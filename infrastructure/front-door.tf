@@ -90,6 +90,23 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
     action  = "Block"
 
     override {
+      rule_group_name = "XSS"
+
+      rule {
+        # XSS Attack Detected via libinjection
+        action  = "AnomalyScoring"
+        enabled = true
+        rule_id = "941101"
+
+        exclusion {
+          match_variable = "RequestHeaderNames" # "HeaderValue:referer"
+          operator       = "Equals"
+          selector       = "referer"
+        }
+      }
+    }
+
+    override {
       rule_group_name = "RFI"
 
       rule {
