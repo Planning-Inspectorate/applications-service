@@ -70,7 +70,7 @@ model Representation {
 	registerFor           String?
 	representedId         String?
 	representativeId      String?
-	attachmentIds         String?
+	attachmentIds         String? @db.VarChar(2000)
 	createdAt             DateTime?    @default(now())
 	modifiedAt            DateTime?    @default(now())
 	representative        ServiceUser? @relation("Representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
@@ -229,7 +229,7 @@ model Advice {
 	adviceDetailsWelsh  String?   @db.VarChar(4000)
 	status              String?
 	redactionStatus     String?
-	attachmentIds       String?
+	attachmentIds       String? @db.VarChar(2000)
 	createdAt           DateTime? @default(now())
 	modifiedAt          DateTime? @default(now())
 	project             Project?  @relation("AdviceProject", fields: [caseId], references: [caseId], onDelete: NoAction, onUpdate: NoAction)

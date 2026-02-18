@@ -80,6 +80,7 @@ const {
 } = require('./already-registered/_utils/get-register-organisation-already-registered-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
+const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
 const { decodeUri } = require('../../../../middleware/decode-uri');
 const { noCache } = require('../_middleware/no-cache');
 
@@ -119,11 +120,13 @@ const registerOrganisationRouter = express.Router({ mergeParams: true });
 
 registerOrganisationRouter.get(
 	registerOrganisationNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterNameController
 );
 registerOrganisationRouter.post(
 	registerOrganisationNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['full-name']),
 	fullNameValidationRules(),
@@ -133,11 +136,13 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationAreYouOver18URL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAreYou18Controller
 );
 registerOrganisationRouter.post(
 	registerOrganisationAreYouOver18URL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	areYou18ValidationRules(),
 	validationErrorHandler,
@@ -146,11 +151,13 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationOrgNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationOrgNameController
 );
 registerOrganisationRouter.post(
 	registerOrganisationOrgNameURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	organisationOrgNameValidationRules(),
 	validationErrorHandler,
@@ -159,11 +166,13 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationEmailURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterEmailController
 );
 registerOrganisationRouter.post(
 	registerOrganisationEmailURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	emailValidationRules(),
 	validationErrorHandler,
@@ -172,11 +181,13 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationJobTitleURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationJobTitleController
 );
 registerOrganisationRouter.post(
 	registerOrganisationJobTitleURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['role']),
 	jobTitleValidationRules(),
@@ -186,11 +197,13 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationAddressURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAddressController
 );
 registerOrganisationRouter.post(
 	registerOrganisationAddressURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	addressValidationRules(),
 	validationErrorHandler,
@@ -199,11 +212,13 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationNumberURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterNumberController
 );
 registerOrganisationRouter.post(
 	registerOrganisationNumberURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	telephoneValidationRules(),
 	validationErrorHandler,
@@ -212,11 +227,13 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationAboutProjectURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationAboutProjectController
 );
 registerOrganisationRouter.post(
 	registerOrganisationAboutProjectURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	decodeUri('body', ['comment']),
 	aboutProjectValidationRules(),
@@ -226,30 +243,35 @@ registerOrganisationRouter.post(
 
 registerOrganisationRouter.get(
 	registerOrganisationCheckAnswersURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationCheckAnswersController
 );
 
 registerOrganisationRouter.get(
 	registerOrganisationDeclarationURL,
+	registerStartRedirectMiddleware,
 	noCache,
 	registerMiddleware,
 	getRegisterDeclarationController
 );
 registerOrganisationRouter.post(
 	registerOrganisationDeclarationURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	postRegisterDeclarationController
 );
 
 registerOrganisationRouter.get(
 	registerOrganisationCompleteURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterCompleteController
 );
 
 registerOrganisationRouter.get(
 	registerOrganisationAlreadyRegisteredURL,
+	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterAlreadyRegisteredController
 );
