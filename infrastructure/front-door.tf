@@ -515,6 +515,18 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
         enabled = true
         rule_id = "933180"
       }
+      rule {
+        # PHP Injection Attack: Wrapper scheme detected
+        action  = "Log"
+        enabled = true
+        rule_id = "933200"
+      }
+      rule {
+        # PHP Injection Attack: Variable Function Call Found
+        action  = "Log"
+        enabled = true
+        rule_id = "933210"
+      }
     }
 
     override {
