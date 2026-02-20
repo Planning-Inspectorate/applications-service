@@ -15,7 +15,8 @@
 	},
 	"dependencies": {
 		"@godaddy/terminus": "*",
-		"pino": "*"
+		"pino": "*",
+		"redis": "*"
 	},
 	"devDependencies": {
 		"eslint": "*",

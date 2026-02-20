@@ -29,7 +29,7 @@
 		"@azure/identity": "*",
 		"@azure/service-bus": "*",
 		"@azure/storage-blob": "*",
-		"@pins/common": "*",
+		"@pins/common": "0.0.0",
 		"@planning-inspectorate/data-model": "*",
 		"@planning-inspectorate/pins-notify": "*",
 		"@prisma/client": "*",

@@ -24,7 +24,7 @@ const mockMessage = {
 };
 
 describe('nsip-document-unpublish', () => {
-	it('logs message', async () => {
+	it('logs starting message', async () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-document-unpublish function');
 	});
@@ -32,6 +32,14 @@ describe('nsip-document-unpublish', () => {
 	it('skips unpublish if documentId is missing', async () => {
 		await sendMessage(mockContext, {});
 		expect(mockContext.log).toHaveBeenCalledWith('skipping unpublish as documentId is missing');
+	});
+
+	it('logs message when case reference is missing', async () => {
+		const messageWithoutCaseRef = { ...mockMessage };
+		delete messageWithoutCaseRef.caseRef;
+
+		await sendMessage(mockContext, messageWithoutCaseRef);
+		expect(mockContext.log).toHaveBeenCalledWith('skipping cache clear as caseRef is required');
 	});
 
 	it('unpublishes document', async () => {
