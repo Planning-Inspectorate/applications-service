@@ -27,7 +27,7 @@
 	},
 	"dependencies": {
 		"@ministryofjustice/frontend": "*",
-		"@pins/common": "*",
+		"@pins/common": "0.0.0",
 		"@planning-inspectorate/pins-components": "*",
 		"@testing-library/dom": "*",
 		"@testing-library/jest-dom": "*",
@@ -57,6 +57,7 @@
 		"marked": "*",
 		"moment": "*",
 		"node-fetch": "*",
+		"node-object-hash": "*",
 		"nunjucks": "*",
 		"nunjucks-date-filter": "*",
 		"ol": "*",

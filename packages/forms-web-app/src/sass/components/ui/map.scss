@@ -56,20 +56,21 @@
 		height: 100%;
 	}
 
-	#projects-map{
+	#projects-map {
 		.ol-popup {
 			> div {
 				padding: 16px;
 				border: none;
 				border-radius: 0;
-    		box-shadow: 2px 2px 2px var(--popup-border);
+				box-shadow: 2px 2px 2px var(--popup-border);
 			}
 
 			.anchor {
 				color: white;
 			}
 
-			button.closeBox, .ol-popup-content {
+			button.closeBox,
+			.ol-popup-content {
 				margin: 0;
 				padding: 0;
 			}
@@ -79,7 +80,8 @@
 				color: var(--popup-text);
 				font-size: 1em;
 
-				&:hover, &:focus {
+				&:hover,
+				&:focus {
 					background: transparent;
 					color: black;
 				}
@@ -106,5 +108,3 @@
 		}
 	}
 }
-
-

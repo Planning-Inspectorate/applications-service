@@ -10,6 +10,9 @@ jest.mock('../../lib/prisma', () => ({
 jest.mock('../../lib/build-merge-query', () =>
 	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
 );
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
 
 const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
@@ -78,7 +81,7 @@ describe('nsip-document', () => {
 		jest.useRealTimers();
 	});
 
-	it('logs message', async () => {
+	it('logs starting message', async () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-document function');
 	});
@@ -88,6 +91,14 @@ describe('nsip-document', () => {
 			'documentId is required'
 		);
 		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
+	});
+
+	it('logs message when case reference is missing', async () => {
+		const messageWithoutCaseRef = { ...mockMessage };
+		delete messageWithoutCaseRef.caseRef;
+
+		await sendMessage(mockContext, messageWithoutCaseRef);
+		expect(mockContext.log).toHaveBeenCalledWith('skipping cache clear as caseRef is required');
 	});
 
 	it('calls buildMergeQuery with correct parameters', async () => {

@@ -8,6 +8,7 @@
 
 const path = require('path');
 const { parseCSV } = require('../utils/parse');
+const { parseRedisConnectionString } = require('@pins/common/src/utils/redis');
 
 module.exports = {
 	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
@@ -112,6 +113,10 @@ module.exports = {
 			algorithm: 'aes-256-ctr',
 			secretKey: process.env.ENCRYPTION_SECRET_KEY || 'dummy-key-set-before-the-testrun'
 		}
+	},
+	redisCache: {
+		connectionString: parseRedisConnectionString(process.env.REDIS_CACHE_CONNECTION_STRING),
+		enabled: process.env.REDIS_CACHE_ENABLED === 'true'
 	},
 	featureFlag: {
 		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',

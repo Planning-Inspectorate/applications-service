@@ -1,6 +1,10 @@
 /* eslint-disable camelcase */
 const fetch = require('node-fetch');
 const uuid = require('uuid');
+const { hasher } = require('node-object-hash');
+const { hash: hashObject } = hasher();
+const { getCache, setCache } = require('./redis-cache');
+
 const { queryStringBuilder } = require('../utils/query-string-builder');
 const config = require('../config');
 const parentLogger = require('./logger');
@@ -106,7 +110,27 @@ exports.searchDocumentList = async (case_ref, search_data) => {
 };
 
 exports.getDocumentByType = async (case_ref, type) => {
-	return handler('getDocumentByType', `/api/v3/documents/${case_ref}?type=${type}`);
+	const requestUrl = `/api/v3/documents/${case_ref}?type=${type}`;
+	const cacheKey = `${case_ref}:docsByType:${type}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getDocumentByType', requestUrl);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
 };
 
 exports.searchRepresentations = async (query = '') =>
@@ -176,11 +200,33 @@ exports.wrappedPostSubmission = async (caseRef, body) => {
 };
 
 exports.wrappedSearchDocumentsV3 = async (body) => {
-	const URL = `/api/v3/documents`;
+	const requestURL = `/api/v3/documents`;
 	const method = 'POST';
-	return handler('searchDocumentsV3', URL, method, {
+	const caseRef = body.caseReference;
+
+	const hashedBody = hashObject(body);
+	const cacheKey = `${caseRef}:docs:${hashedBody}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn(error, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('searchDocumentsV3', requestURL, method, {
 		body: JSON.stringify(body)
 	});
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn(error, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
 };
 
 exports.getDocumentUriByDocRef = async (docRef) => {
