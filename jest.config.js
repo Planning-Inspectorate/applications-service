@@ -1,3 +1,4 @@
+//<rootDir> is: applications-service/packages/forms-web-app
 module.exports = {
 	coverageDirectory: '<rootDir>/jest-reports/coverage',
 	coverageReporters: ['cobertura', 'json', 'html', 'text', 'text-summary'],
