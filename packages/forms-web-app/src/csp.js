@@ -3,7 +3,7 @@ const crypto = require('node:crypto');
 
 const scriptSrc = ['https://*.googletagmanager.com'];
 
-const styleSrc = ["'self'", "'unsafe-inline'"];
+const styleSrc = ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'];
 
 const imgSrc = [
 	"'self'",
@@ -24,7 +24,8 @@ const connectSrc = [
 	'https://*.g.doubleclick.net',
 	'https://*.google.com',
 	'https://*.google.co.uk',
-	'https://api.os.uk'
+	'https://api.os.uk',
+	'https://cdn.jsdelivr.net'
 ];
 
 const addCSPNonce = (req, res) => `'nonce-${res.locals.cspNonce}'`;

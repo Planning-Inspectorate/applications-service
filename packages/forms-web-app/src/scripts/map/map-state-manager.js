@@ -1,390 +1,342 @@
 /**
  * Map State Manager
  *
- * Provides centralized management for all map-related application state:
- * - Leaflet map instance lifecycle
- * - Two-tier tile caching system (L1: in-memory, L2: IndexedDB persistence)
- * - Container resize synchronization with map bounds preservation
- *
- * Cache Lookup Strategy:
- * getTile() → L1 cache (session-fast) → L2 cache (persistent) → null (client fetch)
- * setTile() → L1 (synchronous) + L2 (asynchronous, non-blocking)
+ * Centralized state management for OpenLayers map:
+ * - Map instance lifecycle management
+ * - View state (center, zoom, rotation)
+ * - Popup state tracking
+ * - Container resize handling with smooth animations
  *
  * Usage:
- *   const mapStateManager = require('./map-state-manager');
- *   mapStateManager.setMap(leafletMapInstance);
- *   await mapStateManager.initCache(100);
- *   const tile = await mapStateManager.getTile(z, x, y);
- *   await mapStateManager.setTile(z, x, y, arrayBuffer);
- *   mapStateManager.handleContainerResize(element, bounds);
+ *   const manager = require('./map-state-manager');
+ *   manager.setMap(olMap);
+ *   manager.updateViewState(center, zoom);
+ *   manager.togglePopup(feature);
+ *   manager.handleContainerResize(element);
  */
 
 let mapInstance = null;
-let tileCache = null;
-let tileCacheIndexedDB = null;
+let viewState = {
+	center: null,
+	zoom: 5,
+	rotation: 0
+};
+let popupState = {
+	visible: false,
+	feature: null,
+	coordinate: null
+};
 
-const TRANSITION_TIMEOUT_MS = 350;
-const DB_NAME = 'PinsMapTiles';
-const DB_STORE = 'tiles';
-const DB_VERSION = 1;
+const RESIZE_TRANSITION_MS = 350;
 
 /**
- * Session-scoped tile cache with Least Recently Used eviction.
- * Bounded memory footprint via configurable maximum tile capacity.
- * @class TileCache
+ * Validates and stores OpenLayers Map instance
+ * @param {ol.Map} map - OpenLayers map instance
+ * @throws {Error} If map is not a valid OpenLayers instance
  */
-class TileCache {
-	constructor(maxSize = 100) {
-		this.cache = new Map();
-		this.maxSize = maxSize;
+function setMap(map) {
+	if (!map || typeof map.getView !== 'function' || typeof map.getSize !== 'function') {
+		throw new Error('Invalid OpenLayers Map instance provided');
+	}
+	mapInstance = map;
+	captureViewState();
+}
+
+/**
+ * Returns the current OpenLayers Map instance
+ * @returns {ol.Map|null} Map instance or null if not initialized
+ */
+function getMap() {
+	return mapInstance;
+}
+
+/**
+ * Checks if map is initialized
+ * @returns {boolean}
+ */
+function hasMap() {
+	return mapInstance !== null;
+}
+
+/**
+ * Clears map reference (teardown/testing)
+ * @returns {void}
+ */
+function clearMap() {
+	mapInstance = null;
+	viewState = { center: null, zoom: 5, rotation: 0 };
+	popupState = { visible: false, feature: null, coordinate: null };
+}
+
+/**
+ * Captures current map view state (center, zoom, rotation)
+ * @returns {Object} View state object
+ */
+function captureViewState() {
+	if (!mapInstance) return viewState;
+
+	const view = mapInstance.getView();
+	if (!view) return viewState;
+
+	viewState = {
+		center: view.getCenter(),
+		zoom: view.getZoom(),
+		rotation: view.getRotation()
+	};
+
+	return { ...viewState };
+}
+
+/**
+ * Gets current view state
+ * @returns {Object} {center, zoom, rotation}
+ */
+function getViewState() {
+	return { ...viewState };
+}
+
+/**
+ * Updates map view state with smooth animation
+ * @param {Array<number>} [center] - [x, y] coordinates
+ * @param {number} [zoom] - zoom level
+ * @param {number} [rotation] - rotation in radians (0-2π)
+ * @param {Object} [options] - animation options {duration: ms, easing: fn}
+ */
+function updateViewState(center, zoom, rotation, options = {}) {
+	if (!mapInstance) return;
+
+	const view = mapInstance.getView();
+	const {
+		duration = 500,
+		easing = null // Will use default OpenLayers easing
+	} = options;
+
+	const animationOptions = { duration };
+	if (easing) {
+		animationOptions.easing = easing;
 	}
 
-	/**
-	 * Retrieves cached tile data by geographic coordinates.
-	 *
-	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile column coordinate
-	 * @param {number} y - Tile row coordinate
-	 * @returns {Promise<ArrayBuffer|null>} Tile image buffer or null if not cached
-	 */
-	async getTile(z, x, y) {
-		const key = `${z}/${x}/${y}`;
-		return this.cache.get(key) || null;
+	if (center) {
+		view.animate({ center, ...animationOptions });
+		viewState.center = center;
 	}
 
-	/**
-	 * Stores tile data in cache with automatic eviction of oldest entry
-	 * when cache capacity is exceeded. Implements FIFO eviction policy
-	 * to maintain bounded memory consumption.
-	 *
-	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile column coordinate
-	 * @param {number} y - Tile row coordinate
-	 * @param {ArrayBuffer} arrayBuffer - Raw tile image data
-	 * @returns {Promise<void>}
-	 */
-	async setTile(z, x, y, arrayBuffer) {
-		const key = `${z}/${x}/${y}`;
-
-		if (this.cache.size >= this.maxSize) {
-			const firstKey = this.cache.keys().next().value;
-			this.cache.delete(firstKey);
-		}
-
-		this.cache.set(key, arrayBuffer);
+	if (zoom !== undefined) {
+		view.animate({ zoom, ...animationOptions });
+		viewState.zoom = zoom;
 	}
 
-	/**
-	 * Purges all cached tiles and resets cache state.
-	 *
-	 * @returns {Promise<void>}
-	 */
-	async clear() {
-		this.cache.clear();
-	}
-
-	/**
-	 * Returns cache utilization metrics for monitoring and diagnostics.
-	 *
-	 * @returns {Promise<{size: number, maxSize: number, filled: string}>} Cache statistics object
-	 */
-	async getStats() {
-		return {
-			size: this.cache.size,
-			maxSize: this.maxSize,
-			filled: `${Math.round((this.cache.size / this.maxSize) * 100)}%`
-		};
+	if (rotation !== undefined) {
+		view.animate({ rotation, ...animationOptions });
+		viewState.rotation = rotation;
 	}
 }
 
 /**
- * Persistent tile cache backed by IndexedDB for cross-session resilience.
- * Survives page reloads and browser restarts. Failures degrade gracefully
- * without impacting application functionality.
- * @class IndexedDBTileCache
+ * Restores previously captured view state
+ * @param {Object} [state] - State to restore (defaults to saved state)
+ * @param {Object} [options] - Animation options
  */
-class IndexedDBTileCache {
-	/**
-	 * Establishes connection to persistent tile database and creates
-	 * object store if needed. Silently succeeds or fails without exception.
-	 *
-	 * @returns {Promise<void>}
-	 */
-	async init() {
-		if (this.db || typeof indexedDB === 'undefined') return;
+function restoreViewState(state = viewState, options = {}) {
+	if (!mapInstance || !state) return;
 
-		return new Promise((resolve) => {
-			const request = indexedDB.open(DB_NAME, DB_VERSION);
+	const { center, zoom, rotation } = state;
+	updateViewState(center, zoom, rotation, options);
+}
 
-			request.onerror = () => {
-				console.warn('IndexedDB initialization failed, tiles will not persist');
-				resolve();
-			};
+/**
+ * Updates popup state
+ * @param {boolean} visible - Is popup visible
+ * @param {ol.Feature} [feature] - Feature associated with popup
+ * @param {Array<number>} [coordinate] - Map coordinate
+ */
+function setPopupState(visible, feature = null, coordinate = null) {
+	popupState = {
+		visible,
+		feature,
+		coordinate
+	};
+}
 
-			request.onsuccess = () => {
-				this.db = request.result;
-				resolve();
-			};
+/**
+ * Gets current popup state
+ * @returns {Object} {visible, feature, coordinate}
+ */
+function getPopupState() {
+	return { ...popupState };
+}
 
-			request.onupgradeneeded = (event) => {
-				const db = event.target.result;
-				if (!db.objectStoreNames.contains(DB_STORE)) {
-					db.createObjectStore(DB_STORE);
-				}
-			};
-		});
+/**
+ * Toggles popup visibility
+ * @param {ol.Feature} feature - Feature to show in popup
+ * @param {Array<number>} coordinate - Popup position
+ */
+function togglePopup(feature, coordinate) {
+	if (popupState.visible && popupState.feature === feature) {
+		// Close if clicking same feature
+		setPopupState(false);
+	} else {
+		// Open for this feature
+		setPopupState(true, feature, coordinate);
+	}
+}
+
+/**
+ * Closes popup
+ */
+function closePopup() {
+	setPopupState(false);
+}
+
+/**
+ * Handles map container resize with smooth transition
+ * Recalculates map size after CSS transitions complete
+ * @param {HTMLElement} element - Container element with transition
+ * @param {Object} [options] - {restoreCenter: boolean, margin: number}
+ */
+function handleContainerResize(element, options = {}) {
+	if (!mapInstance) {
+		throw new Error('Map not initialized. Call setMap() first.');
 	}
 
-	/**
-	 * Retrieves cached tile data by geographic coordinates from persistent storage.
-	 *
-	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile column coordinate
-	 * @param {number} y - Tile row coordinate
-	 * @returns {Promise<ArrayBuffer|null>} Tile image buffer or null if not found
-	 */
-	async getTile(z, x, y) {
-		if (!this.db) return null;
+	const { restoreCenter = false, margin = 0 } = options;
 
-		const key = `${z}/${x}/${y}`;
+	// Save current center if requested
+	const savedCenter = restoreCenter ? captureViewState().center : null;
 
-		return new Promise((resolve) => {
-			try {
-				const transaction = this.db.transaction([DB_STORE], 'readonly');
-				const store = transaction.objectStore(DB_STORE);
-				const request = store.get(key);
+	let handled = false;
 
-				request.onsuccess = () => {
-					resolve(request.result || null);
-				};
+	const onResizeComplete = () => {
+		if (handled) return;
+		handled = true;
 
-				request.onerror = () => {
-					resolve(null);
-				};
-			} catch (error) {
-				resolve(null);
-			}
-		});
-	}
+		element.removeEventListener('transitionend', onResizeComplete);
+		clearTimeout(timeoutId);
 
-	/**
-	 * Persists tile data to IndexedDB without blocking the main thread.
-	 * Failures are logged but suppressed to prevent cache errors from
-	 * impacting tile display functionality.
-	 *
-	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile column coordinate
-	 * @param {number} y - Tile row coordinate
-	 * @param {ArrayBuffer} arrayBuffer - Raw tile image data
-	 * @returns {Promise<void>}
-	 */
-	async setTile(z, x, y, arrayBuffer) {
-		if (!this.db) return;
+		// Recalculate map size after transition
+		mapInstance.updateSize();
 
-		const key = `${z}/${x}/${y}`;
-
-		try {
-			const transaction = this.db.transaction([DB_STORE], 'readwrite');
-			const store = transaction.objectStore(DB_STORE);
-			store.put(arrayBuffer, key);
-		} catch (error) {
-			console.warn('Failed to cache tile in IndexedDB:', error);
+		// Restore center if requested
+		if (savedCenter && margin > 0) {
+			updateViewState(savedCenter, undefined, undefined, {
+				duration: 300
+			});
 		}
-	}
+	};
 
-	/**
-	 * Purges all persistent tile data and resets database connection.
-	 *
-	 * @returns {Promise<void>}
-	 */
-	async clear() {
-		if (!this.db) return;
+	// Set timeout as fallback (in case transitionend doesn't fire)
+	const timeoutId = setTimeout(onResizeComplete, RESIZE_TRANSITION_MS);
 
-		return new Promise((resolve) => {
-			try {
-				const transaction = this.db.transaction([DB_STORE], 'readwrite');
-				const store = transaction.objectStore(DB_STORE);
-				store.clear();
-				transaction.oncomplete = () => resolve();
-				transaction.onerror = () => {
-					console.warn('IndexedDB clear failed:', transaction.error);
-					resolve();
-				};
-			} catch (error) {
-				console.warn('Failed to clear IndexedDB:', error);
-				resolve();
-			}
-		});
+	// Listen for transition completion
+	element.addEventListener('transitionend', onResizeComplete, { once: true });
+}
+
+/**
+ * Gets map extent (bounding box)
+ * @returns {Array<number>} [minX, minY, maxX, maxY] or null
+ */
+function getExtent() {
+	if (!mapInstance) return null;
+
+	const view = mapInstance.getView();
+	const extent = view.calculateExtent(mapInstance.getSize());
+	return extent;
+}
+
+/**
+ * Fits map to extent with animation
+ * @param {Array<number>} extent - [minX, minY, maxX, maxY]
+ * @param {Object} [options] - {padding: [top, right, bottom, left], duration: ms}
+ */
+function fitToExtent(extent, options = {}) {
+	if (!mapInstance) return;
+
+	const view = mapInstance.getView();
+	const { padding = [0, 0, 0, 0], duration = 500 } = options;
+
+	view.fit(extent, {
+		padding,
+		duration,
+		maxZoom: 15 // Prevent over-zooming
+	});
+}
+
+/**
+ * Gets visible layers
+ * @returns {Array<ol.layer.Layer>} Array of visible layers
+ */
+function getVisibleLayers() {
+	if (!mapInstance) return [];
+
+	return mapInstance
+		.getLayers()
+		.getArray()
+		.filter((layer) => layer.getVisible());
+}
+
+/**
+ * Sets layer visibility
+ * @param {ol.layer.Layer} layer - Layer to toggle
+ * @param {boolean} visible - Visibility state
+ */
+function setLayerVisible(layer, visible) {
+	if (layer && typeof layer.setVisible === 'function') {
+		layer.setVisible(visible);
 	}
+}
+
+/**
+ * Gets map debug information
+ * @returns {Object} Debug data
+ */
+function getDebugInfo() {
+	if (!mapInstance) return {};
+
+	const view = mapInstance.getView();
+	return {
+		mapReady: true,
+		center: view.getCenter(),
+		zoom: view.getZoom(),
+		rotation: view.getRotation(),
+		size: mapInstance.getSize(),
+		extent: getExtent(),
+		layers: mapInstance.getLayers().getLength(),
+		overlays: mapInstance.getOverlays().getLength(),
+		viewState: { ...viewState },
+		popupState: { ...popupState }
+	};
 }
 
 module.exports = {
-	/**
-	 * Stores Leaflet map instance for global access. Validates instance
-	 * is a valid map object before assignment.
-	 *
-	 * @param {L.Map} map - Leaflet map instance
-	 * @throws {Error} When provided object is not a valid Leaflet map
-	 */
-	setMap(map) {
-		if (map && typeof map.getZoom === 'function') {
-			mapInstance = map;
-		} else {
-			throw new Error('Invalid Leaflet map instance provided to mapStateManager');
-		}
-	},
+	// Map lifecycle
+	setMap,
+	getMap,
+	hasMap,
+	clearMap,
 
-	/**
-	 * Retrieves the current Leaflet map instance.
-	 *
-	 * @returns {L.Map|null} Active map instance or null if not initialized
-	 */
-	getMap() {
-		return mapInstance;
-	},
+	// View state
+	captureViewState,
+	getViewState,
+	updateViewState,
+	restoreViewState,
 
-	/**
-	 * Determines whether a map instance is currently initialized.
-	 *
-	 * @returns {boolean} True if map has been initialized
-	 */
-	hasMap() {
-		return mapInstance !== null;
-	},
+	// Popup state
+	setPopupState,
+	getPopupState,
+	togglePopup,
+	closePopup,
 
-	/**
-	 * Clears map instance reference during teardown or testing.
-	 *
-	 * @returns {void}
-	 */
-	clearMap() {
-		mapInstance = null;
-	},
+	// Container and layout
+	handleContainerResize,
 
-	/**
-	 * Initializes dual-level tile cache system. Creates in-memory L1 cache
-	 * with configurable capacity and establishes persistent L2 cache connection.
-	 *
-	 * @param {number} maxSize - Maximum tiles held in memory (default: 100)
-	 * @returns {Promise<void>}
-	 */
-	async initCache(maxSize = 100) {
-		tileCache = new TileCache(maxSize);
-		tileCacheIndexedDB = new IndexedDBTileCache();
-		await tileCacheIndexedDB.init();
-	},
+	// Extent and bounds
+	getExtent,
+	fitToExtent,
 
-	/**
-	 * Retrieves cached tile by geographic coordinates using layered lookup:
-	 * Session cache (L1) → Persistent cache (L2) → Cache miss. Promotes L2
-	 * hits to L1 for subsequent session requests.
-	 *
-	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile column coordinate
-	 * @param {number} y - Tile row coordinate
-	 * @returns {Promise<ArrayBuffer|null>} Tile image buffer or null if not in cache
-	 */
-	async getTile(z, x, y) {
-		if (!tileCache) return null;
+	// Layers
+	getVisibleLayers,
+	setLayerVisible,
 
-		const inMemoryTile = await tileCache.getTile(z, x, y);
-		if (inMemoryTile) return inMemoryTile;
-
-		if (tileCacheIndexedDB) {
-			const persistentTile = await tileCacheIndexedDB.getTile(z, x, y);
-			if (persistentTile) {
-				await tileCache.setTile(z, x, y, persistentTile);
-				return persistentTile;
-			}
-		}
-
-		return null;
-	},
-
-	/**
-	 * Stores tile in both cache layers synchronously for L1 and
-	 * asynchronously for L2 without blocking the main thread.
-	 *
-	 * @param {number} z - Zoom level
-	 * @param {number} x - Tile column coordinate
-	 * @param {number} y - Tile row coordinate
-	 * @param {ArrayBuffer} arrayBuffer - Raw tile image data
-	 * @returns {Promise<void>}
-	 */
-	async setTile(z, x, y, arrayBuffer) {
-		if (!tileCache) return;
-
-		await tileCache.setTile(z, x, y, arrayBuffer);
-
-		if (tileCacheIndexedDB) {
-			tileCacheIndexedDB.setTile(z, x, y, arrayBuffer).catch(() => null);
-		}
-	},
-
-	/**
-	 * Determines whether the tile cache system is initialized and ready.
-	 *
-	 * @returns {boolean} True if cache has been initialized
-	 */
-	hasCache() {
-		return tileCache !== null;
-	},
-
-	/**
-	 * Returns current cache utilization and capacity information for
-	 * monitoring and diagnostics.
-	 *
-	 * @returns {Promise<{size: number, maxSize: number, filled: string}|null>} Cache metrics or null if not initialized
-	 */
-	async getCacheStats() {
-		if (!tileCache) return null;
-		return tileCache.getStats();
-	},
-
-	/**
-	 * Resets all cache state and releases database resources. Clears
-	 * both session and persistent layers completely.
-	 *
-	 * @returns {Promise<void>}
-	 */
-	async clearCache() {
-		if (tileCache) {
-			await tileCache.clear();
-		}
-		if (tileCacheIndexedDB) {
-			await tileCacheIndexedDB.clear();
-		}
-		tileCache = null;
-		tileCacheIndexedDB = null;
-	},
-
-	/**
-	 * Handles map size recalculation after container resize transitions.
-	 * Optionally restores map bounds if provided, otherwise only recalculates size.
-	 * Allows free user panning when bounds are not provided.
-	 *
-	 * @param {HTMLElement} element - Container element undergoing CSS transition
-	 * @param {L.LatLngBounds} [bounds] - Optional bounds to restore post-transition
-	 * @throws {Error} When map instance has not been initialized
-	 */
-	handleContainerResize(element, bounds) {
-		if (!mapInstance) {
-			throw new Error('Map not initialized. Call setMap() first.');
-		}
-
-		let handled = false;
-
-		const onComplete = () => {
-			if (handled) return;
-			handled = true;
-			element.removeEventListener('transitionend', onComplete);
-			clearTimeout(timeoutId);
-
-			if (bounds) mapInstance.fitBounds(bounds, { animate: false, padding: [0, 0] });
-			mapInstance.invalidateSize(false);
-		};
-
-		const timeoutId = setTimeout(onComplete, TRANSITION_TIMEOUT_MS);
-		element.addEventListener('transitionend', onComplete, { once: true });
-	}
+	// Debugging
+	getDebugInfo
 };

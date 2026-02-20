@@ -10,9 +10,12 @@
 
 const express = require('express');
 const { getProjectsMap } = require('./controller');
+const { featureFlag } = require('../../config');
 
 const projectsMapRouter = express.Router();
 
-projectsMapRouter.get('/projects-map', getProjectsMap);
+if (featureFlag.enableProjectsMap) {
+	projectsMapRouter.get('/projects-map', getProjectsMap);
+}
 
 module.exports = { projectsMapRouter };

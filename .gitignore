@@ -138,3 +138,7 @@ __azurite_db*__.json
 workspace.json
 .structurizr/*
 build
+
+# Compiled CSS (built from SCSS)
+packages/forms-web-app/src/public/stylesheets/*.css
+!packages/forms-web-app/src/public/stylesheets/projects-map.scss

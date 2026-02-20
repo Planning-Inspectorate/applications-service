@@ -11,4 +11,4 @@ const getMapWMTS = async (accessToken) => {
 	return await response.text();
 };
 
-export { getMapWMTS };
+module.exports = { getMapWMTS };

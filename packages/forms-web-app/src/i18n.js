@@ -18,7 +18,11 @@ const i18nRedirect = (req, res, next) => {
 	const localesQuery = query[localesQueryStringID];
 	const localesCookie = cookies[localesQueryCookieID];
 
+	// Skip redirect for API routes - they should not include language query params
+	const isApiRoute = path.startsWith('/api/');
+
 	if (
+		!isApiRoute &&
 		method === 'GET' &&
 		allowWelshTranslation &&
 		!localesQuery &&
