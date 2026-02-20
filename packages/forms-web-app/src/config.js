@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const { parseRedisConnectionString } = require('@pins/common/src/utils/redis');
-const { getUKMapBounds } = require('./utils/map-bounds');
 
 const httpPort = Number(process.env.PORT || 3000);
 const splitStringToArray = (str) => str?.split(',').map((s) => s.trim()) || [];
@@ -173,22 +172,9 @@ module.exports = {
 	}
 };
 
-// Calculate UK map bounds using utility
-const ukMapBounds = getUKMapBounds();
-
 module.exports.maps = {
 	osMapsApiKey: process.env.OS_MAPS_API_KEY,
 	osMapsApiSecret: process.env.OS_MAPS_API_SECRET,
-	leafletOptions: {
-		minZoom: 0, // Zoom level 0 for EPSG:27700
-		maxZoom: 13, // Matches resolutions array (14 zoom levels: 0-13)
-		// Default center: Central UK (converted from BNG to WGS84)
-		center: ukMapBounds.center,
-		zoom: 0,
-		attributionControl: true, // Show OS Maps copyright notice in bottom-right
-		// UK bounds to restrict panning (converted from BNG to WGS84)
-		maxBounds: ukMapBounds.maxBounds
-	},
 	tileLayer: {
 		// Tile server URL with placeholders for {z}/{x}/{y}
 		// {Road, Outdoor, Light, Leisure}_27700 indicates EPSG:27700 (British National Grid) tiles
@@ -202,17 +188,22 @@ module.exports.maps = {
 	},
 	crs: {
 		// EPSG:27700 - British National Grid (BNG)
+		// https://epsg.io/27700
 		code: 'EPSG:27700',
 		// Proj4 string defining Transverse Mercator projection for UK
+		// Source: EPSG official definition with NTv2 grid transformation
 		proj4String:
 			'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs',
+		// Extent in EPSG:27700 coordinates (official EPSG:27700 bounds)
+		extent: [-238375.0, -100000.0, 900000.0, 1376256.0],
 		// Tile resolutions for zoom levels 0-13 (matches OS Maps zoom levels 0-13)
 		resolutions: [896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75, 0.875, 0.4375, 0.21875, 0.109375],
 		// Origin point (top-left corner) in BNG coordinates
 		origin: [-238375.0, 1376256.0]
 	},
 	display: {
-		clustered: true, // Enable marker clustering
-		elementId: 'projects-map' // Must match template element ID
+		elementId: 'projects-map', // Must match template element ID
+		center: [-2, 55], // Default center (UK) in [lng, lat] WGS84 format - EPSG:27700 central meridian
+		zoom: 0 // Default zoom level (0=zoomed out to show UK and neighbouring seas)
 	}
 };

@@ -1,4 +1,5 @@
-import { defaults } from 'ol/control/defaults';
+const { defaults } = require('ol/control/defaults');
+const Attribution = require('ol/control/Attribution').default;
 
 const getZoomLabel = (label, labelTip) => {
 	const zoomLabel = document.createElement('span');
@@ -7,12 +8,24 @@ const getZoomLabel = (label, labelTip) => {
 	return zoomLabel;
 };
 
-const getControls = () =>
-	defaults({
+const getControls = () => {
+	const defaultControls = defaults({
 		zoomOptions: {
 			zoomInLabel: getZoomLabel('&plus;', 'Zoom in'),
 			zoomOutLabel: getZoomLabel('&minus;', 'Zoom out')
-		}
+		},
+		attribution: false // Disable default hidden attribution
 	});
 
-export { getControls };
+	// Add explicit Attribution control that is visible by default
+	defaultControls.push(
+		new Attribution({
+			collapsible: false,
+			collapsed: false // Show by default
+		})
+	);
+
+	return defaultControls;
+};
+
+module.exports = { getControls };

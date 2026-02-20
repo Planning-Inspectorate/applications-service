@@ -10,31 +10,18 @@ jest.mock('../../config', () => ({
 		redact: []
 	},
 	maps: {
-		leafletOptions: {
-			minZoom: 0,
-			maxZoom: 13,
-			center: [52.3, -1.7],
-			zoom: 0,
-			attributionControl: true
-		},
-		tileLayer: {
-			url: 'https://api.os.uk/maps/raster/v1/zxy/Light_27700/{z}/{x}/{y}.png',
-			tokenEndpoint: '/api/os-maps/token',
-			maxZoom: 13,
-			attribution: '© Crown Copyright and database right'
-		},
+		osMapsApiKey: 'test-key',
+		osMapsApiSecret: 'test-secret',
 		crs: {
 			code: 'EPSG:27700',
 			proj4String:
 				'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs',
-			resolutions: [896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75, 0.875, 0.4375, 0.21875, 0.109375],
-			origin: [-238375.0, 1376256.0]
+			extent: [-238375.0, -100000.0, 900000.0, 1376256.0]
 		},
 		display: {
-			clustered: true,
 			elementId: 'projects-map',
-			containerHeight: '700px',
-			animateWhenZoomed: false
+			center: [-2, 55],
+			zoom: 0
 		}
 	}
 }));
@@ -104,7 +91,7 @@ describe('pages/projects-map/controller', () => {
 			expect(mockNext).not.toHaveBeenCalled();
 		});
 
-		it('should include hasActiveFilters and animateWhenZoomed in mapConfig when filters are active', async () => {
+		it('should include totalProjects in mapConfig when filters are active', async () => {
 			const mockGeojson = {
 				type: 'FeatureCollection',
 				features: [
@@ -131,14 +118,15 @@ describe('pages/projects-map/controller', () => {
 
 			expect(renderedData.mapConfig).toEqual(
 				expect.objectContaining({
-					hasActiveFilters: true,
-					animateWhenZoomed: false,
-					totalProjects: 1
+					totalProjects: 1,
+					markers: expect.any(Array),
+					crs: expect.any(Object),
+					elementId: 'projects-map'
 				})
 			);
 		});
 
-		it('should set hasActiveFilters to false when no filters are applied', async () => {
+		it('should render map config without filters', async () => {
 			const mockGeojson = {
 				type: 'FeatureCollection',
 				features: [
@@ -165,8 +153,10 @@ describe('pages/projects-map/controller', () => {
 
 			expect(renderedData.mapConfig).toEqual(
 				expect.objectContaining({
-					hasActiveFilters: false,
-					animateWhenZoomed: false
+					totalProjects: 1,
+					markers: expect.any(Array),
+					crs: expect.any(Object),
+					elementId: 'projects-map'
 				})
 			);
 		});
@@ -198,7 +188,9 @@ describe('pages/projects-map/controller', () => {
 
 			expect(renderedData.mapConfig).toEqual(
 				expect.objectContaining({
-					hasActiveFilters: false
+					totalProjects: 1,
+					crs: expect.any(Object),
+					elementId: 'projects-map'
 				})
 			);
 		});

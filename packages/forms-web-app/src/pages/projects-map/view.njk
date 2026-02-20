@@ -4,49 +4,42 @@
 
 {% set pageTitle = t('projectsMap.pageTitle') %}
 
-{% set leafletStyles = [
-	{
-		cdn: 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css',
-		local: '/public/stylesheets/leaflet.css'
-	},
-	{
-		cdn: 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.min.css',
-		local: '/public/stylesheets/MarkerCluster.css'
-	},
-	{
-		cdn: 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css',
-		local: '/public/stylesheets/MarkerCluster.Default.css'
-	}
-] %}
-
 {% block stylesheet %}
-	{% for style in leafletStyles %}
-		<link rel="stylesheet" href="{{ style.cdn }}"/>
-	{% endfor %}
-	<link rel="stylesheet" href="/public/stylesheets/projects-map.css"/>
-	<script nonce="{{ cspNonce }}">
-		function loadLocalStylesheet(url) {
-			const link = document.createElement('link');
-			link.rel = 'stylesheet';
-			link.href = url;
-			document.head.appendChild(link);
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css"/>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol-ext@latest/dist/ol-ext.min.css"/>
+	<style>
+		.pins-map {
+			min-height: 400px;
+			width: 100%;
 		}
-
-		const stylesheets = [
-			{% for style in leafletStyles %}
-			{ cdn: '{{ style.cdn }}', local: '{{ style.local }}' }{{ "," if not loop.last }}
-			{% endfor %}
-		];
-
-		stylesheets.forEach((sheet) => {
-			const link = document.querySelector(`link[href="${sheet.cdn}"]`);
-			if (link) {
-				link.onerror = () => {
-					loadLocalStylesheet(sheet.local);
-				};
+		
+		.pins-map__container {
+			width: 100%;
+			height: 100%;
+			min-height: 400px;
+		}
+		
+		/* Mobile responsive */
+		@media (max-width: 640px) {
+			.pins-map,
+			.pins-map__container {
+				min-height: 300px;
 			}
-		});
-	</script>
+		}
+		
+		/* Touch-friendly controls */
+		@media (hover: none) and (pointer: coarse) {
+			.ol-control {
+				padding: 6px;
+			}
+			
+			.ol-control button {
+				min-width: 44px;
+				min-height: 44px;
+			}
+		}
+	</style>
+
 {% endblock %}
 
 {% block content %}
@@ -99,11 +92,13 @@
 
 			{% include "../project-search/includes/active-filters.njk" %}
 
-			<div id="projects-map"
-				role="main"
-				aria-label="{{ t('projectsMap.mapAriaLabel') }}"
-				tabindex="0"
-				class="govuk-!-margin-bottom-4"></div>
+			<div class="pins-map govuk-!-margin-bottom-4">
+				<div id="projects-map"
+					role="main"
+					aria-label="{{ t('projectsMap.mapAriaLabel') }}"
+					tabindex="0"
+					class="pins-map__container"></div>
+			</div>
 
 			<p class="govuk-visually-hidden">
 				{{ t('projectsMap.mapIntroText', { totalProjects: mapConfig.totalProjects, projectSearchLink: '<a href="' + projectSearchURL + '">' + t('projectsMap.projectSearchText') + '</a>' }) | safe }}
@@ -141,14 +136,11 @@
 		window._applicationService = {
 			mapConfig: {
 				elementId: '{{ mapConfig.elementId }}',
-				mapOptions: {{ mapConfig.mapOptions | dump | safe }},
-				tileLayer: {{ mapConfig.tileLayer | dump | safe }},
-				crs: {{ mapConfig.crs | dump | safe }},
+				accessToken: '{{ mapConfig.accessToken }}',
+				center: {{ mapConfig.center | dump | safe }},
+				zoom: {{ mapConfig.zoom }},
 				markers: {{ mapConfig.markers | dump | safe }},
-				clustered: {{ mapConfig.clustered | dump | safe }},
-				totalProjects: {{ mapConfig.totalProjects }},
-				hasActiveFilters: {{ mapConfig.hasActiveFilters | dump | safe }},
-				animateWhenZoomed: {{ mapConfig.animateWhenZoomed | dump | safe }}
+				crs: {{ mapConfig.crs | dump | safe }}
 			},
 			/**
 			 * Callback when sidebar toggles
@@ -173,8 +165,8 @@
 			src: "/public/scripts/sidebarToggler.script.js"
 		},
 		{
-			callback: "window.pageDebug('Initiating leaflet map'); var leafletMap = new appScripts.leafletMap(); window.pageDebug('Leaflet map object created'); leafletMap.initiate(window._applicationService.mapConfig).then(function() { window.pageDebug('Leaflet map initiated'); }).catch(function(err) { window.pageDebug('Leaflet map init error:', err); });",
-			src: "/public/scripts/leafletMap.script.js"
+			callback: "window.pageDebug('Initiating OpenLayers map'); window.pageDebug('Map config:', window._applicationService.mapConfig); var olMap = new appScripts.openLayersMap(); window.pageDebug('OpenLayers map object created'); olMap.initiate(window._applicationService.mapConfig).then(function() { window.pageDebug('OpenLayers map initiated'); }).catch(function(err) { console.error('OpenLayers map init error:', err); window.pageDebug('OpenLayers map init error:', err); });",
+			src: "/public/scripts/openLayersMap.script.js"
 		}
 	), initiateScriptsConfig) %}
 {% endblock %}
