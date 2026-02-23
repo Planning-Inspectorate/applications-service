@@ -59,7 +59,6 @@ resource "azurerm_cdn_frontdoor_route" "wfe" {
   patterns_to_match      = ["/*"]
   supported_protocols    = ["Http", "Https"]
 
-
   cdn_frontdoor_custom_domain_ids = [azurerm_cdn_frontdoor_custom_domain.wfe.id]
   link_to_default_domain          = false
 }
