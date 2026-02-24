@@ -57,9 +57,9 @@
 	}
 
 	#projects-map {
-		.ol-popup {
+		.ol-popup.default {
 			> div {
-				padding: 16px;
+				padding: 8px;
 				border: none;
 				border-radius: 0;
 				box-shadow: 2px 2px 2px var(--popup-border);

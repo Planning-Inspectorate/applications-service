@@ -1,4 +1,3 @@
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% extends "layouts/default.njk" %}
 
@@ -27,11 +26,40 @@
 			}
 		}
 
+		/* Hide toggle button by default (mobile/tablet) */
+		#projects-map-filters-toggle-btn {
+			display: none;
+		}
+
 		/* Desktop */
 		@media (min-width: 769px) {
 			.pins-map {
 				height: 650px;
 				min-height: 650px;
+			}
+
+			/* Default: content full-width on desktop, sidebar hidden */
+			#projects-map-sidebar-column {
+				display: none;
+			}
+
+			#projects-map-content-column {
+				width: 100%;
+			}
+
+			/* When grid has show-filters class: 1/3 + 2/3 layout */
+			#projects-map-grid.projects-map-grid--show-filters #projects-map-sidebar-column {
+				display: block;
+				width: 33.33%;
+			}
+
+			#projects-map-grid.projects-map-grid--show-filters #projects-map-content-column {
+				width: 66.66%;
+			}
+
+			/* Show toggle button only on desktop */
+			#projects-map-filters-toggle-btn {
+				display: inline-block;
 			}
 		}
 
@@ -47,76 +75,6 @@
 			}
 		}
 	</style>
-{% endblock %}
-
-{% block content %}
-	<div class="govuk-grid-row">
-		<aside class="govuk-grid-column-one-third govuk-!-display-none" id="maps-sidebar-content" aria-label="Project filters">
-			<form method="post">
-				{% include "./includes/sidebar.njk" %}
-			</form>
-		</aside>
-
-		<div class="govuk-grid-column-full" id="maps-content">
-			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-				{{ t('projectsMap.heading1') }}
-			</h1>
-
-			{% if featureFlag.allowWelshTranslation == false %}
-				<p class="govuk-body">
-					This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
-				</p>
-			{% endif %}
-
-			<p class="govuk-body">
-				{{ t('projectsMap.paragraph1') }}
-			</p>
-
-			<div class="govuk-button-group">
-				{{ govukButton({
-					text: t('projectsMap.showFiltersText'),
-					classes: "govuk-button--secondary",
-					attributes: {
-						id: "filters-toggle-btn",
-						'data-sidebar-toggle': '#maps-sidebar-content',
-						'data-content-toggle': '#maps-content',
-						'data-toggle-class': 'govuk-!-display-none',
-						'data-content-hidden-class': 'govuk-grid-column-full',
-						'data-content-visible-class': 'govuk-grid-column-two-thirds',
-						'data-show-label': t('projectsMap.showFiltersText'),
-						'data-hide-label': t('projectsMap.hideFiltersText'),
-						'data-on-toggle': '_applicationService.onSidebarToggle',
-						'aria-expanded': 'false',
-						'aria-controls': 'maps-sidebar-content'
-					}
-				}) }}
-				<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
-			</div>
-
-			<form method="post">
-				{% include "../project-search/includes/search.njk" %}
-			</form>
-
-			{% include "../project-search/includes/active-filters.njk" %}
-
-			<div class="pins-map govuk-!-margin-bottom-4">
-				<div id="projects-map"
-					role="main"
-					aria-label="{{ t('projectsMap.mapAriaLabel') }}"
-					tabindex="0"
-					class="pins-map__container"></div>
-			</div>
-
-			<p class="govuk-visually-hidden">
-				{{ t('projectsMap.mapIntroText', { totalProjects: mapConfig.totalProjects, projectSearchLink: '<a href="' + projectSearchURL + '">' + t('projectsMap.projectSearchText') + '</a>' }) | safe }}
-			</p>
-
-			{{ govukWarningText({
-				text: t('projectsMap.warningText'),
-				iconFallbackText: "Warning"
-			}) }}
-		</div>
-	</div>
 {% endblock %}
 
 {% block script %}
@@ -148,19 +106,42 @@
 				zoom: {{ mapConfig.zoom }},
 				markers: {{ mapConfig.markers | dump | safe }},
 				crs: {{ mapConfig.crs | dump | safe }}
-			},
-			/**
-			 * Callback when sidebar toggles
-			 */
-			onSidebarToggle: function(state) {
-				var map = window._applicationService.map;
-				var mapStateManager = window._applicationService.mapStateManager;
-				if (!map || !mapStateManager || !state.content) return;
-				mapStateManager.handleContainerResize(state.content);
 			}
 		};
 		window.pageDebug('_applicationService initialized:', window._applicationService);
 	</script>
+
+	<script nonce="{{ cspNonce }}">
+		/**
+		 * Desktop toggle functionality for filters sidebar
+		 * Only runs on desktop (769px+), mobile/tablet uses modal script
+		 */
+		(function() {
+			const toggleBtn = document.getElementById('projects-map-filters-toggle-btn');
+			const gridRow = document.getElementById('projects-map-grid');
+
+			if (!toggleBtn || !gridRow) {
+				return;
+			}
+
+			toggleBtn.addEventListener('click', function(e) {
+				const isShowingFilters = gridRow.classList.toggle('projects-map-grid--show-filters');
+
+				// Update button text
+				toggleBtn.textContent = isShowingFilters
+					? '{{ t("projectsMap.hideFiltersText") }}'
+					: '{{ t("projectsMap.showFiltersText") }}';
+
+				// Trigger map resize
+				if (window._applicationService && window._applicationService.map) {
+					setTimeout(() => {
+						window._applicationService.map.updateSize();
+					}, 100);
+				}
+			});
+		})();
+	</script>
+
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
 		{ src: "/public/scripts/checkbox-accordion.script.js" },
 		{
@@ -168,12 +149,62 @@
 			src: "/public/scripts/modal.script.js"
 		},
 		{
-			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new appScripts.sidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
-			src: "/public/scripts/sidebarToggler.script.js"
-		},
-		{
 			callback: "window.pageDebug('Initiating OpenLayers map'); window.pageDebug('Map config:', window._applicationService.mapConfig); var olMap = new appScripts.openLayersMap(); window.pageDebug('OpenLayers map object created'); olMap.initiate(window._applicationService.mapConfig).then(function() { window.pageDebug('OpenLayers map initiated'); }).catch(function(err) { console.error('OpenLayers map init error:', err); window.pageDebug('OpenLayers map init error:', err); });",
 			src: "/public/scripts/openLayersMap.script.js"
 		}
 	), initiateScriptsConfig) %}
+{% endblock %}
+
+{% block content %}
+	<form method="post">
+		<div class="govuk-grid-row" id="projects-map-grid">
+			<div class="govuk-grid-column-one-third" id="projects-map-sidebar-column">
+				{% include "./includes/sidebar.njk" %}
+			</div>
+
+			<div class="govuk-grid-column-two-thirds" id="projects-map-content-column">
+				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+					{{ t('projectsMap.heading1') }}
+				</h1>
+
+				{% if featureFlag.allowWelshTranslation == false %}
+					<p class="govuk-body">
+						This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
+					</p>
+				{% endif %}
+
+				<p class="govuk-body">
+					{{ t('projectsMap.paragraph1') }}
+				</p>
+
+				{% include "./includes/search.njk" %}
+
+				<div class="govuk-button-group govuk-!-margin-bottom-4">
+					<button type="button" id="projects-map-filters-toggle-btn" class="govuk-button govuk-button--secondary">
+						{{ t('projectsMap.showFiltersText') }}
+					</button>
+					<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
+				</div>
+
+				{% include "../project-search/includes/active-filters.njk" %}
+
+				<div class="pins-map govuk-!-margin-bottom-4">
+					<div id="projects-map"
+						role="main"
+						aria-label="{{ t('projectsMap.mapAriaLabel') }}"
+						tabindex="0"
+						class="pins-map__container"></div>
+				</div>
+
+				<p class="govuk-visually-hidden">
+					{{ t('projectsMap.mapIntroText', { totalProjects: mapConfig.totalProjects, projectSearchLink: '<a href="' + projectSearchURL + '">' + t('projectsMap.projectSearchText') + '</a>' }) | safe }}
+				</p>
+
+				{{ govukWarningText({
+					text: t('projectsMap.warningText'),
+					iconFallbackText: "Warning"
+				}) }}
+			</div>
+		</div>
+	</form>
 {% endblock %}
