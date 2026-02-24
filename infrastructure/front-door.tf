@@ -90,6 +90,23 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
     action  = "Block"
 
     override {
+      rule_group_name = "XSS"
+
+      rule {
+        # XSS Attack Detected via libinjection
+        action  = "AnomalyScoring"
+        enabled = true
+        rule_id = "941101"
+
+        exclusion {
+          match_variable = "RequestHeaderNames" # "HeaderValue:referer"
+          operator       = "Equals"
+          selector       = "referer"
+        }
+      }
+    }
+
+    override {
       rule_group_name = "RFI"
 
       rule {
@@ -497,6 +514,18 @@ resource "azurerm_cdn_frontdoor_firewall_policy" "wfe" {
         action  = "Log"
         enabled = true
         rule_id = "933180"
+      }
+      rule {
+        # PHP Injection Attack: Wrapper scheme detected
+        action  = "Log"
+        enabled = true
+        rule_id = "933200"
+      }
+      rule {
+        # PHP Injection Attack: Variable Function Call Found
+        action  = "Log"
+        enabled = true
+        rule_id = "933210"
       }
     }
 
