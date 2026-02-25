@@ -1,14 +1,21 @@
 const logger = require('../../lib/logger');
-const { getProjectSearchURL } = require('../project-search/utils/get-project-search-url');
+const { getApplications } = require('../../services/applications.service');
+const { queryStringBuilder } = require('../../utils/query-string-builder');
 const { getProjectsMapGeoJSON } = require('../../services/projects-map.service');
 const { maps: mapConfig } = require('../../config');
+const { getMapAccessToken } = require('../_services');
+const { getPageData } = require('./utils/get-page-data');
+const { getProjectsMapQueryString } = require('./utils/get-projects-map-query-string');
+const { getProjectsMapURL } = require('./utils/get-projects-map-url');
 
 const view = 'projects-map/view.njk';
-const projectSearchURL = getProjectSearchURL();
 
 /**
  * GET /projects-map
- * Renders the projects map page with GeoJSON data and Leaflet configuration.
+ * Renders the projects map page with:
+ * - Available filters from the API
+ * - Filtered GeoJSON markers based on query parameters
+ * - OpenLayers configuration
  *
  * @async
  * @param {Object} req - Express request
@@ -17,39 +24,43 @@ const projectSearchURL = getProjectSearchURL();
  */
 const getProjectsMapController = async (req, res, next) => {
 	try {
-		const geojson = await getProjectsMapGeoJSON();
+		const { i18n, query } = req;
 
-		// Leaflet map viewport configuration (zoom, center, bounds)
-		const mapOptions = {
-			minZoom: mapConfig.leafletOptions.minZoom,
-			maxZoom: mapConfig.leafletOptions.maxZoom,
-			center: mapConfig.leafletOptions.center,
-			zoom: mapConfig.leafletOptions.zoom,
-			attributionControl: mapConfig.leafletOptions.attributionControl,
-			maxBounds: mapConfig.leafletOptions.maxBounds
-		};
+		// Validate required map configuration
+		if (!mapConfig.display || !mapConfig.display.elementId) {
+			throw new Error('Missing required map configuration: display.elementId');
+		}
+		if (!mapConfig.crs) {
+			throw new Error('Missing required map configuration: crs');
+		}
 
-		// Configuration passed to client for map initialization
+		// Fetch filters and pagination metadata (similar to project-search)
+		// Uses same query string builder to get filtered counts
+		const { filters } = await getApplications(getProjectsMapQueryString(query));
+
+		// Fetch map GeoJSON data with same filters applied
+		const geojson = await getProjectsMapGeoJSON(getProjectsMapQueryString(query));
+
+		// Build page data with filters and active filter state
+		const pageData = getPageData(i18n, query, geojson.features, filters);
+
+		// Fetch map access token
+		const accessToken = await getMapAccessToken();
+
+		// Configuration passed to client for OpenLayers map initialization
 		const renderedMapConfig = {
 			elementId: mapConfig.display.elementId,
-			mapOptions,
-			tileLayer: {
-				url: mapConfig.tileLayer.url,
-				tokenEndpoint: mapConfig.tileLayer.tokenEndpoint,
-				options: {
-					maxZoom: mapConfig.tileLayer.maxZoom,
-					attribution: mapConfig.tileLayer.attribution
-				}
-			},
-			crs: mapConfig.crs,
+			accessToken: accessToken,
+			center: mapConfig.display.center,
+			zoom: mapConfig.display.zoom,
 			markers: geojson.features,
-			clustered: mapConfig.display.clustered,
-			totalProjects: geojson.features.length
+			totalProjects: geojson.features.length,
+			crs: mapConfig.crs
 		};
 
 		res.render(view, {
-			mapConfig: renderedMapConfig,
-			projectSearchURL
+			...pageData,
+			mapConfig: renderedMapConfig
 		});
 	} catch (error) {
 		logger.error('Error in getProjectsMapController:', error);
@@ -57,6 +68,32 @@ const getProjectsMapController = async (req, res, next) => {
 	}
 };
 
+/**
+ * POST /projects-map
+ * Handles filter form submission
+ *
+ * Builds query string from form submission and redirects to GET with filters applied
+ *
+ * @async
+ * @param {Object} req - Express request
+ * @param {Object} res - Express response
+ */
+const postProjectsMapController = async (req, res) => {
+	try {
+		const { body } = req;
+
+		const queryParamsToKeep = Object.keys(body);
+		const queryString = queryStringBuilder(body, queryParamsToKeep);
+		const projectsMapURL = getProjectsMapURL();
+
+		return res.redirect(`${projectsMapURL}${queryString}`);
+	} catch (e) {
+		logger.error(e);
+		return res.status(500).render('error/unhandled-exception');
+	}
+};
+
 module.exports = {
-	getProjectsMapController
+	getProjectsMapController,
+	postProjectsMapController
 };

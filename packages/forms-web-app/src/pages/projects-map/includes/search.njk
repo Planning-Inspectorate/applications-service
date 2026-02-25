@@ -1,0 +1,3 @@
+{% from "components/ui/search-bar.njk" import uiSearchBar %}
+
+{{ uiSearchBar('projects-map-search-bar', 'searchTerm', query.searchTerm, t('projectsMap.accessibilityText1'), t('common.search')) }}

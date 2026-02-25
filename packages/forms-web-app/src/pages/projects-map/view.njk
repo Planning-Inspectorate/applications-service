@@ -1,81 +1,80 @@
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% extends "layouts/default.njk" %}
 
 {% set pageTitle = t('projectsMap.pageTitle') %}
 
 {% block stylesheet %}
-	<link rel="stylesheet" href="/public/stylesheets/leaflet.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/MarkerCluster.Default.css"/>
-	<link rel="stylesheet" href="/public/stylesheets/projects-map.css">
-{% endblock %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.5.1/ol.css"/>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol-ext@v4.0.37/dist/ol-ext.min.css"/>
+	<style>
+		.pins-map {
+			width: 100%;
+			height: 450px;
+			min-height: 450px;
+		}
 
-{% block content %}
-	<div class="govuk-grid-row">
-		<aside class="govuk-grid-column-one-third" id="maps-sidebar-content" aria-label="Project filters">
-			Filter goes here
-		</aside>
+		.pins-map__container {
+			width: 100%;
+			height: 100%;
+		}
 
-		<div class="govuk-grid-column-two-thirds" id="maps-content">
-			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-				{{ t('projectsMap.heading1') }}
-			</h1>
+		/* Tablet */
+		@media (min-width: 641px) {
+			.pins-map {
+				height: 600px;
+				min-height: 600px;
+			}
+		}
 
-			{% if featureFlag.allowWelshTranslation == false %}
-				<p class="govuk-body">
-					This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
-				</p>
-			{% endif %}
+		/* Hide toggle button by default (mobile/tablet) */
+		#projects-map-filters-toggle-btn {
+			display: none;
+		}
 
-			<p class="govuk-body">
-				{{ t('projectsMap.paragraph1') }}
-			</p>
+		/* Desktop */
+		@media (min-width: 769px) {
+			.pins-map {
+				height: 650px;
+				min-height: 650px;
+			}
 
-			{# TODO: create a new sidebar with filter #}
-			{% include "../project-search/includes/search.njk" %}
+			/* Default: content full-width on desktop, sidebar hidden */
+			#projects-map-sidebar-column {
+				display: none;
+			}
 
-			<div class="govuk-button-group">
-				{{ govukButton({
-					text: t('projectsMap.hideFiltersText'),
-					classes: "govuk-button--secondary",
-					attributes: {
-						id: "filters-toggle-btn",
-						'data-sidebar-toggle': '#maps-sidebar-content',
-						'data-content-toggle': '#maps-content',
-						'data-toggle-class': 'govuk-!-display-none',
-						'data-content-hidden-class': 'govuk-grid-column-full',
-						'data-content-visible-class': 'govuk-grid-column-two-thirds',
-						'data-show-label': t('projectsMap.showFiltersText'),
-						'data-hide-label': t('projectsMap.hideFiltersText'),
-						'data-on-toggle': '_applicationService.onSidebarToggle',
-						'aria-expanded': 'true',
-						'aria-controls': 'maps-sidebar-content'
-					}
-				}) }}
-				<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
-			</div>
+			#projects-map-content-column {
+				width: 100%;
+			}
 
-			<div id="projects-map"
-				role="main"
-				aria-label="Interactive project map. Use arrow keys to pan and plus or minus keys to zoom. Click on markers to view project details."
-				tabindex="0"
-				class="govuk-!-margin-bottom-4"></div>
+			/* When grid has show-filters class: 1/3 + 2/3 layout */
+			#projects-map-grid.projects-map-grid--show-filters #projects-map-sidebar-column {
+				display: block;
+				width: 33.33%;
+			}
 
-			<p class="govuk-visually-hidden">
-				This interactive map shows the locations of {{ mapConfig.totalProjects }} National Infrastructure projects across the UK.
-				Use arrow keys to pan and plus or minus keys to zoom. Click or press Enter on any marker to view project details in a popup.
-				Alternatively, use the <a href="{{ projectSearchURL }}">project search</a> to find projects by name, region, or sector.
-			</p>
+			#projects-map-grid.projects-map-grid--show-filters #projects-map-content-column {
+				width: 66.66%;
+			}
 
-			{% include "../project-search/includes/active-filters.njk" %}
+			/* Show toggle button only on desktop */
+			#projects-map-filters-toggle-btn {
+				display: inline-block;
+			}
+		}
 
-			{{ govukWarningText({
-				text: t('projectsMap.warningText'),
-				iconFallbackText: "Warning"
-			}) }}
-		</div>
-	</div>
+		/* Touch-friendly controls */
+		@media (hover: none) and (pointer: coarse) {
+			.ol-control {
+				padding: 6px;
+			}
+
+			.ol-control button {
+				min-width: 44px;
+				min-height: 44px;
+			}
+		}
+	</style>
 {% endblock %}
 
 {% block script %}
@@ -102,33 +101,110 @@
 		window._applicationService = {
 			mapConfig: {
 				elementId: '{{ mapConfig.elementId }}',
-				mapOptions: {{ mapConfig.mapOptions | dump | safe }},
-				tileLayer: {{ mapConfig.tileLayer | dump | safe }},
-				crs: {{ mapConfig.crs | dump | safe }},
+				accessToken: '{{ mapConfig.accessToken }}',
+				center: {{ mapConfig.center | dump | safe }},
+				zoom: {{ mapConfig.zoom }},
 				markers: {{ mapConfig.markers | dump | safe }},
-				clustered: {{ mapConfig.clustered | dump | safe }},
-				totalProjects: {{ mapConfig.totalProjects }}
-			},
-			/**
-			 * Callback when sidebar toggles
-			 */
-			onSidebarToggle: function(state) {
-				var map = window._applicationService.map;
-				var mapStateManager = window._applicationService.mapStateManager;
-				if (!map || !mapStateManager || !state.content) return;
-				mapStateManager.handleContainerResize(state.content);
+				crs: {{ mapConfig.crs | dump | safe }}
 			}
 		};
 		window.pageDebug('_applicationService initialized:', window._applicationService);
 	</script>
+
+	<script nonce="{{ cspNonce }}">
+		/**
+		 * Desktop toggle functionality for filters sidebar
+		 * Only runs on desktop (769px+), mobile/tablet uses modal script
+		 */
+		(function() {
+			const toggleBtn = document.getElementById('projects-map-filters-toggle-btn');
+			const gridRow = document.getElementById('projects-map-grid');
+
+			if (!toggleBtn || !gridRow) {
+				return;
+			}
+
+			toggleBtn.addEventListener('click', function(e) {
+				const isShowingFilters = gridRow.classList.toggle('projects-map-grid--show-filters');
+
+				// Update button text
+				toggleBtn.textContent = isShowingFilters
+					? '{{ t("projectsMap.hideFiltersText") }}'
+					: '{{ t("projectsMap.showFiltersText") }}';
+
+				// Trigger map resize
+				if (window._applicationService && window._applicationService.map) {
+					setTimeout(() => {
+						window._applicationService.map.updateSize();
+					}, 100);
+				}
+			});
+		})();
+	</script>
+
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+		{ src: "/public/scripts/checkbox-accordion.script.js" },
 		{
-			callback: "window.pageDebug('Initiating sidebar toggler'); var toggler = new window.SidebarToggler('#filters-toggle-btn'); toggler.initiate().then(function() { window.pageDebug('Sidebar toggler initiated'); }).catch(function(err) { window.pageDebug('Sidebar toggler init error:', err); });",
-			src: "/public/scripts/sidebarToggler.script.js"
+			callback: "var modal = new appScripts.modal(); modal.initiate('#projects-map-page-filters', '.ui-checkbox-accordion__modal-close-btn', '#projects-map-search-bar', 'Show filters', 'tablet');",
+			src: "/public/scripts/modal.script.js"
 		},
 		{
-			callback: "window.pageDebug('Initiating leaflet map'); var leafletMap = new appScripts.leafletMap(); window.pageDebug('Leaflet map object created'); leafletMap.initiate(window._applicationService.mapConfig).then(function() { window.pageDebug('Leaflet map initiated'); }).catch(function(err) { window.pageDebug('Leaflet map init error:', err); });",
-			src: "/public/scripts/leafletMap.script.js"
+			callback: "window.pageDebug('Initiating OpenLayers map'); window.pageDebug('Map config:', window._applicationService.mapConfig); var olMap = new appScripts.openLayersMap(); window.pageDebug('OpenLayers map object created'); olMap.initiate(window._applicationService.mapConfig).then(function() { window.pageDebug('OpenLayers map initiated'); }).catch(function(err) { console.error('OpenLayers map init error:', err); window.pageDebug('OpenLayers map init error:', err); });",
+			src: "/public/scripts/openLayersMap.script.js"
 		}
 	), initiateScriptsConfig) %}
+{% endblock %}
+
+{% block content %}
+	<form method="post">
+		<div class="govuk-grid-row" id="projects-map-grid">
+			<div class="govuk-grid-column-one-third" id="projects-map-sidebar-column">
+				{% include "./includes/sidebar.njk" %}
+			</div>
+
+			<div class="govuk-grid-column-two-thirds" id="projects-map-content-column">
+				<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+					{{ t('projectsMap.heading1') }}
+				</h1>
+
+				{% if featureFlag.allowWelshTranslation == false %}
+					<p class="govuk-body">
+						This is a new service. All English projects can be found in this list. For Welsh projects, visit our <a class="govuk-link" href="{{ pinsURL.index }}">old website</a>.
+					</p>
+				{% endif %}
+
+				<p class="govuk-body">
+					{{ t('projectsMap.paragraph1') }}
+				</p>
+
+				{% include "./includes/search.njk" %}
+
+				<div class="govuk-button-group govuk-!-margin-bottom-4">
+					<button type="button" id="projects-map-filters-toggle-btn" class="govuk-button govuk-button--secondary">
+						{{ t('projectsMap.showFiltersText') }}
+					</button>
+					<a class="govuk-link" href="{{ projectSearchURL }}">{{ t('projectsMap.projectSearchLinkText') }}</a>
+				</div>
+
+				{% include "../project-search/includes/active-filters.njk" %}
+
+				<div class="pins-map govuk-!-margin-bottom-4">
+					<div id="projects-map"
+						role="main"
+						aria-label="{{ t('projectsMap.mapAriaLabel') }}"
+						tabindex="0"
+						class="pins-map__container"></div>
+				</div>
+
+				<p class="govuk-visually-hidden">
+					{{ t('projectsMap.mapIntroText', { totalProjects: mapConfig.totalProjects, projectSearchLink: '<a href="' + projectSearchURL + '">' + t('projectsMap.projectSearchText') + '</a>' }) | safe }}
+				</p>
+
+				{{ govukWarningText({
+					text: t('projectsMap.warningText'),
+					iconFallbackText: "Warning"
+				}) }}
+			</div>
+		</div>
+	</form>
 {% endblock %}

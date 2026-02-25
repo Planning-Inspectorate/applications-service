@@ -44,9 +44,11 @@
 
 				{% include "./includes/search.njk" %}
 
-				<p class="govuk-body">
-					<a class="govuk-link" href="{{ projectsMapURL }}">{{ t('projectSearch.projectsMapLinkText') }}</a>
-				</p>
+				{% if featureFlag.enableProjectsMap %}
+					<p class="govuk-body">
+						<a class="govuk-link" href="{{ projectsMapURL }}">{{ t('projectSearch.projectsMapLinkText') }}</a>
+					</p>
+				{% endif %}
 
 				{% include "./includes/active-filters.njk" %}
 

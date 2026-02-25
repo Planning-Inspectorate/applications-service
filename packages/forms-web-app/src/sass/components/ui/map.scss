@@ -1,3 +1,30 @@
+/* ========================================================================
+   CSS Variables for Map Styling
+   ======================================================================== */
+
+:root {
+	--cluster-bg: #d4351c;
+	--cluster-text: white;
+	--popup-text: #0b0c0c;
+	--popup-link: #1d70b8;
+	--popup-link-hover: #003078;
+	--popup-border: #b1b4b6;
+	--font-family: 'GDS Transport', arial, sans-serif;
+	--map-height: 450px; /* Mobile default */
+}
+
+@media (min-width: 40.0625em) {
+	:root {
+		--map-height: 600px; /* Tablet */
+	}
+}
+
+@media (min-width: 48.0625em) {
+	:root {
+		--map-height: 650px; /* Desktop */
+	}
+}
+
 .ui-map {
 	position: relative;
 	height: 443px;
@@ -13,8 +40,8 @@
 .pins-map {
 	position: relative;
 	width: 100%;
-	height: 0;
-	padding-top: calc(9 / 16 * 100%);
+	height: var(--map-height);
+	min-height: var(--map-height);
 
 	&__container {
 		position: absolute;
@@ -27,5 +54,57 @@
 	&__content {
 		width: 100%;
 		height: 100%;
+	}
+
+	#projects-map {
+		.ol-popup.default {
+			> div {
+				padding: 8px;
+				border: none;
+				border-radius: 0;
+				box-shadow: 2px 2px 2px var(--popup-border);
+			}
+
+			.anchor {
+				color: white;
+			}
+
+			button.closeBox,
+			.ol-popup-content {
+				margin: 0;
+				padding: 0;
+			}
+
+			button.closeBox {
+				background: transparent;
+				color: var(--popup-text);
+				font-size: 1em;
+
+				&:hover,
+				&:focus {
+					background: transparent;
+					color: black;
+				}
+			}
+
+			.cluster-popup-header {
+				margin-top: 0;
+			}
+
+			.cluster-popup-table {
+				.cluster-popup-cell-name {
+					a.cluster-popup-link {
+						color: var(--popup-link);
+						text-decoration: underline;
+						font-size: 16px;
+						padding-right: 16px;
+
+						&:hover {
+							color: var(--popup-link-hover);
+						}
+					}
+				}
+			}
+		}
 	}
 }

@@ -10,7 +10,10 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
-const { getProjectsMapController } = require('./projects-map/controller');
+const {
+	getProjectsMapController,
+	postProjectsMapController
+} = require('./projects-map/controller');
 const { getProjectsMapURL } = require('./projects-map/utils/get-projects-map-url');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
@@ -100,14 +103,21 @@ pagesRouter.get(
 	getProjectSearchController
 );
 
-pagesRouter.get(
-	projectsMapURL,
-	addCommonTranslationsMiddleware,
-	addProjectsMapTranslationsMiddleware,
-	getProjectsMapController
-);
+if (featureFlag.enableProjectsMap) {
+	pagesRouter.get(
+		projectsMapURL,
+		addCheckboxAccordionTranslationsMiddleware,
+		addCommonTranslationsMiddleware,
+		addProjectsMapTranslationsMiddleware,
+		getProjectsMapController
+	);
+}
 
 pagesRouter.post(projectSearchURL, postProjectSearchController);
+
+if (featureFlag.enableProjectsMap) {
+	pagesRouter.post(projectsMapURL, postProjectsMapController);
+}
 
 pagesRouter.get(
 	registerOfApplicationsURL,

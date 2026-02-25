@@ -15,7 +15,7 @@ const getPageData = (i18n, query, applications, filters, pagination) => ({
 	totalApplicationsWithoutFilters: pagination.totalItemsWithoutFilters,
 	pagination: getPagination(pagination),
 	paginationQueryString: buildPaginationQueryString(query),
-	projectsMapURL: getProjectsMapURL(),
+	projectsMapURL: getProjectsMapURL(query),
 	query,
 	resultsPerPage: documentsPerPage(query),
 	sortByLinks: getProjectSearchSortByLinks(i18n, query),

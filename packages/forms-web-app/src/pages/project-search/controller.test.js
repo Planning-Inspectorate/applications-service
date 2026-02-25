@@ -15,6 +15,17 @@ jest.mock('../../lib/application-api-wrapper', () => ({
 	getAllProjectList: jest.fn()
 }));
 
+jest.mock('../../config', () => {
+	const actualConfig = jest.requireActual('../../config');
+	return {
+		...actualConfig,
+		featureFlag: {
+			...actualConfig.featureFlag,
+			enableProjectsMap: true
+		}
+	};
+});
+
 describe('pages/project-search/controller', () => {
 	describe('#getProjectSearchController', () => {
 		let req;
