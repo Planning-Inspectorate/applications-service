@@ -314,7 +314,7 @@ function OpenLayersMap() {
 				});
 			}
 
-			// Helper function to generate popup content HTML (matches old Leaflet structure)
+			// Helper function to generate popup content HTML
 			const getPopupContent = (feature) => {
 				const props = feature.getProperties();
 				const projectName = props.projectName || 'Unknown Project';
