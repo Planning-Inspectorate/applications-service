@@ -115,7 +115,7 @@ module.exports = {
 		}
 	},
 	redisCache: {
-		connectionString: parseRedisConnectionString(process.env.REDIS_CACHE_CONNECTION_STRING),
+		connectionString: parseRedisConnectionString(process.env.REDIS_CONNECTION_STRING),
 		enabled: process.env.REDIS_CACHE_ENABLED === 'true'
 	},
 	featureFlag: {
