@@ -62,7 +62,7 @@ services:
       NI_OAUTH_CLIENT_SECRET: some-client-secret
       NI_OAUTH_USERNAME: some-username
       NI_OAUTH_PASSWORD: some-password
-      REDIS_CACHE_CONNECTION_STRING: redis:6379,password=some_redis_password,ssl=False,abortConnect=False
+      REDIS_CONNECTION_STRING: redis:6379,password=some_redis_password,ssl=False,abortConnect=False
       REDIS_CACHE_ENABLED: 'false'
       SERVER_SHOW_ERRORS: 'true'
       SRV_NOTIFY_API_KEY: applicationsservice-9b89eb93-3071-432c-9c6b-4e07dbda9071-101fa83a-8d08-40af-92b6-246b95074e5a
@@ -123,7 +123,6 @@ services:
       PDF_SERVICE_API_URL: http://pdf-service-api:3000
       PLANNED_OUTAGE_RESUME_TEXT: 'Sample service resume text'
       REDIS_CONNECTION_STRING: redis:6379,password=some_redis_password,ssl=False,abortConnect=False
-      REDIS_CACHE_API_KEY: secure_cache_key_goes_here
       REDIS_CACHE_ENABLED: 'false'
       REDIS_CACHE_TTL: 3600
       SESSION_KEY: some_secure_key_goes_here
