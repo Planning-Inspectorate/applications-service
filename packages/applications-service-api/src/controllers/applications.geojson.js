@@ -1,5 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const { getAllApplications } = require('../services/application.backoffice.service');
+const { stageApiToLabel, stageNameFromValue } = require('../utils/application.mapper');
 
 /**
  * Maps a single application to a GeoJSON Feature.
@@ -16,7 +17,11 @@ const { getAllApplications } = require('../services/application.backoffice.servi
  * @returns {Object|null} GeoJSON Feature or null if coordinates are unavailable
  */
 const toGeoJSONFeature = (application) => {
-	const { longLat, caseReference, projectName, stage } = application;
+	// Support both NI camelCase and BO legacy PascalCase shapes
+	const longLat = application.longLat || application.LongLat;
+	const caseReference = application.caseReference || application.CaseReference;
+	const projectName = application.projectName || application.ProjectName;
+	const stage = application.stage ?? application.Stage;
 
 	// longLat is an array of [longitude, latitude] strings derived from LongLat,
 	// LatLong, or northing/easting via OSPoint. Exclude if missing or incomplete.
@@ -36,7 +41,9 @@ const toGeoJSONFeature = (application) => {
 		properties: {
 			caseReference,
 			projectName,
-			stage,
+			// Normalise: numeric stage (BO legacy) → api key → display label
+			stage:
+				stageApiToLabel[typeof stage === 'number' ? stageNameFromValue(stage) : stage] || stage,
 			projectURL: `/projects/${caseReference}`
 		}
 	};
