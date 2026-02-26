@@ -27,5 +27,6 @@
 	"sidebar": {
 		"relatedContent": "Related content",
 		"registerOfApplications": "Register of applications"
-	}
+	},
+	"switchToMapView": "Switch to map view"
 }
