@@ -1,0 +1,5 @@
+{% from "components/ui/tag-link-list.njk" import uiTagLinkList %}
+
+{% if activeFilters | length %}
+	{{ uiTagLinkList(t('projectsMap.filteredResults'), activeFilters) }}
+{% endif %}
