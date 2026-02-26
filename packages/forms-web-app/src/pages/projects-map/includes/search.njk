@@ -1,0 +1,12 @@
+{% from "components/ui/search-bar.njk" import uiSearchBar %}
+
+{{ uiSearchBar('projects-map-search-bar', 'searchTerm', query.searchTerm, t('projectsMap.searchAccessibilityText'), t('common.search')) }}
+
+<div class="govuk-!-margin-bottom-4">
+	{% if activeFilters | length %}
+		<a href="?{{ query | urlencode }}" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.hideFilters') }}</a>
+	{% else %}
+		<a href="?{{ query | urlencode }}&showFilters=true" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.showFilters') }}</a>
+	{% endif %}
+	<a href="{{ projectSearchURL }}" class="govuk-link">{{ t('projectsMap.switchToListView') }}</a>
+</div>
