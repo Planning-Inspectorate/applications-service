@@ -4,9 +4,9 @@
 
 <div class="govuk-!-margin-bottom-4">
 	{% if query.showFilters or activeFilters | length %}
-		<a href="?{{ queryWithoutShowFilters | urlencode }}" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.hideFilters') }}</a>
+		<a href="{{ hideFiltersURL }}" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.hideFilters') }}</a>
 	{% else %}
-		<a href="?{{ query | urlencode }}&showFilters=true" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.showFilters') }}</a>
+		<a href="{{ showFiltersURL }}" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.showFilters') }}</a>
 	{% endif %}
 	<a href="{{ projectSearchURL }}?{{ query | urlencode }}" class="govuk-link">{{ t('projectsMap.switchToListView') }}</a>
 </div>

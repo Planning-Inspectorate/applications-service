@@ -1,5 +1,9 @@
 {% if mapAccessToken %}
-	<div id="projects-map" class="pins-map__content" role="region" aria-label="{{ t('projectsMap.heading1') }}"></div>
+	<div class="pins-map">
+		<div class="pins-map__container">
+			<div id="projects-map" class="pins-map__content" role="region" aria-label="{{ t('projectsMap.heading1') }}"></div>
+		</div>
+	</div>
 
 	{#
 		Project popup overlay — rendered by the client-side map script (projects-map.script.js)
