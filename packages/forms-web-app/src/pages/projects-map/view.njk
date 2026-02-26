@@ -1,0 +1,48 @@
+{% extends "layouts/default.njk" %}
+
+{% set pageTitle = t('projectsMap.pageTitle') %}
+
+{% if mapAccessToken %}
+	{% block stylesheet %}
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css"/>
+	{% endblock %}
+
+	{% block script %}
+		{% set initiateScriptsConfig = (initiateScriptsConfig.push(
+			{
+				src: "https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"
+			},
+			{
+				callback: "var projectsMap = new appScripts.projectsMap.default(); projectsMap.initiate('" + mapAccessToken + "', 'projects-map');",
+				src: "/public/scripts/projects-map.script.js"
+			}
+		), initiateScriptsConfig) %}
+	{% endblock %}
+{% endif %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		{% if filters | length %}
+			<div class="govuk-grid-column-one-third">
+				{% include "./includes/filters.njk" %}
+			</div>
+		{% endif %}
+
+		<div class="{{ 'govuk-grid-column-two-thirds' if filters | length else 'govuk-grid-column-full' }}">
+			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+				{{ t('projectsMap.heading1') }}
+			</h1>
+
+			<p class="govuk-body">
+				{{ t('projectsMap.paragraph1') }}
+			</p>
+
+			{% include "./includes/search.njk" %}
+
+			{% include "./includes/active-filters.njk" %}
+
+			{% include "./includes/map.njk" %}
+		</div>
+	</div>
+{% endblock %}

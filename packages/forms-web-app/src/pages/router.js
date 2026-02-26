@@ -10,6 +10,7 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
+const { getProjectsMapController } = require('./projects-map/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -18,6 +19,7 @@ const {
 const { getContactURL } = require('./contact/_utils/get-contact-url');
 const { getCookiesURL } = require('./cookies/_utils/get-cookies-url');
 const { getProjectSearchURL } = require('./project-search/utils/get-project-search-url');
+const { getProjectsMapURL } = require('./projects-map/utils/get-projects-map-url');
 const {
 	getDetailedInformationURL
 } = require('./detailed-information/_utils/get-detailed-information-url');
@@ -52,6 +54,9 @@ const {
 const {
 	addProjectSearchTranslationsMiddleware
 } = require('./project-search/_middleware/add-project-search-translations-middleware');
+const {
+	addProjectsMapTranslationsMiddleware
+} = require('./projects-map/_middleware/add-projects-map-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -64,6 +69,7 @@ const termsAndConditionsURL = getTermsAndConditionsURL();
 const contactURL = getContactURL();
 const cookiesURL = getCookiesURL();
 const projectSearchURL = getProjectSearchURL();
+const projectsMapURL = getProjectsMapURL();
 const detailedInformationURL = getDetailedInformationURL();
 const registerOfApplicationsURL = getRegisterOfApplicationsURL();
 
@@ -95,6 +101,14 @@ pagesRouter.get(
 );
 
 pagesRouter.post(projectSearchURL, postProjectSearchController);
+
+pagesRouter.get(
+	projectsMapURL,
+	addCheckboxAccordionTranslationsMiddleware,
+	addCommonTranslationsMiddleware,
+	addProjectsMapTranslationsMiddleware,
+	getProjectsMapController
+);
 
 pagesRouter.get(
 	registerOfApplicationsURL,
