@@ -119,7 +119,7 @@ junit.xml
 # Mac OS generated
 .DS_Store
 
-
+packages/forms-web-app/src/public/stylesheets/main.css
 
 uploads/*
 !uploads/.gitkeep
