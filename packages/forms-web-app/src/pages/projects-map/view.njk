@@ -45,7 +45,19 @@
 
 			{% include "./includes/active-filters.njk" %}
 
-			{% include "./includes/map.njk" %}
+			<div class="pins-map">
+				<div class="pins-map__container">
+					{% include "./includes/map.njk" %}
+				</div>
+			</div>
+
+			<div class="govuk-warning-text govuk-!-margin-top-4">
+				<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+				<strong class="govuk-warning-text__text">
+					<span class="govuk-visually-hidden">Warning</span>
+					{{ t('projectsMap.warningText') }}
+				</strong>
+			</div>
 		</div>
 	</div>
 	</form>

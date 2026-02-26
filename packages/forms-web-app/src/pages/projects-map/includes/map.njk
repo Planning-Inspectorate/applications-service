@@ -1,26 +1,3 @@
 {% if mapAccessToken %}
-	<div class="pins-map">
-		<div class="pins-map__container">
-			<div id="projects-map" class="pins-map__content" role="region" aria-label="{{ t('projectsMap.heading1') }}"></div>
-		</div>
-	</div>
-
-	{#
-		Project popup overlay — rendered by the client-side map script (projects-map.script.js)
-		when a pin or cluster is clicked. The script populates #projects-map-popup with project
-		links and stage labels for the selected cluster.
-
-		Future extension (IDAS boundary ticket): when polygon/boundary data is available,
-		this overlay will reflect boundary overlaps at the clicked location rather than
-		clustered pins. The popup container is intentionally kept generic to support this.
-	#}
-	<div id="projects-map-popup" class="pins-map__popup" hidden></div>
+	<div id="projects-map" class="pins-map__content" role="region" aria-label="{{ t('projectsMap.heading1') }}"></div>
 {% endif %}
-
-<div class="govuk-warning-text govuk-!-margin-top-4">
-	<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-	<strong class="govuk-warning-text__text">
-		<span class="govuk-visually-hidden">Warning</span>
-		{{ t('projectsMap.warningText') }}
-	</strong>
-</div>
