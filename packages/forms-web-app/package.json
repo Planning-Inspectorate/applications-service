@@ -61,6 +61,7 @@
 		"nunjucks": "*",
 		"nunjucks-date-filter": "*",
 		"ol": "*",
+		"ol-ext": "*",
 		"pino": "*",
 		"proj4": "*",
 		"redis": "*",
