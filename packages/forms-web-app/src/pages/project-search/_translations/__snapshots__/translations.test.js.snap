@@ -31,6 +31,7 @@ exports[`pages/project-search/_translations should return the correct English tr
     "promoterName": "Applicant",
     "stage": "Stage",
   },
+  "switchToMapView": "Switch to map view",
 }
 `;
 
@@ -65,5 +66,6 @@ exports[`pages/project-search/_translations should return the correct Welsh tran
     "promoterName": "Ymgeisydd",
     "stage": "Cam",
   },
+  "switchToMapView": "Newid i olwg map",
 }
 `;
