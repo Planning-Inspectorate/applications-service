@@ -15,6 +15,18 @@ const view = 'projects-map/view.njk';
  * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
  * Applications without valid LongLat coordinates are silently excluded.
  */
+const STAGE_LABELS = [
+	'Draft',
+	'Pre-application',
+	'Acceptance',
+	'Pre-examination',
+	'Examination',
+	'Recommendation',
+	'Decision',
+	'Post-decision',
+	'Withdrawn'
+];
+
 const toGeoJSON = (applications) => ({
 	type: 'FeatureCollection',
 	features: applications
@@ -30,7 +42,7 @@ const toGeoJSON = (applications) => ({
 				properties: {
 					caseReference: app.CaseReference,
 					projectName: app.ProjectName,
-					stage: app.Stage,
+					stage: STAGE_LABELS[app.Stage] || app.Stage,
 					projectURL: `/projects/${app.CaseReference}`
 				}
 			};

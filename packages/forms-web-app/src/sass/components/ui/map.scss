@@ -21,6 +21,29 @@
 	}
 }
 
+.projects-map__filter-toggle {
+	margin-bottom: 0;
+
+	@media (max-width: calc(map-get($govuk-breakpoints, 'tablet') - 1px)) {
+		display: none;
+	}
+
+	@media (min-width: map-get($govuk-breakpoints, 'tablet')) {
+		margin-right: govuk-spacing(4);
+	}
+}
+
+.projects-map__filters--hidden-on-tablet {
+	@media (min-width: map-get($govuk-breakpoints, 'tablet')) {
+		display: none;
+	}
+}
+
+.no-zoom {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
 .ui-map {
 	position: relative;
 	height: 443px;
