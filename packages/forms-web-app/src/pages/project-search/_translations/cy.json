@@ -27,5 +27,6 @@
 	"sidebar": {
 		"relatedContent": "Cynnwys cysylltiedig",
 		"registerOfApplications": "Cofrestr geisiadau"
-	}
+	},
+	"switchToMapView": "Newid i olwg map"
 }

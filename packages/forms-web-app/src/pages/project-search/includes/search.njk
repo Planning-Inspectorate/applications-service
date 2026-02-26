@@ -1,3 +1,7 @@
 {% from "components/ui/search-bar.njk" import uiSearchBar %}
 
 {{ uiSearchBar('project-search-page-search-bar', 'searchTerm', query.searchTerm, t('projectSearch.accessibilityText1'), t('common.search')) }}
+
+<div class="govuk-!-margin-bottom-4">
+	<a href="{{ projectsMapURL }}?{{ query | urlencode }}" class="govuk-link">{{ t('projectSearch.switchToMapView') }}</a>
+</div>
