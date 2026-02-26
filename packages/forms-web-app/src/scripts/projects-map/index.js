@@ -1,7 +1,6 @@
 import proj4 from 'proj4/dist/proj4';
 import { register } from 'ol/proj/proj4.js';
 import { get as getProjection } from 'ol/proj.js';
-import { transform } from 'ol/proj.js';
 import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS.js';
 import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
 import TileLayer from 'ol/layer/Tile.js';
@@ -21,8 +20,7 @@ import Popup from 'ol-ext/src/overlay/Popup.js';
 import { getMapWMTS } from '../map/get-map-wmts.js';
 import { getControls } from '../map/get-controls.js';
 
-// UK centre in EPSG:4326
-const UK_CENTRE = [-2.5, 54.5];
+const UK_CENTRE_EPSG27700 = [366154, 289239];
 const DEFAULT_ZOOM = 0;
 
 const cssVar = (name, fallback) =>
@@ -81,6 +79,7 @@ function buildTileLayer(accessToken, wmtsXml) {
 	});
 
 	const tileSource = new WMTS({
+		attributions: [`&copy; Crown copyright and database rights ${new Date().getFullYear()}`],
 		tileLoadFunction: async (tile, src) => {
 			const res = await fetch(src, { headers: { Authorization: 'Bearer ' + accessToken } });
 			const blob = await res.blob();
@@ -142,8 +141,6 @@ function projectsMap() {
 			const { tileLayer, wmtsOptions } = buildTileLayer(accessToken, wmtsXml);
 			console.log('[projects-map] tile layer built');
 
-			const centreEpsg27700 = transform(UK_CENTRE, 'EPSG:4326', 'EPSG:27700');
-
 			const geojsonFeatures = geojsonData
 				? new GeoJSON().readFeatures(geojsonData, {
 						dataProjection: 'EPSG:4326',
@@ -179,7 +176,7 @@ function projectsMap() {
 					extent: epsg27700.getExtent(),
 					smoothResolutionConstraint: false,
 					resolutions: wmtsOptions.tileGrid.getResolutions(),
-					center: centreEpsg27700,
+					center: UK_CENTRE_EPSG27700,
 					minZoom: 0,
 					maxZoom: 9,
 					zoom: DEFAULT_ZOOM
@@ -224,11 +221,20 @@ function projectsMap() {
 
 			// Close popup on map click outside a cluster
 			map.on('click', (e) => {
-				const hit = map.hasFeatureAtPixel(e.pixel);
-				if (!hit) {
-					popup.hide();
-				}
+				if (!map.hasFeatureAtPixel(e.pixel)) popup.hide();
 			});
+
+			map.getView().on('change:resolution', () => popup.hide());
+
+			const updateZoomButtons = () => {
+				const view = map.getView();
+				const zoom = view.getZoom();
+				const el = map.getTargetElement();
+				el.querySelector('.ol-zoom-in')?.classList.toggle('no-zoom', zoom >= view.getMaxZoom());
+				el.querySelector('.ol-zoom-out')?.classList.toggle('no-zoom', zoom <= view.getMinZoom());
+			};
+			map.getView().on('change:resolution', updateZoomButtons);
+			map.once('rendercomplete', updateZoomButtons);
 		} catch (error) {
 			console.error('[projects-map] initiate failed:', error);
 		}

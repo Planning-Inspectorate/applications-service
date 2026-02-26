@@ -17,6 +17,11 @@
 			{
 				callback: "var projectsMap = new appScripts['projects-map'].default(); projectsMap.initiate('" + mapAccessToken + "', 'projects-map', " + mapGeoJSON + ");",
 				src: "/public/scripts/projects-map.script.js"
+			},
+			{ src: "/public/scripts/checkbox-accordion.script.js" },
+			{
+				callback: "var modal = new appScripts.modal(); modal.initiate('#projects-map-filters', '.ui-checkbox-accordion__modal-close-btn', '#projects-map-search-bar', 'Show filters', 'tablet');",
+				src: "/public/scripts/modal.script.js"
 			}
 		), initiateScriptsConfig) %}
 	{% endblock %}
@@ -26,13 +31,11 @@
 	{% set showFilterPanel = query.showFilters or activeFilters | length %}
 	<form method="get" action="/projects-map">
 	<div class="govuk-grid-row">
-		{% if showFilterPanel %}
-			<div class="govuk-grid-column-one-third">
-				{% include "./includes/filters.njk" %}
-			</div>
-		{% endif %}
+		<div class="govuk-grid-column-one-third{{ '' if showFilterPanel else ' projects-map__filters--hidden-on-tablet' }}">
+			{% include "./includes/filters.njk" %}
+		</div>
 
-		<div class="{{ 'govuk-grid-column-two-thirds' if showFilterPanel else 'govuk-grid-column-full' }}">
+		<div class="{{ 'govuk-grid-column-two-thirds' if showFilterPanel else 'govuk-grid-column-full' }} projects-map__content">
 			<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
 				{{ t('projectsMap.heading1') }}
 			</h1>
