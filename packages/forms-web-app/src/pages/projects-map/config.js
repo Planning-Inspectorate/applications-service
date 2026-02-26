@@ -1,5 +1,5 @@
 const projectsMapRoute = 'projects-map';
 
-const projectsMapI18nNamespace = 'projectsMap';
+// const projectMapI18nNamespace = 'projectMap';
 
-module.exports = { projectsMapRoute, projectsMapI18nNamespace };
+module.exports = { projectsMapRoute };
