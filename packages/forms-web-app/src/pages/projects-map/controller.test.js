@@ -6,10 +6,12 @@ const { mockI18n } = require('../_mocks/i18n');
 
 const commonTranslations_EN = require('../../locales/en/common.json');
 const projectSearchTranslations_EN = require('../project-search/_translations/en.json');
+const projectsMapTranslations_EN = require('./_translations/en.json');
 
 const i18n = mockI18n({
 	common: commonTranslations_EN,
-	projectSearch: projectSearchTranslations_EN
+	projectSearch: projectSearchTranslations_EN,
+	projectsMap: projectsMapTranslations_EN
 });
 
 jest.mock('../../lib/application-api-wrapper', () => ({
