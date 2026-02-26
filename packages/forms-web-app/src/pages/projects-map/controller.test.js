@@ -44,13 +44,15 @@ describe('pages/projects-map/controller', () => {
 				mapAccessToken: 'mock-token',
 				projectSearchURL: '/project-search',
 				query: {},
-				queryWithoutShowFilters: {}
+				showFiltersURL: '?showFilters=true',
+				hideFiltersURL: '?',
+				mapGeoJSON: expect.stringContaining('FeatureCollection')
 			})
 		);
 		expect(next).not.toHaveBeenCalled();
 	});
 
-	it('strips showFilters from queryWithoutShowFilters', async () => {
+	it('builds showFiltersURL and hideFiltersURL correctly with existing query params', async () => {
 		req.query = { showFilters: 'true', sector: 'energy' };
 		getAllProjectList.mockResolvedValue(getApplicationsFixture);
 		getMapAccessToken.mockResolvedValue('mock-token');
@@ -60,8 +62,8 @@ describe('pages/projects-map/controller', () => {
 		expect(res.render).toHaveBeenCalledWith(
 			'projects-map/view.njk',
 			expect.objectContaining({
-				query: { showFilters: 'true', sector: 'energy' },
-				queryWithoutShowFilters: { sector: 'energy' }
+				showFiltersURL: '?sector=energy&showFilters=true',
+				hideFiltersURL: '?sector=energy'
 			})
 		);
 	});

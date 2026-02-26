@@ -11,11 +11,38 @@ const { getRelatedContentLinks } = require('../project-search/utils/get-related-
 
 const view = 'projects-map/view.njk';
 
+/**
+ * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
+ * Applications without valid LongLat coordinates are silently excluded.
+ */
+const toGeoJSON = (applications) => ({
+	type: 'FeatureCollection',
+	features: applications
+		.map((app) => {
+			const coords = app.LongLat;
+			if (!coords || coords.length < 2 || !coords[0] || !coords[1]) return null;
+			const lng = parseFloat(coords[0]);
+			const lat = parseFloat(coords[1]);
+			if (isNaN(lng) || isNaN(lat)) return null;
+			return {
+				type: 'Feature',
+				geometry: { type: 'Point', coordinates: [lng, lat] },
+				properties: {
+					caseReference: app.CaseReference,
+					projectName: app.ProjectName,
+					stage: app.Stage,
+					projectURL: `/projects/${app.CaseReference}`
+				}
+			};
+		})
+		.filter(Boolean)
+});
+
 const getProjectsMapController = async (req, res, next) => {
 	try {
 		const { i18n, query } = req;
 
-		const [{ filters }, mapAccessToken] = await Promise.all([
+		const [{ applications, filters }, mapAccessToken] = await Promise.all([
 			getApplications(getProjectSearchQueryString(query)),
 			getMapAccessToken()
 		]);
@@ -23,13 +50,21 @@ const getProjectsMapController = async (req, res, next) => {
 		// eslint-disable-next-line no-unused-vars
 		const { showFilters, ...queryWithoutShowFilters } = query;
 
+		const showFiltersParams = new URLSearchParams({
+			...queryWithoutShowFilters,
+			showFilters: 'true'
+		});
+		const hideFiltersParams = new URLSearchParams(queryWithoutShowFilters);
+
 		res.render(view, {
 			...getFilters(i18n, query, filters, projectsMapI18nNamespace),
 			mapAccessToken,
+			mapGeoJSON: JSON.stringify(toGeoJSON(applications)),
 			projectSearchURL: getProjectSearchURL(),
 			relatedContentLinks: getRelatedContentLinks(i18n),
 			query,
-			queryWithoutShowFilters
+			showFiltersURL: `?${showFiltersParams}`,
+			hideFiltersURL: `?${hideFiltersParams}`
 		});
 	} catch (error) {
 		logger.error(error);

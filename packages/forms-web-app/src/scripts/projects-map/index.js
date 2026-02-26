@@ -130,25 +130,31 @@ function renderPopup(popupEl, features, coordinate, overlay) {
 }
 
 function projectsMap() {
-	this.initiate = async (accessToken, target) => {
+	this.initiate = async (accessToken, target, geojsonData) => {
+		console.log('[projects-map] initiate called', {
+			target,
+			hasToken: !!accessToken,
+			hasGeoJSON: !!geojsonData
+		});
 		try {
 			const popupEl = document.getElementById('projects-map-popup');
+			console.log('[projects-map] fetching WMTS...');
 			const wmtsXml = await getMapWMTS(accessToken);
+			console.log('[projects-map] WMTS fetched', { length: wmtsXml?.length });
 			const epsg27700 = setupEpsg27700();
 			const { tileLayer, wmtsOptions } = buildTileLayer(accessToken, wmtsXml);
+			console.log('[projects-map] tile layer built');
 
 			const centreEpsg27700 = transform(UK_CENTRE, 'EPSG:4326', 'EPSG:27700');
 
-			// Fetch GeoJSON with current query params (filters carried via URL)
-			const geojsonRes = await fetch(`/api/v1/applications/geojson${window.location.search}`);
-			const geojsonData = await geojsonRes.json();
+			const geojsonFeatures = geojsonData
+				? new GeoJSON().readFeatures(geojsonData, {
+						dataProjection: 'EPSG:4326',
+						featureProjection: 'EPSG:27700'
+				  })
+				: [];
 
-			const vectorSource = new VectorSource({
-				features: new GeoJSON().readFeatures(geojsonData, {
-					dataProjection: 'EPSG:4326',
-					featureProjection: 'EPSG:27700'
-				})
-			});
+			const vectorSource = new VectorSource({ features: geojsonFeatures });
 
 			const clusterSource = new Cluster({
 				distance: 40,
@@ -180,6 +186,7 @@ function projectsMap() {
 					zoom: DEFAULT_ZOOM
 				})
 			});
+			console.log('[projects-map] map created');
 
 			// SelectCluster (ol-ext) — handles cluster click, fires 'select' with cluster feature
 			const selectCluster = new SelectCluster({
@@ -220,7 +227,7 @@ function projectsMap() {
 				}
 			});
 		} catch (error) {
-			console.error(error);
+			console.error('[projects-map] initiate failed:', error);
 		}
 	};
 }
