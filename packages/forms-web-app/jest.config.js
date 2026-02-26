@@ -13,6 +13,7 @@ module.exports = {
 		'<rootDir>/src/scripts',
 		'<rootDir>/src/views/pins-components'
 	],
+	testPathIgnorePatterns: ['node_modules', '<rootDir>/dist'],
 	coverageThreshold: {
 		global: {
 			branches: 80,
