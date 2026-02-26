@@ -43,10 +43,27 @@ describe('pages/projects-map/controller', () => {
 			expect.objectContaining({
 				mapAccessToken: 'mock-token',
 				projectSearchURL: '/project-search',
-				query: {}
+				query: {},
+				queryWithoutShowFilters: {}
 			})
 		);
 		expect(next).not.toHaveBeenCalled();
+	});
+
+	it('strips showFilters from queryWithoutShowFilters', async () => {
+		req.query = { showFilters: 'true', sector: 'energy' };
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockResolvedValue('mock-token');
+
+		await getProjectsMapController(req, res, next);
+
+		expect(res.render).toHaveBeenCalledWith(
+			'projects-map/view.njk',
+			expect.objectContaining({
+				query: { showFilters: 'true', sector: 'energy' },
+				queryWithoutShowFilters: { sector: 'energy' }
+			})
+		);
 	});
 
 	it('calls next with error when getApplications fails', async () => {
