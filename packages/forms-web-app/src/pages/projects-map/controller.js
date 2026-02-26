@@ -20,12 +20,16 @@ const getProjectsMapController = async (req, res, next) => {
 			getMapAccessToken()
 		]);
 
+		// eslint-disable-next-line no-unused-vars
+		const { showFilters, ...queryWithoutShowFilters } = query;
+
 		res.render(view, {
 			...getFilters(i18n, query, filters, projectsMapI18nNamespace),
 			mapAccessToken,
 			projectSearchURL: getProjectSearchURL(),
 			relatedContentLinks: getRelatedContentLinks(i18n),
-			query
+			query,
+			queryWithoutShowFilters
 		});
 	} catch (error) {
 		logger.error(error);

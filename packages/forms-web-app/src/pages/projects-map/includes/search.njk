@@ -3,8 +3,8 @@
 {{ uiSearchBar('projects-map-search-bar', 'searchTerm', query.searchTerm, t('projectsMap.searchAccessibilityText'), t('common.search')) }}
 
 <div class="govuk-!-margin-bottom-4">
-	{% if activeFilters | length %}
-		<a href="?{{ query | urlencode }}" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.hideFilters') }}</a>
+	{% if query.showFilters or activeFilters | length %}
+		<a href="?{{ queryWithoutShowFilters | urlencode }}" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.hideFilters') }}</a>
 	{% else %}
 		<a href="?{{ query | urlencode }}&showFilters=true" class="govuk-link govuk-!-margin-right-4">{{ t('projectsMap.showFilters') }}</a>
 	{% endif %}
