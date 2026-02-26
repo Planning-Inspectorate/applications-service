@@ -23,6 +23,7 @@
 {% endif %}
 
 {% block content %}
+	<form method="get" action="/projects-map">
 	<div class="govuk-grid-row">
 		{% if filters | length %}
 			<div class="govuk-grid-column-one-third">
@@ -46,4 +47,5 @@
 			{% include "./includes/map.njk" %}
 		</div>
 	</div>
+	</form>
 {% endblock %}
