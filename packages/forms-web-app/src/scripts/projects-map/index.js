@@ -15,39 +15,50 @@ import Circle from 'ol/style/Circle.js';
 import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
 import Text from 'ol/style/Text.js';
-import Overlay from 'ol/Overlay.js';
 import AnimatedCluster from 'ol-ext/src/layer/AnimatedCluster.js';
 import SelectCluster from 'ol-ext/src/interaction/SelectCluster.js';
+import Popup from 'ol-ext/src/overlay/Popup.js';
 import { getMapWMTS } from '../map/get-map-wmts.js';
 import { getControls } from '../map/get-controls.js';
 
 // UK centre in EPSG:4326
 const UK_CENTRE = [-2.5, 54.5];
-const DEFAULT_ZOOM = 5;
+const DEFAULT_ZOOM = 0;
 
-const CLUSTER_FILL = '#1d70b8';
-const SINGLE_FILL = '#ffdd00';
-const SINGLE_STROKE = '#0b0c0c';
+const cssVar = (name, fallback) =>
+	getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
 
-function clusterStyle(feature) {
+function clusterStyle(feature, MARKER_FILL, MARKER_STROKE) {
 	const features = feature.get('features') || [];
 	const count = features.length;
+	if (count === 0) return null;
 	const isSingle = count === 1;
+	const radius = isSingle ? 8 : 12 + Math.min(count, 20);
 
-	return new Style({
+	const shadow = new Style({
 		image: new Circle({
-			radius: isSingle ? 8 : 12 + Math.min(count, 20),
-			fill: new Fill({ color: isSingle ? SINGLE_FILL : CLUSTER_FILL }),
-			stroke: new Stroke({ color: isSingle ? SINGLE_STROKE : '#fff', width: 2 })
+			radius: radius + 1,
+			fill: new Fill({ color: 'rgba(0,0,0,0.25)' }),
+			displacement: [2, -2]
+		})
+	});
+
+	const marker = new Style({
+		image: new Circle({
+			radius,
+			fill: new Fill({ color: MARKER_FILL }),
+			stroke: new Stroke({ color: MARKER_STROKE, width: 2 })
 		}),
 		text: isSingle
 			? null
 			: new Text({
 					text: String(count),
-					fill: new Fill({ color: '#fff' }),
+					fill: new Fill({ color: MARKER_STROKE }),
 					font: 'bold 12px sans-serif'
 			  })
 	});
+
+	return [shadow, marker];
 }
 
 function setupEpsg27700() {
@@ -84,49 +95,36 @@ function buildTileLayer(accessToken, wmtsXml) {
 	return { tileLayer: new TileLayer({ source: tileSource }), wmtsOptions };
 }
 
-function buildPopupOverlay(popupEl) {
-	return new Overlay({
-		element: popupEl,
-		positioning: 'bottom-center',
-		stopEvent: true,
-		offset: [0, -10]
+function buildPopup() {
+	return new Popup({
+		popupClass: 'default',
+		closeBox: true,
+		positioning: 'auto',
+		autoPan: { animation: { duration: 250 } }
 	});
 }
 
-function renderPopup(popupEl, features, coordinate, overlay) {
+function renderPopup(popup, features, coordinate) {
 	const count = features.length;
+	const rows = features
+		.map((f) => {
+			const { caseReference, projectName, stage } = f.getProperties();
+			return `<tr class="cluster-popup-row">
+				<td class="cluster-popup-cell-name">
+					<a href="/projects/${caseReference}" class="cluster-popup-link">${projectName || caseReference}</a>
+				</td>
+				<td class="cluster-popup-cell-stage">${stage || ''}</td>
+			</tr>`;
+		})
+		.join('');
 
-	const heading = document.createElement('p');
-	heading.className = 'govuk-body-s govuk-!-font-weight-bold govuk-!-margin-bottom-1';
-	heading.textContent = `${count} ${count === 1 ? 'project' : 'projects'} selected`;
-
-	const list = document.createElement('ul');
-	list.className = 'govuk-list govuk-list--spaced govuk-!-margin-bottom-0';
-
-	features.forEach((f) => {
-		const props = f.getProperties();
-		const li = document.createElement('li');
-		li.className = 'govuk-body-s govuk-!-margin-bottom-0';
-
-		const link = document.createElement('a');
-		link.className = 'govuk-link';
-		link.href = `/projects/${props.caseReference}`;
-		link.textContent = props.projectName || props.caseReference;
-
-		const stage = document.createElement('span');
-		stage.className = 'govuk-!-margin-left-2 govuk-body-s';
-		stage.textContent = props.stage || '';
-
-		li.appendChild(link);
-		li.appendChild(stage);
-		list.appendChild(li);
-	});
-
-	popupEl.innerHTML = '';
-	popupEl.appendChild(heading);
-	popupEl.appendChild(list);
-	popupEl.hidden = false;
-	overlay.setPosition(coordinate);
+	popup.show(
+		coordinate,
+		`<div class="cluster-popup-container">
+			<h2 class="cluster-popup-header">${count} ${count === 1 ? 'project' : 'projects'} selected</h2>
+			<table class="cluster-popup-table">${rows}</table>
+		</div>`
+	);
 }
 
 function projectsMap() {
@@ -137,7 +135,6 @@ function projectsMap() {
 			hasGeoJSON: !!geojsonData
 		});
 		try {
-			const popupEl = document.getElementById('projects-map-popup');
 			console.log('[projects-map] fetching WMTS...');
 			const wmtsXml = await getMapWMTS(accessToken);
 			console.log('[projects-map] WMTS fetched', { length: wmtsXml?.length });
@@ -161,20 +158,22 @@ function projectsMap() {
 				source: vectorSource
 			});
 
+			const MARKER_FILL = cssVar('--cluster-bg', '#d4351c');
+			const MARKER_STROKE = cssVar('--cluster-text', 'white');
+			const styleWithColours = (feature) => clusterStyle(feature, MARKER_FILL, MARKER_STROKE);
+
 			// AnimatedCluster (ol-ext) — wraps cluster source with expand animation on click
 			const clusterLayer = new AnimatedCluster({
 				source: clusterSource,
 				animationDuration: 300,
-				style: clusterStyle
+				style: styleWithColours
 			});
-
-			const popupOverlay = buildPopupOverlay(popupEl);
 
 			const map = new Map({
 				controls: getControls(),
 				target,
 				layers: [tileLayer, clusterLayer],
-				overlays: [popupOverlay],
+				overlays: [],
 				view: new View({
 					projection: 'EPSG:27700',
 					extent: epsg27700.getExtent(),
@@ -188,42 +187,46 @@ function projectsMap() {
 			});
 			console.log('[projects-map] map created');
 
+			const popup = buildPopup();
+			map.addOverlay(popup);
+
 			// SelectCluster (ol-ext) — handles cluster click, fires 'select' with cluster feature
 			const selectCluster = new SelectCluster({
 				animate: true,
 				animationDuration: 300,
 				spiral: true,
 				circleMaxObjects: 10,
-				style: clusterStyle,
-				featureStyle: clusterStyle
+				style: styleWithColours,
+				featureStyle: styleWithColours
+			});
+
+			map.on('pointermove', (e) => {
+				map.getTargetElement().style.cursor = map.hasFeatureAtPixel(e.pixel) ? 'pointer' : '';
 			});
 
 			map.addInteraction(selectCluster);
 
 			selectCluster.on('select', (e) => {
 				if (!e.selected.length) {
-					popupEl.hidden = true;
-					popupOverlay.setPosition(undefined);
+					popup.hide();
 					return;
 				}
 
 				const feature = e.selected[0];
-				// Skip link features drawn by SelectCluster during spiral expand
 				if (feature.get('selectclusterlink')) return;
 
 				const clusterFeatures = feature.get('features');
 				if (!clusterFeatures || clusterFeatures.length === 0) return;
 
 				const coordinate = feature.getGeometry().getCoordinates();
-				renderPopup(popupEl, clusterFeatures, coordinate, popupOverlay);
+				renderPopup(popup, clusterFeatures, coordinate);
 			});
 
 			// Close popup on map click outside a cluster
 			map.on('click', (e) => {
 				const hit = map.hasFeatureAtPixel(e.pixel);
 				if (!hit) {
-					popupEl.hidden = true;
-					popupOverlay.setPosition(undefined);
+					popup.hide();
 				}
 			});
 		} catch (error) {
