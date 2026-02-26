@@ -1,0 +1,23 @@
+{
+	"pageTitle": "Map prosiectau",
+	"heading1": "Map prosiectau",
+	"paragraph1": "Dewiswch farc ar y map i weld prosiect yn yr ardal.",
+	"searchAccessibilityText": "Chwilio map prosiectau",
+	"showFilters": "Dangos hidlyddion",
+	"hideFilters": "Cuddio hidlyddion",
+	"switchToListView": "Newid i olwg rhestr",
+	"switchToMapView": "Newid i olwg map",
+	"applyFilters": "Cymhwyso hidlyddion",
+	"filteredResults": "Canlyniadau wedi'u hidlo",
+	"projectsSelected": "{{count}} prosiect wedi'u dewis",
+	"warningText": "Mae lleoliadau marcwyr yn fras yn unig. Cyfeiriwch at y cynlluniau a'r lluniadau diweddaraf i weld ffiniau'r prosiect",
+	"filterLabels": {
+		"region": "Lleoliad",
+		"sector": "Sector",
+		"stage": "Cam"
+	},
+	"sidebar": {
+		"relatedContent": "Cynnwys cysylltiedig",
+		"registerOfApplications": "Cofrestr geisiadau"
+	}
+}

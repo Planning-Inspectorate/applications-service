@@ -1,0 +1,23 @@
+{
+	"pageTitle": "Projects map",
+	"heading1": "Projects map",
+	"paragraph1": "Select a marker on the map to view a project in the area.",
+	"searchAccessibilityText": "Search projects map",
+	"showFilters": "Show filters",
+	"hideFilters": "Hide filters",
+	"switchToListView": "Switch to list view",
+	"switchToMapView": "Switch to map view",
+	"applyFilters": "Apply filters",
+	"filteredResults": "Filtered results",
+	"projectsSelected": "{{count}} projects selected",
+	"warningText": "Marker locations are approximate only. Refer to the latest plans and drawings to view project boundaries",
+	"filterLabels": {
+		"region": "Location",
+		"sector": "Sector",
+		"stage": "Stage"
+	},
+	"sidebar": {
+		"relatedContent": "Related content",
+		"registerOfApplications": "Register of applications"
+	}
+}
