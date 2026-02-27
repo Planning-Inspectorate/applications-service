@@ -23,7 +23,8 @@ module.exports = (req, res, next) => {
 
 	let activeCookiePolicy;
 	try {
-		activeCookiePolicy = JSON.parse(req.cookies[cookieConfig.COOKIE_POLICY_KEY]);
+		const decoded = decodeURIComponent(req.cookies[cookieConfig.COOKIE_POLICY_KEY]);
+		activeCookiePolicy = JSON.parse(decoded);
 	} catch (e) {
 		// something went wrong decoding the cookie policy JSON, so lets wipe it and start again
 		removeUnwantedCookies(req, res, ['connect.sid', EASY_AUTH.EASY_AUTH_COOKIE_NAME]);
