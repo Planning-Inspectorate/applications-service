@@ -40,7 +40,7 @@ describe('controllers/applications.geojson', () => {
 						properties: {
 							caseReference: 'EN010001',
 							projectName: 'Test Project',
-							stage: 'pre_application',
+							stage: 'Pre-application',
 							projectURL: '/projects/EN010001'
 						}
 					}
