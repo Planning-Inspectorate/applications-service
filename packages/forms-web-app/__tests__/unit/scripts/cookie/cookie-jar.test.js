@@ -47,7 +47,9 @@ describe('scripts/cookie/cookie-jar', () => {
 			createCookie(document, fakeName, fakeValue);
 
 			expect(document.cookie).toEqual(
-				`${fakeName}=${fakeValue}; expires=Thu, 18 Nov 2021 00:00:00 GMT; path=/`
+				`${fakeName}=${encodeURIComponent(
+					fakeValue
+				)}; expires=Thu, 18 Nov 2021 00:00:00 GMT; path=/`
 			);
 		});
 
@@ -55,7 +57,9 @@ describe('scripts/cookie/cookie-jar', () => {
 			createCookie(document, fakeName, fakeValue, 30);
 
 			expect(document.cookie).toEqual(
-				`${fakeName}=${fakeValue}; expires=Fri, 18 Dec 2020 00:00:00 GMT; path=/`
+				`${fakeName}=${encodeURIComponent(
+					fakeValue
+				)}; expires=Fri, 18 Dec 2020 00:00:00 GMT; path=/`
 			);
 		});
 
