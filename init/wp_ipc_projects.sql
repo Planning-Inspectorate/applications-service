@@ -95,7 +95,7 @@ INSERT INTO ipclive.wp_ipc_projects (CaseReference, ProjectName, Proposal, Proje
                                      DateOfCommissionerAppointment, DateTimeExaminationEnds,
                                      Stage4ExtensiontoExamCloseDate, TimeOfRelevantRepresentationClose,
                                      TwitterAccountName, SINumber, sourceSystem, dateOfNonAcceptance, CaseSubType)
-VALUES ('EN010009', 'St James Barton Giant Wind Turbine', 'EN01 - Generating Stations',
+VALUES ('EN010009', 'St James Barton Giant Wind Turbine [e2e test case]', 'EN01 - Generating Stations',
         'St James Barton, BRISTOL THU 16 JAN', 3, 'Horizon Dev Environment DJW', 'Postman', 'Pat',
         'david.white@pins.gsi.gov.uk', '1234', NULL,
         '\"The Windmill of the South!\" - Tue 14 Jan 2020, 17 May 2021 DJW test on NSIP Azure website Also in TestAZ Giant wind turbine on St James Barton roundabout.',
@@ -160,7 +160,7 @@ INSERT INTO ipclive.wp_ipc_projects (CaseReference, ProjectName, Proposal, Proje
                                      DateOfCommissionerAppointment, DateTimeExaminationEnds,
                                      Stage4ExtensiontoExamCloseDate, TimeOfRelevantRepresentationClose,
                                      TwitterAccountName, SINumber, sourceSystem, dateOfNonAcceptance, CaseSubType)
-VALUES ('EN010102', 'Hinkley Point C New Nuclear Power Station Material Change 1', 'EN01 - Generating Stations',
+VALUES ('EN010102', 'Hinkley Point C New Nuclear Power Station Material Change 1 [e2e test case]', 'EN01 - Generating Stations',
         'Approximately 3km offshore of Hinkley Point, Somerset', 3, 'NNB Generation Company (HPC) Limited', 'Carly',
         'Vince', 'webteam@planninginspectorate.gov.uk', '0800 197 6102', NULL,
         'Removal of requirement to install Acoustic Fish Deterrent system (associated with cooling water intake heads)',
@@ -192,12 +192,12 @@ INSERT INTO ipclive.wp_ipc_projects (CaseReference, ProjectName, Proposal, Proje
                                      DateOfCommissionerAppointment, DateTimeExaminationEnds,
                                      Stage4ExtensiontoExamCloseDate, TimeOfRelevantRepresentationClose,
                                      TwitterAccountName, SINumber, sourceSystem, dateOfNonAcceptance, CaseSubType)
-VALUES ('EN010116', 'North Lincolnshire Green Energy Park', 'EN01 - Generating Stations',
+VALUES ('EN010116', 'North Lincolnshire Green Energy Park [e2e test case]', 'EN01 - Generating Stations',
         'Flixborough Wharf, Flixborough Industrial Estate, North Lincolnshire.       ', 3,
         'North Lincolnshire Green Energy Park Limited', '', '', 'chris.bungay@planninginspectorate.gov.uk', '', NULL,
-        'The Project consists of an Energy Recovery Facility (ERF) converting up to 650,000 tonnes per annum of Refuse Derived Fuel (RDF) to generate a maximum of 95 Mega Watts of electrical output (MWe) and/or 380 Mega Watts of thermal output (MWt) to provide power, heat and steam on the site of the operating Flixborough Wharf on the River Trent. The Project will incorporate battery storage, hydrogen production from the electrolysis of water, hydrogen storage, heat and steam storage. It will also include heat-treatment of bottom and fly ash, concrete block manufacturing, carbon dioxide capture and utilisation and an extended district heat network of 5km, power and gas network to service the nearby proposed housing development. Development at the site will also include the following associated measures to allow access to and from the site by road, rail or river, with a correspondingly reduced environmental impact: i. an extension to Flixborough Wharf; ii. the reopening of a 9km single track railway line that connects Flixborough Wharf with the steel works at Scunthorpe; iii. a railhead complex to handle the RDF and concrete products; and iv. a new road alignment to facilitate the flow of traffic accessing the site from the south.',
+        '[This case is used for e2e tests-do not change the case data]. The Project consists of an Energy Recovery Facility (ERF) converting up to 650,000 tonnes per annum of Refuse Derived Fuel (RDF) to generate a maximum of 95 Mega Watts of electrical output (MWe) and/or 380 Mega Watts of thermal output (MWt) to provide power, heat and steam on the site of the operating Flixborough Wharf on the River Trent. The Project will incorporate battery storage, hydrogen production from the electrolysis of water, hydrogen storage, heat and steam storage. It will also include heat-treatment of bottom and fly ash, concrete block manufacturing, carbon dioxide capture and utilisation and an extended district heat network of 5km, power and gas network to service the nearby proposed housing development. Development at the site will also include the following associated measures to allow access to and from the site by road, rail or river, with a correspondingly reduced environmental impact: i. an extension to Flixborough Wharf; ii. the reopening of a 9km single track railway line that connects Flixborough Wharf with the steel works at Scunthorpe; iii. a railhead complex to handle the RDF and concrete products; and iv. a new road alignment to facilitate the flow of traffic accessing the site from the south.',
         'webteam@planninginspectorate.gov.uk', NULL, NULL, NULL, 'Q3 2021', NULL, NULL, '2023-01-01', '2023-08-01',
-        '2025-08-01', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+        DATE_ADD(NOW(), INTERVAL 1 YEAR), NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, 'Region', NULL, 485899, 414508, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
         '53.620078025496,-0.70283147423378', 'Yorkshire and the Humber', NULL, NULL,
         'https://northlincolnshiregreenenergypark.co.uk/', '2021-10-26 10:32:16', NULL, NULL, NULL, NULL, NULL, NULL,
