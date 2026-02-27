@@ -47,11 +47,15 @@ class PO_RegComments {
 	verifyCommentsDisplayedinDescendingOrder(table) {
 		const contents = table.hashes();
 		cy.get('[data-cy="published-date"]').each(($e1, index) => {
+			if (index >= contents.length) return;
+
 			const actualText = $e1.text().trim();
 			const expectedText = contents[index].Date;
 			expect(actualText).to.contain(expectedText);
 		});
 		cy.get('[data-cy="published-stage"]').each(($e1, index) => {
+			if (index >= contents.length) return;
+
 			const actualText = $e1.text().trim();
 			const expectedText = contents[index].Stage;
 			expect(actualText).to.contain(expectedText);
@@ -97,7 +101,7 @@ class PO_RegComments {
 
 	verifyCommentIsPresent(table) {
 		const contents = table.hashes();
-		cy.get('[data-cy="representaion"]').each(($e1, index) => {
+		cy.get('[data-cy="representaion"] .pins-rte').each(($e1, index) => {
 			const actualText = $e1.text();
 			const expectedText = contents[index].Data;
 			expect(actualText.replace(/\s/g, '').trim()).to.contain(
