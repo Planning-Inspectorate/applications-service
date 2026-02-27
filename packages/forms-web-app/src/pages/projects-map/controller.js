@@ -15,18 +15,25 @@ const view = 'projects-map/view.njk';
  * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
  * Applications without valid LongLat coordinates are silently excluded.
  */
-const STAGE_LABELS = [
-	'Draft',
-	'Pre-application',
-	'Acceptance',
-	'Pre-examination',
-	'Examination',
-	'Recommendation',
-	'Decision',
-	'Post-decision',
-	'Withdrawn'
-];
+/** Maps numeric DB Stage value to display label. Mirrors NI_MAPPING.stage in application.mapper.js. */
+const STAGE_LABELS = {
+	0: 'Draft',
+	1: 'Pre-application',
+	2: 'Acceptance',
+	3: 'Pre-examination',
+	4: 'Examination',
+	5: 'Recommendation',
+	6: 'Decision',
+	7: 'Post-decision',
+	8: 'Withdrawn'
+};
 
+/**
+ * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
+ * Applications without valid LongLat coordinates are silently excluded.
+ * @param {Object[]} applications
+ * @returns {Object} GeoJSON FeatureCollection
+ */
 const toGeoJSON = (applications) => ({
 	type: 'FeatureCollection',
 	features: applications
@@ -73,7 +80,7 @@ const getProjectsMapController = async (req, res, next) => {
 			mapAccessToken,
 			mapGeoJSON: JSON.stringify(toGeoJSON(applications)),
 			projectSearchURL: getProjectSearchURL(),
-			relatedContentLinks: getRelatedContentLinks(i18n),
+			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
 			query,
 			showFiltersURL: `?${showFiltersParams}`,
 			hideFiltersURL: `?${hideFiltersParams}`

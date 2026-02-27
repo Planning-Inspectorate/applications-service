@@ -22,10 +22,20 @@ import { getControls } from '../map/get-controls.js';
 
 const UK_CENTRE_EPSG27700 = [366154, 289239];
 const DEFAULT_ZOOM = 0;
+const logger = window.appLogger || { debug: () => {}, error: console.error };
 
+/** @param {string} name @param {string} fallback @returns {string} */
 const cssVar = (name, fallback) =>
 	getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
 
+/**
+ * Returns an OL Style array for a cluster feature.
+ * Returns null for count=0 (expanded individual features — SelectCluster handles those).
+ * @param {import('ol').Feature} feature
+ * @param {string} MARKER_FILL
+ * @param {string} MARKER_STROKE
+ * @returns {import('ol/style').Style[]|null}
+ */
 function clusterStyle(feature, MARKER_FILL, MARKER_STROKE) {
 	const features = feature.get('features') || [];
 	const count = features.length;
@@ -59,6 +69,7 @@ function clusterStyle(feature, MARKER_FILL, MARKER_STROKE) {
 	return [shadow, marker];
 }
 
+/** Registers EPSG:27700 projection with proj4 and returns the OL projection object. */
 function setupEpsg27700() {
 	proj4.defs(
 		'EPSG:27700',
@@ -70,6 +81,11 @@ function setupEpsg27700() {
 	return epsg27700;
 }
 
+/**
+ * Builds the OS Maps WMTS tile layer.
+ * @param {string} accessToken
+ * @param {string} wmtsXml
+ */
 function buildTileLayer(accessToken, wmtsXml) {
 	const parser = new WMTSCapabilities();
 	const result = parser.read(wmtsXml);
@@ -81,12 +97,15 @@ function buildTileLayer(accessToken, wmtsXml) {
 	const tileSource = new WMTS({
 		attributions: [`&copy; Crown copyright and database rights ${new Date().getFullYear()}`],
 		tileLoadFunction: async (tile, src) => {
-			const res = await fetch(src, { headers: { Authorization: 'Bearer ' + accessToken } });
-			const blob = await res.blob();
-			const reader = new FileReader();
-			reader.onloadend = () =>
-				(tile.getImage().src = `data:image/png;base64,${btoa(reader.result)}`);
-			reader.readAsBinaryString(blob);
+			try {
+				const res = await fetch(src, { headers: { Authorization: 'Bearer ' + accessToken } });
+				if (!res.ok) throw new Error(`Tile fetch failed: ${res.status}`);
+				const arrayBuffer = await res.arrayBuffer();
+				const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+				tile.getImage().src = `data:image/png;base64,${base64}`;
+			} catch (err) {
+				logger.error('[projects-map] tile load error:', err);
+			}
 		},
 		...wmtsOptions
 	});
@@ -94,6 +113,7 @@ function buildTileLayer(accessToken, wmtsXml) {
 	return { tileLayer: new TileLayer({ source: tileSource }), wmtsOptions };
 }
 
+/** @returns {import('ol-ext/src/overlay/Popup').default} */
 function buildPopup() {
 	return new Popup({
 		popupClass: 'default',
@@ -103,6 +123,12 @@ function buildPopup() {
 	});
 }
 
+/**
+ * Renders the cluster popup with a list of projects.
+ * @param {import('ol-ext/src/overlay/Popup').default} popup
+ * @param {import('ol').Feature[]} features
+ * @param {number[]} coordinate EPSG:27700 coordinate
+ */
 function renderPopup(popup, features, coordinate) {
 	const count = features.length;
 	const rows = features
@@ -127,19 +153,17 @@ function renderPopup(popup, features, coordinate) {
 }
 
 function projectsMap() {
+	/**
+	 * Initialises the projects map.
+	 * @param {string} accessToken OS Maps Bearer token
+	 * @param {string} target DOM element id for the map
+	 * @param {Object} geojsonData GeoJSON FeatureCollection
+	 */
 	this.initiate = async (accessToken, target, geojsonData) => {
-		console.log('[projects-map] initiate called', {
-			target,
-			hasToken: !!accessToken,
-			hasGeoJSON: !!geojsonData
-		});
 		try {
-			console.log('[projects-map] fetching WMTS...');
 			const wmtsXml = await getMapWMTS(accessToken);
-			console.log('[projects-map] WMTS fetched', { length: wmtsXml?.length });
 			const epsg27700 = setupEpsg27700();
 			const { tileLayer, wmtsOptions } = buildTileLayer(accessToken, wmtsXml);
-			console.log('[projects-map] tile layer built');
 
 			const geojsonFeatures = geojsonData
 				? new GeoJSON().readFeatures(geojsonData, {
@@ -182,8 +206,6 @@ function projectsMap() {
 					zoom: DEFAULT_ZOOM
 				})
 			});
-			console.log('[projects-map] map created');
-
 			const popup = buildPopup();
 			map.addOverlay(popup);
 
@@ -236,7 +258,7 @@ function projectsMap() {
 			map.getView().on('change:resolution', updateZoomButtons);
 			map.once('rendercomplete', updateZoomButtons);
 		} catch (error) {
-			console.error('[projects-map] initiate failed:', error);
+			logger.error('[projects-map] initiate failed:', error);
 		}
 	};
 }
