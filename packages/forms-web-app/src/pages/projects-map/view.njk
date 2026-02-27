@@ -15,7 +15,7 @@
 				src: "https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"
 			},
 			{
-				callback: "var projectsMap = new appScripts['projects-map'].default(); projectsMap.initiate('" + mapAccessToken + "', 'projects-map', " + mapGeoJSON + ");",
+				callback: "var el = document.getElementById('projects-map'); var projectsMap = new appScripts['projects-map'].default(); projectsMap.initiate(el.dataset.token, 'projects-map', JSON.parse(el.dataset.geojson));",
 				src: "/public/scripts/projects-map.script.js"
 			},
 			{ src: "/public/scripts/checkbox-accordion.script.js" },

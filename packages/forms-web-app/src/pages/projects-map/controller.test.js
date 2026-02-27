@@ -68,6 +68,20 @@ describe('pages/projects-map/controller', () => {
 		);
 	});
 
+	it('includes correct stage labels in mapGeoJSON', async () => {
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockResolvedValue('mock-token');
+
+		await getProjectsMapController(req, res, next);
+
+		const { mapGeoJSON } = res.render.mock.calls[0][1];
+		const geojson = JSON.parse(mapGeoJSON);
+		const stages = geojson.features.map((f) => f.properties.stage);
+		expect(stages).toContain('Examination'); // Stage: 4
+		expect(stages).toContain('Pre-application'); // Stage: 1
+		expect(stages).toContain('Acceptance'); // Stage: 2
+	});
+
 	it('calls next with error when getApplications fails', async () => {
 		getAllProjectList.mockResolvedValue({ resp_code: 500 });
 		getMapAccessToken.mockResolvedValue('mock-token');
