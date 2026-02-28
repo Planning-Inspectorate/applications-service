@@ -2,7 +2,6 @@ const express = require('express');
 
 const applicationsController = require('../controllers/applications');
 const applicationsControllerV2 = require('../controllers/applications.v2');
-const { getApplicationsGeoJSON } = require('../controllers/applications.geojson');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
 const {
@@ -24,12 +23,6 @@ const getApplicationsRoute = (req, res, next) => {
 };
 
 router.get('/download', applicationsController.getAllApplicationsDownload);
-
-router.get(
-	'/geojson',
-	normaliseArrayQueryParams(['stage', 'region', 'sector']),
-	asyncRoute(getApplicationsGeoJSON)
-);
 router.get('/:caseReference', validateRequestWithOpenAPI, getApplicationsRoute);
 router.get(
 	'',
