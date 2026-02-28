@@ -13,21 +13,19 @@ describe('routes/applications', () => {
 	});
 
 	it('should define the expected routes', () => {
-		expect(get.mock.calls.length).toBe(4);
+		expect(get.mock.calls.length).toBe(3);
 
 		expect(get.mock.calls[0][0]).toBe(
 			'/download',
 			applicationsController.getAllApplicationsDownload
 		);
 
-		expect(get.mock.calls[1][0]).toBe('/geojson');
-
-		expect(get.mock.calls[2][0]).toBe(
+		expect(get.mock.calls[1][0]).toBe(
 			'/:caseReference',
 			validateRequestWithOpenAPI,
 			applicationsController.getApplication
 		);
 
-		expect(get.mock.calls[3][0]).toBe('', applicationsController.getAllApplications);
+		expect(get.mock.calls[2][0]).toBe('', applicationsController.getAllApplications);
 	});
 });
