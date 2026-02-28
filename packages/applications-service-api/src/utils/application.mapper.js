@@ -438,8 +438,6 @@ const regionMap = {
 	yorkshire_and_the_humber: 'Yorkshire and the Humber'
 };
 
-const stageApiToLabel = Object.fromEntries(NI_MAPPING.stage.map(({ api, label }) => [api, label]));
-
 module.exports = {
 	buildApiFiltersFromNIApplications,
 	mapApplicationFiltersToNI,
@@ -453,6 +451,5 @@ module.exports = {
 	mapColumnLabelToApi: mapColumnLabelToApiEn,
 	mapColumnLabelToApiCy,
 	mergeFilters,
-	stageNameFromValue,
-	stageApiToLabel
+	stageNameFromValue
 };
