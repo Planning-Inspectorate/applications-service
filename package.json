@@ -113,7 +113,7 @@
 		"i18next-http-middleware": "^3.5.0",
 		"js-yaml": "^3.14.0",
 		"json-diff": "^1.0.6",
-		"jspdf": "^2.5.1",
+		"jspdf": "^4.2.0",
 		"leaflet": "^1.9.4",
 		"leaflet.markercluster": "^1.5.3",
 		"lodash": "^4.17.23",
