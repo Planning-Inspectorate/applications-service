@@ -66,15 +66,6 @@ const getProjectsMapController = async (req, res, next) => {
 			getMapAccessToken()
 		]);
 
-		// eslint-disable-next-line no-unused-vars
-		const { showFilters, ...queryWithoutShowFilters } = query;
-
-		const showFiltersParams = new URLSearchParams({
-			...queryWithoutShowFilters,
-			showFilters: 'true'
-		});
-		const hideFiltersParams = new URLSearchParams(queryWithoutShowFilters);
-
 		res.render(view, {
 			...getFilters(i18n, query, filters, projectsMapI18nNamespace),
 			mapAccessToken,
@@ -82,8 +73,7 @@ const getProjectsMapController = async (req, res, next) => {
 			projectSearchURL: getProjectSearchURL(),
 			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
 			query,
-			showFiltersURL: `?${showFiltersParams}`,
-			hideFiltersURL: `?${hideFiltersParams}`
+			showFilters: !!req.session.projectsMapShowFilters
 		});
 	} catch (error) {
 		logger.error(error);
@@ -91,4 +81,14 @@ const getProjectsMapController = async (req, res, next) => {
 	}
 };
 
-module.exports = { getProjectsMapController };
+const postShowFiltersController = (req, res) => {
+	req.session.projectsMapShowFilters = true;
+	res.redirect(`/projects-map?${new URLSearchParams(req.query)}`);
+};
+
+const postHideFiltersController = (req, res) => {
+	delete req.session.projectsMapShowFilters;
+	res.redirect(`/projects-map?${new URLSearchParams(req.query)}`);
+};
+
+module.exports = { getProjectsMapController, postShowFiltersController, postHideFiltersController };

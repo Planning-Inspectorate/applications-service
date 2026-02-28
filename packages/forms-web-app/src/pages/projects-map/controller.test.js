@@ -1,4 +1,8 @@
-const { getProjectsMapController } = require('./controller');
+const {
+	getProjectsMapController,
+	postShowFiltersController,
+	postHideFiltersController
+} = require('./controller');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../_services');
 const { getApplicationsFixture } = require('../_fixtures');
@@ -26,7 +30,7 @@ describe('pages/projects-map/controller', () => {
 	let req, res, next;
 
 	beforeEach(() => {
-		req = { i18n, query: {} };
+		req = { i18n, query: {}, session: {} };
 		res = { render: jest.fn() };
 		next = jest.fn();
 		jest.resetAllMocks();
@@ -44,16 +48,15 @@ describe('pages/projects-map/controller', () => {
 				mapAccessToken: 'mock-token',
 				projectSearchURL: '/project-search',
 				query: {},
-				showFiltersURL: '?showFilters=true',
-				hideFiltersURL: '?',
+				showFilters: false,
 				mapGeoJSON: expect.stringContaining('FeatureCollection')
 			})
 		);
 		expect(next).not.toHaveBeenCalled();
 	});
 
-	it('builds showFiltersURL and hideFiltersURL correctly with existing query params', async () => {
-		req.query = { showFilters: 'true', sector: 'energy' };
+	it('passes showFilters=true when session flag is set', async () => {
+		req.session.projectsMapShowFilters = true;
 		getAllProjectList.mockResolvedValue(getApplicationsFixture);
 		getMapAccessToken.mockResolvedValue('mock-token');
 
@@ -61,10 +64,7 @@ describe('pages/projects-map/controller', () => {
 
 		expect(res.render).toHaveBeenCalledWith(
 			'projects-map/view.njk',
-			expect.objectContaining({
-				showFiltersURL: '?sector=energy&showFilters=true',
-				hideFiltersURL: '?sector=energy'
-			})
+			expect.objectContaining({ showFilters: true })
 		);
 	});
 
@@ -100,5 +100,26 @@ describe('pages/projects-map/controller', () => {
 
 		expect(next).toHaveBeenCalledWith(expect.any(Error));
 		expect(res.render).not.toHaveBeenCalled();
+	});
+
+	describe('postShowFiltersController', () => {
+		it('sets session flag and redirects', () => {
+			req.query = { sector: 'energy' };
+			res.redirect = jest.fn();
+			postShowFiltersController(req, res);
+			expect(req.session.projectsMapShowFilters).toBe(true);
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
+		});
+	});
+
+	describe('postHideFiltersController', () => {
+		it('clears session flag and redirects', () => {
+			req.session.projectsMapShowFilters = true;
+			req.query = { sector: 'energy' };
+			res.redirect = jest.fn();
+			postHideFiltersController(req, res);
+			expect(req.session.projectsMapShowFilters).toBeUndefined();
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
+		});
 	});
 });

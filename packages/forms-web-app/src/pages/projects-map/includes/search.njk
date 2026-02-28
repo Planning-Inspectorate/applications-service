@@ -3,10 +3,16 @@
 {{ uiSearchBar('projects-map-search-bar', 'searchTerm', query.searchTerm, t('projectsMap.searchAccessibilityText'), t('common.search')) }}
 
 <div class="govuk-button-group govuk-!-margin-bottom-4">
-	{% if query.showFilters or activeFilters | length %}
-		<a href="{{ hideFiltersURL }}" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.hideFilters') }}</a>
+	{% if showFilters or activeFilters | length %}
+		<form method="post" action="/projects-map/hide-filters?{{ query | urlencode }}">
+			<input type="hidden" name="_csrf" value="{{ _csrf }}"/>
+			<button type="submit" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.hideFilters') }}</button>
+		</form>
 	{% else %}
-		<a href="{{ showFiltersURL }}" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.showFilters') }}</a>
+		<form method="post" action="/projects-map/show-filters?{{ query | urlencode }}">
+			<input type="hidden" name="_csrf" value="{{ _csrf }}"/>
+			<button type="submit" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.showFilters') }}</button>
+		</form>
 	{% endif %}
 	<a href="{{ projectSearchURL }}?{{ query | urlencode }}" class="govuk-link">{{ t('projectsMap.switchToListView') }}</a>
 </div>
