@@ -10,7 +10,11 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
-const { getProjectsMapController } = require('./projects-map/controller');
+const {
+	getProjectsMapController,
+	postShowFiltersController,
+	postHideFiltersController
+} = require('./projects-map/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -101,6 +105,10 @@ pagesRouter.get(
 );
 
 pagesRouter.post(projectSearchURL, postProjectSearchController);
+
+pagesRouter.post(`${projectsMapURL}/show-filters`, postShowFiltersController);
+
+pagesRouter.post(`${projectsMapURL}/hide-filters`, postHideFiltersController);
 
 pagesRouter.get(
 	projectsMapURL,
