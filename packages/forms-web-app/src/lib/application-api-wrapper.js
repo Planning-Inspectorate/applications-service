@@ -101,9 +101,6 @@ exports.getProjectData = async (case_ref) => {
 exports.getAllProjectList = async (queryString = '') =>
 	handler('getAllProjectList', `/api/v1/applications${queryString}`);
 
-exports.getProjectsMapGeoJSON = async (queryString = '') =>
-	handler('getProjectsMapGeoJSON', `/api/v1/applications/geojson${queryString}`);
-
 exports.searchDocumentList = async (case_ref, search_data) => {
 	const documentServiceApiUrl = `/api/v1/documents/${case_ref}`;
 	const method = 'POST';
