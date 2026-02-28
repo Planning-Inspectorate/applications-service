@@ -1,7 +1,7 @@
 const {
 	getProjectsMapController,
-	postShowFiltersController,
-	postHideFiltersController
+	getShowFiltersController,
+	getHideFiltersController
 } = require('./controller');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../_services');
@@ -102,22 +102,22 @@ describe('pages/projects-map/controller', () => {
 		expect(res.render).not.toHaveBeenCalled();
 	});
 
-	describe('postShowFiltersController', () => {
+	describe('getShowFiltersController', () => {
 		it('sets session flag and redirects', () => {
 			req.query = { sector: 'energy' };
 			res.redirect = jest.fn();
-			postShowFiltersController(req, res);
+			getShowFiltersController(req, res);
 			expect(req.session.projectsMapShowFilters).toBe(true);
 			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
 		});
 	});
 
-	describe('postHideFiltersController', () => {
+	describe('getHideFiltersController', () => {
 		it('clears session flag and redirects', () => {
 			req.session.projectsMapShowFilters = true;
 			req.query = { sector: 'energy' };
 			res.redirect = jest.fn();
-			postHideFiltersController(req, res);
+			getHideFiltersController(req, res);
 			expect(req.session.projectsMapShowFilters).toBeUndefined();
 			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
 		});

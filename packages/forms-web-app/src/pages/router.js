@@ -12,8 +12,8 @@ const {
 } = require('./project-search/controller');
 const {
 	getProjectsMapController,
-	postShowFiltersController,
-	postHideFiltersController
+	getShowFiltersController,
+	getHideFiltersController
 } = require('./projects-map/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
@@ -106,9 +106,9 @@ pagesRouter.get(
 
 pagesRouter.post(projectSearchURL, postProjectSearchController);
 
-pagesRouter.post(`${projectsMapURL}/show-filters`, postShowFiltersController);
+pagesRouter.get(`${projectsMapURL}/show-filters`, getShowFiltersController);
 
-pagesRouter.post(`${projectsMapURL}/hide-filters`, postHideFiltersController);
+pagesRouter.get(`${projectsMapURL}/hide-filters`, getHideFiltersController);
 
 pagesRouter.get(
 	projectsMapURL,
