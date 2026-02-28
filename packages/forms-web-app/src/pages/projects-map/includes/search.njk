@@ -3,7 +3,7 @@
 {{ uiSearchBar('projects-map-search-bar', 'searchTerm', query.searchTerm, t('projectsMap.searchAccessibilityText'), t('common.search')) }}
 
 <div class="govuk-button-group govuk-!-margin-bottom-4">
-	{% if showFilters or activeFilters | length %}
+	{% if showFilters %}
 		<a href="/projects-map/hide-filters?{{ query | urlencode }}" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.hideFilters') }}</a>
 	{% else %}
 		<a href="/projects-map/show-filters?{{ query | urlencode }}" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.showFilters') }}</a>
