@@ -1,123 +1,125 @@
-const { getProjectsMapController } = require('./controller');
-const { getProjectsMapGeoJSON } = require('../../services/projects-map.service');
+const {
+	getProjectsMapController,
+	getShowFiltersController,
+	getHideFiltersController
+} = require('./controller');
+const { getAllProjectList } = require('../../lib/application-api-wrapper');
+const { getMapAccessToken } = require('../_services');
+const { getApplicationsFixture } = require('../_fixtures');
+const { mockI18n } = require('../_mocks/i18n');
 
-jest.mock('../../services/projects-map.service');
-jest.mock('../../config', () => {
-	const originalConfig = jest.requireActual('../../../src/config');
+const commonTranslations_EN = require('../../locales/en/common.json');
+const projectSearchTranslations_EN = require('../project-search/_translations/en.json');
+const projectsMapTranslations_EN = require('./_translations/en.json');
 
-	return {
-		...originalConfig,
-		logger: {
-			level: 'info',
-			redact: []
-		},
-		maps: {
-			leafletOptions: {
-				minZoom: 0,
-				maxZoom: 13,
-				center: [52.3, -1.7],
-				zoom: 0,
-				attributionControl: true
-			},
-			tileLayer: {
-				url: 'https://api.os.uk/maps/raster/v1/zxy/Light_27700/{z}/{x}/{y}.png',
-				tokenEndpoint: '/api/os-maps/token',
-				maxZoom: 13,
-				attribution: '© Crown Copyright and database right'
-			},
-			crs: {
-				code: 'EPSG:27700',
-				proj4String:
-					'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs',
-				resolutions: [
-					896, 448, 224, 112, 56, 28, 14, 7, 3.5, 1.75, 0.875, 0.4375, 0.21875, 0.109375
-				],
-				origin: [-238375.0, 1376256.0]
-			},
-			display: {
-				clustered: true,
-				elementId: 'projects-map',
-				containerHeight: '700px',
-				animateWhenZoomed: false
-			}
-		}
-	};
+const i18n = mockI18n({
+	common: commonTranslations_EN,
+	projectSearch: projectSearchTranslations_EN,
+	projectsMap: projectsMapTranslations_EN
 });
-jest.mock('../../lib/logger');
-jest.mock('../project-search/utils/get-project-search-url', () => ({
-	getProjectSearchURL: jest.fn(() => '/projects/search')
+
+jest.mock('../../lib/application-api-wrapper', () => ({
+	getAllProjectList: jest.fn()
+}));
+
+jest.mock('../_services', () => ({
+	getMapAccessToken: jest.fn()
 }));
 
 describe('pages/projects-map/controller', () => {
-	let mockRes;
-	let mockNext;
+	let req, res, next;
 
 	beforeEach(() => {
-		mockRes = { render: jest.fn() };
-		mockNext = jest.fn();
-		jest.clearAllMocks();
+		req = { i18n, query: {}, session: {} };
+		res = { render: jest.fn() };
+		next = jest.fn();
+		jest.resetAllMocks();
 	});
 
-	describe('success', () => {
-		it('should render view with map configuration', async () => {
-			const mockGeojson = {
-				type: 'FeatureCollection',
-				features: [
-					{
-						type: 'Feature',
-						geometry: { type: 'Point', coordinates: [-1.5, 51.5] },
-						properties: { caseRef: 'EN010001', projectName: 'Test Project' }
-					}
-				]
-			};
+	it('renders view with filters and mapAccessToken', async () => {
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockResolvedValue('mock-token');
 
-			getProjectsMapGeoJSON.mockResolvedValue(mockGeojson);
+		await getProjectsMapController(req, res, next);
 
-			await getProjectsMapController({}, mockRes, mockNext);
+		expect(res.render).toHaveBeenCalledWith(
+			'projects-map/view.njk',
+			expect.objectContaining({
+				mapAccessToken: 'mock-token',
+				projectSearchURL: '/project-search',
+				query: {},
+				showFilters: false,
+				mapGeoJSON: expect.stringContaining('FeatureCollection')
+			})
+		);
+		expect(next).not.toHaveBeenCalled();
+	});
 
-			expect(getProjectsMapGeoJSON).toHaveBeenCalled();
-			expect(mockRes.render).toHaveBeenCalledWith(
-				'projects-map/view.njk',
-				expect.objectContaining({
-					mapConfig: expect.any(Object),
-					projectSearchURL: '/projects/search'
-				})
-			);
-			expect(mockNext).not.toHaveBeenCalled();
-		});
+	it('passes showFilters=true when session flag is set', async () => {
+		req.session.projectsMapShowFilters = true;
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockResolvedValue('mock-token');
 
-		it('should render view with empty markers when no projects exist', async () => {
-			const emptyGeojson = {
-				type: 'FeatureCollection',
-				features: []
-			};
+		await getProjectsMapController(req, res, next);
 
-			getProjectsMapGeoJSON.mockResolvedValue(emptyGeojson);
+		expect(res.render).toHaveBeenCalledWith(
+			'projects-map/view.njk',
+			expect.objectContaining({ showFilters: true })
+		);
+	});
 
-			await getProjectsMapController({}, mockRes, mockNext);
+	it('includes correct stage labels in mapGeoJSON', async () => {
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockResolvedValue('mock-token');
 
-			expect(mockRes.render).toHaveBeenCalled();
-			expect(mockNext).not.toHaveBeenCalled();
+		await getProjectsMapController(req, res, next);
+
+		const { mapGeoJSON } = res.render.mock.calls[0][1];
+		const geojson = JSON.parse(mapGeoJSON);
+		const stages = geojson.features.map((f) => f.properties.stage);
+		expect(stages).toContain('Examination'); // Stage: 4
+		expect(stages).toContain('Pre-application'); // Stage: 1
+		expect(stages).toContain('Acceptance'); // Stage: 2
+	});
+
+	it('calls next with error when getApplications fails', async () => {
+		getAllProjectList.mockResolvedValue({ resp_code: 500 });
+		getMapAccessToken.mockResolvedValue('mock-token');
+
+		await getProjectsMapController(req, res, next);
+
+		expect(next).toHaveBeenCalledWith(expect.any(Error));
+		expect(res.render).not.toHaveBeenCalled();
+	});
+
+	it('calls next with error when getMapAccessToken fails', async () => {
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockRejectedValue(new Error('token error'));
+
+		await getProjectsMapController(req, res, next);
+
+		expect(next).toHaveBeenCalledWith(expect.any(Error));
+		expect(res.render).not.toHaveBeenCalled();
+	});
+
+	describe('getShowFiltersController', () => {
+		it('sets session flag and redirects', () => {
+			req.query = { sector: 'energy' };
+			res.redirect = jest.fn();
+			getShowFiltersController(req, res);
+			expect(req.session.projectsMapShowFilters).toBe(true);
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
 		});
 	});
 
-	describe('error handling', () => {
-		it('should pass error to Express error handler when service fails', async () => {
-			const testError = new Error('Service failed');
-			getProjectsMapGeoJSON.mockRejectedValue(testError);
-
-			await getProjectsMapController({}, mockRes, mockNext);
-
-			expect(mockNext).toHaveBeenCalledWith(testError);
-			expect(mockRes.render).not.toHaveBeenCalled();
-		});
-
-		it('should not render view on error', async () => {
-			getProjectsMapGeoJSON.mockRejectedValue(new Error('Database error'));
-
-			await getProjectsMapController({}, mockRes, mockNext);
-
-			expect(mockRes.render).not.toHaveBeenCalled();
+	describe('getHideFiltersController', () => {
+		it('clears session flag and redirects', () => {
+			req.session.projectsMapShowFilters = true;
+			req.query = { sector: 'energy' };
+			res.redirect = jest.fn();
+			getHideFiltersController(req, res);
+			expect(req.session.projectsMapShowFilters).toBeUndefined();
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
 		});
 	});
 });

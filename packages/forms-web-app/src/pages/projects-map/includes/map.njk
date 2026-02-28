@@ -1,0 +1,3 @@
+{% if mapAccessToken %}
+	<div id="projects-map" class="pins-map__content" role="region" aria-label="{{ t('projectsMap.heading1') }}" data-token="{{ mapAccessToken }}" data-geojson="{{ mapGeoJSON | escape }}"></div>
+{% endif %}

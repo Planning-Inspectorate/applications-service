@@ -1,31 +1,19 @@
 {
-	"common": {
-		"projects": "projects"
-	},
-	"pageTitle": "Projects Map",
+	"pageTitle": "Projects map",
 	"heading1": "Projects map",
-	"paragraph1": "This is a map of all project boundaries. To find a specific project select a project boundary.",
-	"showFiltersText": "Show filters",
-	"hideFiltersText": "Hide filters",
-	"projectSearchLinkText": "Switch to list view",
-	"warningText": "Project boundaries shown are for illustrative purposes only. To view exact boundaries refer to latest relevant plans and drawings.",
-	"linkText1": "Download a table containing a complete list of all {{-totalApplications}} projects (CSV)",
-	"accessibilityText1": "Search projects",
-	"heading2": "Filtered results",
-	"paragraph2": "Showing {{-from}} to {{-to}} of {{-total}} projects.",
-	"noResultsFound": {
-		"paragraph1": "No results were found matching your search terms and filters.",
-		"paragraph2": "Would you like to clear your search and filters to view all projects instead?",
-		"linkText1": "Clear search and filters"
-	},
+	"paragraph1": "Select a marker on the map to view a project in the area.",
+	"searchAccessibilityText": "Search projects map",
+	"showFilters": "Show filters",
+	"hideFilters": "Hide filters",
+	"switchToListView": "Switch to list view",
+	"switchToMapView": "Switch to map view",
+	"applyFilters": "Apply filters",
+	"filteredResults": "Filtered results",
+	"projectsSelected": "{{count}} projects selected",
+	"warningText": "Marker locations are approximate only. Refer to the latest plans and drawings to view project boundaries",
 	"filterLabels": {
 		"region": "Location",
 		"sector": "Sector",
-		"stage": "Stage"
-	},
-	"sortByLinks": {
-		"projectName": "Project name",
-		"promoterName": "Applicant",
 		"stage": "Stage"
 	},
 	"sidebar": {
