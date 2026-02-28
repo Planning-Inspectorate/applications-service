@@ -28,7 +28,7 @@
 {% endif %}
 
 {% block content %}
-	{% set showFilterPanel = showFilters or activeFilters | length %}
+	{% set showFilterPanel = showFilters %}
 	<form method="get" action="/projects-map">
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-third{{ '' if showFilterPanel else ' projects-map__filters--hidden-on-tablet' }}">
