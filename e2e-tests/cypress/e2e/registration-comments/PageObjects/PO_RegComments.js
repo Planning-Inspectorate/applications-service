@@ -101,7 +101,7 @@ class PO_RegComments {
 
 	verifyCommentIsPresent(table) {
 		const contents = table.hashes();
-		cy.get('[data-cy="representaion"] .pins-rte').each(($e1, index) => {
+		cy.get('[data-cy="representation"] .pins-rte').each(($e1, index) => {
 			const actualText = $e1.text();
 			const expectedText = contents[index].Data;
 			expect(actualText.replace(/\s/g, '').trim()).to.contain(
