@@ -172,7 +172,7 @@ Feature: Relevant Representations (Registration comments) page
         And I click on 0 read more link
         Then I verify below comment is displayed
             | Data                                                                                                                                                                                                                                                                                                                                       |
-			    |  |
+			    | Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's building and environmental controls, have been satisfied. |
         And I click on back link
         Then I verify text "Showing 1 to 25 of 48 results" is present on the page
 
