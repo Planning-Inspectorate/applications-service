@@ -49,7 +49,8 @@
 				{{ govukButton({
 					text: t('common.acceptAndContinue'),
 					type: "Submit",
-					attributes: { "data-cy": "button-accept-and-regoster"}
+  				preventDoubleClick: true,
+					attributes: { "data-cy": "button-accept-and-register"}
 				}) }}
 			</form>
 		</div>
