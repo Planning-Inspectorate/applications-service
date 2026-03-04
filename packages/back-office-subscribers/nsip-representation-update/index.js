@@ -1,5 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
-const buildMergeQuery = require('../lib/build-merge-query');
+const buildUpdateQuery = require('../lib/build-update-query');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-representation-update function`);
@@ -19,7 +19,7 @@ module.exports = async (context, message) => {
 		modifiedAt: new Date()
 	};
 
-	const { statement, parameters } = buildMergeQuery(
+	const { statement, parameters } = buildUpdateQuery(
 		'representation',
 		'representationId',
 		representation,
@@ -27,5 +27,5 @@ module.exports = async (context, message) => {
 	);
 
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`upserted representation with representationId ${representationId}`);
+	context.log(`updated representation with representationId ${representationId}`);
 };
