@@ -136,7 +136,9 @@ function renderPopup(popup, features, coordinate) {
 			const { caseReference, projectName, stage } = f.getProperties();
 			return `<tr class="cluster-popup-row">
 				<td class="cluster-popup-cell-name">
-					<a href="/projects/${caseReference}" class="cluster-popup-link">${projectName || caseReference}</a>
+					<a href="/projects/${caseReference}" class="govuk-link cluster-popup-link">${
+				projectName || caseReference
+			}</a>
 				</td>
 				<td class="cluster-popup-cell-stage">${stage || ''}</td>
 			</tr>`;
