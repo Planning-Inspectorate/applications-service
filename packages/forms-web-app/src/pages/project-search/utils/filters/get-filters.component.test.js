@@ -158,7 +158,7 @@ describe('project-search/utils/filters/get-filters', () => {
 								tags: [
 									{
 										icon: 'close',
-										link: '?sector=mock_value_3&sector=mock_value_4&stage=acceptance',
+										link: '/project-search?sector=mock_value_3&sector=mock_value_4&stage=acceptance',
 										textHtml:
 											'<span class="govuk-visually-hidden">Remove</span> North West <span class="govuk-visually-hidden">filter</span>'
 									}
@@ -169,13 +169,13 @@ describe('project-search/utils/filters/get-filters', () => {
 								tags: [
 									{
 										icon: 'close',
-										link: '?region=north_west&sector=mock_value_4&stage=acceptance',
+										link: '/project-search?region=north_west&sector=mock_value_4&stage=acceptance',
 										textHtml:
 											'<span class="govuk-visually-hidden">Remove</span> mock label 3 <span class="govuk-visually-hidden">filter</span>'
 									},
 									{
 										icon: 'close',
-										link: '?region=north_west&sector=mock_value_3&stage=acceptance',
+										link: '/project-search?region=north_west&sector=mock_value_3&stage=acceptance',
 										textHtml:
 											'<span class="govuk-visually-hidden">Remove</span> mock label 4 <span class="govuk-visually-hidden">filter</span>'
 									}
@@ -186,7 +186,7 @@ describe('project-search/utils/filters/get-filters', () => {
 								tags: [
 									{
 										icon: 'close',
-										link: '?region=north_west&sector=mock_value_3&sector=mock_value_4',
+										link: '/project-search?region=north_west&sector=mock_value_3&sector=mock_value_4',
 										textHtml:
 											'<span class="govuk-visually-hidden">Remove</span> Acceptance <span class="govuk-visually-hidden">filter</span>'
 									}
