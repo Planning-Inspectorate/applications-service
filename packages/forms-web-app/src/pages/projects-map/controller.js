@@ -57,32 +57,22 @@ const toGeoJSON = (applications) => ({
 		.filter(Boolean)
 });
 
+/**
+ * GET /projects-map
+ * Renders the interactive map view with filtered project markers.
+ * Fetches applications and map token in parallel, builds GeoJSON for map rendering.
+ */
 const getProjectsMapController = async (req, res, next) => {
 	try {
-		const { i18n, query, body } = req;
+		const { i18n, query } = req;
 
-		// Handle show/hide filters via POST body, then redirect to clean URL
-		if (body.showFilters === 'true') {
-			req.session.projectsMapShowFilters = true;
-			// eslint-disable-next-line no-unused-vars
-			const { showFilters, _csrf, ...safeQuery } = body;
-			const qs = new URLSearchParams(safeQuery).toString();
-			return res.redirect(`/projects-map${qs ? `?${qs}` : ''}`);
-		}
-
-		if (body.hideFilters === 'true') {
-			delete req.session.projectsMapShowFilters;
-			// eslint-disable-next-line no-unused-vars
-			const { hideFilters, _csrf, ...safeQuery } = body;
-			const qs = new URLSearchParams(safeQuery).toString();
-			return res.redirect(`/projects-map${qs ? `?${qs}` : ''}`);
-		}
-
+		// Fetch applications and OS Maps token concurrently
 		const [{ applications, filters }, mapAccessToken] = await Promise.all([
 			getApplications(getProjectSearchQueryString(query)),
 			getMapAccessToken()
 		]);
 
+		// Strip CSRF token from query before passing to view
 		// eslint-disable-next-line no-unused-vars
 		const { _csrf, ...safeQuery } = query;
 
@@ -101,6 +91,29 @@ const getProjectsMapController = async (req, res, next) => {
 	}
 };
 
-const postProjectsMapController = getProjectsMapController;
+/**
+ * POST /projects-map
+ * Toggles filter panel visibility and redirects back with preserved query params.
+ * Reads current state from filterToggleValue, flips it, stores in session.
+ * Extracts query string from referrer to maintain active filters.
+ */
+const postProjectsMapController = (req, res, next) => {
+	try {
+		// Flip the boolean: 'true' → false, anything else → true
+		req.session.projectsMapShowFilters = req.body.filterToggleValue !== 'true';
+
+		// Extract referrer  URL from request
+		const referrer = req.get('Referrer');
+
+		// Extract query string from referrer URL
+		// e.g., '?region=wales&sector=energy' → 'region=wales&sector=energy'
+		const queryString = referrer ? new URL(referrer).search.slice(1) : '';
+
+		res.redirect(`/projects-map${queryString ? `?${queryString}` : ''}`);
+	} catch (error) {
+		logger.error(error);
+		next(error);
+	}
+};
 
 module.exports = { getProjectsMapController, postProjectsMapController };

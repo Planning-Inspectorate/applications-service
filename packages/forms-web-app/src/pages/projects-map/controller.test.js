@@ -1,4 +1,4 @@
-const { getProjectsMapController } = require('./controller');
+const { getProjectsMapController, postProjectsMapController } = require('./controller');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../_services');
 const { getApplicationsFixture } = require('../_fixtures');
@@ -98,28 +98,28 @@ describe('pages/projects-map/controller', () => {
 		expect(res.render).not.toHaveBeenCalled();
 	});
 
-	describe('getProjectsMapController', () => {
-		it('sets session flag and redirects when showFilters=true in POST body', async () => {
-			req.body = { showFilters: 'true', sector: 'energy' };
+	describe('postProjectsMapController', () => {
+		it('toggles filter visibility and redirects using referrer query string', async () => {
+			req.session.projectsMapShowFilters = true;
+			req.body = { filterToggleValue: 'true' };
+			req.get = jest.fn().mockReturnValue('http://localhost:9004/projects-map?region=wales');
 			res.redirect = jest.fn();
 
-			await getProjectsMapController(req, res, next);
+			await postProjectsMapController(req, res, next);
 
-			expect(req.session.projectsMapShowFilters).toBe(true);
-			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
-			expect(res.render).not.toHaveBeenCalled();
+			expect(req.session.projectsMapShowFilters).toBe(false);
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map?region=wales');
 		});
 
-		it('clears session flag and redirects when hideFilters=true in POST body', async () => {
-			req.session.projectsMapShowFilters = true;
-			req.body = { hideFilters: 'true', sector: 'energy' };
+		it('handles empty referrer gracefully', async () => {
+			req.body = { filterToggleValue: 'false' };
+			req.get = jest.fn().mockReturnValue('');
 			res.redirect = jest.fn();
 
-			await getProjectsMapController(req, res, next);
+			await postProjectsMapController(req, res, next);
 
-			expect(req.session.projectsMapShowFilters).toBeUndefined();
-			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
-			expect(res.render).not.toHaveBeenCalled();
+			expect(req.session.projectsMapShowFilters).toBe(true);
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map');
 		});
 	});
 });
