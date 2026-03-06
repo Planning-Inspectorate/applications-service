@@ -8,6 +8,7 @@ const {
 } = require('../project-search/utils/get-project-search-query-string');
 const { getProjectSearchURL } = require('../project-search/utils/get-project-search-url');
 const { getRelatedContentLinks } = require('../project-search/utils/get-related-content-links');
+const { getProjectsMapURL } = require('./utils/get-projects-map-url');
 
 const view = 'projects-map/view.njk';
 
@@ -84,7 +85,7 @@ const getProjectsMapController = async (req, res, next) => {
 		const { _csrf: _csrfIgnored, ...safeQuery } = query;
 
 		res.render(view, {
-			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace),
+			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
 			mapAccessToken,
 			mapGeoJSON: JSON.stringify(toGeoJSON(applications)),
 			projectSearchURL: getProjectSearchURL(),
