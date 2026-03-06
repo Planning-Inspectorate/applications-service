@@ -59,7 +59,24 @@ const toGeoJSON = (applications) => ({
 
 const getProjectsMapController = async (req, res, next) => {
 	try {
-		const { i18n, query } = req;
+		const { i18n, query, body } = req;
+
+		// Handle show/hide filters via POST body, then redirect to clean URL
+		if (body.showFilters === 'true') {
+			req.session.projectsMapShowFilters = true;
+			// eslint-disable-next-line no-unused-vars
+			const { showFilters, _csrf, ...safeQuery } = body;
+			const qs = new URLSearchParams(safeQuery).toString();
+			return res.redirect(`/projects-map${qs ? `?${qs}` : ''}`);
+		}
+
+		if (body.hideFilters === 'true') {
+			delete req.session.projectsMapShowFilters;
+			// eslint-disable-next-line no-unused-vars
+			const { hideFilters, _csrf, ...safeQuery } = body;
+			const qs = new URLSearchParams(safeQuery).toString();
+			return res.redirect(`/projects-map${qs ? `?${qs}` : ''}`);
+		}
 
 		const [{ applications, filters }, mapAccessToken] = await Promise.all([
 			getApplications(getProjectSearchQueryString(query)),
@@ -84,20 +101,6 @@ const getProjectsMapController = async (req, res, next) => {
 	}
 };
 
-const getShowFiltersController = (req, res) => {
-	// eslint-disable-next-line no-unused-vars
-	const { _csrf, ...safeQuery } = req.query;
-	const qs = new URLSearchParams(safeQuery).toString();
-	req.session.projectsMapShowFilters = true;
-	res.redirect(`/projects-map${qs ? `?${qs}` : ''}`);
-};
+const postProjectsMapController = getProjectsMapController;
 
-const getHideFiltersController = (req, res) => {
-	// eslint-disable-next-line no-unused-vars
-	const { _csrf, ...safeQuery } = req.query;
-	const qs = new URLSearchParams(safeQuery).toString();
-	delete req.session.projectsMapShowFilters;
-	res.redirect(`/projects-map${qs ? `?${qs}` : ''}`);
-};
-
-module.exports = { getProjectsMapController, getShowFiltersController, getHideFiltersController };
+module.exports = { getProjectsMapController, postProjectsMapController };

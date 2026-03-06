@@ -1,8 +1,4 @@
-const {
-	getProjectsMapController,
-	getShowFiltersController,
-	getHideFiltersController
-} = require('./controller');
+const { getProjectsMapController } = require('./controller');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../_services');
 const { getApplicationsFixture } = require('../_fixtures');
@@ -30,7 +26,7 @@ describe('pages/projects-map/controller', () => {
 	let req, res, next;
 
 	beforeEach(() => {
-		req = { i18n, query: {}, session: {} };
+		req = { i18n, query: {}, body: {}, session: {} };
 		res = { render: jest.fn() };
 		next = jest.fn();
 		jest.resetAllMocks();
@@ -102,24 +98,28 @@ describe('pages/projects-map/controller', () => {
 		expect(res.render).not.toHaveBeenCalled();
 	});
 
-	describe('getShowFiltersController', () => {
-		it('sets session flag and redirects', () => {
-			req.query = { sector: 'energy' };
+	describe('getProjectsMapController', () => {
+		it('sets session flag and redirects when showFilters=true in POST body', async () => {
+			req.body = { showFilters: 'true', sector: 'energy' };
 			res.redirect = jest.fn();
-			getShowFiltersController(req, res);
+
+			await getProjectsMapController(req, res, next);
+
 			expect(req.session.projectsMapShowFilters).toBe(true);
 			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
+			expect(res.render).not.toHaveBeenCalled();
 		});
-	});
 
-	describe('getHideFiltersController', () => {
-		it('clears session flag and redirects', () => {
+		it('clears session flag and redirects when hideFilters=true in POST body', async () => {
 			req.session.projectsMapShowFilters = true;
-			req.query = { sector: 'energy' };
+			req.body = { hideFilters: 'true', sector: 'energy' };
 			res.redirect = jest.fn();
-			getHideFiltersController(req, res);
+
+			await getProjectsMapController(req, res, next);
+
 			expect(req.session.projectsMapShowFilters).toBeUndefined();
 			expect(res.redirect).toHaveBeenCalledWith('/projects-map?sector=energy');
+			expect(res.render).not.toHaveBeenCalled();
 		});
 	});
 });

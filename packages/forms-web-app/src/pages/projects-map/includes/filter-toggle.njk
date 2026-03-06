@@ -1,0 +1,20 @@
+<div class="govuk-button-group govuk-!-margin-bottom-4">
+	{% if showFilters %}
+		<form method="post" action="/projects-map" class="projects-map__filter-toggle__container">
+			<input type="hidden" name="hideFilters" value="true"/>
+			{% for key, value in query %}
+				<input type="hidden" name="{{ key }}" value="{{ value }}"/>
+			{% endfor %}
+			<button type="submit" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.hideFilters') }}</button>
+		</form>
+	{% else %}
+		<form method="post" action="/projects-map" class="projects-map__filter-toggle__container">
+			<input type="hidden" name="showFilters" value="true"/>
+			{% for key, value in query %}
+				<input type="hidden" name="{{ key }}" value="{{ value }}"/>
+			{% endfor %}
+			<button type="submit" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.showFilters') }}</button>
+		</form>
+	{% endif %}
+	<a href="{{ projectSearchURL }}?{{ query | urlencode }}" class="govuk-link">{{ t('projectsMap.switchToListView') }}</a>
+</div>
