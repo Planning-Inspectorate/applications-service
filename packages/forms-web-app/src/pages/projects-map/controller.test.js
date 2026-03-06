@@ -26,7 +26,7 @@ describe('pages/projects-map/controller', () => {
 	let req, res, next;
 
 	beforeEach(() => {
-		req = { i18n, query: {}, body: {}, session: {} };
+		req = { i18n, query: {}, body: {}, session: {}, url: '/projects-map' };
 		res = { render: jest.fn() };
 		next = jest.fn();
 		jest.resetAllMocks();

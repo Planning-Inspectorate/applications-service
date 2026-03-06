@@ -66,18 +66,25 @@ const getProjectsMapController = async (req, res, next) => {
 	try {
 		const { i18n, query } = req;
 
+		// Redirect to clean URL if only _csrf or searchTerm with no value exists
+		// eslint-disable-next-line no-unused-vars
+		const { _csrf, searchTerm, ...filters } = query;
+		if (Object.keys(filters).length === 0 && !searchTerm && req.url.includes('?')) {
+			return res.redirect('/projects-map');
+		}
+
 		// Fetch applications and OS Maps token concurrently
-		const [{ applications, filters }, mapAccessToken] = await Promise.all([
+		const [{ applications, filters: availableFilters }, mapAccessToken] = await Promise.all([
 			getApplications(getProjectSearchQueryString(query)),
 			getMapAccessToken()
 		]);
 
 		// Strip CSRF token from query before passing to view
 		// eslint-disable-next-line no-unused-vars
-		const { _csrf, ...safeQuery } = query;
+		const { _csrf: _csrfIgnored, ...safeQuery } = query;
 
 		res.render(view, {
-			...getFilters(i18n, query, filters, projectsMapI18nNamespace),
+			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace),
 			mapAccessToken,
 			mapGeoJSON: JSON.stringify(toGeoJSON(applications)),
 			projectSearchURL: getProjectSearchURL(),
