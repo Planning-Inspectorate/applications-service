@@ -1,26 +1,34 @@
 {
 	"heading1": "Contact us",
-	"heading2": "General Enquiries",
+	"heading2": "General enquiries",
 	"paragraph1": "If you are contacting us about a particular project, please email the project team. The project team email address can be found on the project page.",
-	"paragraph2": "If you have another enquiry, you can contact us by the following options:",
-	"paragraph3": "Contact form: {{-link}}",
-	"paragraph3LinkText": "Fill out our form",
+
+	"paragraph2": "If you have another enquiry, you can contact us by filling out our {{-link}}.",
+	"paragraph2LinkText": "customer contact form",
+
+	"heading5": "Phone",
+	"paragraph6": "Phone (customer services):",
 	"paragraph4": "Email: {{-link}}",
-	"paragraph5": "If you are contacting us about a specific project, put the project name in the subject line. At busy times we may not be able to respond immediately.",
-	"paragraph6": "Telephone customer services:",
-	"paragraph8": "Address:",
+	"paragraph5": "Monday to Friday, 9am to 4pm (except public holidays)",
+
+	"heading6": "Address",
+	"paragraph8": "Address",
+
+	"heading7": "Social media",
 	"paragraph9": "Follow us on X:",
-	"paragraph10": "Further information about contacting the Planning Inspectorate customer services can be viewed on {{-link}}.",
+	"paragraph16": "{{-link}}.",
+	"paragraph16LinkText": "Visit our GOV.UK pages for more ways to contact us",
+	"paragraph10": "We cannot discuss specific cases or individual applications over social media, so please do not give any personal details.",
+
 	"heading3": "Feedback and complaints",
-	"paragraph11": "The Planning Inspectorate tries to provide the best possible service for its customers. We try to ensure everyone is satisfied with the service they receive. Complaints about the examination process or Examining Authority's final report will be considered and responded to.",
-	"howToComplainHeading1": "How to complain",
-	"howToComplainParagraph1": "Complaints should be made as soon as the reason becomes apparent. We will not answer complaints made more than one year after a decision or recommendation.",
-	"howToComplainParagraph2": "Complaints should be made in full at the start, providing as much detail as possible. You can send complaints to us using our contact form or by telephone.",
-	"customerContactFormLinkText": "Customer contact form",
-	"howToComplainParagraph3": "Details of our complaints procedure can be found {{-link}}.",
-	"howToComplainParagraph3LinkText": "here",
+	"paragraph11": "We aim to provide the best possible service for our customers and we treat all complaints seriously. {{-link}}.",
+	"paragraph11LinkText": "Find out about our complaints procedure",
+	"howToComplainParagraph1": "We are always looking to improve our service. Help us achieve this by sharing your experiences of using the service in {{-link}}.",
+	"howToComplainParagraph1LinkText": "our feedback form",
+
 	"heading4": "Press and media",
-	"paragraph12": "Telephone:",
-	"paragraph13": "Email:",
-	"paragraph14": "The Press office is open from {{-openingHours}}."
+	"paragraph12": "Phone:",
+	"paragraph13": "Email",
+	"paragraph14": "Monday to Thursday, 9am to 5pm (except public holidays). Friday, 9am to 4pm (except public holidays)",
+	"paragraph15LinkText": "Find out about our call charges"
 }
