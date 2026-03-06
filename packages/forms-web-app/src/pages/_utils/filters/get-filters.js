@@ -9,10 +9,11 @@ const { getFiltersViewModel } = require('./get-filters-view-model');
  * @param {Object} query - Express query object
  * @param {Array} rawFilters - Raw filter data from API
  * @param {string} i18nNamespace - Namespace containing filterLabels translation keys
+ * @param {string} basePath - Base path to prepend to filter removal links (e.g., '/projects-map')
  */
-const getFilters = (i18n, query, rawFilters, i18nNamespace) => {
+const getFilters = (i18n, query, rawFilters, i18nNamespace, basePath = '') => {
 	const filtersViewModel = getFiltersViewModel(i18n, rawFilters, i18nNamespace);
-	return getActiveFiltersViewModel(query, filtersViewModel);
+	return getActiveFiltersViewModel(query, filtersViewModel, basePath);
 };
 
 module.exports = { getFilters };
