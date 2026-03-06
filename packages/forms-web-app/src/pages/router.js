@@ -12,8 +12,7 @@ const {
 } = require('./project-search/controller');
 const {
 	getProjectsMapController,
-	getShowFiltersController,
-	getHideFiltersController
+	postProjectsMapController
 } = require('./projects-map/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
@@ -106,17 +105,23 @@ pagesRouter.get(
 
 pagesRouter.post(projectSearchURL, postProjectSearchController);
 
-pagesRouter.get(`${projectsMapURL}/show-filters`, getShowFiltersController);
+if (featureFlag.enableProjectsMap) {
+	pagesRouter.post(
+		projectsMapURL,
+		addCheckboxAccordionTranslationsMiddleware,
+		addCommonTranslationsMiddleware,
+		addProjectsMapTranslationsMiddleware,
+		postProjectsMapController
+	);
 
-pagesRouter.get(`${projectsMapURL}/hide-filters`, getHideFiltersController);
-
-pagesRouter.get(
-	projectsMapURL,
-	addCheckboxAccordionTranslationsMiddleware,
-	addCommonTranslationsMiddleware,
-	addProjectsMapTranslationsMiddleware,
-	getProjectsMapController
-);
+	pagesRouter.get(
+		projectsMapURL,
+		addCheckboxAccordionTranslationsMiddleware,
+		addCommonTranslationsMiddleware,
+		addProjectsMapTranslationsMiddleware,
+		getProjectsMapController
+	);
+}
 
 pagesRouter.get(
 	registerOfApplicationsURL,

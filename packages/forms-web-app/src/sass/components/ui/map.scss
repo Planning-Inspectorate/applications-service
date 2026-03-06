@@ -20,9 +20,12 @@
 		--map-height: 650px;
 	}
 }
+.projects-map__filter-toggle__container {
+	display: flex;
+}
 
 .projects-map__filter-toggle {
-	margin-bottom: 0;
+	margin-bottom: 0 !important;
 
 	@media (max-width: calc(map-get($govuk-breakpoints, 'tablet') - 1px)) {
 		display: none;

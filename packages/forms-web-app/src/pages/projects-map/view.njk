@@ -29,10 +29,11 @@
 
 {% block content %}
 	{% set showFilterPanel = showFilters %}
-	<form method="get" action="/projects-map">
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-one-third{{ '' if showFilterPanel else ' projects-map__filters--hidden-on-tablet' }}">
-			{% include "./includes/filters.njk" %}
+			<form method="get" action="/projects-map">
+				{% include "./includes/filters.njk" %}
+			</form>
 		</div>
 
 		<div class="{{ 'govuk-grid-column-two-thirds' if showFilterPanel else 'govuk-grid-column-full' }} projects-map__content">
@@ -45,6 +46,8 @@
 			</p>
 
 			{% include "./includes/search.njk" %}
+
+			{% include "./includes/filter-toggle.njk" %}
 
 			{% include "./includes/active-filters.njk" %}
 
@@ -63,5 +66,4 @@
 			</div>
 		</div>
 	</div>
-	</form>
 {% endblock %}
