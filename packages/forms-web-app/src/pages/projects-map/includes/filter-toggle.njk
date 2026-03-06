@@ -16,5 +16,6 @@
 			<button type="submit" class="govuk-button govuk-button--secondary projects-map__filter-toggle">{{ t('projectsMap.showFilters') }}</button>
 		</form>
 	{% endif %}
-	<a href="{{ projectSearchURL }}?{{ query | urlencode }}" class="govuk-link">{{ t('projectsMap.switchToListView') }}</a>
+	{% set queryString = query | urlencode %}
+	<a href="{{ projectSearchURL }}{% if queryString | length %}?{{ queryString }}{% endif %}" class="govuk-link">{{ t('projectsMap.switchToListView') }}</a>
 </div>
