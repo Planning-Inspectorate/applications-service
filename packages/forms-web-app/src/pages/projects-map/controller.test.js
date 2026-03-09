@@ -44,6 +44,7 @@ describe('pages/projects-map/controller', () => {
 				mapAccessToken: 'mock-token',
 				projectSearchURL: '/project-search',
 				query: {},
+				queryString: '',
 				showFilters: false,
 				mapGeoJSON: expect.stringContaining('FeatureCollection')
 			})

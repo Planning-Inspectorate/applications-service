@@ -5,6 +5,5 @@
 			{{ t('projectsMap.hideFilters' if showFilters else 'projectsMap.showFilters') }}
 		</button>
 	</form>
-	{% set queryString = query | urlencode %}
-	<a href="{{ projectSearchURL }}{% if queryString | length %}?{{ queryString }}{% endif %}" class="govuk-link">{{ t('projectsMap.switchToListView') }}</a>
+	<a href="{{ projectSearchURL }}{{ queryString }}" class="govuk-link">{{ t('projectsMap.switchToListView') }}</a>
 </div>

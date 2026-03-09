@@ -9,6 +9,7 @@ const {
 const { getProjectSearchURL } = require('../project-search/utils/get-project-search-url');
 const { getRelatedContentLinks } = require('../project-search/utils/get-related-content-links');
 const { getProjectsMapURL } = require('./utils/get-projects-map-url');
+const { queryStringBuilder } = require('../../utils/query-string-builder');
 
 const view = 'projects-map/view.njk';
 
@@ -67,9 +68,8 @@ const getProjectsMapController = async (req, res, next) => {
 	try {
 		const { i18n, query } = req;
 
-		// Redirect to clean URL if only _csrf or searchTerm with no value exists
-		// eslint-disable-next-line no-unused-vars
-		const { _csrf, searchTerm, ...filters } = query;
+		// Redirect to clean URL if only searchTerm with no value exists
+		const { searchTerm, ...filters } = query;
 		if (Object.keys(filters).length === 0 && !searchTerm && req.url.includes('?')) {
 			return res.redirect('/projects-map');
 		}
@@ -80,9 +80,7 @@ const getProjectsMapController = async (req, res, next) => {
 			getMapAccessToken()
 		]);
 
-		// Strip CSRF token from query before passing to view
-		// eslint-disable-next-line no-unused-vars
-		const { _csrf: _csrfIgnored, ...safeQuery } = query;
+		const queryString = queryStringBuilder(query, Object.keys(query), true);
 
 		res.render(view, {
 			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
@@ -90,7 +88,8 @@ const getProjectsMapController = async (req, res, next) => {
 			mapGeoJSON: JSON.stringify(toGeoJSON(applications)),
 			projectSearchURL: getProjectSearchURL(),
 			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
-			query: safeQuery,
+			query,
+			queryString,
 			showFilters: !!req.session.projectsMapShowFilters
 		});
 	} catch (error) {
