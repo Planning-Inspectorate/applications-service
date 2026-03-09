@@ -217,6 +217,7 @@ describe('pages/project-search/controller', () => {
 						paginationQueryString: '?page=:page',
 						projectsMapURL: '/projects-map',
 						query: {},
+						queryString: '',
 						relatedContentLinks: [
 							{ name: 'Register of applications', url: '/register-of-applications' }
 						],
