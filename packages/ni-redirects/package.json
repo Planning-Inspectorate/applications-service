@@ -11,8 +11,8 @@
 		"deploy:test": "wrangler deploy -e test",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"test": "npx jest",
-		"test:cov": "npx jest --coverage --verbose"
+		"test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+		"test:cov": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage --verbose"
 	},
 	"devDependencies": {
 		"cross-env": "*",
