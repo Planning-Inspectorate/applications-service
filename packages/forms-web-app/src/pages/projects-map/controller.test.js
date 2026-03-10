@@ -38,6 +38,7 @@ describe('pages/projects-map/controller', () => {
 
 		await getProjectsMapController(req, res, next);
 
+		expect(req.session.projectsMapShowFilters).toBe(false);
 		expect(res.render).toHaveBeenCalledWith(
 			'projects-map/view.njk',
 			expect.objectContaining({
@@ -59,6 +60,7 @@ describe('pages/projects-map/controller', () => {
 
 		await getProjectsMapController(req, res, next);
 
+		expect(req.session.projectsMapShowFilters).toBe(true);
 		expect(res.render).toHaveBeenCalledWith(
 			'projects-map/view.njk',
 			expect.objectContaining({ showFilters: true })
