@@ -99,6 +99,36 @@ describe('pages/projects-map/controller', () => {
 		expect(res.render).not.toHaveBeenCalled();
 	});
 
+	it('excludes empty searchTerm from queryString', async () => {
+		req.query = { searchTerm: '', region: 'wales' };
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockResolvedValue('mock-token');
+
+		await getProjectsMapController(req, res, next);
+
+		expect(res.render).toHaveBeenCalledWith(
+			'projects-map/view.njk',
+			expect.objectContaining({
+				queryString: '?region=wales'
+			})
+		);
+	});
+
+	it('includes searchTerm in queryString when it has a value', async () => {
+		req.query = { searchTerm: 'wind', region: 'wales' };
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockResolvedValue('mock-token');
+
+		await getProjectsMapController(req, res, next);
+
+		expect(res.render).toHaveBeenCalledWith(
+			'projects-map/view.njk',
+			expect.objectContaining({
+				queryString: '?region=wales&searchTerm=wind'
+			})
+		);
+	});
+
 	describe('postProjectsMapController', () => {
 		it('toggles filter visibility and redirects using referrer query string', async () => {
 			req.session.projectsMapShowFilters = true;
