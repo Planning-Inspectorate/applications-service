@@ -84,10 +84,6 @@ const getProjectsMapController = async (req, res, next) => {
 		const queryParams = searchTerm ? { ...filters, searchTerm } : filters;
 		const queryString = queryStringBuilder(queryParams, Object.keys(queryParams), true);
 
-		if (req.session.projectsMapShowFilters === undefined) {
-			req.session.projectsMapShowFilters = false;
-		}
-
 		res.render(view, {
 			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
 			mapAccessToken,
@@ -96,7 +92,7 @@ const getProjectsMapController = async (req, res, next) => {
 			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
 			query,
 			queryString,
-			showFilters: req.session.projectsMapShowFilters
+			showFilters: !!req.session.projectsMapShowFilters
 		});
 	} catch (error) {
 		logger.error(error);
