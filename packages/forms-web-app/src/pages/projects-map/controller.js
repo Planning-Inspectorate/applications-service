@@ -80,7 +80,9 @@ const getProjectsMapController = async (req, res, next) => {
 			getMapAccessToken()
 		]);
 
-		const queryString = queryStringBuilder(query, Object.keys(query), true);
+		// Build query string from filters
+		const queryParams = searchTerm ? { ...filters, searchTerm } : filters;
+		const queryString = queryStringBuilder(queryParams, Object.keys(queryParams), true);
 
 		res.render(view, {
 			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
