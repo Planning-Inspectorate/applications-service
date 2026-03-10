@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"engines": {
-		"node": ">=20.0.0 <21.0.0"
+		"node": ">=22.0.0 <23.0.0"
 	},
 	"name": "applications-service",
 	"description": "Application - these are utility scripts for the whole repo",
@@ -170,7 +170,7 @@
 		"jest-when": "^3.5.2",
 		"lint-staged": "^13.0.0",
 		"mocha-allure-reporter": "^1.4.0",
-		"multi-semantic-release": "^2.13.0",
+		"multi-semantic-release": "^3.1.0",
 		"node-html-parser": "^6.1.5",
 		"node-mocks-http": "^1.11.0",
 		"nodemon": "^2.0.12",
