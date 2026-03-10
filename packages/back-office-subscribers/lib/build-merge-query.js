@@ -1,4 +1,4 @@
-const isNullOrUndefined = (value) => value === null || value === undefined;
+const { isNullOrUndefined } = require('./_utils/is-null-undefined');
 
 /**
  * Build a merge query for the given entity
