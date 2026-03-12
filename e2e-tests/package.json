@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "",
 	"engines": {
-		"node": ">=20.0.0 <21.0.0"
+		"node": ">=22.0.0 <23.0.0"
 	},
 	"scripts": {
 		"postinstall": "patch-package",

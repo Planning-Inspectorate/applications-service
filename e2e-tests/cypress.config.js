@@ -6,6 +6,14 @@ module.exports = defineConfig({
 	viewportWidth: 1024,
 	viewportHeight: 1600,
 	video: false,
+	defaultCommandTimeout: 10000,
+	pageLoadTimeout: 30000,
+	requestTimeout: 10000,
+	responseTimeout: 30000,
+	retries: {
+		runMode: 2,
+		openMode: 0
+	},
 	env: {
 		demoDelay: 0,
 		APP_APPLICATION_BASE_URL: 'http://forms-web-app:9004',
