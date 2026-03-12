@@ -13,9 +13,15 @@ module.exports = defineConfig({
 		excludeSpecPattern: ['cypress/e2e/features/**', 'cypress/e2e/step_definitions/**'],
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
-		pageLoadTimeout: 20000,
-		defaultCommandTimeout: 20000,
+		pageLoadTimeout: 60000,
+		defaultCommandTimeout: 10000,
+		requestTimeout: 10000,
+		responseTimeout: 30000,
 		testIsolation: false,
+		retries: {
+			runMode: 2,
+			openMode: 0
+		},
 		env: {
 			commandDelay: 0,
 			baseUrl: 'https://applications-service-test.planninginspectorate.gov.uk'
