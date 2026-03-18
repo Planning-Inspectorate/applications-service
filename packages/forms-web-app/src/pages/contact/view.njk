@@ -28,16 +28,16 @@
       </h2>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph6') }} {{ pinsContactDetails.supportTeamPhoneNumber }}<br>
-        {{ t('contact.paragraph5') }}
+        {{ t('contact.paragraph3') }} {{ pinsContactDetails.supportTeamPhoneNumber }}<br>
+        {{ t('contact.paragraph4') }}
       </p>
 
       <p class="govuk-body">
-        <a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('contact.paragraph15LinkText') }}</a>
+        <a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('contact.paragraph13LinkText') }}</a>
       </p>
 
       <h2 class="govuk-heading-s">
-        {{ t('contact.paragraph13') }}
+        {{ t('contact.paragraph10') }}
       </h2>
 
       <p class="govuk-body">
@@ -68,16 +68,16 @@
       </h2>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph10') }}
+        {{ t('contact.paragraph7') }}
       </p>
       <p class="govuk-body">
-        {{ t('contact.paragraph9') }}
+        {{ t('contact.paragraph6') }}
         <a class="govuk-link" href="{{ pinsSocialMedia.twitterURL }}">{{ pinsSocialMedia.twitterHandle }}</a>
       </p>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph16', {
-          link: '<a class="govuk-link" href="' + govUK.furtherInformationURL + '">' + t('contact.paragraph16LinkText') + '</a>'
+        {{ t('contact.paragraph13', {
+          link: '<a class="govuk-link" href="' + govUK.furtherInformationURL + '">' + t('contact.linkText1') + '</a>'
         }) | safe }}
       </p>
 
@@ -86,8 +86,8 @@
       </h2>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph11', {
-          link: '<a class="govuk-link" href="' + govUK.complaintsProcedure + '">' + t('contact.paragraph11LinkText') + '</a>'
+        {{ t('contact.paragraph8', {
+          link: '<a class="govuk-link" href="' + govUK.complaintsProcedure + '">' + t('contact.paragraph8LinkText') + '</a>'
         }) | safe }}
       </p>
 
@@ -102,17 +102,19 @@
       </h2>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph12') }}
+        {{ t('contact.paragraph9') }}
         {{ pinsContactDetails.pressAndMediaPhoneNumber }}
         <br>
-        {{ t('contact.paragraph13') }}:
+        {{ t('contact.paragraph10') }}:
         <a class="govuk-link" href="mailto:{{ pinsContactDetails.pressAndMediaEmailAddress }}">{{ pinsContactDetails.pressAndMediaEmailAddress }}</a>
         <br>
-        {{ t('contact.paragraph14', { openingHours: t('common.govUK.pressOfficeOpeningHours') }) }}
+        {{ t('contact.paragraph11') }}
+        <br>
+        {{ t('contact.paragraph12') }}
       </p>
 
       <p class="govuk-body">
-        <a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('contact.paragraph15LinkText') }}</a>
+        <a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('contact.paragraph13LinkText') }}</a>
       </p>
     </div>
   </div>
