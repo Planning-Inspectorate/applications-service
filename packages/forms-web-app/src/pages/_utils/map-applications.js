@@ -19,7 +19,7 @@ const mapApplications = ({ language }, applications) =>
 				langIsWelsh && application.ProjectNameWelsh
 					? application.ProjectNameWelsh
 					: application.ProjectName,
-			stage: projectStagesTranslations[application.Stage][language]
+			stage: projectStagesTranslations[application.Stage]?.[language] || ''
 		};
 	});
 

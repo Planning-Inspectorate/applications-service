@@ -81,5 +81,35 @@ describe('pages/_utils/map-applications', () => {
 				]);
 			});
 		});
+
+		describe('When an application has an unknown stage value', () => {
+			const i18n = mockI18n({}, 'en');
+
+			it('should return empty string for stage instead of crashing', () => {
+				const applications = [
+					{
+						...getApplicationsFixture.data.applications[0],
+						Stage: 99
+					}
+				];
+
+				const result = mapApplications(i18n, applications);
+
+				expect(result[0].stage).toBe('');
+			});
+
+			it('should handle stage 0 (draft) which has no translation', () => {
+				const applications = [
+					{
+						...getApplicationsFixture.data.applications[0],
+						Stage: 0
+					}
+				];
+
+				const result = mapApplications(i18n, applications);
+
+				expect(result[0].stage).toBe('');
+			});
+		});
 	});
 });

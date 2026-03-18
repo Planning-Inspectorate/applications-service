@@ -40,7 +40,7 @@ function clusterStyle(feature, MARKER_FILL, MARKER_STROKE) {
 	const features = feature.get('features') || [];
 	const count = features.length;
 	if (count === 0) return null;
-	const isSingle = count === 1;
+	const isSingle = count <= 1;
 	const radius = isSingle ? 8 : 12 + Math.min(count, 20);
 
 	const shadow = new Style({
@@ -218,7 +218,19 @@ function projectsMap() {
 				spiral: true,
 				circleMaxObjects: 10,
 				style: styleWithColours,
-				featureStyle: styleWithColours
+				featureStyle: (feature) => {
+					const { caseReference } = feature.getProperties();
+					if (caseReference) {
+						return new Style({
+							image: new Circle({
+								radius: 8,
+								fill: new Fill({ color: MARKER_FILL }),
+								stroke: new Stroke({ color: MARKER_STROKE, width: 2 })
+							})
+						});
+					}
+					return styleWithColours(feature);
+				}
 			});
 
 			map.on('pointermove', (e) => {

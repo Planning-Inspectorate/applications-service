@@ -55,6 +55,7 @@ describe('pages/project-search/controller', () => {
 					expect(res.render).toHaveBeenCalledWith('project-search/view.njk', {
 						activeFilters: [],
 						applicationsDownloadURL: '/api/applications-download',
+						enableProjectsMap: false,
 						totalApplicationsWithoutFilters: 21,
 						applications: [
 							{
@@ -232,6 +233,67 @@ describe('pages/project-search/controller', () => {
 							{ link: '?sortBy=%2BStage&page=1', name: 'Stage', sort: 'none' }
 						]
 					});
+				});
+			});
+
+			describe('when API returns totalPages=1 (MERGE mode)', () => {
+				const mergeFixture = {
+					resp_code: 200,
+					data: {
+						...getApplicationsFixture.data,
+						totalPages: 1,
+						currentPage: 1,
+						itemsPerPage: 3,
+						totalItems: 3
+					}
+				};
+
+				it('should paginate applications in the controller', async () => {
+					req.query = { itemsPerPage: '2' };
+					getAllProjectList.mockResolvedValue(mergeFixture);
+
+					await getProjectSearchController(req, res, next);
+
+					const renderData = res.render.mock.calls[0][1];
+					expect(renderData.applications).toHaveLength(2);
+					expect(renderData.pagination.paginationData.itemsPerPage).toBe(2);
+					expect(renderData.pagination.paginationData.totalPages).toBe(2);
+					expect(renderData.pagination.paginationData.currentPage).toBe(1);
+				});
+
+				it('should return second page of results', async () => {
+					req.query = { itemsPerPage: '2', page: '2' };
+					getAllProjectList.mockResolvedValue(mergeFixture);
+
+					await getProjectSearchController(req, res, next);
+
+					const renderData = res.render.mock.calls[0][1];
+					expect(renderData.applications).toHaveLength(1);
+					expect(renderData.pagination.paginationData.currentPage).toBe(2);
+				});
+
+				it('should default to 25 items per page when not specified', async () => {
+					req.query = {};
+					getAllProjectList.mockResolvedValue(mergeFixture);
+
+					await getProjectSearchController(req, res, next);
+
+					const renderData = res.render.mock.calls[0][1];
+					expect(renderData.pagination.paginationData.itemsPerPage).toBe(25);
+					expect(renderData.applications).toHaveLength(3);
+				});
+			});
+
+			describe('when API returns totalPages>1 (non-MERGE mode)', () => {
+				it('should not re-paginate applications', async () => {
+					getAllProjectList.mockResolvedValue(getApplicationsFixture);
+
+					await getProjectSearchController(req, res, next);
+
+					const renderData = res.render.mock.calls[0][1];
+					expect(renderData.pagination.paginationData.totalPages).toBe(7);
+					expect(renderData.pagination.paginationData.itemsPerPage).toBe(3);
+					expect(renderData.applications).toHaveLength(3);
 				});
 			});
 		});

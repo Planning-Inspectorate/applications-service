@@ -79,6 +79,16 @@ describe('pages/projects-map/controller', () => {
 		expect(stages).toContain('Acceptance'); // Stage: 2
 	});
 
+	it('requests all applications with itemsPerPage=1000', async () => {
+		getAllProjectList.mockResolvedValue(getApplicationsFixture);
+		getMapAccessToken.mockResolvedValue('mock-token');
+
+		await getProjectsMapController(req, res, next);
+
+		const queryString = getAllProjectList.mock.calls[0][0];
+		expect(queryString).toContain('size=1000');
+	});
+
 	it('calls next with error when getApplications fails', async () => {
 		getAllProjectList.mockResolvedValue({ resp_code: 500 });
 		getMapAccessToken.mockResolvedValue('mock-token');

@@ -1,6 +1,7 @@
 const { buildQueryString } = require('../../documents/_utils/common/buildQuerySring');
-
-const defaultDocumentsPerPage = 25;
+const {
+	applications: { defaultItemsPerPage: defaultDocumentsPerPage }
+} = require('../../../../config');
 
 const isItemsPerPageEqualToSize = (query, size) => Number(query.itemsPerPage) === size;
 

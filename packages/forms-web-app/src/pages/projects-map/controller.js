@@ -76,7 +76,7 @@ const getProjectsMapController = async (req, res, next) => {
 
 		// Fetch applications and OS Maps token concurrently
 		const [{ applications, filters: availableFilters }, mapAccessToken] = await Promise.all([
-			getApplications(getProjectSearchQueryString(query)),
+			getApplications(getProjectSearchQueryString({ ...query, itemsPerPage: 1000 })),
 			getMapAccessToken()
 		]);
 

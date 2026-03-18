@@ -87,7 +87,7 @@ And('User clicks on accept and continue button for {string}', (linkType) => {
 });
 
 And('User clicks on accept and register button', () => {
-	cy.get('[data-cy="button-accept-and-regoster"]').click();
+	cy.get('[data-cy="button-accept-and-register"]').click();
 });
 
 And('I click on {string} change link', (linkType) => {
