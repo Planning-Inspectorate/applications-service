@@ -1,29 +1,35 @@
 {
 	"heading1": "Contact us",
-	"heading2": "General enquiries",
-	"heading3": "Phone",
-	"heading4": "Address",
-	"heading5": "Social media",
-	"heading6": "Feedback and complaints",
-	"heading7": "Press and media",
 
+	"heading2": "General enquiries",
 	"paragraph1": "If you are contacting us about a particular project, please email the project team. The project team email address can be found on the project page.",
 	"paragraph2": "If you have another enquiry, you can contact us by filling out our {{-link}}.",
 	"paragraph2LinkText": "customer contact form",
+
+	"heading3": "Phone",
 	"paragraph3": "Phone (customer services):",
 	"paragraph4": "Monday to Friday, 9am to 4pm (except public holidays)",
+	"paragraph13LinkText": "Find out about our call charges",
+
+	"paragraph10": "Email",
+
+	"heading4": "Address",
 	"paragraph5": "Address",
-	"paragraph6": "Follow us on X:",
+
+	"heading5": "Social media",
 	"paragraph7": "We cannot discuss specific cases or individual applications over social media, so please do not give any personal details.",
+	"paragraph6": "Follow us on X:",
+	"paragraph13": "{{-link}}.",
+	"waysToContactLinkText": "Visit our GOV.UK pages for more ways to contact us",
+
+	"heading6": "Feedback and complaints",
 	"paragraph8": "We aim to provide the best possible service for our customers and we treat all complaints seriously. {{-link}}.",
 	"paragraph8LinkText": "Find out about our complaints procedure",
 	"howToComplainParagraph1": "We are always looking to improve our service. Help us achieve this by sharing your experiences of using the service in {{-link}}.",
 	"howToComplainParagraph1LinkText": "our feedback form",
+
+	"heading7": "Press and media",
 	"paragraph9": "Phone:",
-	"paragraph10": "Email",
 	"paragraph11": "Monday to Thursday, 9am to 5pm (except public holidays).",
-	"paragraph12": "Friday, 9am to 4pm (except public holidays)",
-	"paragraph13": "{{-link}}.",
-	"paragraph13LinkText": "Find out about our call charges",
-	"waysToContactLinkText": "Visit our GOV.UK pages for more ways to contact us"
+	"paragraph12": "Friday, 9am to 4pm (except public holidays)"
 }
