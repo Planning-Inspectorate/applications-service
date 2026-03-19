@@ -10,8 +10,10 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
-const { getProjectsMapController } = require('./projects-map/controller');
-const { getProjectsMapURL } = require('./projects-map/utils/get-projects-map-url');
+const {
+	getProjectsMapController,
+	postProjectsMapController
+} = require('./projects-map/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -20,6 +22,7 @@ const {
 const { getContactURL } = require('./contact/_utils/get-contact-url');
 const { getCookiesURL } = require('./cookies/_utils/get-cookies-url');
 const { getProjectSearchURL } = require('./project-search/utils/get-project-search-url');
+const { getProjectsMapURL } = require('./projects-map/utils/get-projects-map-url');
 const {
 	getDetailedInformationURL
 } = require('./detailed-information/_utils/get-detailed-information-url');
@@ -69,9 +72,9 @@ const termsAndConditionsURL = getTermsAndConditionsURL();
 const contactURL = getContactURL();
 const cookiesURL = getCookiesURL();
 const projectSearchURL = getProjectSearchURL();
+const projectsMapURL = getProjectsMapURL();
 const detailedInformationURL = getDetailedInformationURL();
 const registerOfApplicationsURL = getRegisterOfApplicationsURL();
-const projectsMapURL = getProjectsMapURL();
 
 const { featureFlag } = require('../config');
 
@@ -100,14 +103,25 @@ pagesRouter.get(
 	getProjectSearchController
 );
 
-pagesRouter.get(
-	projectsMapURL,
-	addCommonTranslationsMiddleware,
-	addProjectsMapTranslationsMiddleware,
-	getProjectsMapController
-);
-
 pagesRouter.post(projectSearchURL, postProjectSearchController);
+
+if (featureFlag.enableProjectsMap) {
+	pagesRouter.post(
+		projectsMapURL,
+		addCheckboxAccordionTranslationsMiddleware,
+		addCommonTranslationsMiddleware,
+		addProjectsMapTranslationsMiddleware,
+		postProjectsMapController
+	);
+
+	pagesRouter.get(
+		projectsMapURL,
+		addCheckboxAccordionTranslationsMiddleware,
+		addCommonTranslationsMiddleware,
+		addProjectsMapTranslationsMiddleware,
+		getProjectsMapController
+	);
+}
 
 pagesRouter.get(
 	registerOfApplicationsURL,

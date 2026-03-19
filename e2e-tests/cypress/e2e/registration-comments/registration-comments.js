@@ -35,9 +35,12 @@ Then('I verify no registration comments text present on the page', () => {
 	regComments.assertNoRegCommentsOnThePage();
 });
 
-Then('I can verify that the registration comments displayed in descending order', (table) => {
-	regComments.verifyCommentsDisplayedinDescendingOrder(table);
-});
+Then(
+	'I can verify that the registration comments displayed in descending order by date submitted and secondary alphabetical order of author',
+	(table) => {
+		regComments.verifyCommentsDisplayedinDescendingOrder(table);
+	}
+);
 
 Then('I verify no pagination is present on the page', () => {
 	regComments.assertNoPagination();

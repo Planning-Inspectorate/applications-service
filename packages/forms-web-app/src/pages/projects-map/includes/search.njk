@@ -1,0 +1,5 @@
+{% from "components/ui/search-bar.njk" import uiSearchBar %}
+
+<form method="get" action="/projects-map">
+	{{ uiSearchBar('projects-map-search-bar', 'searchTerm', query.searchTerm, t('projectsMap.searchAccessibilityText'), t('common.search')) }}
+</form>

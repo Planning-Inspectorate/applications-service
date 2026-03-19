@@ -14,7 +14,8 @@ const getActiveFilterQueryParamsWithRemovedFilter = (queryObj, removeMe) => {
 		}
 	}
 
-	return `?${URL.toString()}`;
+	const queryString = URL.toString();
+	return queryString ? `?${queryString}` : '';
 };
 
 module.exports = {

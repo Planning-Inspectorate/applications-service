@@ -1,35 +1,23 @@
 {
-	"common": {
-		"projects": "projects"
-	},
-	"pageTitle": "Projects Map",
-	"heading1": "Projects map",
-	"paragraph1": "This is a map of all project boundaries. To find a specific project select a project boundary.",
-	"showFiltersText": "Show filters",
-	"hideFiltersText": "Hide filters",
-	"projectSearchLinkText": "Switch to list view",
-	"warningText": "Project boundaries shown are for illustrative purposes only. To the view exact boundaries refer to latest relevant plans and drawings.",
-	"linkText1": "Download a table containing a complete list of all {{-totalApplications}} projects (CSV)",
-	"accessibilityText1": "Search projects",
-	"heading2": "Filtered results",
-	"paragraph2": "Showing {{-from}} to {{-to}} of {{-total}} projects.",
-	"noResultsFound": {
-		"paragraph1": "No results were found matching your search terms and filters.",
-		"paragraph2": "Would you like to clear your search and filters to view all projects instead?",
-		"linkText1": "Clear search and filters"
-	},
+	"pageTitle": "Map prosiectau",
+	"heading1": "Map prosiectau",
+	"paragraph1": "Dewiswch farc ar y map i weld prosiect yn yr ardal.",
+	"searchAccessibilityText": "Chwilio map prosiectau",
+	"showFilters": "Dangos hidlyddion",
+	"hideFilters": "Cuddio hidlyddion",
+	"switchToListView": "Newid i olwg rhestr",
+	"switchToMapView": "Newid i olwg map",
+	"applyFilters": "Cymhwyso hidlyddion",
+	"filteredResults": "Canlyniadau wedi'u hidlo",
+	"projectsSelected": "{{count}} prosiect wedi'u dewis",
+	"warningText": "Mae lleoliadau marcwyr yn fras yn unig. Cyfeiriwch at y cynlluniau a'r lluniadau diweddaraf i weld ffiniau'r prosiect",
 	"filterLabels": {
-		"region": "Location",
+		"region": "Lleoliad",
 		"sector": "Sector",
-		"stage": "Stage"
-	},
-	"sortByLinks": {
-		"projectName": "Project name",
-		"promoterName": "Applicant",
-		"stage": "Stage"
+		"stage": "Cam"
 	},
 	"sidebar": {
-		"relatedContent": "Related content",
-		"registerOfApplications": "Register of applications"
+		"relatedContent": "Cynnwys cysylltiedig",
+		"registerOfApplications": "Cofrestr geisiadau"
 	}
 }

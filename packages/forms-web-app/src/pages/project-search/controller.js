@@ -15,9 +15,7 @@ const getProjectSearchController = async (req, res, next) => {
 			getProjectSearchQueryString(query)
 		);
 
-		const pageData = getPageData(i18n, query, applications, filters, pagination);
-
-		res.render(view, pageData);
+		res.render(view, getPageData(i18n, query, applications, filters, pagination));
 	} catch (error) {
 		logger.error(error);
 		next(error);

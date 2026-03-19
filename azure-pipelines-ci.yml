@@ -18,7 +18,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.24.2
+      ref: refs/tags/release/3.25.2
 
 extends:
   template: stages/wrapper_ci.yml@templates
@@ -47,7 +47,7 @@ extends:
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 20
-              script: cd packages/applications-service-api && npx prisma generate
+              script: cd packages/applications-service-api && npm run db:generate
           - template: ../steps/node_script.yml
             parameters:
               nodeVersion: 20
