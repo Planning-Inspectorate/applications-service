@@ -1,15 +1,14 @@
-const sendMessage = require('../index');
-const buildUpdateQuery = require('../../lib/build-update-query');
-
-const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
-		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
+		representation: { updateMany: jest.fn().mockResolvedValue({ count: 1 }) }
 	}
 }));
-jest.mock('../../lib/build-update-query', () =>
-	jest.fn().mockImplementation(jest.requireActual('../../lib/build-update-query'))
-);
+
+jest.mock('../../lib/build-prisma-update-query', () => jest.fn().mockResolvedValue({ count: 1 }));
+
+const sendMessage = require('../index');
+const mockPrismaUpdate = require('../../lib/build-prisma-update-query');
+const { prismaClient } = require('../../lib/prisma');
 
 const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
@@ -32,7 +31,8 @@ const mockRepresentation = {
 };
 describe('nsip-representation-update', () => {
 	beforeEach(() => {
-		mockExecuteRawUnsafe.mockReset();
+		mockPrismaUpdate.mockClear();
+		mockContext.log.mockClear();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
@@ -51,40 +51,28 @@ describe('nsip-representation-update', () => {
 		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
 			'representationId is required'
 		);
-		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
+		expect(mockPrismaUpdate).not.toHaveBeenCalled();
 	});
 
 	it('throws error if status is missing', async () => {
 		await expect(
 			async () => await sendMessage(mockContext, { representationId: 123 })
 		).rejects.toThrow('status is required');
-		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
+		expect(mockPrismaUpdate).not.toHaveBeenCalled();
 	});
 
-	it('calls buildUpdateQuery with correct parameters', async () => {
+	it('calls buildPrismaUpdateQuery with correct parameters', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(buildUpdateQuery).toHaveBeenCalledWith(
-			'representation',
+		expect(mockPrismaUpdate).toHaveBeenCalledWith(
+			prismaClient.representation,
 			'representationId',
 			mockRepresentation,
 			mockEnqueueDateTime
 		);
 	});
 
-	it('runs query to update representation status', async () => {
+	it('logs success after update', async () => {
 		await sendMessage(mockContext, mockMessage);
-		const [receivedStatement, ...receivedParameters] = mockExecuteRawUnsafe.mock.calls[0];
-		const statements = receivedStatement.split('\n');
-		expect(statements[0].trim()).toBe('UPDATE [representation]');
-		expect(statements[1].trim()).toBe('SET [status] = @P1, [modifiedAt] = @P2');
-		expect(statements[2].trim()).toBe('WHERE [representationId] = @P3');
-		expect(statements[3].trim()).toBe(
-			"AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, [modifiedAt]);"
-		);
-
-		const expectedParameters = Object.values(mockRepresentation);
-		expect(receivedParameters.length).toBe(expectedParameters.length);
-		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`updated representation with representationId ${mockMessage.representationId}`
 		);
