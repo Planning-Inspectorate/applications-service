@@ -105,6 +105,7 @@ module.exports = {
 			'https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice',
 		complaintsProcedure:
 			'https://www.gov.uk/government/organisations/planning-inspectorate/about/complaints-procedure',
+		callCharges: 'https://www.gov.uk/call-charges',
 		freedomOfInformation: 'https://www.gov.uk/make-a-freedom-of-information-request',
 		furtherInformationURL: 'https://www.gov.uk/government/organisations/planning-inspectorate',
 		dataProtection: 'https://www.gov.uk/data-protection',
