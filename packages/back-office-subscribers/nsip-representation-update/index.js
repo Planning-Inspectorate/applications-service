@@ -1,5 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
-const buildMergeQuery = require('../lib/build-merge-query');
+const buildPrismaUpdateQuery = require('../lib/build-prisma-update-query');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-representation-update function`);
@@ -11,21 +11,18 @@ module.exports = async (context, message) => {
 		throw new Error('status is required');
 	}
 
-	console.log('context.bindingData.enqueuedTimeUtc', context.bindingData.enqueuedTimeUtc);
-
 	const representation = {
 		representationId,
 		status,
 		modifiedAt: new Date()
 	};
 
-	const { statement, parameters } = buildMergeQuery(
-		'representation',
+	await buildPrismaUpdateQuery(
+		prismaClient.representation,
 		'representationId',
 		representation,
 		context.bindingData.enqueuedTimeUtc
 	);
 
-	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`upserted representation with representationId ${representationId}`);
+	context.log(`updated representation with representationId ${representationId}`);
 };
