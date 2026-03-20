@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"engines": {
-		"node": ">=20.0.0 <21.0.0"
+		"node": ">=22.0.0 <23.0.0"
 	},
 	"type": "module",
 	"scripts": {
@@ -11,8 +11,8 @@
 		"deploy:test": "wrangler deploy -e test",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest",
-		"test:cov": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --coverage --verbose"
+		"test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+		"test:cov": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage --verbose"
 	},
 	"devDependencies": {
 		"cross-env": "*",

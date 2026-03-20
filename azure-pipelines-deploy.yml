@@ -145,7 +145,7 @@ extends:
               - ${{ if eq(parameters.schemaMigration, true) }}:
                   - template: ../steps/node_script.yml
                     parameters:
-                      nodeVersion: 20
+                      nodeVersion: 22
                       environmentVariables:
                         DATABASE_URL: $(DATABASE_URL)
                       script: npm run db:migrate:deploy --workspace=@pins/applications-service-api
