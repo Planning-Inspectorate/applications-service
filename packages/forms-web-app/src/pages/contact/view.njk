@@ -18,34 +18,39 @@
       </p>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph2') }}
+        {{ t('contact.paragraph2', {
+          link: '<a class="govuk-link" href="' + pinsContactDetails.contactUsFormURL + '">' + t('contact.paragraph2LinkText') + '</a>'
+        }) | safe }}
+      </p>
+
+      <h2 class="govuk-heading-s">
+        {{ t('contact.heading3') }}
+      </h2>
+
+      <p class="govuk-body">
+        {{ t('contact.paragraph3') }} {{ pinsContactDetails.supportTeamPhoneNumber }}<br>
+        {{ t('contact.paragraph4') }}
       </p>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph3', { link: '<a class="govuk-link" href="' + pinsContactDetails.contactUsFormURL + '">' + t('contact.paragraph3LinkText') + '</a>' }) | safe }}
+        <a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('contact.callChargesLinkText') }}</a>
       </p>
 
-      <p class="govuk-body">
-        {{ t('contact.paragraph4', { link: '<a class="govuk-link" href="mailto:' + pinsContactDetails.enquiriesEmailAddress + '">' + pinsContactDetails.enquiriesEmailAddress + '</a>' }) | safe }}
-      </p>
+      <h2 class="govuk-heading-s">
+        {{ t('contact.heading4') }}
+      </h2>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph5') }}
+      <a class="govuk-link" href="mailto:{{ pinsContactDetails.enquiriesEmailAddress }}">
+        {{ pinsContactDetails.enquiriesEmailAddress }}
+      </a>
       </p>
 
-      <p class="govuk-body">
-        {{ t('contact.paragraph6') }}
-        <a class="govuk-link" href="tel:{{ pinsContactDetails.supportTeamPhoneNumber }}">{{ pinsContactDetails.supportTeamPhoneNumber }}</a>
-        <p>
-          {{ t('common.pinsContactDetails.csOpeningHoursLine1') }}
-          <br>
-          {{ t('common.pinsContactDetails.csOpeningHoursLine2') }}
-        </p>
-      </p>
+      <h2 class="govuk-heading-s">
+        {{ t('contact.heading5') }}
+      </h2>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph8') }}
-        <br>
         Planning Inspectorate
         <br>
         c/o QUADIENT
@@ -58,57 +63,58 @@
         <br>
       </p>
 
+      <h2 class="govuk-heading-s">
+        {{ t('contact.heading6') }}
+      </h2>
+
       <p class="govuk-body">
-        {{ t('contact.paragraph9') }}
+        {{ t('contact.paragraph5') }}
+      </p>
+      <p class="govuk-body">
+        {{ t('contact.paragraph6') }}
         <a class="govuk-link" href="{{ pinsSocialMedia.twitterURL }}">{{ pinsSocialMedia.twitterHandle }}</a>
       </p>
 
       <p class="govuk-body">
-        {{ t('contact.paragraph10', { link: '<a class="govuk-link" href="' + govUK.furtherInformationURL + '">GOV.UK</a>' }) | safe }}
+        {{ t('contact.paragraph7', {
+          link: '<a class="govuk-link" href="' + govUK.furtherInformationURL + '">' + t('contact.waysToContactLinkText') + '</a>'
+        }) | safe }}
       </p>
 
       <h2 class="govuk-heading-m">
-        {{ t('contact.heading3') }}
+        {{ t('contact.heading7') }}
       </h2>
 
       <p class="govuk-body">
+        {{ t('contact.paragraph8', {
+          link: '<a class="govuk-link" href="' + govUK.complaintsProcedure + '">' + t('contact.paragraph8LinkText') + '</a>'
+        }) | safe }}
+      </p>
+
+      <p class="govuk-body">
+        {{ t('contact.howToComplainParagraph1', {
+          link: '<a class="govuk-link" href="' + serviceFeedbackUrl + '">' + t('contact.howToComplainParagraph1LinkText') + '</a>'
+        }) | safe }}
+      </p>
+
+      <h2 class="govuk-heading-m">
+        {{ t('contact.heading8') }}
+      </h2>
+
+      <p class="govuk-body">
+        {{ t('contact.paragraph9') }}
+        {{ pinsContactDetails.pressAndMediaPhoneNumber }}
+        <br>
+        {{ t('contact.pressAndMediaEmailLabel') }}:
+        <a class="govuk-link" href="mailto:{{ pinsContactDetails.pressAndMediaEmailAddress }}">{{ pinsContactDetails.pressAndMediaEmailAddress }}</a>
+        <br>
+        {{ t('contact.paragraph10') }}
+        <br>
         {{ t('contact.paragraph11') }}
       </p>
 
-      <h2 class="govuk-heading-m">
-        {{ t('contact.howToComplainHeading1') }}
-      </h2>
-
       <p class="govuk-body">
-        {{ t('contact.howToComplainParagraph1') }}
-      </p>
-
-      <p class="govuk-body">
-        {{ t('contact.howToComplainParagraph2') }}
-      </p>
-
-      <p class="govuk-body">
-        <a class="govuk-link" href="{{ pinsContactDetails.contactUsFormURL }}">{{ t('contact.customerContactFormLinkText') }}</a>
-      </p>
-
-      <p class="govuk-body">
-        {{ t('contact.howToComplainParagraph3', { link: '<a class="govuk-link" href="' + govUK.complaintsProcedure + '">' + t('contact.howToComplainParagraph3LinkText') + '</a>' }) | safe  }}
-      </p>
-
-      <h2 class="govuk-heading-m">
-        {{ t('contact.heading4') }}
-      </h2>
-
-      <p class="govuk-body">
-        {{ t('contact.paragraph12') }}
-        <a class="govuk-link" href="tel:{{ pinsContactDetails.pressAndMediaPhoneNumber }}">{{ pinsContactDetails.pressAndMediaPhoneNumber }}</a>
-        <br>
-        {{ t('contact.paragraph13') }}
-        <a class="govuk-link" href="mailto:{{ pinsContactDetails.pressAndMediaEmailAddress }}">{{ pinsContactDetails.pressAndMediaEmailAddress }}</a>
-      </p>
-
-      <p class="govuk-body">
-        {{ t('contact.paragraph14', { openingHours: t('common.govUK.pressOfficeOpeningHours') }) }}
+        <a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('contact.callChargesLinkText') }}</a>
       </p>
     </div>
   </div>
