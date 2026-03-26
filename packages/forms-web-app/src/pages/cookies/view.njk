@@ -2,6 +2,7 @@
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% block script %}
   {% set initiateScriptsConfig = (initiateScriptsConfig.push(
@@ -38,20 +39,109 @@
         <ul class="govuk-list govuk-list--bullet">
           <li>{{ t('cookies.listItem1') }}</li>
           <li>{{ t('cookies.listItem2') }}</li>
+					<li>{{ t('cookies.listItem3') }}</li>
         </ul>
         <p>{{ t('cookies.paragraph5') }}</p>
 
+        {{ govukTable({
+          caption: t('cookies.heading4'),
+          captionClasses: "govuk-table__caption--s",
+          firstCellIsHeader: false,
+          head: [
+            {
+              text: t('cookies.cookiesName')
+            },
+            {
+              text: t('cookies.cookiesPurpose')
+            },
+            {
+              text: t('cookies.cookiesExpires')
+            }
+          ],
+          rows: [
+            [
+              { text: t('cookies.cookiesName1') },
+              { text: t('cookies.cookiesPurpose1') },
+              { text: t('cookies.cookiesExpires1') }
+            ],
+            [
+              { text: t('cookies.cookiesName2') },
+              { text: t('cookies.cookiesPurpose2') },
+              { text: t('cookies.cookiesExpires2') }
+            ],
+            [
+              { text: t('cookies.cookiesName3') },
+              { text: t('cookies.cookiesPurpose3') },
+              { text: t('cookies.cookiesExpires3') }
+            ],
+            [
+              { text: t('cookies.cookiesName4') },
+              { text: t('cookies.cookiesPurpose4') },
+              { text: t('cookies.cookiesExpires4') }
+            ],
+            [
+              { text: t('cookies.cookiesName5') },
+              { text: t('cookies.cookiesPurpose5') },
+              { text: t('cookies.cookiesExpires5') }
+            ],
+            [
+              { text: t('cookies.cookiesName6') },
+              { text: t('cookies.cookiesPurpose6') },
+              { text: t('cookies.cookiesExpires6') }
+            ],
+            [
+              { text: t('cookies.cookiesName7') },
+              { text: t('cookies.cookiesPurpose7') },
+              { text: t('cookies.cookiesExpires7') }
+            ],
+            [
+              { text: t('cookies.cookiesName8') },
+              { text: t('cookies.cookiesPurpose8') },
+              { text: t('cookies.cookiesExpires8') }
+            ]
+          ]
+        }) }}
+
+        <h2 class="govuk-heading-m">{{ t('cookies.heading5') }}</h2>
+        <p>{{ t('cookies.paragraph6') }}</p>
+
+        {{ govukTable({
+          caption: t('cookies.heading6'),
+          captionClasses: "govuk-table__caption--s",
+          firstCellIsHeader: false,
+          head: [
+            {
+              text: t('cookies.cookiesName')
+            },
+            {
+              text: t('cookies.cookiesPurpose')
+            },
+            {
+              text: t('cookies.cookiesExpires')
+            }
+          ],
+          rows: [
+            [
+              { text: t('cookies.cookiesName9') },
+              { text: t('cookies.cookiesPurpose9') },
+              { text: t('cookies.cookiesExpires9') }
+            ],
+            [
+              { text: t('cookies.cookiesName10') },
+              { text: t('cookies.cookiesPurpose10') },
+              { text: t('cookies.cookiesExpires10') }
+            ],
+            [
+              { text: t('cookies.cookiesName11') },
+              { text: t('cookies.cookiesPurpose11') },
+              { text: t('cookies.cookiesExpires11') }
+            ]
+          ]
+        }) }}
+
         <form action="" method="post" accept-charset="utf-8">
           <div class="govuk-form-group">
-              <span class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  {{ t('cookies.heading4') }}
-              </span>
-              <div id="optional-cookies-hint" class="govuk-hint">
-              <span class="govuk-hint">
-                <p>{{ t('cookies.paragraph6') }}</p>
-                <p>{{ t('cookies.paragraph7') }}</p>
-              </span>
-              </div>
+            <p id="optional-cookies-hint" class="govuk-hint">{{ t('cookies.paragraph7') }}</p>
             <fieldset class="govuk-fieldset" aria-describedby="optional-cookies-hint">
 							<legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                 {{ t('cookies.legend1') }}
