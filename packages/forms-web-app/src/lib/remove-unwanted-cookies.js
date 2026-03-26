@@ -12,6 +12,9 @@ const defaultKeepMeCookies = [
 	localesQueryCookieID,
 	'ARRAffinity',
 	'ARRAffinitySameSite',
+	'ASLBSA',
+	'ASLBSACORS',
+	'__cf_bm',
 	EASY_AUTH.EASY_AUTH_COOKIE_NAME
 ];
 
