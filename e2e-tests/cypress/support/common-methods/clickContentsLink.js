@@ -5,6 +5,4 @@ module.exports = (contentLink) => {
 			cy.get('ul > li > a').eq(index).click();
 		}
 	});
-
-	cy.wait(Cypress.env('demoDelay'));
 };

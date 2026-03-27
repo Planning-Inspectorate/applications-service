@@ -6,20 +6,24 @@
 		},
 		"lint": {
 			"dependsOn": ["^build"],
-			"outputs": []
+			"outputs": [],
+			"persistent": true
 		},
 		"lint:fix": {
 			"dependsOn": ["^build"],
-			"outputs": []
+			"outputs": [],
+			"persistent": true
 		},
 		"test": {
-			"outputs": []
+			"outputs": [],
+			"persistent": true
 		},
 		"test:cov": {
 			"outputs": ["jest-reports/**"]
 		},
 		"test:watch": {
-			"outputs": []
+			"outputs": [],
+			"persistent": true
 		}
 	}
 }

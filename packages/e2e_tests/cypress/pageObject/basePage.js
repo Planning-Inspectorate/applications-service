@@ -10,7 +10,7 @@ export class BasePage {
 		accessibliltyLink: () => cy.get('[data-cy="Accessibility statement"]'),
 		privacyNoticeLink: () => cy.get('[data-cy="Privacy"]'),
 		cookiesLink: () => cy.get('[data-cy="Cookies"]'),
-		saveAndContinueBtn: () => cy.get('[data-cy="button-accept-and-register"]'),
+		saveAndContinueBtn: () => cy.get('[data-cy="button-accept-and-regoster"]'),
 		contiuneBtn: () => cy.get('[data-cy="button-submit-and-continue"]'),
 		checkBox: () => cy.get('[type="checkbox"]'),
 		govLink: () => cy.get('.govuk-link'),

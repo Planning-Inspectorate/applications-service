@@ -44,5 +44,5 @@ When('I confirm my answers are correct', () => {
 });
 
 When('I accept the declaration', () => {
-	cy.get('[data-cy="button-accept-and-register"]').click();
+	cy.get('[data-cy="button-accept-and-regoster"]').click();
 });
