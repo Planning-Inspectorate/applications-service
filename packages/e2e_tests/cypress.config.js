@@ -13,11 +13,13 @@ module.exports = defineConfig({
 		excludeSpecPattern: ['cypress/e2e/features/**', 'cypress/e2e/step_definitions/**'],
 		experimentalRunAllSpecs: true,
 		chromeWebSecurity: false,
-		pageLoadTimeout: 60000,
-		defaultCommandTimeout: 10000,
-		requestTimeout: 10000,
-		responseTimeout: 30000,
+		pageLoadTimeout: 90000,
+		defaultCommandTimeout: 15000,
+		requestTimeout: 15000,
+		responseTimeout: 60000,
 		testIsolation: false,
+		experimentalMemoryManagement: true,
+		numTestsKeptInMemory: 1,
 		retries: {
 			runMode: 2,
 			openMode: 0

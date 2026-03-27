@@ -21,29 +21,7 @@ pr:
 trigger: none
 
 jobs:
-  - job: Setup
-    pool:
-      vmImage: "ubuntu-latest"
-    steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: "22.x"
-        displayName: 'Install Node.js'
-
-      - task: ShellScript@2
-        inputs:
-          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/install-chromium.sh'
-        displayName: 'Install Chromium'
-        condition: eq(variables['agent.os'], 'Linux')
-
-      - task: Npm@1
-        inputs:
-          command: "install"
-          workingDir: $(System.DefaultWorkingDirectory)/packages/e2e_tests
-        displayName: 'Install Dependencies'
-
   - job: Registration_Tests
-    dependsOn: Setup
     pool:
       vmImage: "ubuntu-latest"
     steps:
@@ -78,7 +56,6 @@ jobs:
         condition: failed()
 
   - job: UI_Navigation_Tests
-    dependsOn: Setup
     pool:
       vmImage: "ubuntu-latest"
     steps:
@@ -113,7 +90,6 @@ jobs:
         condition: failed()
 
   - job: Search_Filter_Tests
-    dependsOn: Setup
     pool:
       vmImage: "ubuntu-latest"
     steps:
@@ -148,7 +124,6 @@ jobs:
         condition: failed()
 
   - job: Project_Details_Tests
-    dependsOn: Setup
     pool:
       vmImage: "ubuntu-latest"
     steps:
@@ -183,7 +158,6 @@ jobs:
         condition: failed()
 
   - job: Examination_Timetable_Tests
-    dependsOn: Setup
     pool:
       vmImage: "ubuntu-latest"
     steps:
