@@ -21,10 +21,31 @@ pr:
 trigger: none
 
 jobs:
-  - job: Run_Cypress_Tests_For_Applications_FO
+  - job: Setup
     pool:
       vmImage: "ubuntu-latest"
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: 'Install Node.js'
 
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/install-chromium.sh'
+        displayName: 'Install Chromium'
+        condition: eq(variables['agent.os'], 'Linux')
+
+      - task: Npm@1
+        inputs:
+          command: "install"
+          workingDir: $(System.DefaultWorkingDirectory)/packages/e2e_tests
+        displayName: 'Install Dependencies'
+
+  - job: Registration_Tests
+    dependsOn: Setup
+    pool:
+      vmImage: "ubuntu-latest"
     steps:
       - task: NodeTool@0
         inputs:
@@ -46,12 +67,152 @@ jobs:
       - task: ShellScript@2
         inputs:
           scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/run-tests.sh'
-          args: '${{ parameters.environment }}'
-        displayName: 'Run Cypress Tests'
+          args: 'register-as-an-agent.cy.js register-as-an-organisation.cy.js registers-as-myself.cy.js ${{ parameters.environment }}'
+        displayName: 'Run Registration Tests'
 
       - task: PublishBuildArtifacts@1
         inputs:
           pathToPublish: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/cypress/screenshots'
-          artifactName: 'FailedTests'
-        displayName: 'Publish Failed Tests Artifacts'
+          artifactName: 'Registration_Tests_Failed'
+        displayName: 'Publish Registration Tests Artifacts'
+        condition: failed()
+
+  - job: UI_Navigation_Tests
+    dependsOn: Setup
+    pool:
+      vmImage: "ubuntu-latest"
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: 'Install Node.js'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/install-chromium.sh'
+        displayName: 'Install Chromium'
+        condition: eq(variables['agent.os'], 'Linux')
+
+      - task: Npm@1
+        inputs:
+          command: "install"
+          workingDir: $(System.DefaultWorkingDirectory)/packages/e2e_tests
+        displayName: 'Install Dependencies'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/run-tests.sh'
+          args: 'cookie-banner.cy.js cookie-settings.cy.js locale-switcher.cy.js footer-links.cy.js ${{ parameters.environment }}'
+        displayName: 'Run UI & Navigation Tests'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/cypress/screenshots'
+          artifactName: 'UI_Navigation_Tests_Failed'
+        displayName: 'Publish UI & Navigation Tests Artifacts'
+        condition: failed()
+
+  - job: Search_Filter_Tests
+    dependsOn: Setup
+    pool:
+      vmImage: "ubuntu-latest"
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: 'Install Node.js'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/install-chromium.sh'
+        displayName: 'Install Chromium'
+        condition: eq(variables['agent.os'], 'Linux')
+
+      - task: Npm@1
+        inputs:
+          command: "install"
+          workingDir: $(System.DefaultWorkingDirectory)/packages/e2e_tests
+        displayName: 'Install Dependencies'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/run-tests.sh'
+          args: 'filter-and-search-project-documents.cy.js filter-and-search-relevant-reps.cy.js ${{ parameters.environment }}'
+        displayName: 'Run Search & Filter Tests'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/cypress/screenshots'
+          artifactName: 'Search_Filter_Tests_Failed'
+        displayName: 'Publish Search & Filter Tests Artifacts'
+        condition: failed()
+
+  - job: Project_Details_Tests
+    dependsOn: Setup
+    pool:
+      vmImage: "ubuntu-latest"
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: 'Install Node.js'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/install-chromium.sh'
+        displayName: 'Install Chromium'
+        condition: eq(variables['agent.os'], 'Linux')
+
+      - task: Npm@1
+        inputs:
+          command: "install"
+          workingDir: $(System.DefaultWorkingDirectory)/packages/e2e_tests
+        displayName: 'Install Dependencies'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/run-tests.sh'
+          args: 'project-information.cy.js section-51-advice.cy.js get-updates-sign-up.cy.js ${{ parameters.environment }}'
+        displayName: 'Run Project Details Tests'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/cypress/screenshots'
+          artifactName: 'Project_Details_Tests_Failed'
+        displayName: 'Publish Project Details Tests Artifacts'
+        condition: failed()
+
+  - job: Examination_Timetable_Tests
+    dependsOn: Setup
+    pool:
+      vmImage: "ubuntu-latest"
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: 'Install Node.js'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/install-chromium.sh'
+        displayName: 'Install Chromium'
+        condition: eq(variables['agent.os'], 'Linux')
+
+      - task: Npm@1
+        inputs:
+          command: "install"
+          workingDir: $(System.DefaultWorkingDirectory)/packages/e2e_tests
+        displayName: 'Install Dependencies'
+
+      - task: ShellScript@2
+        inputs:
+          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/run-tests.sh'
+          args: 'examination-timetable-agent-submission.cy.js examination-timetable-myself-submission.cy.js examination-timetable-organisation-submission.cy.js ${{ parameters.environment }}'
+        displayName: 'Run Examination Timetable Tests'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/cypress/screenshots'
+          artifactName: 'Examination_Timetable_Tests_Failed'
+        displayName: 'Publish Examination Timetable Tests Artifacts'
         condition: failed()
