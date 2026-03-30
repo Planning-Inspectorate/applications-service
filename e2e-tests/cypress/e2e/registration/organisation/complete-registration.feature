@@ -1,7 +1,7 @@
 @testSuite @registration @organisation @completion
 Feature: Organisation Registration complete page
     As a Test user
-    I want to navigate to Organisation Regsitration complete page
+    I want to navigate to Organisation Registration complete page
     So that I can verify the functionality
 
   Background: Start registration as an organisation and progress to check answers page
