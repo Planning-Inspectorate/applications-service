@@ -123,6 +123,7 @@ exports[`pages/examination/_translations should return the correct English trans
       "paragraph4": "If you have not registered as an interested party, we'll ask you for your personal details and documents to support your comments if you plan to upload them.",
       "paragraph5": "If you're submitting comments as an organisation you work for",
       "paragraph6": "You'll need your organisation's:",
+      "paragraph7": "To protect your information, you will be signed out after 4 hours of inactivity and your progress will not be saved.",
       "phrase1": "Use this service to have your say about the",
     },
     "noOpenDeadlines": {
@@ -412,6 +413,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
       "paragraph4": "Os nad ydych wedi cofrestreu fel parti â buddiant, byddwn yn gofyn am eich manylion personol a dogfennau i gefnogi'ch sylwadau os ydych yn bwriadu eu lanlwytho.",
       "paragraph5": "Os ydych yn cyflwyno sylwadau fel sefydliad rydych yn gweithio iddo",
       "paragraph6": "Bydd arnoch angen y canlynol ar gyfer eich sefydliad:",
+      "paragraph7": "I ddiogelu'ch gwybodaeth, byddwch yn cael eich allgofnodi ar ôl 4 awr o anweithgarwch ac ni fydd eich cynnydd yn cael ei arbed.",
       "phrase1": "Defnyddiwch y gwasanaeth hwn i leisio'ch barn am",
     },
     "noOpenDeadlines": {

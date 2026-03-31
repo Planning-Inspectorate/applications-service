@@ -120,7 +120,8 @@
 			"listItem4": "name",
 			"listItem5": "interested party number",
 			"listItem6": "email address",
-			"listItem7": "supporting documents if you plan to upload your documents"
+			"listItem7": "supporting documents if you plan to upload your documents",
+			"paragraph7": "To protect your information, you will be signed out after 4 hours of inactivity and your progress will not be saved."
 		},
 		"noOpenDeadlines": {
 			"title1": "No Deadlines - Have your say on an application",

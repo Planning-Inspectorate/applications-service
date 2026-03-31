@@ -11,6 +11,7 @@
 			"listItem1": "seen by the examining authority",
 			"listItem2": "published on our website",
 			"paragraph4": "You will be able to submit further comments during the examination of the application once you have registered.",
+			"paragraph9": "To protect your information, you will be signed out after 4 hours of inactivity and your progress will not be saved.",
 			"paragraph5": "You must submit your registration before 23:59 on {{-date}}.",
 			"buttonText": "Start now",
 			"heading3": "Before you start",
