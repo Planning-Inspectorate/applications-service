@@ -6,6 +6,7 @@ coverage
 .wrangler
 *.yml
 **/dist/**
+.turbo/*
 packages/applications-service-api/prisma/client/*
 packages/back-office-subscribers/lib/prisma-client/*
 packages/forms-web-app/src/public/stylesheets/main.css

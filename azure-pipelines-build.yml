@@ -47,22 +47,22 @@ extends:
             displayName: Cache NPM
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: npm ci
               environmentVariables:
                 npm_config_cache: $(npm_config_cache)
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: cd packages/applications-service-api && npm run db:generate
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               condition: succeededOrFailed()
               script: npm run lint
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               condition: succeededOrFailed()
               script: npm run test:cov
           - template: ../steps/check_changed_files.yml
@@ -165,14 +165,14 @@ extends:
             displayName: Cache NPM
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: npm ci --omit=dev --workspace=@pins/back-office-subscribers
               workingDirectory: $(Build.Repository.LocalPath)
               environmentVariables:
                 npm_config_cache: $(npm_config_cache)
           - template: ../steps/node_script.yml
             parameters:
-              nodeVersion: 20
+              nodeVersion: 22
               script: npm run db:generate
           - script: mv node_modules packages/back-office-subscribers/node_modules
             workingDirectory: $(Build.Repository.LocalPath)
