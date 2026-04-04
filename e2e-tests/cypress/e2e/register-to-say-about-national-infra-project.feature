@@ -16,9 +16,8 @@ Feature: Registering to have your say about a national infrastructure project pa
             | Links                     |
             | Who can register          |
             | When to register          |
-            | What you need to register |
+            | Registering to have your say |
             | After you have registered |
-            | Register to have your say |
             | More detailed advice      |
         When I click on "The Nationally Significant Infrastructure planning process step by step" link
         Then I am on the "Having your say about a national infrastructure project" page
