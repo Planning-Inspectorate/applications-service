@@ -1,0 +1,25 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% if not title %}
+  {% set sectionName = " - " + pageCaption if pageCaption else "" %}
+  {% set title %}
+    {{ question.pageTitle | default('GOV.UK') }}{{ sectionName }} - test section
+  {% endset %}
+{% endif %}
+
+{% block pageTitle %}{{ "Error: " + title if errors else title }}{% endblock %}
+
+{# show question content within content, overrides main content #}
+{% block content %}
+    {{ super() }}
+    {% block dynQuestionContent %}{% endblock %}
+{% endblock %}
+
+{% if warningMessage %}
+  {% set beforeSubmitButton = govukWarningText({
+    text: warningMessage
+  }) %}
+{% endif %}

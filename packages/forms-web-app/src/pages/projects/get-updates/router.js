@@ -1,71 +1,36 @@
-const express = require('express');
+import express from 'express';
+
+import { addCommonTranslationsMiddleware } from '../../_middleware/i18n/add-common-translations-middleware.js';
+
+import { projectsMiddleware } from '../_middleware/middleware.js';
+import { addGetUpdatesIndexTranslationsMiddleware } from './index/_middleware/add-get-updates-index-translations-middleware.js';
+
+import { getGetUpdatesIndexController } from './index/controller.js';
+
+/*
+// SO all these middlewares do the same thing functionally, the only difference is they load the translations in the _translations folder of their respective folder
+// TODO - set up the middleware later
+import { addGetUpdatesEmailTranslationsMiddleware } from './email/_middleware/add-get-updates-email-translations-middleware';
+import { addGetUpdatesHowOftenTranslationsMiddleware } from './how-often/_middleware/add-get-updates-how-often-translations-middleware';
+import { addGetUpdatesConfirmYourEmailTranslationsMiddleware } from './confirm-your-email/_middleware/add-get-updates-confirm-your-email-translations-middleware';
+import { addGetUpdatesSubscribedTranslationsMiddleware } from './subscribed/_middleware/add-get-updates-subscribed-translations-middleware';
+import { getUpdatesMiddleware } from './_middleware/get-updates-middleware';
+import { getUpdatesUnsubscribedTranslationsMiddleware } from './unsubscribed/_middleware/unsubscribed-translations-middleware';
+import { getUpdatesUnsubscribeTranslationsMiddleware } from './unsubscribe/_middleware/unsubscribe-translations-middleware';
+
+import { selectDocumentQuestionMiddleware } from '../middleware/select-document-middleware.ts';
+import { removeIsEditingJourneyMiddleware, someoneElseEditingJourneyMiddleware } from '../middleware/session.ts';
+*/
+
+import { createRoutes as getUpdatesFormRoutes } from './form/router.js';
+
+import { getUpdatesIndexURL } from './index/utils/get-updates-index-url.js';
+import { getUpdatesFormURL } from './form/utils/get-updates-form-url.js';
 
 const getUpdatesRouter = express.Router();
 
-const {
-	addCommonTranslationsMiddleware
-} = require('../../_middleware/i18n/add-common-translations-middleware');
-const {
-	addGetUpdatesIndexTranslationsMiddleware
-} = require('./index/_middleware/add-get-updates-index-translations-middleware');
-const {
-	addGetUpdatesEmailTranslationsMiddleware
-} = require('./email/_middleware/add-get-updates-email-translations-middleware');
-const {
-	addGetUpdatesHowOftenTranslationsMiddleware
-} = require('./how-often/_middleware/add-get-updates-how-often-translations-middleware');
-const {
-	addGetUpdatesConfirmYourEmailTranslationsMiddleware
-} = require('./confirm-your-email/_middleware/add-get-updates-confirm-your-email-translations-middleware');
-const {
-	addGetUpdatesSubscribedTranslationsMiddleware
-} = require('./subscribed/_middleware/add-get-updates-subscribed-translations-middleware');
-const { projectsMiddleware } = require('../_middleware/middleware');
-const { getUpdatesMiddleware } = require('./_middleware/get-updates-middleware');
-const {
-	getUpdatesUnsubscribedTranslationsMiddleware
-} = require('./unsubscribed/_middleware/unsubscribed-translations-middleware');
-const {
-	getUpdatesUnsubscribeTranslationsMiddleware
-} = require('./unsubscribe/_middleware/unsubscribe-translations-middleware');
-
-const { getGetUpdatesIndexController } = require('./index/controller');
-const {
-	getGetUpdatesEmailController,
-	postGetUpdatesEmailController
-} = require('./email/controller');
-const { emailValidationRules } = require('../../../validators/shared/email-address');
-const { validationErrorHandler } = require('../../../validators/validation-error-handler');
-const {
-	getGetUpdatesHowOftenController,
-	postGetUpdatesHowOftenController
-} = require('./how-often/controller');
-const { howOftenValidationRules } = require('./how-often/validator');
-const { getUpdatesConfirmYourEmailController } = require('./confirm-your-email/controller');
-const { getUpdatesSubscribedController } = require('./subscribed/controller');
-const {
-	getGetUpdatesUnsubscribeController,
-	postGetUpdatesUnsubscribeController
-} = require('./unsubscribe/controller');
-const { getUpdatesUnsubscribedController } = require('./unsubscribed/controller');
-
-const { getUpdatesIndexURL } = require('./index/utils/get-updates-index-url');
-const { getUpdatesEmailURL } = require('./email/utils/get-updates-email-url');
-const { getUpdatesHowOftenURL } = require('./how-often/utils/get-updates-how-often-url');
-const {
-	getUpdatesConfirmYourEmailURL
-} = require('./confirm-your-email/utils/get-updates-confirm-your-email-url');
-const { getUpdatesSubscribedURL } = require('./subscribed/utils/get-updates-subscribed-url');
-const { getUpdatesUnsubscribeURL } = require('./unsubscribe/utils/get-updates-unsubscribe-url');
-const { getUpdatesUnsubscribedURL } = require('./unsubscribed/utils/get-updates-unsubscribed-url');
-
 const updatesIndexURL = getUpdatesIndexURL();
-const updatesEmailURL = getUpdatesEmailURL();
-const updatesHowOftenURL = getUpdatesHowOftenURL();
-const updatesConfirmYourEmailURL = getUpdatesConfirmYourEmailURL();
-const updatesSubscribedURL = getUpdatesSubscribedURL();
-const updatesUnsubscribeURL = getUpdatesUnsubscribeURL();
-const updatesUnsubscribedURL = getUpdatesUnsubscribedURL();
+const updatesFormURL = getUpdatesFormURL();
 
 getUpdatesRouter.use(addCommonTranslationsMiddleware);
 
@@ -76,60 +41,6 @@ getUpdatesRouter.get(
 	getGetUpdatesIndexController
 );
 
-getUpdatesRouter.get(
-	updatesEmailURL,
-	addGetUpdatesEmailTranslationsMiddleware,
-	getUpdatesMiddleware,
-	getGetUpdatesEmailController
-);
-getUpdatesRouter.post(
-	updatesEmailURL,
-	emailValidationRules(),
-	validationErrorHandler,
-	postGetUpdatesEmailController
-);
+getUpdatesRouter.use(updatesFormURL, getUpdatesFormRoutes());
 
-getUpdatesRouter.get(
-	updatesHowOftenURL,
-	addGetUpdatesHowOftenTranslationsMiddleware,
-	getUpdatesMiddleware,
-	getGetUpdatesHowOftenController
-);
-getUpdatesRouter.post(
-	updatesHowOftenURL,
-	howOftenValidationRules(),
-	validationErrorHandler,
-	postGetUpdatesHowOftenController
-);
-
-getUpdatesRouter.get(
-	updatesConfirmYourEmailURL,
-	addGetUpdatesConfirmYourEmailTranslationsMiddleware,
-	projectsMiddleware,
-	getUpdatesMiddleware,
-	getUpdatesConfirmYourEmailController
-);
-
-getUpdatesRouter.get(
-	updatesSubscribedURL,
-	addGetUpdatesSubscribedTranslationsMiddleware,
-	projectsMiddleware,
-	getUpdatesSubscribedController
-);
-
-getUpdatesRouter.get(
-	updatesUnsubscribeURL,
-	projectsMiddleware,
-	getUpdatesUnsubscribeTranslationsMiddleware,
-	getGetUpdatesUnsubscribeController
-);
-getUpdatesRouter.post(updatesUnsubscribeURL, postGetUpdatesUnsubscribeController);
-
-getUpdatesRouter.get(
-	updatesUnsubscribedURL,
-	projectsMiddleware,
-	getUpdatesUnsubscribedTranslationsMiddleware,
-	getUpdatesUnsubscribedController
-);
-
-module.exports = { getUpdatesRouter };
+export { getUpdatesRouter };

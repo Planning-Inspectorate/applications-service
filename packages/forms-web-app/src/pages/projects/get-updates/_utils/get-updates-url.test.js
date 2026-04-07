@@ -1,4 +1,4 @@
-const { getUpdatesURL } = require('./get-updates-url');
+import { getUpdatesURL } from './get-updates-url';
 
 describe('pages/projects/get-updates/_utils/get-updates-url', () => {
 	describe('#getUpdatesURL', () => {
