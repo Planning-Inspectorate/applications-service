@@ -1,7 +1,7 @@
-const { isProjectStatusPostDecision } = require('./utils/is-project-status-post-decision');
 const { hasDecisionDatePassed } = require('./utils/has-decision-date-passed');
-const { setOrRemoveGetUpdatesSession } = require('./utils/set-or-remove-get-updates-session');
-const { getUpdatesEmailURL } = require('../email/utils/get-updates-email-url');
+const { getUpdatesFormURL } = require('../form/utils/get-updates-form-url');
+const { setOrRemoveGetUpdatesSession } = require('../_session');
+const { isProjectStatusPostDecision } = require('./utils/is-project-status-post-decision');
 
 const view = 'projects/get-updates/index/view.njk';
 
@@ -22,7 +22,7 @@ const getGetUpdatesIndexController = (req, res) => {
 	setOrRemoveGetUpdatesSession(postDecisionStatus, decisionDatePassed, session, caseRef);
 
 	return res.render(view, {
-		nextPageRoute: getUpdatesEmailURL(caseRef),
+		nextPageRoute: getUpdatesFormURL(caseRef),
 		decisionDatePassed
 	});
 };

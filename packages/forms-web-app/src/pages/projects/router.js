@@ -92,7 +92,6 @@ projectsRouter.post(examinationTimetableURL, postProjectsExaminationTimetableCon
 projectsRouter.use(section51Router);
 
 projectsRouter.use(representationsRouter);
-
 projectsRouter.use(getUpdatesRouter);
 
 projectsRouter.use(registerRouter);

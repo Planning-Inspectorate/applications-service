@@ -1,9 +1,7 @@
-const { getProjectsURL } = require('../../_utils/get-projects-url');
-const { getUpdatesRoute } = require('../config');
+import { getProjectsURL } from '../../_utils/get-projects-url.js';
+import { getUpdatesRoute } from '../config.js';
 
-const getUpdatesURL = (caseRef) => {
+export const getUpdatesURL = (caseRef) => {
 	const projectsURL = getProjectsURL(caseRef);
 	return `${projectsURL}/${getUpdatesRoute}`;
 };
-
-module.exports = { getUpdatesURL };

@@ -1,3 +1,1 @@
-const getUpdatesRoute = 'get-updates';
-
-module.exports = { getUpdatesRoute };
+export const getUpdatesRoute = 'get-updates';

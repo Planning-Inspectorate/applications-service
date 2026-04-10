@@ -1,0 +1,80 @@
+{% extends layoutTemplate %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block dynQuestionContent %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form action="" method="post" novalidate>
+                {% if _csrf %}<input type="hidden" name="_csrf" value="{{ _csrf }}">{% endif %}
+                {% if question.label %}
+                    <h1 class="govuk-heading-l">
+                        {{ question.question }}
+                    </h1>
+
+                    {% if question.description %}
+                        <p class="govuk-body">
+                            {{ question.description }}
+                        </p>
+                    {% endif %}
+
+                    {{ govukInput({
+                        label: {
+                            text: question.label,
+                            classes: 'govuk-label',
+                            for: question.fieldName,
+                            isPageHeading: false
+                        },
+                        id: question.fieldName,
+                        name: question.fieldName,
+                        value: question.value,
+                        hint: question.hint and { text: question.hint },
+                        errorMessage: errors[question.fieldName] and {
+                            text: errors[question.fieldName].msg
+                        },
+                        classes: question.classes,
+                        attributes: question.attributes,
+                        type: question.type,
+                        autocomplete: question.autocomplete
+                    }) }}
+
+                    {% if question.html %}
+                        {% include question.html ignore missing %}
+                    {% endif %}
+                {% else %}
+                    {{ govukInput({
+                        label: {
+                            text: question.question,
+                            classes: 'govuk-label--l',
+                            for: question.fieldName,
+                            isPageHeading: true
+                        },
+                        id: question.fieldName,
+                        name: question.fieldName,
+                        value: question.value,
+                        hint: question.hint and { text: question.hint },
+                        errorMessage: errors[question.fieldName] and {
+                            text: errors[question.fieldName].msg
+                        },
+                        classes: question.classes,
+                        attributes: question.attributes,
+                        type: question.type,
+                        autocomplete: question.autocomplete
+                    }) }}
+
+                    {% if question.html %}
+                        {% include question.html ignore missing %}
+                    {% endif %}
+                {% endif %}
+
+                {{ govukButton({
+                    text: continueButtonText,
+                    type: "submit",
+                    attributes: { "data-cy":"button-save-and-continue"}
+                }) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

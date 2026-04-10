@@ -1,5 +1,4 @@
 const { getGetUpdatesSession, setGetUpdatesSession } = require('./get-updates');
-const { getGetUpdatesEmailSession, setGetUpdatesEmailSession } = require('./get-updates-email');
 const {
 	getGetUpdatesSubscriptionLinkSentSession,
 	setGetUpdatesSubscriptionLinkSentSession
@@ -8,14 +7,14 @@ const {
 	getGetUpdatesUnsubscribedSession,
 	setGetUpdatesUnsubscribedSession
 } = require('./get-updates-unsubscribed');
+const { setOrRemoveGetUpdatesSession } = require('./set-or-remove-get-updates-session');
 
 module.exports = {
 	getGetUpdatesSession,
 	setGetUpdatesSession,
-	getGetUpdatesEmailSession,
-	setGetUpdatesEmailSession,
 	getGetUpdatesSubscriptionLinkSentSession,
 	setGetUpdatesSubscriptionLinkSentSession,
 	getGetUpdatesUnsubscribedSession,
-	setGetUpdatesUnsubscribedSession
+	setGetUpdatesUnsubscribedSession,
+	setOrRemoveGetUpdatesSession
 };
