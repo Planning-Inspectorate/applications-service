@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/get-updates/unsubscribed/_translations should return the correct English translations 1`] = `
+{
+  "panelText": "You have unsubscribed from emails about this project",
+  "panelTitle": "Success",
+}
+`;
+
+exports[`pages/projects/get-updates/unsubscribed/_translations should return the correct Welsh translations 1`] = `
+{
+  "panelText": "Rydych wedi datdanysgrifio o gael negeseuon e-bost ynglŷn â’r prosiect hwn",
+  "panelTitle": "Llwyddiant",
+}
+`;

@@ -40,6 +40,16 @@ export function createRoutes() {
 		buildSave(saveDataToSession)
 	);
 
+	/* we have two options here for handling the transition from the form back to the existing control flow
+	1. we can feature a check your answers page, letting users confirm their answers before confirming and then the email confirmation is sent
+	2. we can configure this check your answers route to redirect us straight to the email confirmation page, skipping the check your answers page entirely
+
+	option 2 lets us keep the flow as it is currently, but the check your answers page is a key component of dynamic forms. Bypassing it is a bit "hacky" and is not the intended flow
+	option 1 lets us remain consistent with other PINS journeys using dynamic forms but it does alter our current flow.
+	I recognise that for a journey this short it seems redundant, but for larger journeys like "have your say" a check your answers page would be more useful
+
+	I have gone for option 1 for now as it is easier to implement
+	*/
 	router.get('/check-your-answers', getJourneyResponse, getJourney, (req, res) =>
 		list(req, res, journeyId, {
 			submitButtonText: 'Save and return'

@@ -1,0 +1,33 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitle = t('getUpdatesUnsubscribe.pageTitle') %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ t('getUpdatesUnsubscribe.pageHeading') }}</h1>
+
+      {% if isWelsh and projectNameWelsh %}
+        {% set name = projectNameWelsh %}
+      {% else %}
+        {% set name = projectName %}
+      {% endif %}
+
+      <p class="govuk-body">
+        {{ t('getUpdatesUnsubscribe.paragraph') }} {{ name }}.
+      </p>
+
+      <form method="POST" novalidate>
+        {{ govukButton({
+          name: "email",
+          text: t('getUpdatesUnsubscribe.unsubscribeLink'),
+          value: email
+        }) }}
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

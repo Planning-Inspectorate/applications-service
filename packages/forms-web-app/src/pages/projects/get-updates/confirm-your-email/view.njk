@@ -1,0 +1,43 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% set pageTitle = t('getUpdatesConfirmYourEmail.title1') %}
+{% set pageHeading = t('getUpdatesConfirmYourEmail.heading1') %}
+
+{% set confirmHtml %}
+	<p>{{ t('getUpdatesConfirmYourEmail.paragraph4') }}</p>
+	<p>{{ t('getUpdatesConfirmYourEmail.paragraph5', { link: '<a class="govuk-link" href="' + "email" + '">' + t('getUpdatesConfirmYourEmail.paragraph5LinkText1') + '</a>' }) | safe }}</p> 
+{% endset %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
+
+      <p class="govuk-body-l">
+        {{ t('getUpdatesConfirmYourEmail.paragraph1')}} <strong>{{ email }}</strong>
+      </p>
+
+      <p class="govuk-body">
+        {{ t('getUpdatesConfirmYourEmail.paragraph2')}}
+      </p>
+
+      <p class="govuk-body">
+        {{ projectName }}
+      </p>
+
+      <p class="govuk-body">
+        {{ t('getUpdatesConfirmYourEmail.paragraph3')}}
+      </p>
+
+      {{ govukDetails({
+        html: confirmHtml,
+        summaryText: t('getUpdatesConfirmYourEmail.linkText1')
+      }) }}
+    </div>
+  </div>
+
+{% endblock %}
