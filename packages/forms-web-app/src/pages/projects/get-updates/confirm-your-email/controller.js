@@ -14,6 +14,7 @@ const getUpdatesConfirmYourEmailController = (req, res, next) => {
 		if (!getGetUpdatesSubscriptionLinkSentSession(session))
 			throw new Error('Get updates subscription link sent session value not true');
 
+		//we are definitely reaching here!
 		return res.render(view, getPageData(session, caseRef));
 	} catch (error) {
 		logger.error(error);
