@@ -8,7 +8,11 @@ export function createJourney(questions, response, req) {
 
 	return new Journey({
 		journeyId: journeyId,
-		sections: [new Section(journeyTitle, 'details').addQuestion(questions.test)],
+		sections: [
+			new Section(journeyTitle, 'details')
+				.addQuestion(questions.email)
+				.addQuestion(questions.howOften)
+		],
 		taskListUrl: 'check-your-answers',
 		journeyTemplate: 'layouts/forms-question.njk',
 		taskListTemplate: 'layouts/forms-check-your-answers.njk',
