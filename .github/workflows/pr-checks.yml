@@ -131,9 +131,11 @@ jobs:
             exit 1
           fi
 
+          SPEC_GLOB="{$SPEC_LIST}"
+
           echo "Running shard ${{ matrix.shard_index }} of 4"
           echo "$SPEC_LIST" | tr ',' '\n'
-          npx cypress-tags run -b chrome --env TAGS="not (@wip or @ignore)" --spec "$SPEC_LIST"
+          npx cypress-tags run -b chrome --env TAGS="not (@wip or @ignore)" --glob "$SPEC_GLOB"
 
       - name: Generate Cypress HTML report
         if: always()
