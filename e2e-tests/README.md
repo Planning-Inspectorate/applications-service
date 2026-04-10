@@ -1,74 +1,241 @@
 # Cypress E2E tests
 
-### Overview
+This directory contains the legacy Cypress + Cucumber regression suite for the applications service.
 
-The [Cypress](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell) framework provides support 
-for automated testing and BDD. 
+## What these tests cover
 
-#### Running against a different base URL
+The suite covers both:
 
-By default, Cypress will run tests against the URL defines in the `baseUrl` setting in `cypress.json` (currently,
-[localhost:9004](http://localhost:9004)). If you wish to switch to a different URL, you can set an environment
-variable to do so. For example, to run against the prod cluster.
+- the public guidance pages under "Have your say"
+- the "Register to have your say" journey itself, including registration steps and completion pages
+
+Examples:
+
+- `cypress/e2e/start-page.feature`
+- `cypress/e2e/register-to-say-about-national-infra-project.feature`
+- `cypress/e2e/say-about-national-infra-project.feature`
+- `cypress/e2e/registration/**/*.feature`
+
+## Test data
+
+These tests do **not** create fresh projects or cases for each run.
+
+They rely on seeded or mocked application data that is already available in the local stack. A lot of the suite is hardcoded to specific projects and case references such as:
+
+- `North Lincolnshire Green Energy Park`
+- `EN010116`
+- `Cleve Hill Solar Park`
+- `Hinkley Point C New Nuclear Power Station Material Change 1`
+
+Because of that, you should seed the local database before running the suite.
+
+Some registration scenarios do submit new registrations against those existing seeded cases. They use fixed names, emails and phone numbers in the test steps, so these tests are best treated as local regression tests against seeded data rather than isolated disposable environments.
+
+## Prerequisites
+
+- Node.js 22
+- Docker
+
+Install dependencies in both places:
 
 ```shell
-CYPRESS_BASE_URL=http://application-planning-decision.planninginspectorate.gov.uk npm run test:e2e
+npm ci
+npm --prefix e2e-tests ci
 ```
 
-If you wish to test against a different cluster secured with HTTP Basic authentication, you add this into the
-environment variable. For instance, if the username was `hello` and the password `world`:
+Or use:
 
 ```shell
-CYPRESS_BASE_URL=http://hello:world@applications-dev.planninginspectorate.gov.uk npm run test:e2e
+make install
 ```
 
-> This is not the password. For (obvious) security purposes, this is never checked into this repo.
+If the API package does not yet have a local `.env`, you can create it from the checked-in development template with:
 
-If you wish to run this inside GitHub Actions against an environment, a secret is configured with all URLs (and
-any authentication):
- - `CYPRESS_DEV_BASE_URL`
- - `CYPRESS_PREPROD_BASE_URL`
- - `CYPRESS_PROD_BASE_URL`
-
-
-
-#### Test data
-From the project root folder run `npm run dev` which will spin up the application against `localhost:9004`
-
-In a separate terminal, navigate to `e2e-tests` folder.
-
-All the features were tagged with `@testSuite` tag.
-
-to run all the tests in headed chrome mode execute below command:
-```
- npx cypress run --headed -b chrome --env demoDelay=1000 --env TAGS="@testSuite"
-```
-selection of tests by tags i.e. only those with `@wip` tag:
-```
- npx cypress run --headed -b chrome --env demoDelay=1000 --env TAGS="@wip"
-```
-A much more efficient way of running a selection of tests by tag which avoids firing up a browser for skipped feature files:
-```
-npx cypress-tags run --headed -b chrome --env demoDelay=1000 --env TAGS="@registration and @myself"
-```
-or like this to select a specific feature file:
-```
- npx cypress run --headed -b chrome --env demoDelay=1000 --spec cypress/integration/register-type-of-party.feature
-```
-or like this to run all feature files in a specific directory:
-```
- npx cypress run --headed -b chrome --env demoDelay=1000 --spec "cypress/integration/registration/myself/**/*.feature"
+```shell
+make api-env
 ```
 
-#### Accessibility Testing
+## Local setup
 
-Accessibility testing is integrated into acceptance test suite. It has been commented out atm until the accessibility issues were resolved. 
+From the repo root:
 
-To run accessibility testing uncomment below code from `assertUserOnThePage.js` file. 
+1. Create the required `.env` files described in the root `README.md`.
+2. Generate Prisma client and prepare the local database:
 
+```shell
+docker compose up -d mssql
+npm run db:generate
+npm run db:migrate:dev
+npm run db:seed
 ```
- cy.checkPageA11y({
-    });
+
+Or use:
+
+```shell
+make db-up
+make db-setup
 ```
 
-Acceptance Tests were written such that we assert page title and heading for every page and along with that assertion we incorporated axe run against that page to find out accessibility violations.
+`make db-setup` will first create `packages/applications-service-api/.env` from `packages/applications-service-api/.env.development` if it is missing.
+`make db-setup` assumes the local SQL Server is already running on `localhost:1433`.
+
+3. Start the local stack:
+
+```shell
+npm run dev
+```
+
+Or use:
+
+```shell
+make dev
+```
+
+The web app should then be available at [http://localhost:9004](http://localhost:9004).
+
+## Running the tests
+
+The Cypress config lives in `e2e-tests/cypress.config.js` and defaults to `http://localhost:9004`.
+
+### Open Cypress interactively
+
+```shell
+npm --prefix e2e-tests run test:open
+```
+
+Or use:
+
+```shell
+make e2e-open
+```
+
+`make e2e-open` opens Cypress in Chrome by default to avoid Electron renderer issues on some local machines.
+
+### Run the default E2E suite headlessly
+
+```shell
+npm --prefix e2e-tests run test:e2e
+```
+
+This runs feature files under `cypress/e2e/**/*.feature` and excludes `@wip` and `@ignore`.
+
+Or use:
+
+```shell
+make e2e
+```
+
+### Run in headed mode with demo delay
+
+```shell
+npm --prefix e2e-tests run test:e2e:demo
+```
+
+Or use:
+
+```shell
+make e2e-demo
+```
+
+### Run a subset by tag
+
+Run from the `e2e-tests` directory:
+
+```shell
+npx cypress-tags run -b chrome --env TAGS="@registration and @myself"
+```
+
+Or use:
+
+```shell
+make e2e-tags TAGS='@registration and @myself'
+```
+
+Examples:
+
+```shell
+npx cypress-tags run -b chrome --env TAGS="@testSuite"
+npx cypress-tags run -b chrome --env TAGS="@registration and @completion"
+```
+
+### Run a specific feature file
+
+Run from the `e2e-tests` directory:
+
+```shell
+npx cypress-tags run -b chrome --spec "cypress/e2e/register-to-say-about-national-infra-project.feature"
+```
+
+Or use:
+
+```shell
+make e2e-spec SPEC='cypress/e2e/register-to-say-about-national-infra-project.feature'
+```
+
+### Run a directory of features
+
+Run from the `e2e-tests` directory:
+
+```shell
+npx cypress-tags run -b chrome --spec "cypress/e2e/registration/myself/**/*.feature"
+```
+
+Or use:
+
+```shell
+make e2e-dir SPEC='cypress/e2e/registration/myself/**/*.feature'
+```
+
+## Running against another environment
+
+By default Cypress uses the `baseUrl` from `cypress.config.js`, currently `http://localhost:9004`.
+
+You can override it with `CYPRESS_BASE_URL`, for example:
+
+```shell
+CYPRESS_BASE_URL=http://application-planning-decision.planninginspectorate.gov.uk npm --prefix e2e-tests run test:e2e
+```
+
+If the target environment uses HTTP Basic auth:
+
+```shell
+CYPRESS_BASE_URL=http://hello:world@applications-dev.planninginspectorate.gov.uk npm --prefix e2e-tests run test:e2e
+```
+
+## Reporting
+
+After a run, you can post-process the generated cucumber JSON into an HTML report:
+
+```shell
+npm --prefix e2e-tests run test:e2e:postprocess
+```
+
+Or use:
+
+```shell
+make e2e-report
+```
+
+## Make targets
+
+From the repo root, run:
+
+```shell
+make help
+```
+
+That will list the grouped shortcuts for:
+
+- installing dependencies
+- grouped DB setup and reset commands
+- starting the local stack
+- Cypress open, default, demo, smoke, tag, and spec runs
+
+## Accessibility testing
+
+Accessibility support is wired in through `cypress-axe`, but the automatic page checks are currently commented out in the suite.
+
+If you want to experiment with enabling them, review:
+
+- `cypress/support/accessibility.js`
+- `cypress/support/common-methods/assertUserOnThePage.js`
