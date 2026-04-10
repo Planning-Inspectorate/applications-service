@@ -1,0 +1,160 @@
+name: PR Checks
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            e2e-tests/package-lock.json
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npm run db:generate
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run format check
+        run: npm run format-check
+
+      - name: Run unit and integration tests
+        run: npm run test:cov
+
+  cypress-e2e:
+    name: Cypress E2E (Shard ${{ matrix.shard_index }}/4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard_index: [1, 2, 3, 4]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            e2e-tests/package-lock.json
+
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('e2e-tests/package-lock.json') }}
+
+      - name: Create root CI env
+        run: |
+          cat <<EOF > .env
+          ENCRYPTION_SECRET_KEY=github-actions-test-encryption-secret
+          EOF
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install E2E dependencies
+        run: npm --prefix e2e-tests ci
+
+      - name: Start infrastructure services
+        run: docker compose up -d mssql db redis api-mock-server
+
+      - name: Generate, migrate and seed database
+        run: make db-setup
+
+      - name: Start application services
+        run: docker compose up -d applications-service-api applications-web-app
+
+      - name: Wait for app health checks
+        run: |
+          set -e
+
+          for url in http://localhost:3000/health http://localhost:9004/health; do
+            echo "Waiting for $url"
+            for attempt in $(seq 1 30); do
+              if curl --fail --silent --show-error "$url" > /dev/null; then
+                echo "$url is healthy"
+                break
+              fi
+
+              if [ "$attempt" -eq 30 ]; then
+                echo "Timed out waiting for $url"
+                exit 1
+              fi
+
+              sleep 10
+            done
+          done
+
+      - name: Run Cypress shard
+        run: |
+          cd e2e-tests
+
+          SPEC_LIST="$(
+            find cypress/e2e -type f -name '*.feature' | sort | awk \
+              -v shard_index="${{ matrix.shard_index }}" \
+              -v shard_count="4" \
+              '((NR - 1) % shard_count) == (shard_index - 1) { print }' | paste -sd, -
+          )"
+
+          if [ -z "$SPEC_LIST" ]; then
+            echo "No specs were assigned to shard ${{ matrix.shard_index }} of 4"
+            exit 1
+          fi
+
+          echo "Running shard ${{ matrix.shard_index }} of 4"
+          echo "$SPEC_LIST" | tr ',' '\n'
+          npx cypress-tags run -b chrome --env TAGS="not (@wip or @ignore)" --spec "$SPEC_LIST"
+
+      - name: Generate Cypress HTML report
+        if: always()
+        run: npm --prefix e2e-tests run test:e2e:postprocess
+
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots-shard-${{ matrix.shard_index }}
+          path: e2e-tests/cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload Cypress HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-html-report-shard-${{ matrix.shard_index }}
+          path: e2e-tests/cypress/cucumber-report
+          if-no-files-found: ignore
+
+      - name: Stop docker compose services
+        if: always()
+        run: docker compose down -v
