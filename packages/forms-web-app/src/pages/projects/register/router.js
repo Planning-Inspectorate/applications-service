@@ -1,17 +1,33 @@
 const express = require('express');
 
+/** controllers */
 const { getRegisterIndexController } = require('./index/controller');
 const {
-	getRegisteringForController,
-	postRegisteringForController
-} = require('./registering-for/controller');
+	getRegisterDeclarationController,
+	postRegisterDeclarationController
+} = require('./_common/declaration/controller');
+const { getRegisterCompleteController } = require('./_common/complete/controller');
+const {
+	getRegisterAlreadyRegisteredController
+} = require('./_common/already-registered/controller');
+
+/** routes and urls */
+const { createRoutes: registerFormRoutes } = require('./forms/router');
 
 const { getRegisterIndexURL } = require('./index/_utils/get-register-index-url');
-const { getRegisteringForURL } = require('./registering-for/_utils/get-registering-for-url');
+const { getRegisterFormURL } = require('./forms/_utils/get-form-url');
+const {
+	getRegisterDeclarationURL
+} = require('./_common/declaration/_utils/get-register-declaration-url');
+const { getRegisterCompleteURL } = require('./_common/complete/_utils/get-register-complete-url');
+const {
+	getRegisterAlreadySubmittedURL
+} = require('./_common/already-registered/_utils/get-register-already-submitted-url');
 
+/** middleware */
 const { projectsMiddleware } = require('../_middleware/middleware');
-const { registerMiddleware } = require('./_middleware/register-middleware');
-const { registerStartRedirectMiddleware } = require('./_middleware/start-redirect-middleware');
+//const { registerMiddleware } = require('./_middleware/register-middleware');
+//const { registerStartRedirectMiddleware } = require('./_middleware/start-redirect-middleware');
 const {
 	addRegisterTranslationsMiddleware
 } = require('./_middleware/add-register-translations-middleware');
@@ -19,17 +35,18 @@ const {
 	addCommonTranslationsMiddleware
 } = require('../../../pages/_middleware/i18n/add-common-translations-middleware');
 
-const { validationErrorHandler } = require('../../../validators/validation-error-handler');
+//const { validationErrorHandler } = require('../../../validators/validation-error-handler');
+/*
 const {
 	validateRegisteringForOptions
 } = require('./registering-for/_validators/validate-registering-for-options');
-
-const { registerAgentRouter } = require('./agent/router');
-const { registerMyselfRouter } = require('./myself/router');
-const { registerOrganisationRouter } = require('./organisation/router');
+ */
 
 const registerIndexURL = getRegisterIndexURL();
-const registeringForURL = getRegisteringForURL();
+const registerFormURL = getRegisterFormURL();
+const registerDeclarationURL = getRegisterDeclarationURL();
+const registerCompleteURL = getRegisterCompleteURL();
+const registerAlreadyRegisteredURL = getRegisterAlreadySubmittedURL();
 
 const registerRouter = express.Router({ mergeParams: true });
 
@@ -38,25 +55,13 @@ registerRouter.use(addCommonTranslationsMiddleware, addRegisterTranslationsMiddl
 registerRouter.get(registerIndexURL, projectsMiddleware, getRegisterIndexController);
 registerRouter.get(`${registerIndexURL}/start`, projectsMiddleware, getRegisterIndexController);
 
-registerRouter.get(
-	registeringForURL,
-	registerStartRedirectMiddleware,
-	registerMiddleware,
-	getRegisteringForController
-);
-registerRouter.post(
-	registeringForURL,
-	registerStartRedirectMiddleware,
-	registerMiddleware,
-	validateRegisteringForOptions(),
-	validationErrorHandler,
-	postRegisteringForController
-);
+registerRouter.use(registerFormURL, registerFormRoutes());
 
-registerRouter.use(registerAgentRouter);
+registerRouter.get(registerDeclarationURL, getRegisterDeclarationController);
+registerRouter.post(registerDeclarationURL, postRegisterDeclarationController);
 
-registerRouter.use(registerMyselfRouter);
+registerRouter.get(registerCompleteURL, getRegisterCompleteController);
 
-registerRouter.use(registerOrganisationRouter);
+registerRouter.get(registerAlreadyRegisteredURL, getRegisterAlreadyRegisteredController);
 
 module.exports = { registerRouter };

@@ -12,6 +12,10 @@ const path = require('path');
 const { getYearNow } = require('./utils/date-utils');
 const { getFileNameFromDocumentUrl } = require('./lib/get-file-name-from-url');
 
+const dynamicFormsRoot = path.resolve(
+	require.resolve('@planning-inspectorate/dynamic-forms'),
+	'..'
+);
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
 const pinsComponentsRoot = path.resolve(
@@ -21,6 +25,7 @@ const pinsComponentsRoot = path.resolve(
 
 const viewPaths = [
 	govukFrontendRoot,
+	dynamicFormsRoot,
 	mojFrontendRoot,
 	path.join(__dirname, 'views'),
 	path.join(__dirname, 'pages'),

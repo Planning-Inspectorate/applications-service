@@ -28,6 +28,7 @@
 	"dependencies": {
 		"@ministryofjustice/frontend": "*",
 		"@pins/common": "0.0.0",
+		"@planning-inspectorate/dynamic-forms": "^3.9.0",
 		"@planning-inspectorate/pins-components": "*",
 		"@testing-library/dom": "*",
 		"@testing-library/jest-dom": "*",

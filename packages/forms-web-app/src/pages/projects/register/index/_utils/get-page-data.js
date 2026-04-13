@@ -1,6 +1,6 @@
 const { formatDate } = require('../../../../../utils/date-utils');
 const { mapTitles } = require('../../../../_utils/map-titles');
-const { getRegisteringForURL } = require('../../registering-for/_utils/get-registering-for-url');
+const { getRegisterFormURL } = require('../../forms/_utils/get-form-url');
 
 const getCloseDate = (
 	registrationOpen,
@@ -33,7 +33,7 @@ const getPageData = (
 		registrationReOpened,
 		DateOfReOpenRelevantRepresentationClose
 	),
-	registeringForURL: getRegisteringForURL(caseRef),
+	registerFormURL: getRegisterFormURL(caseRef),
 	registrationOpen,
 	registrationReOpened
 });
