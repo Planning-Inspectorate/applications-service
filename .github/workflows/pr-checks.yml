@@ -20,6 +20,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch main branch for Turbo diff
+        run: git fetch origin main:refs/remotes/origin/main
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -46,13 +51,13 @@ jobs:
         run: npm run test:cov
 
   cypress-e2e:
-    name: Cypress E2E (Shard ${{ matrix.shard_index }}/4)
+    name: Cypress E2E (Shard ${{ matrix.shard_index }}/6)
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        shard_index: [1, 2, 3, 4]
+        shard_index: [1, 2, 3, 4, 5, 6]
 
     steps:
       - name: Checkout repository
@@ -122,18 +127,18 @@ jobs:
           SPEC_LIST="$(
             find cypress/e2e -type f -name '*.feature' | sort | awk \
               -v shard_index="${{ matrix.shard_index }}" \
-              -v shard_count="4" \
+              -v shard_count="6" \
               '((NR - 1) % shard_count) == (shard_index - 1) { print }' | paste -sd, -
           )"
 
           if [ -z "$SPEC_LIST" ]; then
-            echo "No specs were assigned to shard ${{ matrix.shard_index }} of 4"
+            echo "No specs were assigned to shard ${{ matrix.shard_index }} of 6"
             exit 1
           fi
 
           SPEC_GLOB="{$SPEC_LIST}"
 
-          echo "Running shard ${{ matrix.shard_index }} of 4"
+          echo "Running shard ${{ matrix.shard_index }} of 6"
           echo "$SPEC_LIST" | tr ',' '\n'
           npx cypress-tags run -b chrome --env TAGS="not (@wip or @ignore)" --glob "$SPEC_GLOB"
 

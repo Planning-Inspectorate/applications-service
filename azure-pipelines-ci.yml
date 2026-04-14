@@ -68,31 +68,3 @@ extends:
               nodeVersion: 22
               condition: succeededOrFailed()
               script: npm run test:cov
-      - name: Run Cypress E2E Tests Shard 1
-        steps:
-          - template: azure-pipelines-e2e-steps.yml
-            parameters:
-              artifactSuffix: shard-1
-              shardIndex: 1
-              shardCount: 4
-      - name: Run Cypress E2E Tests Shard 2
-        steps:
-          - template: azure-pipelines-e2e-steps.yml
-            parameters:
-              artifactSuffix: shard-2
-              shardIndex: 2
-              shardCount: 4
-      - name: Run Cypress E2E Tests Shard 3
-        steps:
-          - template: azure-pipelines-e2e-steps.yml
-            parameters:
-              artifactSuffix: shard-3
-              shardIndex: 3
-              shardCount: 4
-      - name: Run Cypress E2E Tests Shard 4
-        steps:
-          - template: azure-pipelines-e2e-steps.yml
-            parameters:
-              artifactSuffix: shard-4
-              shardIndex: 4
-              shardCount: 4
