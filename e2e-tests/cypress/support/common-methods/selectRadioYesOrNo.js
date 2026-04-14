@@ -7,7 +7,7 @@ module.exports = (radioChoice) => {
 			cy.get('[data-cy="answer-no"]').click();
 			break;
 		default:
-			throw console.error('uanble to find specified radio option: ' + radioChoice);
+			throw console.error('unable to find specified radio option: ' + radioChoice);
 	}
 
 	cy.wait(Cypress.env('demoDelay'));

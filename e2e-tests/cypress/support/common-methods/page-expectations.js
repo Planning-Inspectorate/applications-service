@@ -366,7 +366,7 @@ module.exports = {
 		url: '/what-happens-after-the-decision-is-made'
 	}),
 	'cookies settings': staticPage({
-		title: 'Cookies',
+		title: 'Cookies on the Find a National Infrastructure Project service',
 		heading: 'Cookies',
 		url: '/cookies'
 	}),

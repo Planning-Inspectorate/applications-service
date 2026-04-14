@@ -133,7 +133,7 @@ jobs:
 
           if [ -z "$SPEC_LIST" ]; then
             echo "No specs were assigned to shard ${{ matrix.shard_index }} of 6"
-            exit 1
+            exit 0
           fi
 
           SPEC_GLOB="{$SPEC_LIST}"

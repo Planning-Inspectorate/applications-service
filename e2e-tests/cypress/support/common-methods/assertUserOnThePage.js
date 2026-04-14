@@ -4,7 +4,7 @@ module.exports = (pageName) => {
 	const expectation = pageExpectations[pageName.toLowerCase()];
 
 	if (!expectation) {
-		throw new Error('uanble to find specified page name: ' + pageName);
+		throw new Error('unable to find specified page name: ' + pageName);
 	}
 
 	if (expectation.title) {
