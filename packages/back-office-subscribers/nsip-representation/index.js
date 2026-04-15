@@ -3,25 +3,35 @@ const buildMergeQuery = require('../lib/build-merge-query');
 const { serviceUserQuery } = require('../lib/queries');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-representation function`);
-	const representationId = message.representationId;
+	const { caseRef, correlationId, representedId, representationId } = message;
 
 	if (!representationId) {
-		throw new Error('representationId is required');
+		throw new Error('representationId is required to invoke nsip-representation function');
 	}
 
-	if (!message.representedId) {
+	if (!representedId) {
 		throw new Error('representedId is required');
 	}
 
+	context.log(`invoking nsip-representation function`, {
+		correlationId,
+		caseReference: caseRef
+	});
+
 	// Only create the service users if it doesn't already exist
 	// We create this first so that the foreign key constraint doesn't fail
-	await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representedId);
-	context.log(`created represented with serviceUserId ${message.representedId}`);
+	await prismaClient.$executeRawUnsafe(serviceUserQuery, representedId);
+	context.log(`created represented with serviceUserId ${representedId}`, {
+		correlationId,
+		caseReference: caseRef
+	});
 
 	if (message.representativeId) {
 		await prismaClient.$executeRawUnsafe(serviceUserQuery, message.representativeId);
-		context.log(`created representative with serviceUserId ${message.representativeId}`);
+		context.log(`created representative with serviceUserId ${message.representativeId}`, {
+			correlationId,
+			caseReference: caseRef
+		});
 	}
 
 	let representation = {
@@ -50,5 +60,11 @@ module.exports = async (context, message) => {
 		context.bindingData.enqueuedTimeUtc
 	);
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`upserted representation with representationId ${representationId}`);
+	context.log(
+		`nsip-representation function upserted representation with representationId ${representationId}`,
+		{
+			correlationId,
+			caseReference: caseRef
+		}
+	);
 };

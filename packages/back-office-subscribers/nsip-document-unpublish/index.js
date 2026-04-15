@@ -2,14 +2,20 @@ const { prismaClient } = require('../lib/prisma');
 const axios = require('axios');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-document-unpublish function`);
 	const documentId = message.documentId;
 	const caseRef = message.caseRef;
 
 	if (!documentId) {
-		context.log(`skipping unpublish as documentId is missing`);
+		context.warn(`skipping nsip-document-unpublish function as documentId is missing`, {
+			correlationId: message.correlationId,
+			caseReference: caseRef
+		});
 		return;
 	}
+
+	context.log(
+		`invoking nsip-document-unpublish function for documentId ${documentId} and caseRef ${caseRef}`
+	);
 
 	// we use deleteMany to avoid the need to check if the document exists
 	await prismaClient.document.deleteMany({
@@ -17,7 +23,7 @@ module.exports = async (context, message) => {
 			documentId
 		}
 	});
-	context.log(`unpublished document with documentId: ${documentId}`);
+	context.log(`unpublished document for caseRef ${caseRef} with documentId: ${documentId}`);
 
 	if (!caseRef) {
 		context.log('skipping cache clear as caseRef is required');
@@ -30,5 +36,6 @@ module.exports = async (context, message) => {
 		const { data: cacheClearResponse } = await axios.delete(url);
 
 		context.log(JSON.stringify(cacheClearResponse, null, 2));
+		context.log(`documents cache cleared for caseRef ${caseRef}`);
 	}
 };
