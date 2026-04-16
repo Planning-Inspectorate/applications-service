@@ -88,6 +88,7 @@
 			"line3Length": "Mae'n rhaid i'r dref neu'r ddinas gynnwys 64 o nodau neu lai",
 			"postcodeEmpty": "Nodwch god post",
 			"postcodeLength": "Mae'n rhaid i'r cod post gynnwys 16 o nodau neu lai",
+			"invalidPostcode": "Rhowch god post yn y fformat cywir, fel SW1A 1AA",
 			"countryEmpty": "Nodwch wlad",
 			"countryLength": "Mae'n rhaid i'r wlad gynnwys 64 o nodau neu lai"
 		},

@@ -88,6 +88,7 @@
 			"line3Length": "Town or city must be 64 characters or less",
 			"postcodeEmpty": "Enter a postcode",
 			"postcodeLength": "Postcode must be 16 characters or less",
+			"invalidPostcode": "Enter a postcode in the correct format, like SW1A 1AA",
 			"countryEmpty": "Enter a country",
 			"countryLength": "Country must be 64 characters or less"
 		},
