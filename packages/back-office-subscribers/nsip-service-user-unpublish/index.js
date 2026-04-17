@@ -1,13 +1,18 @@
 const { prismaClient } = require('../lib/prisma');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-service-user-unpublish function`);
 	const serviceUserId = message.id;
+	const caseReference = message.caseReference;
 
 	if (!serviceUserId) {
-		context.log(`skipping unpublish as serviceUserId is missing`);
+		context.log(`skipping nsip-service-user-unpublish function as serviceUserId is missing`, {
+			correlationId: message.correlationId,
+			caseReference
+		});
 		return;
 	}
+
+	context.log(`invoking nsip-service-user-unpublish function for caseReference: ${caseReference}`);
 
 	// we only need to disconnect the service user from the project table
 	// representation contact service users will never be unpublished
@@ -27,5 +32,7 @@ module.exports = async (context, message) => {
 		}
 	});
 
-	context.log(`unpublished service user with serviceUserId ${serviceUserId}`);
+	context.log(
+		`nsip-service-user-unpublish function unpublished service user with serviceUserId ${serviceUserId} for caseReference: ${caseReference}`
+	);
 };

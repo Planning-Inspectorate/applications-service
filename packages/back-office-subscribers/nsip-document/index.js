@@ -4,13 +4,16 @@ const { prismaClient } = require('../lib/prisma');
 const buildMergeQuery = require('../lib/build-merge-query');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-document function`);
 	const documentId = message.documentId;
 	const caseRef = message.caseRef;
 
 	if (!documentId) {
-		throw new Error('documentId is required');
+		throw new Error(`documentId is required for nsip-document function`, {
+			correlationId: message.correlationId
+		});
 	}
+
+	context.log(`invoking nsip-document function for caseRef ${caseRef}`);
 
 	const documents = {
 		...pick(message, documentPropertiesFromMessage),
@@ -26,7 +29,7 @@ module.exports = async (context, message) => {
 	);
 
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`upserted document with documentId ${documentId}`);
+	context.log(`upserted document with documentId ${documentId} for caseRef ${caseRef}`);
 
 	if (!caseRef) {
 		context.log('skipping cache clear as caseRef is required');
@@ -39,6 +42,7 @@ module.exports = async (context, message) => {
 		const { data: cacheClearResponse } = await axios.delete(url);
 
 		context.log(JSON.stringify(cacheClearResponse, null, 2));
+		context.log(`documents cache cleared for caseRef ${caseRef}`);
 	}
 };
 

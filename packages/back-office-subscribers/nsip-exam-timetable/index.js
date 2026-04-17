@@ -1,14 +1,17 @@
 const { prismaClient } = require('../lib/prisma');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-exam-timetable function`);
 	const events = message.events || [];
 	const currentTime = new Date();
 	const caseReference = message.caseReference;
 
 	if (!caseReference) {
-		throw new Error('caseReference is required');
+		throw new Error(`caseReference is required for nsip-exam-timetable function`, {
+			correlationId: message.correlationId
+		});
 	}
+
+	context.log(`invoking nsip-exam-timetable function for caseReference: ${caseReference}`);
 
 	return await prismaClient.$transaction(async (tx) => {
 		// note: because of the nesting, it's much faster easier to remove and then add any events because back office will send all events

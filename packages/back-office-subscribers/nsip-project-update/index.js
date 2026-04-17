@@ -2,13 +2,16 @@ const { prismaClient } = require('../lib/prisma');
 const buildMergeQuery = require('../lib/build-merge-query');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-project-update function`);
-
 	const projectUpdateId = message.id;
+	const caseReference = message.caseReference;
 
 	if (!projectUpdateId) {
-		throw new Error('id is required');
+		throw new Error(`id is required for nsip-project-update function`, {
+			correlationId: message.correlationId
+		});
 	}
+
+	context.log(`invoking nsip-project-update function for caseReference: ${caseReference}`);
 
 	const projectUpdate = {
 		projectUpdateId,
