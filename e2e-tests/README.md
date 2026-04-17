@@ -43,16 +43,10 @@ npm ci
 npm --prefix e2e-tests ci
 ```
 
-Or use:
-
-```shell
-make install
-```
-
 If the API package does not yet have a local `.env`, you can create it from the checked-in development template with:
 
 ```shell
-make api-env
+cp packages/applications-service-api/.env.development packages/applications-service-api/.env
 ```
 
 ## Local setup
@@ -69,26 +63,10 @@ npm run db:migrate:dev
 npm run db:seed
 ```
 
-Or use:
-
-```shell
-make db-up
-make db-setup
-```
-
-`make db-setup` will first create `packages/applications-service-api/.env` from `packages/applications-service-api/.env.development` if it is missing.
-`make db-setup` assumes the local SQL Server is already running on `localhost:1433`.
-
 3. Start the local stack:
 
 ```shell
 npm run dev
-```
-
-Or use:
-
-```shell
-make dev
 ```
 
 The web app should then be available at [http://localhost:9004](http://localhost:9004).
@@ -103,14 +81,6 @@ The Cypress config lives in `e2e-tests/cypress.config.js` and defaults to `http:
 npm --prefix e2e-tests run test:open
 ```
 
-Or use:
-
-```shell
-make e2e-open
-```
-
-`make e2e-open` opens Cypress in Chrome by default to avoid Electron renderer issues on some local machines.
-
 ### Run the default E2E suite headlessly
 
 ```shell
@@ -119,22 +89,10 @@ npm --prefix e2e-tests run test:e2e
 
 This runs feature files under `cypress/e2e/**/*.feature` and excludes `@wip` and `@ignore`.
 
-Or use:
-
-```shell
-make e2e
-```
-
 ### Run in headed mode with demo delay
 
 ```shell
 npm --prefix e2e-tests run test:e2e:demo
-```
-
-Or use:
-
-```shell
-make e2e-demo
 ```
 
 ### Run a subset by tag
@@ -143,12 +101,6 @@ Run from the `e2e-tests` directory:
 
 ```shell
 npx cypress-tags run -b chrome --env TAGS="@registration and @myself"
-```
-
-Or use:
-
-```shell
-make e2e-tags TAGS='@registration and @myself'
 ```
 
 Examples:
@@ -166,24 +118,12 @@ Run from the `e2e-tests` directory:
 npx cypress-tags run -b chrome --spec "cypress/e2e/register-to-say-about-national-infra-project.feature"
 ```
 
-Or use:
-
-```shell
-make e2e-spec SPEC='cypress/e2e/register-to-say-about-national-infra-project.feature'
-```
-
 ### Run a directory of features
 
 Run from the `e2e-tests` directory:
 
 ```shell
 npx cypress-tags run -b chrome --spec "cypress/e2e/registration/myself/**/*.feature"
-```
-
-Or use:
-
-```shell
-make e2e-dir SPEC='cypress/e2e/registration/myself/**/*.feature'
 ```
 
 ## Running against another environment
@@ -209,27 +149,6 @@ After a run, you can post-process the generated cucumber JSON into an HTML repor
 ```shell
 npm --prefix e2e-tests run test:e2e:postprocess
 ```
-
-Or use:
-
-```shell
-make e2e-report
-```
-
-## Make targets
-
-From the repo root, run:
-
-```shell
-make help
-```
-
-That will list the grouped shortcuts for:
-
-- installing dependencies
-- grouped DB setup and reset commands
-- starting the local stack
-- Cypress open, default, demo, smoke, tag, and spec runs
 
 ## Accessibility testing
 

@@ -94,7 +94,13 @@ jobs:
         run: docker compose up -d mssql db redis api-mock-server
 
       - name: Generate, migrate and seed database
-        run: make db-setup
+        run: |
+          if [ ! -f packages/applications-service-api/.env ]; then
+            cp packages/applications-service-api/.env.development packages/applications-service-api/.env
+          fi
+          npm run db:generate
+          npm run db:migrate:dev
+          npm run db:seed
 
       - name: Start application services
         run: docker compose up -d applications-service-api applications-web-app
