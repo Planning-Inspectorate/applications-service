@@ -88,7 +88,7 @@ describe('projects/register/index/controller', () => {
 						pageHeading: 'Register to have your say about a national infrastructure project',
 						pageTitle:
 							'Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						registeringForURL: '/projects/mock-case-ref/register/who-registering-for',
+						registerFormURL: '/projects/mock-case-ref/register/who-registering-for',
 						registrationOpen: true,
 						registrationReOpened: false
 					});
@@ -117,7 +117,7 @@ describe('projects/register/index/controller', () => {
 						pageHeading: 'Register to have your say about a national infrastructure project',
 						pageTitle:
 							'Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						registeringForURL: '/projects/mock-case-ref/register/who-registering-for',
+						registerFormURL: '/projects/mock-case-ref/register/who-registering-for',
 						registrationOpen: false,
 						registrationReOpened: false
 					});
@@ -148,7 +148,7 @@ describe('projects/register/index/controller', () => {
 						pageHeading: 'Register to have your say about a national infrastructure project',
 						pageTitle:
 							'Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						registeringForURL: '/projects/mock-case-ref/register/who-registering-for',
+						registerFormURL: '/projects/mock-case-ref/register/who-registering-for',
 						registrationOpen: false,
 						registrationReOpened: false
 					});
@@ -177,7 +177,7 @@ describe('projects/register/index/controller', () => {
 						pageHeading: 'Register to have your say about a national infrastructure project',
 						pageTitle:
 							'Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						registeringForURL: '/projects/mock-case-ref/register/who-registering-for',
+						registerFormURL: '/projects/mock-case-ref/register/who-registering-for',
 						registrationOpen: false,
 						registrationReOpened: true
 					});
@@ -206,7 +206,7 @@ describe('projects/register/index/controller', () => {
 						pageHeading: 'Register to have your say about a national infrastructure project',
 						pageTitle:
 							'Register to have your say about a national infrastructure project - National Infrastructure Planning',
-						registeringForURL: '/projects/mock-case-ref/register/who-registering-for',
+						registerFormURL: '/projects/mock-case-ref/register/who-registering-for',
 						registrationOpen: false,
 						registrationReOpened: false
 					});

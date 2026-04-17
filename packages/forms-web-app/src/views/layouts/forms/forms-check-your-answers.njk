@@ -1,0 +1,16 @@
+{% extends "layouts/default.njk" %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-l">
+                {% if pageCaption %}
+                    <span class="govuk-caption-l govuk-!-margin-top-8">{{ pageCaption }}</span>
+                {% endif %}
+                {{ pageHeading | default('Check your answers') }}
+            </h1>
+        </div>
+    </div>
+
+    {% block dynTaskList %}{% endblock %}
+{% endblock %}
