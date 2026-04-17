@@ -1,6 +1,6 @@
 {
 	"heading1": "Cookies",
-	"paragraph1": "Cookies are files saved on your phone, tablet or computer when you visit a website. We use cookies to store information about how you use the Find a National Infrastructure Project service, such as the pages you visit.",
+	"paragraph1": "Cookies are files saved on your phone, tablet or computer when you visit a website. We use cookies to store information about how you use the find a national infrastructure project service, such as the pages you visit.",
 	"heading2": "Cookie settings",
 	"paragraph2": "We use different types of cookies.",
 	"paragraph3": "You can choose which cookies you're happy for us to use.",
@@ -39,7 +39,7 @@
 	"cookiesPurpose8": "Stores your preferred language to view the website",
 	"cookiesExpires8": "2 years",
 	"heading5": "Analytics cookies",
-	"paragraph6": "We use Google Analytics to measure how you use the Find a National Infrastructure Project service so we can improve it based on user needs. We do not allow Google to use or share the data about how you use this site.",
+	"paragraph6": "We use Google Analytics to measure how you use the find a national infrastructure project service so we can improve it based on user needs. We do not allow Google to use or share the data about how you use this site.",
 	"heading6": "Analytics cookies we use",
 	"paragraph7": "By accepting analytics cookies, you agree to the Planning Inspectorate using your data to help improve the find a national infrastructure project service.",
 	"cookiesName9": "_ga",
@@ -48,9 +48,6 @@
 	"cookiesName10": "_ga_DQ9S57CJDP",
 	"cookiesPurpose10": "Helps us understand how you use the website by measuring visits and traffic patterns",
 	"cookiesExpires10": "2 years",
-	"cookiesName11": "cookie_policy",
-	"cookiesPurpose11": "Helps us remember your cookie policy preferences",
-	"cookiesExpires11": "2 years",
 	"legend1": "Do you want to accept analytics cookies?",
 	"successBanner": {
 		"heading1": "Your cookie settings were saved",
