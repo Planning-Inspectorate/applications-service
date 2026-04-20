@@ -55,8 +55,6 @@
 		"pino": "*",
 		"prisma": "*",
 		"ramda": "*",
-		"sequelize": "*",
-		"sequelize-mock": "*",
 		"swagger-ui-express": "*",
 		"tcp-ping": "*",
 		"uuid": "*"

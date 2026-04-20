@@ -22,11 +22,14 @@ const mockContext = {
 
 const mockMessage = {
 	representationId: 123,
-	status: 'PUBLISHED'
+	status: 'PUBLISHED',
+	correlationId: 'id-1',
+	caseRef: 'mock-case-reference'
 };
 
 const mockRepresentation = {
-	...mockMessage,
+	representationId: 123,
+	status: 'PUBLISHED',
 	modifiedAt: new Date()
 };
 describe('nsip-representation-update', () => {
@@ -44,7 +47,10 @@ describe('nsip-representation-update', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-representation-update function');
+		expect(mockContext.log).toHaveBeenCalledWith(`invoking nsip-representation-update function`, {
+			correlationId: 'id-1',
+			caseReference: 'mock-case-reference'
+		});
 	});
 
 	it('throws error if representationId is missing', async () => {
@@ -74,7 +80,11 @@ describe('nsip-representation-update', () => {
 	it('logs success after update', async () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`updated representation with representationId ${mockMessage.representationId}`
+			`updated representation with representationId ${mockMessage.representationId}`,
+			{
+				correlationId: 'id-1',
+				caseReference: 'mock-case-reference'
+			}
 		);
 	});
 
@@ -83,7 +93,11 @@ describe('nsip-representation-update', () => {
 		await sendMessage(mockContext, mockMessage);
 
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`no representation updated with representationId ${mockMessage.representationId} - update may be stale or no record exists`
+			`no representation updated with representationId ${mockMessage.representationId} - update may be stale or no record exists`,
+			{
+				correlationId: 'id-1',
+				caseReference: 'mock-case-reference'
+			}
 		);
 	});
 });

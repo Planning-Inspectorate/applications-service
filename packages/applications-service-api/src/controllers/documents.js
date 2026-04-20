@@ -1,32 +1,20 @@
 const { StatusCodes } = require('http-status-codes');
 const {
-	fetchNIDocuments,
-	fetchNIDocumentFilters,
-	fetchNIDocumentsByType
-} = require('../services/document.ni.service');
-const {
-	fetchBackOfficeDocuments,
-	fetchBackOfficeDocumentFilters,
-	fetchBackOfficeDocumentsByType,
-	fetchBackOfficeDocumentByDocRef
-} = require('../services/document.backoffice.service');
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
+	fetchDocuments,
+	fetchDocumentsByType,
+	fetchDocumentFilters,
+	fetchDocumentByDocRef
+} = require('../services/document.service');
 
-const getBackOfficeDocuments = (req, res) =>
-	getDocuments(req, res, fetchBackOfficeDocuments, fetchBackOfficeDocumentFilters);
-
-const getNIDocuments = (req, res) =>
-	getDocuments(req, res, fetchNIDocuments, fetchNIDocumentFilters);
-
-const getDocuments = async (req, res, getDocumentsFn, getFiltersFn) => {
+const getDocuments = async (req, res) => {
 	const { body } = req;
 	const { isMaterialChange } = body;
 
 	const requestFilters = buildFilters(req);
 
 	const [documents, availableFilters] = await Promise.all([
-		getDocumentsFn(requestFilters, isMaterialChange),
-		getFiltersFn(requestFilters.caseReference, isMaterialChange)
+		fetchDocuments(requestFilters, isMaterialChange),
+		fetchDocumentFilters(requestFilters.caseReference, isMaterialChange)
 	]);
 
 	const responseBody = {
@@ -56,20 +44,11 @@ const getDocumentByCaseReference = async (req, res) => {
 	const { caseReference } = req.params;
 	let { type } = req.query;
 
-	if (isBackOfficeCaseReference(caseReference)) {
-		const { data } = await fetchBackOfficeDocumentsByType({
-			caseReference,
-			type
-		});
-
-		response = data;
-	} else {
-		const { data } = await fetchNIDocumentsByType({
-			caseReference,
-			type
-		});
-		response = data;
-	}
+	const { data } = await fetchDocumentsByType({
+		caseReference,
+		type
+	});
+	response = data;
 
 	if (!response)
 		return res
@@ -81,7 +60,7 @@ const getDocumentByCaseReference = async (req, res) => {
 
 const getDocumentLinkByDocumentReference = async (req, res) => {
 	const { docRef } = req.params;
-	const [document] = await fetchBackOfficeDocumentByDocRef(docRef);
+	const [document] = await fetchDocumentByDocRef(docRef);
 
 	if (!document || !document.path) {
 		return res.status(StatusCodes.NOT_FOUND).send('Document not found');
@@ -91,8 +70,7 @@ const getDocumentLinkByDocumentReference = async (req, res) => {
 };
 
 module.exports = {
-	getNIDocuments,
-	getBackOfficeDocuments,
+	getDocuments,
 	getDocumentByCaseReference,
 	getDocumentLinkByDocumentReference
 };

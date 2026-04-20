@@ -1,23 +1,12 @@
 const ApiError = require('../error/apiError');
-const { createNISubmission, completeNISubmission } = require('./submission.ni.service');
-const { publishDeadlineSubmission } = require('./backoffice.publish.service');
+const { publishDeadlineSubmission } = require('./publish.service');
 const { generateRepresentationPDF, uploadSubmissionFileToBlobStorage } = require('../utils/file');
-const { getApplication } = require('./application.backoffice.service');
+const { getApplication } = require('./application.service');
 const { sendSubmissionNotification } = require('../lib/notify');
 const { generateId } = require('../utils/generate-id');
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const { isProjectRegionWales } = require('../utils/is-project-region-wales');
-const createSubmission = async (submission) =>
-	isBackOfficeCaseReference(submission.metadata.caseReference)
-		? createBackOfficeSubmission(submission)
-		: createNISubmission(submission);
 
-const completeSubmission = async (submissionDetails) =>
-	isBackOfficeCaseReference(submissionDetails.caseReference)
-		? completeBackOfficeSubmission(submissionDetails)
-		: completeNISubmission(submissionDetails.submissionId);
-
-const createBackOfficeSubmission = async (submission) => {
+const createSubmission = async (submission) => {
 	const { metadata } = submission;
 
 	if (!metadata.submissionId) metadata.submissionId = generateId('S');
@@ -44,7 +33,7 @@ const buildRepresentationFileName = (metadata) =>
 		metadata.submissionId
 	}.pdf`;
 
-const completeBackOfficeSubmission = async (submissionDetails) => {
+const completeSubmission = async (submissionDetails) => {
 	const { submissionId, caseReference, email } = submissionDetails;
 
 	const application = await getApplication(caseReference);

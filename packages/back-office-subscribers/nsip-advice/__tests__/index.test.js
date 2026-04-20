@@ -63,7 +63,9 @@ describe('nsip-advice', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-advice function');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`invoking nsip-advice function for caseReference ${mockMessage.caseReference} and adviceId ${mockMessage.adviceId}`
+		);
 	});
 
 	it('throws error if adviceId is missing', async () => {
@@ -106,7 +108,7 @@ describe('nsip-advice', () => {
 		expect(receivedParameters.length).toBe(expectedParameters.length);
 		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`upserted advice with adviceId ${mockMessage.adviceId}`
+			`nsip-advice function upserted advice with adviceId ${mockMessage.adviceId} for caseReference ${mockMessage.caseReference}`
 		);
 	});
 });

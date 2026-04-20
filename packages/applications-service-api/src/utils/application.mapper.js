@@ -75,9 +75,6 @@ const mapColumnValueToApi = (name, value) => {
 	}
 };
 
-const mapFilterValueToNI = (name, value) =>
-	NI_MAPPING[name].find((mapping) => mapping.api === value)?.ni;
-
 const isValidNIColumnValue = (name, value) =>
 	NI_MAPPING[name]?.some((mapping) => mapping.ni === value);
 
@@ -136,7 +133,7 @@ const buildApiFiltersFromNIApplications = (applications) => {
  * @param applications
  * @returns {{name: string, value: string, label: string, count: number}[]}
  */
-const buildApplicationsFiltersFromBOApplications = (applications) => {
+const buildApplicationsFiltersFromApplications = (applications) => {
 	const mappedToNIApplications = applications.map((application) => {
 		return {
 			Stage: stageMap[application.stage],
@@ -174,88 +171,10 @@ const mergeFilters = (filtersA, filtersB) => {
 };
 
 /**
- * Map API filters back to values for querying against NI database
- * @param {{ stage?: string[], region?: string[], sector?: string[] }} query
- * @returns {{ stage?: string[], region?: string[], sector?: string[] }}
- */
-const mapApplicationFiltersToNI = (query) => {
-	return ['stage', 'region', 'sector'].reduce((memo, field) => {
-		const filterValues = query[field];
-		if (filterValues && filterValues.length > 0) {
-			memo[field] = filterValues.map((value) => mapFilterValueToNI(field, value));
-		}
-		return memo;
-	}, {});
-};
-
-/**
- * Map Application object from NI database to API format
- * @param application
- */
-const mapNIApplicationToApi = (application) => {
-	if (!application) return;
-
-	const longLat = application.LongLat || mapLongLat(application.LatLong);
-	const zoomLevel = Number.isInteger(application.MapZoomLevel)
-		? application.MapZoomLevel
-		: mapZoomLevel(application.MapZoomLevel);
-
-	const apiStruct = {
-		caseReference: application.CaseReference,
-		projectName: application.ProjectName,
-		projectType: application.Proposal,
-		projectDescription: application.Summary,
-		projectLocation: application.ProjectLocation,
-		projectEmailAddress: application.ProjectEmailAddress,
-		applicantName: application.PromoterName,
-		applicantFirstName: application.PromoterFirstName,
-		applicantLastName: application.PromoterLastName,
-		applicantPhoneNumber: application.ApplicantPhoneNumber,
-		applicantEmailAddress: application.ApplicantEmailAddress,
-		applicantWebsite: application.WebAddress,
-		easting: application.AnticipatedGridRefEasting,
-		northing: application.AnticipatedGridRefNorthing,
-		longLat: longLat,
-		mapZoomLevel: zoomLevel,
-		regions: [mapColumnValueToApi('region', application.Region)],
-		sector: mapColumnValueToApi('sector', application.Proposal?.substring(0, 2)),
-		stage: mapColumnValueToApi('stage', application.Stage),
-		anticipatedDateOfSubmission: application.AnticipatedDateOfSubmission,
-		anticipatedSubmissionDateNonSpecific: application.AnticipatedSubmissionDateNonSpecific,
-		confirmedDateOfDecision: application.ConfirmedDateOfDecision,
-		confirmedStartOfExamination: application.ConfirmedStartOfExamination,
-		dateOfDCOAcceptance: application.DateOfDCOAcceptance_NonAcceptance,
-		dateOfDCOSubmission: application.DateOfDCOSubmission,
-		dateOfNonAcceptance: application.dateOfNonAcceptance,
-		dateOfRecommendations: application.DateOfRecommendations,
-		dateOfRelevantRepresentationClose: application.DateOfRelevantRepresentationClose,
-		dateOfRepresentationPeriodOpen: application.DateOfRepresentationPeriodOpen,
-		dateProjectAppearsOnWebsite: null, // TODO is there NI equivalent for this?
-		dateProjectWithdrawn: application.DateProjectWithdrawn,
-		dateRRepAppearOnWebsite: application.DateRRepAppearOnWebsite,
-		dateTimeExaminationEnds: application.DateTimeExaminationEnds,
-		deadlineForAcceptanceDecision: null, // TODO is there NI equivalent for this?
-		preliminaryMeetingStartDate: application.DateOfPreliminaryMeeting,
-		sourceSystem: application.sourceSystem,
-		stage4ExtensionToExamCloseDate: application.Stage4ExtensiontoExamCloseDate,
-		stage5ExtensionToDecisionDeadline: application.Stage5ExtensiontoDecisionDeadline,
-		stage5ExtensionToRecommendationDeadline: application.stage5ExtensionToRecommendationDeadline,
-		isMaterialChange: application.isMaterialChange,
-		deadlineForSubmissionOfRecommendation: null,
-		deadlineForDecision: null,
-		projectNameWelsh: application.ProjectNameWelsh,
-		projectDescriptionWelsh: application.SummaryWelsh,
-		projectLocationWelsh: application.ProjectLocationWelsh
-	};
-
-	return apiStruct;
-};
-
-/**
  * Map Application object from Back Office to API format
  * @param application
  */
-const mapBackOfficeApplicationToApi = (application) => {
+const mapApplicationToApi = (application) => {
 	if (!application) return;
 
 	let fields = [
@@ -320,11 +239,10 @@ const mapBackOfficeApplicationToApi = (application) => {
  * Map Applications array from Back Office to legacy API format
  * @param applications
  */
-const mapBackOfficeApplicationsToApi = (applications) =>
-	applications.map((application) => {
-		const mappedToApi = mapBackOfficeApplicationToApi(application);
-		return mapResponseBackToNILegacyFormat(mappedToApi);
-	});
+const mapApplicationsToApi = (applications) => {
+	const mappedToApi = applications.map(mapApplicationToApi);
+	return mappedToApi.map(mapResponseBackToNILegacyFormat);
+};
 
 /**
  * Adds MapZoomLevel and LongLat properties to NI Application
@@ -395,15 +313,6 @@ const mapResponseBackToNILegacyFormat = (application) => {
 	return legacyStruct;
 };
 
-const mapNIApplicationsToApi = (applications) => {
-	return applications.map(addMapZoomLevelAndLongLat).map((application) => {
-		return {
-			...application,
-			ConfirmedDateOfDecision: getValidDateInStringOrNull(application.ConfirmedDateOfDecision),
-			DateOfDCOSubmission: getValidDateInStringOrNull(application.DateOfDCOSubmission)
-		};
-	});
-};
 const getValidDateInStringOrNull = (date) => {
 	if (new Date(date).toString() === 'Invalid Date') return null;
 	// NI saves dates as '0000-00-00' when they are not set
@@ -439,16 +348,13 @@ const regionMap = {
 };
 
 module.exports = {
-	buildApiFiltersFromNIApplications,
-	mapApplicationFiltersToNI,
-	mapNIApplicationToApi,
-	mapBackOfficeApplicationToApi,
-	mapBackOfficeApplicationsToApi,
-	addMapZoomLevelAndLongLat,
+	buildApplicationsFiltersFromApplications,
+	mapApplicationToApi,
+	mapApplicationsToApi,
 	mapResponseBackToNILegacyFormat,
-	buildApplicationsFiltersFromBOApplications,
-	mapNIApplicationsToApi,
+	addMapZoomLevelAndLongLat,
 	mapColumnLabelToApi: mapColumnLabelToApiEn,
+	buildApiFiltersFromNIApplications,
 	mapColumnLabelToApiCy,
 	mergeFilters,
 	stageNameFromValue

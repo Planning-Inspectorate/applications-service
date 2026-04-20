@@ -3,7 +3,7 @@ const {
 	getFilters,
 	getDocumentsByType,
 	getDocumentByDocRef
-} = require('../../../src/repositories/document.backoffice.repository');
+} = require('../../../src/repositories/document.repository');
 
 const mockFindMany = jest.fn();
 const mockCount = jest.fn();

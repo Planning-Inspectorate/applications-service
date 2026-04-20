@@ -24,6 +24,7 @@ const mockContext = {
 
 const mockMessage = {
 	representationId: 123,
+	correlationId: 'id-1',
 	caseRef: 'CASE-REF',
 	caseId: 123,
 	referenceId: 'reference-id',
@@ -71,7 +72,10 @@ describe('nsip-representation', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-representation function');
+		expect(mockContext.log).toHaveBeenCalledWith(`invoking nsip-representation function`, {
+			correlationId: 'id-1',
+			caseReference: 'CASE-REF'
+		});
 	});
 	it('throws error if representationId is missing', async () => {
 		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
@@ -96,7 +100,11 @@ describe('nsip-representation', () => {
 					mockMessage.representedId
 				);
 				expect(mockContext.log).toHaveBeenCalledWith(
-					`created represented with serviceUserId ${mockMessage.representedId}`
+					`created represented with serviceUserId ${mockMessage.representedId}`,
+					{
+						correlationId: 'id-1',
+						caseReference: 'CASE-REF'
+					}
 				);
 			});
 		});
@@ -111,7 +119,11 @@ describe('nsip-representation', () => {
 					mockMessage.representativeId
 				);
 				expect(mockContext.log).toHaveBeenCalledWith(
-					`created representative with serviceUserId ${mockMessage.representativeId}`
+					`created representative with serviceUserId ${mockMessage.representativeId}`,
+					{
+						correlationId: 'id-1',
+						caseReference: 'CASE-REF'
+					}
 				);
 			});
 		});
@@ -210,7 +222,11 @@ describe('nsip-representation', () => {
 		expect(receivedParameters.length).toBe(expectedParameters.length);
 		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`upserted representation with representationId ${mockMessage.representationId}`
+			`nsip-representation function upserted representation with representationId ${mockMessage.representationId}`,
+			{
+				correlationId: 'id-1',
+				caseReference: 'CASE-REF'
+			}
 		);
 	});
 });

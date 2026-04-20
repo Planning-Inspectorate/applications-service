@@ -9,8 +9,7 @@
 		"packages/forms-web-app",
 		"packages/applications-service-api",
 		"packages/common",
-		"packages/back-office-subscribers",
-		"packages/ni-redirects"
+		"packages/back-office-subscribers"
 	],
 	"scripts": {
 		"commit": "cz",

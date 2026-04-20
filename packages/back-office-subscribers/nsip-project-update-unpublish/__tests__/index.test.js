@@ -20,7 +20,8 @@ const mockContext = {
 };
 
 const mockMessage = {
-	id: 1
+	id: 1,
+	correlationId: 'id-1'
 };
 
 describe('nsip-project-update-unpublish', () => {
@@ -30,9 +31,12 @@ describe('nsip-project-update-unpublish', () => {
 	});
 
 	it('skips unpublish if projectUpdateId is missing', async () => {
-		await sendMessage(mockContext, {});
+		await sendMessage(mockContext, { correlationId: 'id-1' });
 		expect(mockContext.log).toHaveBeenCalledWith(
-			'skipping unpublish as projectUpdateId is missing'
+			'skipping nsip-project-update-unpublish function as projectUpdateId is missing',
+			{
+				correlationId: 'id-1'
+			}
 		);
 	});
 

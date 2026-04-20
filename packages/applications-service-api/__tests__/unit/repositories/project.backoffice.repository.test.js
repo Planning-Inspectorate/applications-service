@@ -1,7 +1,7 @@
 const {
 	getByCaseReference,
 	getAllApplications
-} = require('../../../src/repositories/project.backoffice.repository');
+} = require('../../../src/repositories/project.repository');
 const config = require('../../../src/lib/config');
 const { APPLICATION_DB } = require('../../__data__/application');
 const mockFindUnique = jest.fn();

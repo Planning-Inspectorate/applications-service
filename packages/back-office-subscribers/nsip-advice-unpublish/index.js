@@ -23,6 +23,6 @@ module.exports = async (context, message) => {
 	});
 
 	context.log(
-		`unsip-advice-unpublish function published advice for caseReference ${caseReference} with adviceId: ${adviceId}`
+		`nsip-advice-unpublish function published advice for caseReference ${caseReference} with adviceId: ${adviceId}`
 	);
 };
