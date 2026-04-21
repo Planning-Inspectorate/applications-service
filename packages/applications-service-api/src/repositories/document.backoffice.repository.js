@@ -29,31 +29,28 @@ const getDocuments = async (query) => {
 		]
 	};
 
-	if (query.datePublishedFrom || query.datePublishedTo) {
-		const dateConditions = {};
+	const { datePublishedFrom: from, datePublishedTo: to } = query;
 
-		if (query.datePublishedFrom === query.datePublishedTo) {
-			dateConditions.datePublished = {
-				contains: query.datePublishedFrom
-			};
+	if (from || to) {
+		let datePublished;
+
+		if (from && to && from === to) {
+			//fetch documents published on the same day
+			const start = new Date(from);
+			start.setHours(0, 0, 0, 0);
+
+			const end = new Date(from);
+			end.setHours(23, 59, 59, 999);
+
+			datePublished = { gte: start, lte: end };
 		} else {
-			if (query.datePublishedFrom && query.datePublishedTo) {
-				dateConditions.datePublished = {
-					gte: query.datePublishedFrom,
-					lte: query.datePublishedTo
-				};
-			} else if (query.datePublishedFrom) {
-				dateConditions.datePublished = {
-					gte: query.datePublishedFrom
-				};
-			} else if (query.datePublishedTo) {
-				dateConditions.datePublished = {
-					lte: query.datePublishedTo
-				};
-			}
+			datePublished = {
+				...(from && { gte: from }),
+				...(to && { lte: to })
+			};
 		}
 
-		whereClause.AND.push(dateConditions);
+		whereClause.AND.push({ datePublished });
 	}
 
 	if (query.searchTerm) {
@@ -116,23 +113,25 @@ const getDocuments = async (query) => {
 		});
 	}
 
-	const rows = await prismaClient.document.findMany({
-		where: whereClause,
-		skip: (query?.page - 1) * query?.itemsPerPage || 0,
-		take: query?.itemsPerPage || 25,
-		orderBy: {
-			datePublished: 'desc'
-		}
-	});
-	const count = await prismaClient.document.count({
-		where: whereClause
-	});
+	const [rows, count] = await prismaClient.$transaction([
+		prismaClient.document.findMany({
+			where: whereClause,
+			skip: (query?.page - 1) * query?.itemsPerPage || 0,
+			take: query?.itemsPerPage || 25,
+			orderBy: {
+				datePublished: 'desc'
+			}
+		}),
+		prismaClient.document.count({
+			where: whereClause
+		})
+	]);
 
 	return { rows, count };
 };
 
 const getDocumentsByType = async (queryData) =>
-	await prismaClient.document.findFirst({
+	prismaClient.document.findFirst({
 		where: {
 			caseRef: queryData.caseReference,
 			documentType: queryData.type

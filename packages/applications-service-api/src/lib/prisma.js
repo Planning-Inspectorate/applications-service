@@ -3,23 +3,27 @@ const { isProduction } = require('./config');
 const logger = require('./logger');
 const { PrismaMssql } = require('@prisma/adapter-mssql');
 
-let prismaClientInstance;
+const globalForPrisma = globalThis;
 
 const createPrismaClient = () => {
 	const logOption = isProduction
 		? ['warn', 'error']
 		: [{ emit: 'event', level: 'query' }, 'info', 'warn', 'error'];
 
-	if (!prismaClientInstance) {
-		prismaClientInstance = new PrismaClient({
+	const prisma =
+		globalForPrisma.prisma ||
+		new PrismaClient({
 			adapter: new PrismaMssql(process.env.DATABASE_URL),
 			log: logOption
 		});
+
+	if (!isProduction && !globalForPrisma.prisma) {
+		registerQueryLogger(prisma);
 	}
 
-	if (!isProduction) registerQueryLogger(prismaClientInstance);
+	if (!isProduction) globalForPrisma.prisma = prisma;
 
-	return prismaClientInstance;
+	return prisma;
 };
 
 const registerQueryLogger = (prismaClient) => {

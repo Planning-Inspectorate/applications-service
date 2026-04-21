@@ -18,6 +18,6 @@ const createInterestedParty = async (data) => {
 };
 
 const updateInterestedParty = async (id, data) =>
-	await db.InterestedParty.update(data, { where: { ID: id } });
+	db.InterestedParty.update(data, { where: { ID: id } });
 
 module.exports = { createInterestedParty, updateInterestedParty };

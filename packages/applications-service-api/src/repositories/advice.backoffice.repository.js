@@ -4,7 +4,14 @@ const { isGeneralAdviceCaseReference } = require('../utils/is-general-advice-cas
 const { featureFlag } = require('../lib/config');
 
 const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTerm, orderBy) => {
-	const terms = searchTerm?.split(' ').filter((term) => !stopWordList.includes(term.toLowerCase()));
+	const terms = Array.from(
+		new Set(
+			(searchTerm ?? '')
+				.split(' ')
+				.map((t) => t.trim().toLowerCase())
+				.filter((t) => !stopWordList.includes(t))
+		)
+	);
 	const generalAdviceCaseReference = isGeneralAdviceCaseReference(caseReference);
 
 	const where = {
@@ -67,8 +74,10 @@ const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTe
 		};
 	}
 
-	const advice = await prismaClient.advice.findMany(dbQuery);
-	const count = await prismaClient.advice.count({ where });
+	const [advice, count] = await prismaClient.$transaction([
+		prismaClient.advice.findMany(dbQuery),
+		prismaClient.advice.count({ where })
+	]);
 	return { count, advice };
 };
 

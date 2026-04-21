@@ -127,8 +127,10 @@ const getAllApplications = async (options = {}) => {
 		}
 	};
 
-	const applications = await prismaClient.project.findMany(findOptions);
-	const count = await prismaClient.project.count({ where });
+	const [applications, count] = await prismaClient.$transaction([
+		prismaClient.project.findMany(findOptions),
+		prismaClient.project.count({ where })
+	]);
 	return { applications, count };
 };
 
