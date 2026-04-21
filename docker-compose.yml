@@ -179,6 +179,7 @@ services:
 
   mssql:
     image: mcr.microsoft.com/azure-sql-edge:latest
+    platform: linux/x86_64
     container_name: mssql
     cap_add: [ 'SYS_PTRACE' ]
     user: root
