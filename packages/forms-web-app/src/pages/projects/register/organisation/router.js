@@ -33,11 +33,12 @@ const {
 	postRegisterOrganisationAboutProjectController
 } = require('./about-project/controller');
 const { getRegisterOrganisationCheckAnswersController } = require('./check-answers/controller');
-const {
-	getRegisterDeclarationController,
-	postRegisterDeclarationController
-} = require('../_common/declaration/controller');
+const { getRegisterDeclarationController } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getProcessSubmission,
+	postProcessSubmission
+} = require('../_common/process-submission/controller');
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
@@ -72,6 +73,9 @@ const {
 const {
 	getRegisterOrganisationDeclarationURL
 } = require('./declaration/_utils/get-register-organisation-declaration-url');
+const {
+	getRegisterOrganisationProcessSubmissionURL
+} = require('./process-submission/_utils/get-register-organisation-process-submission-url');
 const {
 	getRegisterOrganisationCompleteURL
 } = require('./complete/_utils/get-register-organisation-complete-url');
@@ -113,6 +117,7 @@ const registerOrganisationNumberURL = getRegisterOrganisationNumberURL();
 const registerOrganisationAboutProjectURL = getRegisterOrganisationAboutProjectURL();
 const registerOrganisationCheckAnswersURL = getRegisterOrganisationCheckAnswersURL();
 const registerOrganisationDeclarationURL = getRegisterOrganisationDeclarationURL();
+const registerOrganisationProcessSubmissionURL = getRegisterOrganisationProcessSubmissionURL();
 const registerOrganisationCompleteURL = getRegisterOrganisationCompleteURL();
 const registerOrganisationAlreadyRegisteredURL = getRegisterOrganisationAlreadyRegisteredURL();
 
@@ -255,11 +260,19 @@ registerOrganisationRouter.get(
 	registerMiddleware,
 	getRegisterDeclarationController
 );
+
+registerOrganisationRouter.get(
+	registerOrganisationProcessSubmissionURL,
+	registerStartRedirectMiddleware,
+	noCache,
+	registerMiddleware,
+	getProcessSubmission
+);
 registerOrganisationRouter.post(
-	registerOrganisationDeclarationURL,
+	registerOrganisationProcessSubmissionURL,
 	registerStartRedirectMiddleware,
 	registerMiddleware,
-	postRegisterDeclarationController
+	postProcessSubmission
 );
 
 registerOrganisationRouter.get(
