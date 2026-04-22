@@ -207,6 +207,16 @@
 		"comments": "Registration comments",
 		"changeCommentsHiddenText": "registration comments"
 	},
+	"processSubmission": {
+		"title": "Processing registration",
+		"heading1": "Processing registration",
+		"heading1NoScript": "Process registration",
+		"subTitle": "This may take several minutes",
+		"paragraph1": "This may take several minutes.",
+		"ctaText1": "Process registration",
+		"warningTextJSEnabled": " Do not refresh or navigate away from this page.",
+		"warningTextNoScript": "Do not refresh or navigate away from this page."
+	},
 	"declaration": {
 		"pageHeading": "Declaration",
 		"paragraph1": "By submitting this form, you are registering to have your say and telling us your registration comments.",

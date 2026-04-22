@@ -207,6 +207,16 @@
 		"comments": "Sylwadau cofrestru",
 		"changeCommentsHiddenText": "sylwadau cofrestru"
 	},
+	"processSubmission": {
+		"title": "Wrthi’n prosesu’r cofrestriad",
+		"heading1": "Wrthi’n prosesu’r cofrestriad",
+		"heading1NoScript": "Prosesu cofrestriad",
+		"subTitle": "Gall hyn gymryd ychydig funudau",
+		"paragraph1": "Gall hyn gymryd ychydig funudau.",
+		"ctaText1": "Prosesu cofrestriad",
+		"warningTextJSEnabled": "Peidiwch â diweddaru na symud i ffwrdd o’r dudalen hon.",
+		"warningTextNoScript": "Peidiwch â diweddaru na symud i ffwrdd o’r dudalen hon."
+	},
 	"declaration": {
 		"pageHeading": "Datganiad",
 		"paragraph1": "Trwy gyflwyno'r ffurflen hon, rydych yn cofrestru i leisio'ch barn a rhoi eich sylwadau cofrestru i ni.",

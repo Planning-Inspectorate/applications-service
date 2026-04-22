@@ -23,11 +23,12 @@ const {
 	postRegisterMyselfAboutProjectController
 } = require('./about-project/controller');
 const { getRegisterMyselfCheckAnswersController } = require('./check-answers/controller');
-const {
-	getRegisterDeclarationController,
-	postRegisterDeclarationController
-} = require('../_common/declaration/controller');
+const { getRegisterDeclarationController } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getProcessSubmission,
+	postProcessSubmission
+} = require('../_common/process-submission/controller');
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
@@ -214,11 +215,19 @@ describe('pages/projects/register/myself/router', () => {
 				registerMiddleware,
 				getRegisterDeclarationController
 			);
+
+			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/myself/process-submission',
+				registerStartRedirectMiddleware,
+				noCache,
+				registerMiddleware,
+				getProcessSubmission
+			);
 			expect(post).toHaveBeenCalledWith(
-				'/projects/:case_ref/register/myself/declaration',
+				'/projects/:case_ref/register/myself/process-submission',
 				registerStartRedirectMiddleware,
 				registerMiddleware,
-				postRegisterDeclarationController
+				postProcessSubmission
 			);
 
 			expect(get).toHaveBeenCalledWith(
@@ -235,7 +244,7 @@ describe('pages/projects/register/myself/router', () => {
 				getRegisterAlreadyRegisteredController
 			);
 
-			expect(get).toBeCalledTimes(10);
+			expect(get).toBeCalledTimes(11);
 			expect(post).toBeCalledTimes(7);
 			expect(use).toBeCalledTimes(0);
 		});

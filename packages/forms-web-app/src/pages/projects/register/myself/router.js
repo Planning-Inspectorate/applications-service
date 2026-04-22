@@ -25,11 +25,12 @@ const {
 	postRegisterMyselfAboutProjectController
 } = require('./about-project/controller');
 const { getRegisterMyselfCheckAnswersController } = require('./check-answers/controller');
-const {
-	getRegisterDeclarationController,
-	postRegisterDeclarationController
-} = require('../_common/declaration/controller');
+const { getRegisterDeclarationController } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getProcessSubmission,
+	postProcessSubmission
+} = require('../_common/process-submission/controller');
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
@@ -50,6 +51,9 @@ const {
 const {
 	getRegisterMyselfDeclarationURL
 } = require('./declaration/_utils/get-register-myself-declaration-url');
+const {
+	getRegisterMyselfProcessSubmissionURL
+} = require('./process-submission/_utils/get-register-myself-process-submission-url');
 const {
 	getRegisterMyselfCompleteURL
 } = require('./complete/_utils/get-register-myself-complete-url');
@@ -81,6 +85,7 @@ const registerMyselfEmailURL = getRegisterMyselfEmailURL();
 const registerMyselfAddressURL = getRegisterMyselfAddressURL();
 const registerMyselfNumberURL = getRegisterMyselfNumberURL();
 const registerMyselfDeclarationURL = getRegisterMyselfDeclarationURL();
+const registerMyselfProcessSubmissionURL = getRegisterMyselfProcessSubmissionURL();
 const registerMyselfCompleteURL = getRegisterMyselfCompleteURL();
 const registerMyselfAboutProjectURL = getRegisterMyselfAboutProjectURL();
 const registerMyselfCheckAnswersURL = getRegisterMyselfCheckAnswersURL();
@@ -194,11 +199,19 @@ registerMyselfRouter.get(
 	registerMiddleware,
 	getRegisterDeclarationController
 );
+
+registerMyselfRouter.get(
+	registerMyselfProcessSubmissionURL,
+	registerStartRedirectMiddleware,
+	noCache,
+	registerMiddleware,
+	getProcessSubmission
+);
 registerMyselfRouter.post(
-	registerMyselfDeclarationURL,
+	registerMyselfProcessSubmissionURL,
 	registerStartRedirectMiddleware,
 	registerMiddleware,
-	postRegisterDeclarationController
+	postProcessSubmission
 );
 
 registerMyselfRouter.get(
