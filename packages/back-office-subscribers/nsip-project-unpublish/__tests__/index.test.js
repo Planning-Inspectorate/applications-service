@@ -50,12 +50,19 @@ describe('nsip-project-unpublish', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-project-unpublish function');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`invoking nsip-project-unpublish function for caseReference: ${mockMessage.caseReference}`
+		);
 	});
 
 	it('skips unpublish if caseReference is missing', async () => {
-		await sendMessage(mockContext, {});
-		expect(mockContext.log).toHaveBeenCalledWith('skipping unpublish as caseReference is missing');
+		await sendMessage(mockContext, { correlationId: 'id-1' });
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`skipping nsip-project-unpublish function as caseReference is missing`,
+			{
+				correlationId: 'id-1'
+			}
+		);
 	});
 
 	it('calls buildMergeQuery with correct parameters', async () => {
@@ -91,7 +98,7 @@ describe('nsip-project-unpublish', () => {
 		expect(receivedParameters.length).toBe(expectedParameters.length);
 		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`unpublished project with caseReference: ${mockMessage.caseReference}`
+			`nsip-project-unpublish function unpublished project with caseReference: ${mockMessage.caseReference}`
 		);
 	});
 });
