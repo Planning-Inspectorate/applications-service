@@ -1,12 +1,15 @@
 const { getProjectsURL } = require('../../_utils/get-projects-url');
 const { getFormattedUpdates } = require('./get-formatted-updates');
+const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-updates-index-url');
 
-const getPageData = ({ caseRef, projectName }, projectUpdates, lang) => {
+const getPageData = ({ caseRef, projectName }, projectUpdates, i18n) => {
+	const title = i18n.t('projectUpdates.heading1');
 	return {
 		contentBackLinkUrl: getProjectsURL(caseRef),
-		title: 'All project updates',
-		pageTitle: `${projectName} - All project updates`,
-		updates: getFormattedUpdates(projectUpdates, lang)
+		title: title,
+		pageTitle: `${projectName} - ${title}`,
+		updates: getFormattedUpdates(projectUpdates, i18n.language),
+		getUpdatesUrl: getUpdatesIndexURL(caseRef)
 	};
 };
 

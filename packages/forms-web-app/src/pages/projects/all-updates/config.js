@@ -1,3 +1,4 @@
 const projectsAllUpdatesRoute = 'project-updates';
+const projectsAllUpdatesI18nNamespace = 'projectUpdates';
 
-module.exports = { projectsAllUpdatesRoute };
+module.exports = { projectsAllUpdatesRoute, projectsAllUpdatesI18nNamespace };

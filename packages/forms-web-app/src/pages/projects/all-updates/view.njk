@@ -24,6 +24,16 @@
 
     </div>
 
+	{% else %}
+
+		<p class="govuk-body">
+			{{ t('projectUpdates.paragraph1') }}
+		</p>
+
+		<p class="govuk-body">
+			{{ t('projectUpdates.paragraph2', { link: '<a class="govuk-link" href="' + getUpdatesUrl + '">' + t('projectUpdates.paragraph2LinkText') + '</a>' }) | safe }}
+		</p>
+
   {% endif %}
 
 {% endblock %}

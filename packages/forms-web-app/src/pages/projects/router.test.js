@@ -33,6 +33,9 @@ const {
 const {
 	addExaminationTimetableTranslationsMiddleware
 } = require('./examination-timetable/_middleware/add-examination-timetable-translations-middleware');
+const {
+	addProjectsAllUpdatesTranslationsMiddleware
+} = require('./all-updates/_middleware/add-all-updates-translations-middleware');
 
 jest.mock('../../config', () => {
 	const originalConfig = jest.requireActual('../../config');
@@ -78,6 +81,7 @@ describe('pages/projects/router', () => {
 			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/project-updates',
 				projectsMiddleware,
+				addProjectsAllUpdatesTranslationsMiddleware,
 				getProjectsAllUpdatesController
 			);
 
