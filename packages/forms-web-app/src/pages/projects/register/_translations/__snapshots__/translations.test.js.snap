@@ -201,6 +201,16 @@ exports[`pages/cookies/_translations should return the correct English translati
     "hint": "We will publish your organisation name on the website along with your comments about the project.",
     "pageHeading": "What is the name of your organisation or charity?",
   },
+  "processSubmission": {
+    "ctaText1": "Process registration",
+    "heading1": "Processing registration",
+    "heading1NoScript": "Process registration",
+    "paragraph1": "This may take several minutes.",
+    "subTitle": "This may take several minutes",
+    "title": "Processing registration",
+    "warningTextJSEnabled": " Do not refresh or navigate away from this page.",
+    "warningTextNoScript": "Do not refresh or navigate away from this page.",
+  },
   "registerFor": {
     "option1": "Myself",
     "option2": "An organisation I work or volunteer for",
@@ -481,6 +491,16 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
   "organisationOrCharityName": {
     "hint": "Byddwn yn cyhoeddi enw eich sefydliad ar y wefan ynghyd â'ch sylwadau ynglŷn â'r prosiect.",
     "pageHeading": "Beth yw enw eich sefydliad neu'ch elusen?",
+  },
+  "processSubmission": {
+    "ctaText1": "Prosesu cofrestriad",
+    "heading1": "Wrthi’n prosesu’r cofrestriad",
+    "heading1NoScript": "Prosesu cofrestriad",
+    "paragraph1": "Gall hyn gymryd ychydig funudau.",
+    "subTitle": "Gall hyn gymryd ychydig funudau",
+    "title": "Wrthi’n prosesu’r cofrestriad",
+    "warningTextJSEnabled": "Peidiwch â diweddaru na symud i ffwrdd o’r dudalen hon.",
+    "warningTextNoScript": "Peidiwch â diweddaru na symud i ffwrdd o’r dudalen hon.",
   },
   "registerFor": {
     "option1": "Fi fy hun",
