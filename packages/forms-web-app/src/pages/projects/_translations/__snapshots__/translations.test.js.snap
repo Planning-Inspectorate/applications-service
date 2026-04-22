@@ -3,6 +3,7 @@
 exports[`pages/projects/_translations should return the correct English translations 1`] = `
 {
   "navigation": {
+    "allProjectUpdates": "All project updates",
     "documents": "Documents",
     "examinationTimetable": "Examination timetable",
     "getUpdates": "Get updates",
@@ -25,6 +26,7 @@ exports[`pages/projects/_translations should return the correct English translat
 exports[`pages/projects/_translations should return the correct Welsh translations 1`] = `
 {
   "navigation": {
+    "allProjectUpdates": "Pob diweddariad ar y prosiect",
     "documents": "Dogfennau",
     "examinationTimetable": "Amserlen yr archwiliad",
     "getUpdates": "Cael diweddariadau",
