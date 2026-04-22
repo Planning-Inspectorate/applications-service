@@ -10,6 +10,9 @@ const {
 } = require('../../examination-timetable/_utils/get-projects-examination-timetable-url');
 const { getRegisterIndexURL } = require('../../register/index/_utils/get-register-index-url');
 const { getUpdatesIndexURL } = require('../../get-updates/index/utils/get-updates-index-url');
+const {
+	getProjectsAllUpdatesURL
+} = require('../../all-updates/_utils/get-projects-all-updates-url');
 const { isRegistrationOpen } = require('../../register/index/_utils/is-registration-open');
 
 function getVerticalTabs(
@@ -61,6 +64,12 @@ function getVerticalTabs(
 			id: 'get-updates',
 			name: i18n.t('projects.navigation.getUpdates'),
 			url: getUpdatesIndexURL(caseRef)
+		},
+		{
+			hidden: false,
+			id: 'all-project-updates',
+			name: i18n.t('projects.navigation.allProjectUpdates'),
+			url: getProjectsAllUpdatesURL(caseRef)
 		},
 		{
 			hidden: false,

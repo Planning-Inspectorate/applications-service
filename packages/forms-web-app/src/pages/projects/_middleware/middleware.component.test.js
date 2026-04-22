@@ -111,6 +111,12 @@ describe('pages/projects/_middleware/middleware', () => {
 					},
 					{
 						hidden: false,
+						id: 'all-project-updates',
+						name: 'All project updates',
+						url: '/projects/mock-case-ref/project-updates'
+					},
+					{
+						hidden: false,
 						id: 'section-51',
 						name: 'Section 51 advice',
 						url: '/projects/mock-case-ref/s51advice'

@@ -36,7 +36,7 @@ exports[`pages/examination/_translations should return the correct English trans
   "heading1": "Project information",
   "latestUpdateBanner": {
     "latestUpdate": "Latest update",
-    "viewAllUpdates": "View all updates",
+    "viewAllUpdates": "View all project updates",
   },
   "materialChangeProjectStage": {
     "applicationPublished": {
@@ -249,7 +249,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
   "heading1": "Gwybodaeth am y prosiect",
   "latestUpdateBanner": {
     "latestUpdate": "Diweddariad diweddaraf",
-    "viewAllUpdates": "Gweld yr holl ddiweddariadau",
+    "viewAllUpdates": "Gweld pob diweddariad ar y prosiect",
   },
   "materialChangeProjectStage": {
     "applicationPublished": {

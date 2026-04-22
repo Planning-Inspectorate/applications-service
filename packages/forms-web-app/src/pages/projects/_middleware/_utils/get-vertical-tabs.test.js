@@ -75,6 +75,12 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 					},
 					{
 						hidden: false,
+						id: 'all-project-updates',
+						name: 'All project updates',
+						url: '/projects/mock-case-ref/project-updates'
+					},
+					{
+						hidden: false,
 						id: 'section-51',
 						name: 'Section 51 advice',
 						url: '/projects/mock-case-ref/s51advice'
@@ -132,6 +138,12 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 						id: 'get-updates',
 						name: 'Get updates',
 						url: '/projects/mock-case-ref/get-updates/start'
+					},
+					{
+						hidden: false,
+						id: 'all-project-updates',
+						name: 'All project updates',
+						url: '/projects/mock-case-ref/project-updates'
 					},
 					{
 						hidden: false,
@@ -198,6 +210,12 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 								id: 'get-updates',
 								name: 'Get updates',
 								url: '/projects/re-opened-registration-case-ref/get-updates/start'
+							},
+							{
+								hidden: false,
+								id: 'all-project-updates',
+								name: 'All project updates',
+								url: '/projects/re-opened-registration-case-ref/project-updates'
 							},
 							{
 								hidden: false,
