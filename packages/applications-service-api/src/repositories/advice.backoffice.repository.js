@@ -67,8 +67,10 @@ const getAllAdviceByCaseReference = async (caseReference, offset, size, searchTe
 		};
 	}
 
-	const advice = await prismaClient.advice.findMany(dbQuery);
-	const count = await prismaClient.advice.count({ where });
+	const [advice, count] = await Promise.all([
+		prismaClient.advice.findMany(dbQuery),
+		prismaClient.advice.count({ where })
+	]);
 	return { count, advice };
 };
 
