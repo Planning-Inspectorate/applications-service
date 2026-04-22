@@ -142,7 +142,7 @@ const fetchDocumentsByDocumentType = async (requestQuery) => {
 		order: [['date_created', 'desc']]
 	};
 
-	return await db.Document.findOne(dbQuery);
+	return db.Document.findOne(dbQuery);
 };
 
 module.exports = {
