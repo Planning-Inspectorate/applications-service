@@ -46,7 +46,7 @@ Then('I click on {string} logo', (logoLink) => {
 			whoYouRegisterForPage.clickOnCrownCopyRight();
 			break;
 		default:
-			throw console.error('uanble to find specified logo link: ' + logoLink);
+			throw console.error('unable to find specified logo link: ' + logoLink);
 	}
 });
 
