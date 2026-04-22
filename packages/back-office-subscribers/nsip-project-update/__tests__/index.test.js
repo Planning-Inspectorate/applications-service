@@ -56,7 +56,9 @@ describe('nsip-project-update', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-project-update function');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`invoking nsip-project-update function for caseReference: ${mockMessage.caseReference}`
+		);
 	});
 
 	it('throws error if id is missing', async () => {

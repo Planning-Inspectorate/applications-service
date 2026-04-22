@@ -118,7 +118,9 @@ describe('nsip-exam-timetable', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toBeCalledWith(`invoking nsip-exam-timetable function`);
+		expect(mockContext.log).toBeCalledWith(
+			`invoking nsip-exam-timetable function for caseReference: ${mockMessage.caseReference}`
+		);
 	});
 
 	it('throws error if caseReference is missing', async () => {

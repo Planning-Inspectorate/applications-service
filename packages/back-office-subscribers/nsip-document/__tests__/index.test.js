@@ -83,7 +83,9 @@ describe('nsip-document', () => {
 
 	it('logs starting message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-document function');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`invoking nsip-document function for caseRef ${mockMessage.caseRef}`
+		);
 	});
 
 	it('throws error if documentId is missing', async () => {
@@ -134,7 +136,7 @@ describe('nsip-document', () => {
 		expect(receivedParameters.length).toBe(expectedParameters.length);
 		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`upserted document with documentId ${mockMessage.documentId}`
+			`upserted document with documentId ${mockMessage.documentId} for caseRef ${mockMessage.caseRef}`
 		);
 	});
 });
