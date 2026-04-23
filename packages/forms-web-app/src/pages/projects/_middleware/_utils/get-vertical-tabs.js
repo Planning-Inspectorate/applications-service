@@ -1,4 +1,3 @@
-const { featureFlag } = require('../../../../config');
 const { getProjectsDocumentsURL } = require('../../documents/_utils/get-projects-documents-url');
 const { getProjectsIndexURL } = require('../../index/_utils/get-projects-index-url');
 const {
@@ -24,7 +23,7 @@ function getVerticalTabs(
 ) {
 	return [
 		{
-			hidden: featureFlag.allowProjectInformation != true,
+			hidden: false,
 			id: 'project-information',
 			name: i18n.t('projects.navigation.index'),
 			url: getProjectsIndexURL(caseRef)

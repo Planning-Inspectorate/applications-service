@@ -3,9 +3,6 @@ const { NotFoundError } = require('../../../../lib/errors');
 const { getRepresentationById } = require('../../../../lib/application-api-wrapper');
 const { getRepresentationsURL } = require('../_utils/get-representations-url');
 const { getRepresentationViewModel } = require('../index/_utils/get-representations-view-model');
-const {
-	featureFlag: { allowProjectInformation }
-} = require('../../../../config');
 const { isLangWelsh } = require('../../../_utils/is-lang-welsh');
 
 const view = 'projects/representations/representation/view.njk';
@@ -25,7 +22,6 @@ const getRepresentationController = async (req, res, next) => {
 			representation: getRepresentationViewModel(representation, i18n.language),
 			backToListUrl: getRepresentationsURL(case_ref),
 			projectName,
-			allowProjectInformation,
 			langIsWelsh: isLangWelsh(i18n.language)
 		});
 	} catch (error) {

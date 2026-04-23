@@ -1,11 +1,5 @@
 const { i18nRedirect } = require('./i18n');
 
-jest.mock('./config', () => ({
-	featureFlag: {
-		allowWelshTranslation: true
-	}
-}));
-
 describe('i18n', () => {
 	describe('#i18nRedirect', () => {
 		describe('When the request method is not GET', () => {

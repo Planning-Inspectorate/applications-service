@@ -6,7 +6,6 @@ const {
 const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
 const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
-const config = require('../../../../../config');
 
 jest.mock('../../../../../lib/application-api-wrapper');
 jest.mock('../../../../../lib/logger');
@@ -29,8 +28,6 @@ describe('pages/projects/register/organisation/about-project/controller', () => 
 		);
 
 		putComments.mockImplementation(() => Promise.resolve({ resp_code: 200, data: {} }));
-
-		config.featureFlag.allowSaveAndExitOption = true;
 	});
 
 	describe('#getRegisterOrganisationAboutProjectController', () => {

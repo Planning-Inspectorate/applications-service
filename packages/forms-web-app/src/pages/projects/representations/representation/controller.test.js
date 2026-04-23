@@ -82,7 +82,6 @@ describe('pages/projects/representations/representation/controller', () => {
 						'projects/representations/representation/view.njk',
 						{
 							langIsWelsh: false,
-							allowProjectInformation: true,
 							backToListUrl: '/projects/EN010009/representations',
 							projectName: 'ABC',
 							representation: {

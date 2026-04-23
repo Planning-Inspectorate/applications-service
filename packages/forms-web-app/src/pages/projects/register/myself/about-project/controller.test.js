@@ -4,7 +4,6 @@ const {
 } = require('./controller');
 
 const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
-const config = require('../../../../../config');
 
 const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
 
@@ -28,8 +27,6 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 		);
 
 		putComments.mockImplementation(() => Promise.resolve({ resp_code: 200, data: {} }));
-
-		config.featureFlag.allowSaveAndExitOption = true;
 	});
 
 	describe('#getRegisterMyselfAboutProjectController', () => {
