@@ -1,20 +1,20 @@
-const { postRegistration } = require('../../../../../lib/application-api-wrapper');
-const logger = require('../../../../../lib/logger');
-const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
-const {
+import { postRegistration } from '../../../../../lib/application-api-wrapper.js';
+import logger from '../../../../../lib/logger.js';
+import {
 	getSessionBase,
 	setSession,
 	getSession
-} = require('../../../../../controllers/register/common/session');
-const { getRedirectUrl, getAlreadySubmittedUrl } = require('./_utils/get-redirect-url');
+} from '../../../../../controllers/register/common/session.js';
+import { getRedirectUrl, getAlreadySubmittedUrl } from './_utils/get-redirect-url.js';
 
 const view = 'projects/register/_common/declaration/view.njk';
 const hasSubmittedKey = 'hasSubmitted';
 
-const getRegisterDeclarationController = (req, res) => {
+export const getRegisterDeclarationController = (req, res) => {
 	try {
 		const { session } = req;
-		const key = getKeyFromUrl(req.originalUrl);
+		const key = req.session.registerData?.registeringFor;
+
 		const userSessionData = getSession(session, key);
 
 		if (userSessionData?.hasSubmitted) {
@@ -30,11 +30,12 @@ const getRegisterDeclarationController = (req, res) => {
 	}
 };
 
-const postRegisterDeclarationController = async (req, res) => {
+export const postRegisterDeclarationController = async (req, res) => {
 	try {
 		const { session, params } = req;
 		const { case_ref } = params;
-		const key = getKeyFromUrl(req.originalUrl);
+
+		const key = req.session.registerData?.registeringFor;
 
 		const sessionForKey = getSessionBase(session, key);
 		sessionForKey.case_ref = case_ref;
@@ -48,14 +49,10 @@ const postRegisterDeclarationController = async (req, res) => {
 		sessionForKey.ipRefNo = response.data?.referenceId;
 
 		setSession(session, key, hasSubmittedKey, true);
+
 		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);
 	} catch (e) {
 		logger.error(`Could not Post declaration, internal error occurred ${e}`);
 		return res.status(500).render('error/have-your-say-journey-error');
 	}
-};
-
-module.exports = {
-	getRegisterDeclarationController,
-	postRegisterDeclarationController
 };
