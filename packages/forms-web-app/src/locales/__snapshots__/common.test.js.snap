@@ -81,6 +81,7 @@ exports[`locales/common should return the correct English common translations 1`
     "address": {
       "countryEmpty": "Enter a country",
       "countryLength": "Country must be 64 characters or less",
+      "invalidPostcode": "Enter a postcode in the correct format, like SW1A 1AA",
       "line1Empty": "Enter address line 1",
       "line1Length": "Address line 1 must be 255 characters or less",
       "line2Length": "Address line 2 must be 96 characters or less",
@@ -196,6 +197,7 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
     "address": {
       "countryEmpty": "Nodwch wlad",
       "countryLength": "Mae'n rhaid i'r wlad gynnwys 64 o nodau neu lai",
+      "invalidPostcode": "Rhowch god post yn y fformat cywir, fel SW1A 1AA",
       "line1Empty": "Nodwch linell gyfeiriad 1",
       "line1Length": "Mae'n rhaid i linell gyfeiriad 1 gynnwys 255 o nodau neu lai",
       "line2Length": "Mae'n rhaid i linell gyfeiriad 2 gynnwys 96 o nodau neu lai",

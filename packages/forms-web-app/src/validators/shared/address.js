@@ -33,6 +33,13 @@ const rules = () => {
 			.withMessage((_, { req }) => {
 				return req.i18n.t('common.validationErrors.address.postcodeLength');
 			}),
+		body('postcode')
+			.trim()
+			.customSanitizer((value) => value.toUpperCase().replace(/\s+/g, ' '))
+			.matches(/^[a-z]{1,2}\d[a-z\d]?\s*\d[a-z]{2}$/i)
+			.withMessage((_, { req }) => {
+				return req.i18n.t('common.validationErrors.address.invalidPostcode');
+			}),
 		body('country')
 			.notEmpty()
 			.withMessage((_, { req }) => {
