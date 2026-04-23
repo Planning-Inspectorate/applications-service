@@ -22,14 +22,14 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<div class="visible-on visible-on--js-enabled">
+				{{ centredTitleSubtitle(t("examination.processingSubmission.heading1"), submittingItemsSubtitle) }}
+
+				{{ indicatorLoadingSpinner() }}
+
 				{{ govukWarningText({
 					text: t("examination.processingSubmission.warningTextJSEnabled"),
 					iconFallbackText: t("common.warning")
 				}) }}
-
-				{{ indicatorLoadingSpinner() }}
-
-				{{ centredTitleSubtitle(t("examination.processingSubmission.heading1"), submittingItemsSubtitle) }}
 
 				<form method="POST">
 					{{ govukButton({
