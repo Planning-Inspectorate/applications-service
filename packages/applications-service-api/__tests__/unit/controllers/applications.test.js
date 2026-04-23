@@ -6,22 +6,27 @@ const {
 	getAllApplications,
 	getAllApplicationsDownload
 } = require('../../../src/controllers/applications');
-const { APPLICATION_FO } = require('../../__data__/application');
+const {
+	APPLICATION_FO,
+	APPLICATION_API_V1,
+	APPLICATION_API
+} = require('../../__data__/application');
 
-jest.mock('../../../src/services/application.ni.service');
-const mockGetNIApplication =
-	require('../../../src/services/application.ni.service').getNIApplication;
-
-jest.mock('../../../src/services/application.backoffice.service');
+jest.mock('../../../src/services/application.service');
 const getAllApplicationsDownloadService =
-	require('../../../src/services/application.backoffice.service').getAllApplicationsDownload;
+	require('../../../src/services/application.service').getAllApplicationsDownload;
 const getAllApplicationsService =
-	require('../../../src/services/application.backoffice.service').getAllApplications;
-describe('getApplication', () => {
-	afterEach(() => mockGetNIApplication.mockClear());
+	require('../../../src/services/application.service').getAllApplications;
+const getApplicationService = require('../../../src/services/application.service').getApplication;
 
+describe('getApplication', () => {
 	it('should get application from mock', async () => {
-		mockGetNIApplication.mockResolvedValueOnce(APPLICATION_FO);
+		getApplicationService.mockResolvedValueOnce({
+			...APPLICATION_API,
+			deadlineForDecision: '2023-01-30',
+			deadlineForSubmissionOfRecommendation: '2023-01-30',
+			sourceSystem: 'ODT'
+		});
 
 		const req = httpMocks.createRequest({
 			params: {
@@ -37,11 +42,18 @@ describe('getApplication', () => {
 		delete data.updatedAt;
 
 		expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-		expect(data).toEqual(APPLICATION_FO);
+		expect(data).toEqual({
+			...APPLICATION_API_V1,
+			DateOfDCOAcceptance_NonAcceptance: '2023-02-01',
+			deadlineForAcceptanceDecision: '2023-01-30',
+			deadlineForDecision: '2023-01-30',
+			deadlineForSubmissionOfRecommendation: '2023-01-30',
+			sourceSystem: 'ODT'
+		});
 	});
 
 	it('should throw application not found', async () => {
-		mockGetNIApplication.mockResolvedValueOnce(null);
+		getApplicationService.mockResolvedValueOnce(null);
 
 		const req = httpMocks.createRequest({
 			params: {

@@ -3,7 +3,6 @@ const {
 	postProjectsExaminationTimetableController
 } = require('./controller');
 
-const { getProjectData } = require('../../../lib/application-api-wrapper');
 const { getTimetables } = require('../../../lib/application-api-wrapper');
 const { mockI18n } = require('../../_mocks/i18n');
 
@@ -50,16 +49,14 @@ describe('pages/projects/examination-timetable/controller', () => {
 		describe('When getting the examination table page', () => {
 			describe('and there are no issues', () => {
 				beforeEach(async () => {
-					getProjectData.mockResolvedValue({
-						data: {
-							CaseReference: 'mock_case_ref',
-							ConfirmedStartOfExamination: '2023-01-01',
-							DateTimeExaminationEnds: '2023-01-03',
-							dateOfNonAcceptance: '2023-01-01',
-							ProjectName: 'mock project name',
-							PromoterName: 'mock promoter name'
-						}
-					});
+					res.locals.applicationData = {
+						caseReference: 'mock_case_ref',
+						ConfirmedStartOfExamination: '2023-01-01',
+						DateTimeExaminationEnds: '2023-01-03',
+						dateOfNonAcceptance: '2023-01-01',
+						projectName: 'mock project name',
+						promoterName: 'mock promoter name'
+					};
 
 					getTimetables.mockResolvedValue({
 						data: {
@@ -188,13 +185,11 @@ describe('pages/projects/examination-timetable/controller', () => {
 				});
 			});
 			describe('and there is an issue', () => {
-				beforeEach(async () => {
-					getProjectData.mockResolvedValue(() => {
-						throw new Error('something went wrong');
-					});
+				it('should render the error page', async () => {
+					res.locals.applicationData = null;
+
 					await getProjectsExaminationTimetableController(req, res);
-				});
-				it('should render the error page', () => {
+
 					expect(res.render).toHaveBeenCalledWith('error/unhandled-exception');
 					expect(res.status).toHaveBeenLastCalledWith(500);
 				});

@@ -1,17 +1,8 @@
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
-const {
-	getTimetablesByCaseReference: getBackOfficeTimetable
-} = require('../repositories/timetable.backoffice.repository');
-const {
-	getTimetablesByCaseReference: getNITimetable
-} = require('../repositories/timetable.ni.repository');
-
-const { mapBackOfficeTimetableToApi, mapNITimetableToApi } = require('../utils/timetable.mapper');
+const { getTimetablesByCaseReference } = require('../repositories/timetable.repository');
+const { mapTimetableToAPI } = require('../utils/timetable.mapper');
 
 const getTimetables = async (caseReference) =>
-	isBackOfficeCaseReference(caseReference)
-		? mapBackOfficeTimetableToApi(await getBackOfficeTimetable(caseReference))
-		: mapNITimetableToApi(await getNITimetable(caseReference));
+	mapTimetableToAPI(await getTimetablesByCaseReference(caseReference));
 
 module.exports = {
 	getTimetables

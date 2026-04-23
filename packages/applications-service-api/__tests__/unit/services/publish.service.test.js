@@ -8,7 +8,7 @@ const {
 	publishDeleteNSIPSubscription,
 	publishDeadlineSubmission,
 	publishRegisterRepresentation
-} = require('../../../src/services/backoffice.publish.service');
+} = require('../../../src/services/publish.service');
 const { SUBMISSION_DATA } = require('../../__data__/submission');
 const { REQUEST_FILE_DATA } = require('../../__data__/file');
 const { INTERESTED_PARTY_SELF_BACK_OFFICE } = require('../../__data__/interestedParty');

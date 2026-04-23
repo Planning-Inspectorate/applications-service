@@ -1,6 +1,4 @@
-const {
-	getTimetablesByCaseReference
-} = require('../../../src/repositories/timetable.backoffice.repository');
+const { getTimetablesByCaseReference } = require('../../../src/repositories/timetable.repository');
 const { TIMETABLES_BACKOFFICE_DATA } = require('../../__data__/timetables');
 const config = require('../../../src/lib/config');
 

@@ -1,6 +1,7 @@
 const mockMessageWithInvalidServiceUserType = {
 	id: '123',
-	serviceUserType: 'Invalid'
+	serviceUserType: 'Invalid',
+	caseReference: 'B123456'
 };
 
 const mockBaseMessage = {

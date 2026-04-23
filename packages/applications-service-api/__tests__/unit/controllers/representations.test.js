@@ -9,7 +9,7 @@ const {
 	getRepresentationsForApplication,
 	getRepresentationByIdAndCaseRef
 } = require('../../../src/services/representation.service');
-const { getDocumentsByDataId } = require('../../../src/repositories/document.ni.repository');
+const { getDocumentsByIds } = require('../../../src/repositories/document.repository');
 
 const mockData = {
 	totalItems: 1,
@@ -93,7 +93,7 @@ jest.mock('../../../src/lib/config.js', () => ({
 }));
 
 jest.mock('../../../src/services/representation.service');
-jest.mock('../../../src/repositories/document.ni.repository');
+jest.mock('../../../src/repositories/document.repository');
 
 getRepresentationsForApplication.mockImplementation(({ caseReference }) => {
 	if (caseReference === 'EN010009') {
@@ -113,7 +113,7 @@ getRepresentationsForApplication.mockImplementation(({ caseReference }) => {
 	return Promise.resolve(null);
 });
 
-getDocumentsByDataId.mockImplementation(() => {
+getDocumentsByIds.mockImplementation(() => {
 	return Promise.resolve({ 0: {} });
 });
 

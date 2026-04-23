@@ -48,7 +48,7 @@ describe('nsip-service-user', () => {
 
 	it('throws error if serviceUserType is invalid', async () => {
 		await expect(sendMessage(mockContext, mockMessageWithInvalidServiceUserType)).rejects.toThrow(
-			`Invalid serviceUserType: ${mockMessageWithInvalidServiceUserType.serviceUserType}`
+			`Invalid serviceUserType ${mockMessageWithInvalidServiceUserType.serviceUserType} for caseReference ${mockMessageWithInvalidServiceUserType.caseReference}`
 		);
 		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
 	});
@@ -77,7 +77,7 @@ describe('nsip-service-user', () => {
 			expect(receivedParameters.length).toBe(expectedParameters.length);
 			expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 			expect(mockContext.log).toHaveBeenCalledWith(
-				`updated serviceUser with serviceUserId ${mockRepresentationContactServiceUser.serviceUserId}`
+				`updated serviceUser with serviceUserId ${mockRepresentationContactServiceUser.serviceUserId} for caseReference ${mockRepresentationContactServiceUser.caseReference}`
 			);
 		});
 
@@ -105,7 +105,7 @@ describe('nsip-service-user', () => {
 			expect(receivedParameters.length).toBe(expectedParameters.length);
 			expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 			expect(mockContext.log).toHaveBeenCalledWith(
-				`updated serviceUser with serviceUserId ${mockApplicantServiceUser.serviceUserId}`
+				`updated serviceUser with serviceUserId ${mockApplicantServiceUser.serviceUserId} for caseReference ${mockApplicantServiceUser.caseReference}`
 			);
 		});
 	});

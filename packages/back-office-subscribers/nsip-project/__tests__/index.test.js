@@ -69,7 +69,9 @@ describe('nsip-project', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-project function');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`invoking nsip-project function for caseReference: ${mockMessage.caseReference}`
+		);
 	});
 	it('throws error if caseReference is missing', async () => {
 		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
@@ -89,7 +91,7 @@ describe('nsip-project', () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockExecuteRawUnsafe).toHaveBeenCalledWith(serviceUserQuery, mockMessage.applicantId);
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`created applicant with serviceUserId ${mockMessage.applicantId}`
+			`created applicant with serviceUserId ${mockMessage.applicantId} for caseReference: ${mockMessage.caseReference}`
 		);
 	});
 
@@ -148,7 +150,7 @@ describe('nsip-project', () => {
 		expect(receivedParameters.length).toBe(expectedParameters.length);
 		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`upserted project with caseReference ${mockMessage.caseReference}`
+			`nsip-project function upserted project with caseReference ${mockMessage.caseReference}`
 		);
 	});
 });

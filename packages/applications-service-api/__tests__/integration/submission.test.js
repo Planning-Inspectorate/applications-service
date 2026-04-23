@@ -52,9 +52,7 @@ const { APPLICATION_DB } = require('../__data__/application');
 const BACK_OFFICE_CASE_REFERENCE = 'BC0110001';
 
 const { request } = require('../__data__/supertest');
-const { isBackOfficeCaseReference } = require('../../src/utils/is-backoffice-case-reference');
 
-jest.mock('../../src/utils/is-backoffice-case-reference');
 const submissionRequest = () =>
 	request
 		.post(`/api/v1/submissions/${BACK_OFFICE_CASE_REFERENCE}`)
@@ -71,9 +69,6 @@ describe('/api/v1/submissions', () => {
 	const mockUuid = 'eb43f2de-cd51-4f95-a7a3-e04082bdcd8b';
 
 	beforeEach(() => {
-		isBackOfficeCaseReference.mockImplementation(
-			(caseReference) => caseReference === BACK_OFFICE_CASE_REFERENCE
-		);
 		uuid.v4.mockReturnValue(mockUuid);
 	});
 

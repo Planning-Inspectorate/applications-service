@@ -1,7 +1,7 @@
 const {
 	getAllAdviceByCaseReference,
 	getAdviceById
-} = require('../../../src/repositories/advice.backoffice.repository');
+} = require('../../../src/repositories/advice.repository');
 const { ADVICE_BACKOFFICE_DATA, GENERAL_ADVICE_BACKOFFICE_DATA } = require('../../__data__/advice');
 const config = require('../../../src/lib/config');
 const {

@@ -91,7 +91,7 @@ jobs:
         run: npm --prefix e2e-tests ci
 
       - name: Start infrastructure services
-        run: docker compose up -d mssql db redis api-mock-server
+        run: docker compose up -d mssql redis api-mock-server
 
       - name: Generate, migrate and seed database
         run: |

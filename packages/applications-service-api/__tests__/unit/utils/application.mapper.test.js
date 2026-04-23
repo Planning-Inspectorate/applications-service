@@ -1,17 +1,12 @@
 const {
-	buildApiFiltersFromNIApplications,
-	buildApplicationsFiltersFromBOApplications,
-	mapApplicationFiltersToNI,
-	mapNIApplicationToApi,
-	mapBackOfficeApplicationToApi,
+	buildApplicationsFiltersFromApplications,
+	mapApplicationToApi,
+	mapApplicationsToApi,
 	addMapZoomLevelAndLongLat,
-	mapBackOfficeApplicationsToApi,
-	mapNIApplicationsToApi,
 	mergeFilters,
 	stageNameFromValue
 } = require('../../../src/utils/application.mapper');
 const {
-	APPLICATIONS_NI_FILTER_COLUMNS,
 	APPLICATIONS_BO_FILTER_COLUMNS,
 	APPLICATIONS_FO_FILTERS,
 	APPLICATION_FO,
@@ -21,95 +16,14 @@ const {
 } = require('../../__data__/application');
 
 describe('application.mapper', () => {
-	describe('buildApiFiltersFromNIApplications', () => {
-		it('maps applications from NI database to filters in api format', () => {
-			const result = buildApiFiltersFromNIApplications(APPLICATIONS_NI_FILTER_COLUMNS);
-
-			expect(result).toEqual(APPLICATIONS_FO_FILTERS);
-		});
-
-		it('excludes undefined values from filter counts', () => {
-			const result = buildApiFiltersFromNIApplications([
-				{ Stage: 1, Region: 'South East', Proposal: 'BC08 - Leisure' },
-				{ Stage: null, Region: 'North East', Proposal: 'EN01 - Generating Stations' },
-				{ Stage: 2, Region: null, Proposal: 'BC08 - Leisure' },
-				{ Stage: 2, Region: 'South East', Proposal: null }
-			]);
-
-			expect(result).toEqual([
-				{
-					name: 'stage',
-					label: 'Pre-application',
-					label_cy: 'Cyn-ymgeisio',
-					value: 'pre_application',
-					count: 1
-				},
-				{ name: 'stage', label: 'Acceptance', label_cy: 'Derbyn', value: 'acceptance', count: 2 },
-				{
-					name: 'region',
-					label: 'South East',
-					label_cy: 'Y De-ddwyrain',
-					value: 'south_east',
-					count: 2
-				},
-				{
-					name: 'region',
-					label: 'North East',
-					label_cy: 'Y Gogledd-ddwyrain',
-					value: 'north_east',
-					count: 1
-				},
-				{
-					name: 'sector',
-					label: 'Business and Commercial',
-					label_cy: 'Busnes a Masnachol',
-					value: 'business_and_commercial',
-					count: 2
-				},
-				{ name: 'sector', label: 'Energy', label_cy: 'Ynni', value: 'energy', count: 1 }
-			]);
-		});
-
-		it('excludes invalid values from filter counts', () => {
-			const result = buildApiFiltersFromNIApplications([
-				{ Stage: 1, Region: 'NOT A REGION', Proposal: 'BC08 - Leisure' },
-				{ Stage: null, Region: 'North East', Proposal: 'NOT A PROPOSAL' },
-				{ Stage: 200, Region: null, Proposal: 'BC08 - Leisure' }
-			]);
-
-			expect(result).toEqual([
-				{
-					name: 'stage',
-					label: 'Pre-application',
-					label_cy: 'Cyn-ymgeisio',
-					value: 'pre_application',
-					count: 1
-				},
-				{
-					name: 'region',
-					label: 'North East',
-					label_cy: 'Y Gogledd-ddwyrain',
-					value: 'north_east',
-					count: 1
-				},
-				{
-					name: 'sector',
-					label: 'Business and Commercial',
-					label_cy: 'Busnes a Masnachol',
-					value: 'business_and_commercial',
-					count: 2
-				}
-			]);
-		});
-	});
-	describe('buildApplicationsFiltersFromBOApplications', () => {
+	describe('buildApplicationsFiltersFromApplications', () => {
 		it('maps applications from back office database to filters in api format', () => {
-			const result = buildApplicationsFiltersFromBOApplications(APPLICATIONS_BO_FILTER_COLUMNS);
+			const result = buildApplicationsFiltersFromApplications(APPLICATIONS_BO_FILTER_COLUMNS);
 			expect(result).toEqual(APPLICATIONS_FO_FILTERS);
 		});
 
 		it('excludes undefined values from filter counts', () => {
-			const result = buildApplicationsFiltersFromBOApplications([
+			const result = buildApplicationsFiltersFromApplications([
 				{ stage: 'acceptance', regions: 'south_east', sector: 'EN01 - Generating Stations' },
 				{ stage: null, regions: 'north_east', sector: 'EN01 - Generating Stations' },
 				{ stage: 'pre_application', regions: null, sector: 'BC08 - Leisure' },
@@ -150,7 +64,7 @@ describe('application.mapper', () => {
 		});
 
 		it('handles multiple regions in one application correctly', () => {
-			const result = buildApplicationsFiltersFromBOApplications([
+			const result = buildApplicationsFiltersFromApplications([
 				{
 					stage: 'acceptance',
 					regions: 'south_east,north_west',
@@ -214,67 +128,14 @@ describe('application.mapper', () => {
 		});
 	});
 
-	describe('mapApplicationFiltersToNI', () => {
-		it('maps api filters to NI database values', () => {
-			const apiRequestFilters = {
-				stage: ['acceptance', 'pre_examination'],
-				sector: ['energy', 'transport'],
-				region: ['south_east', 'north_west']
-			};
-
-			const result = mapApplicationFiltersToNI(apiRequestFilters);
-
-			expect(result).toEqual({
-				stage: [2, 3],
-				sector: ['EN', 'TR'],
-				region: ['South East', 'North West']
-			});
-		});
-	});
-
-	describe('mapNIApplicationToApi', () => {
-		it('maps ni db application data to api format', () => {
-			expect(mapNIApplicationToApi(APPLICATION_FO)).toEqual(
-				expect.objectContaining({
-					...APPLICATION_API,
-					deadlineForAcceptanceDecision: null,
-					sourceSystem: 'HORIZON'
-				})
-			);
-		});
-
-		it('does not map zoom level and longlat if already mapped', () => {
-			const applicationAlreadyMappedLocationAttributes = {
-				...APPLICATION_FO,
-				LongLat: ['-0.7123', '53.6123'],
-				MapZoomLevel: 6
-			};
-			delete applicationAlreadyMappedLocationAttributes.LatLong;
-
-			expect(mapNIApplicationToApi(applicationAlreadyMappedLocationAttributes)).toEqual(
-				expect.objectContaining({
-					...APPLICATION_API,
-					longLat: ['-0.7123', '53.6123'],
-					mapZoomLevel: 6,
-					deadlineForAcceptanceDecision: null,
-					sourceSystem: 'HORIZON'
-				})
-			);
-		});
-
-		it('returns undefined if no application provided', () => {
-			expect(mapNIApplicationToApi(undefined)).toEqual(undefined);
-		});
-	});
-
-	describe('mapBackOfficeApplicationToApi', () => {
+	describe('mapApplicationToApi', () => {
 		describe('when applicant does not exist', () => {
 			it('maps back office application data to api format', () => {
 				const applicationWithoutApplicant = {
 					...APPLICATION_DB,
 					applicant: null
 				};
-				expect(mapBackOfficeApplicationToApi(applicationWithoutApplicant)).toEqual(
+				expect(mapApplicationToApi(applicationWithoutApplicant)).toEqual(
 					expect.objectContaining({
 						...APPLICATION_API,
 						applicantEmailAddress: '',
@@ -295,7 +156,7 @@ describe('application.mapper', () => {
 					stage: 'examination',
 					ExaminationTimetable: [{ date: '2025-12-11' }]
 				};
-				const result = mapBackOfficeApplicationToApi(application);
+				const result = mapApplicationToApi(application);
 				expect(result.anticipatedCloseOfExamination).toBe('2025-12-11');
 			});
 		});
@@ -312,7 +173,7 @@ describe('application.mapper', () => {
 						webAddress: 'www.test.com'
 					}
 				};
-				expect(mapBackOfficeApplicationToApi(applicationWithApplicant)).toEqual(
+				expect(mapApplicationToApi(applicationWithApplicant)).toEqual(
 					expect.objectContaining({
 						...APPLICATION_API,
 						applicantEmailAddress: applicationWithApplicant.applicant.email,
@@ -328,7 +189,7 @@ describe('application.mapper', () => {
 		});
 
 		it('returns undefined if no application provided', () => {
-			expect(mapBackOfficeApplicationToApi(undefined)).toEqual(undefined);
+			expect(mapApplicationToApi(undefined)).toEqual(undefined);
 		});
 	});
 
@@ -361,9 +222,9 @@ describe('application.mapper', () => {
 			expect(addMapZoomLevelAndLongLat(inputApplication)).toEqual(outputApplication);
 		});
 	});
-	describe('mapBackOfficeApplicationsToApi', () => {
-		it('maps back office applications data to api format', () => {
-			const result = mapBackOfficeApplicationsToApi([APPLICATION_DB]);
+	describe('mapApplicationsToApi', () => {
+		it('maps applications data to api format', () => {
+			const result = mapApplicationsToApi([APPLICATION_DB]);
 			expect(result[0]).toEqual(
 				expect.objectContaining({
 					...APPLICATION_API_V1,
@@ -375,49 +236,6 @@ describe('application.mapper', () => {
 					deadlineForSubmissionOfRecommendation: null,
 					isMaterialChange: undefined
 				})
-			);
-		});
-	});
-	describe('mapNIApplicationsToApi', () => {
-		it('maps NI applications data to API format', () => {
-			expect(mapNIApplicationsToApi([APPLICATION_FO])).toEqual([
-				{
-					...APPLICATION_FO,
-					LongLat: ['-0.7028315466694124', '53.620079146110655'],
-					LatLong: undefined,
-					MapZoomLevel: 1
-				}
-			]);
-		});
-		describe('when date is not a valid value', () => {
-			const niApplicationsWithInvalidDate = [
-				{
-					...APPLICATION_FO,
-					ConfirmedDateOfDecision: 'Invalid Date',
-					DateOfDCOSubmission: 'Invalid Date'
-				}
-			];
-			const niApplicationsWithUnsetDate = [
-				{
-					...APPLICATION_FO,
-					ConfirmedDateOfDecision: '0000-00-00',
-					DateOfDCOSubmission: '0000-00-00'
-				}
-			];
-			it.each([[niApplicationsWithInvalidDate], [niApplicationsWithUnsetDate]])(
-				'maps NI application to API format',
-				(input) => {
-					expect(mapNIApplicationsToApi(input)).toEqual([
-						{
-							...APPLICATION_FO,
-							ConfirmedDateOfDecision: null,
-							DateOfDCOSubmission: null,
-							LongLat: ['-0.7028315466694124', '53.620079146110655'],
-							LatLong: undefined,
-							MapZoomLevel: 1
-						}
-					]);
-				}
 			);
 		});
 	});
