@@ -1,13 +1,12 @@
 {% extends "layouts/default.njk" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
 {% from "components/indicator/loading-spinner.njk" import indicatorLoadingSpinner %}
 {% from "components/text/centred-title-subtitle.njk" import centredTitleSubtitle %}
 
-{% set pageTitle = t("examination.processingSubmission.title") %}
+{% set pageTitle = t("register.processSubmission.title") %}
 
 {% block script %}
 	{% set initiateScriptsConfig = (initiateScriptsConfig.push(
@@ -22,12 +21,12 @@
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
 			<div class="visible-on visible-on--js-enabled">
-				{{ centredTitleSubtitle(t("examination.processingSubmission.heading1"), submittingItemsSubtitle) }}
+				{{ centredTitleSubtitle(t("register.processSubmission.heading1"), t("register.processSubmission.subTitle")) }}
 
 				{{ indicatorLoadingSpinner() }}
 
 				{{ govukWarningText({
-					text: t("examination.processingSubmission.warningTextJSEnabled"),
+					text: t("register.processSubmission.warningTextJSEnabled"),
 					iconFallbackText: t("common.warning")
 				}) }}
 
@@ -35,33 +34,35 @@
 					{{ govukButton({
 						attributes: { id: 'page-process-submission-submit-button', style: 'display: none;' },
 						preventDoubleClick: true,
-						text: t("examination.processingSubmission.ctaText1"),
+						text: t("register.processSubmission.ctaText1"),
 						type: "Submit"
-					}) }}
+						}) }}
 				</form>
+
 			</div>
 
 			<noscript>
 				<h1 class="govuk-heading-l">
-					{{ t("examination.processingSubmission.heading1NoScript") }}
+					{{ t("register.processSubmission.heading1NoScript") }}
 				</h1>
 
 				<p class="govuk-body">
-					{{ t("examination.processingSubmission.paragraph1") }}
+					{{ t("register.processSubmission.paragraph1") }}
 				</p>
 
 				{{ govukWarningText({
-					text: t("examination.processingSubmission.warningTextNoScript"),
+					text: t("register.processSubmission.warningTextNoScript"),
 					iconFallbackText: t("common.warning")
-				}) }}
+					}) }}
 
 				<form method="POST">
 					{{ govukButton({
 						attributes: { id: 'page-process-submission-submit-button' },
 						preventDoubleClick: true,
-						text: t("examination.processingSubmission.ctaText1"),
+						text: t("register.processSubmission.ctaText1"),
 						type: "Submit"
-					}) }}
+						}) }}
+
 				</form>
 			</noscript>
 		</div>

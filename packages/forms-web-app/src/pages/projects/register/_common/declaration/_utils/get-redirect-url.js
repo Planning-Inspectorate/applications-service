@@ -1,5 +1,5 @@
 const { VIEW } = require('../../../../../../lib/views');
-const getRedirectUrl = (key) => `/${VIEW.REGISTER[key.toUpperCase()].REGISTRATION_COMPLETE}`;
+const getRedirectUrl = (key) => `/${VIEW.REGISTER[key.toUpperCase()].PROCESS_SUBMISSION}`;
 
 const getAlreadySubmittedUrl = (key) => `/${VIEW.REGISTER[key.toUpperCase()].ALREADY_REGISTERED}`;
 
