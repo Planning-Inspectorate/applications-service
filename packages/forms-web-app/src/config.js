@@ -52,22 +52,15 @@ module.exports = {
 	},
 	featureFlag: {
 		allowHomepage: process.env.FEATURE_HOME_PAGE === 'true',
-		allowPrimaryNavigation: process.env.FEATURE_PRIMARY_NAVIGATION === 'true',
 		googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
-		allowSaveAndExitOption: process.env.FEATURE_SAVE_AND_EXIT_OPTION === 'true',
-		showAffectedAreaSection: process.env.FEATURE_SHOW_AFFECTED_AREA_SECTION === 'true',
-		contentSecurityPolicy: process.env.FEATURE_ENABLED_CONTENT_SECURITY_POLICY === 'true',
-		allowProjectInformation: process.env.FEATURE_PROJECT_INFORMATION === 'true',
 		useGeneralS51BackOffice: process.env.FEATURE_GENERAL_S51_BO === 'true',
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
-		useApplicationInsights: process.env.FEATURE_APPLICATION_INSIGHTS === 'true',
 		openRegistrationCaseReferences: splitStringToArray(
 			process.env.OPEN_REGISTRATION_CASE_REFERENCES
 		),
 		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE',
-		allowWelshTranslation: process.env.FEATURE_ALLOW_WELSH_TRANSLATION === 'true',
 		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
 		enableProjectsMap: process.env.FEATURE_ENABLE_PROJECTS_MAP === 'true',
 		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'

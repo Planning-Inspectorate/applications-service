@@ -176,7 +176,6 @@ describe('pages/projects/documents/controller', () => {
 				it('should return the view and page data', () => {
 					expect(res.render).toHaveBeenCalledWith('projects/documents/view.njk', {
 						activeFilters: [],
-						allowProjectInformation: true,
 						baseUrl: '/projects/mock-case-ref',
 						caseRef: 'mock-case-ref',
 						displayClearAllFilters: false,

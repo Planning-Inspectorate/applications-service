@@ -1,9 +1,6 @@
 const logger = require('../../../../lib/logger');
 const { searchRepresentations } = require('../../../../lib/application-api-wrapper');
 const { getPaginationData, calculatePageOptions } = require('../../../../lib/pagination');
-const {
-	featureFlag: { allowProjectInformation }
-} = require('../../../../config');
 const { getRelevantRepresentationsQuery } = require('./_utils/get-relevant-representations-query');
 const { documentsPerPage } = require('../../_utils/pagination/documentsPerPage');
 const { buildPaginationQueryString } = require('../../../_utils/build-pagination-query-string');
@@ -50,7 +47,6 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			...getFilters(query, typeFilters, langIsWelsh),
 			projectName: applicationData.projectName,
 			caseRef: case_ref,
-			allowProjectInformation,
 			representations: getRepresentationsViewModel(representations, i18n.language, case_ref),
 			paginationData,
 			pageOptions,

@@ -16,8 +16,7 @@ jest.mock('../../../config', () => {
 	return {
 		...originalConfig,
 		featureFlag: {
-			...originalConfig.featureFlag,
-			allowProjectInformation: false
+			...originalConfig.featureFlag
 		}
 	};
 });
@@ -68,7 +67,7 @@ describe('pages/projects/_middleware/middleware', () => {
 				},
 				verticalTabs: [
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-information',
 						name: 'Project information',
 						url: '/projects/mock-case-ref'

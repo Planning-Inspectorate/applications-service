@@ -1,6 +1,5 @@
 const { VIEW } = require('../../../../../lib/views');
 const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
-const config = require('../../../../../config');
 
 const view = 'projects/register/_common/about-project/view.njk';
 const key = 'organisation';
@@ -41,7 +40,7 @@ const postRegisterOrganisationAboutProjectController = async (req, res) => {
 
 		req.session.comment = comment;
 
-		if (mode === 'draft' && config.featureFlag.allowSaveAndExitOption) {
+		if (mode === 'draft') {
 			req.session.mode = 'draft';
 
 			let { ipRefNo } = req.session.orgRegdata;

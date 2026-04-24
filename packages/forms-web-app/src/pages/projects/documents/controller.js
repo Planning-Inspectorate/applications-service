@@ -1,6 +1,5 @@
 const logger = require('../../../lib/logger');
 const { pageData } = require('./_utils/page-data');
-const { featureToggles } = require('./_utils/feature-toggles');
 const { getDocuments } = require('./_utils/documents/getDocuments');
 const { getFilters } = require('./_utils/filters/getFilters');
 const { getPagination, getPaginationUrl } = require('../_utils/pagination/pagination');
@@ -25,7 +24,6 @@ const getProjectsDocumentsController = async (req, res) => {
 		const { isMaterialChange, projectName } = applicationData;
 
 		const { paginationUrl, queryUrl } = getPaginationUrl(req);
-		const pageFeatureToggles = featureToggles();
 		const pageDataObj = pageData(case_ref);
 
 		const { documents, filters, pagination } = await searchDocuments(case_ref, {
@@ -42,7 +40,6 @@ const getProjectsDocumentsController = async (req, res) => {
 
 		return res.render(view, {
 			...documentsView,
-			...pageFeatureToggles,
 			...pageDataObj,
 			...paginationView,
 			displayClearAllFilters: isClearAllFiltersDisplayed(query, filteredView.activeFilters),

@@ -10,12 +10,10 @@ const config = require('./config');
 const app = require('./app');
 const logger = require('./lib/logger');
 
-if (config.featureFlag.useApplicationInsights) {
-	try {
-		appInsights.setup().start();
-	} catch (err) {
-		logger.warn({ err }, 'Application insights failed to start: ');
-	}
+try {
+	appInsights.setup().start();
+} catch (err) {
+	logger.warn({ err }, 'Application insights failed to start: ');
 }
 
 /**
