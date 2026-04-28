@@ -6,62 +6,50 @@
 {% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
 
 {% block pageTitle %}
-	{{ title }}
+    {{ title }}
 {% endblock %}
 
 {% block content %}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-two-thirds">
-			<div class="govuk-panel govuk-panel--confirmation">
-				<h1 class="govuk-panel__title">
-					{{pageHeading}}
-				</h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-panel govuk-panel--confirmation">
+                <h1 class="govuk-panel__title">
+                    {{ pageHeading }}
+                </h1>
 
-				<div class="govuk-panel__body">
-					{{ t('register.complete.panel1') }}<br>
-					<strong>{{ ipRefNo }}</strong>
-				</div>
-			</div>
+                <div class="govuk-panel__body">
+                    {{ t('register.complete.panel1') }}<br>
+                    <strong>{{ ipRefNo }}</strong>
+                </div>
+            </div>
 
-			<p class="govuk-body">
-				{{ t('register.complete.paragraph1') }}
-			</p>
+            <p class="govuk-body">
+                {{ t('register.complete.paragraph1') }}
+            </p>
 
-			<p class="govuk-body">
-				{{ t('register.complete.paragraph2') }}
-			</p>
+            <p class="govuk-body">
+                {{ t('register.complete.paragraph2') }}
+            </p>
 
-			<h2 class="govuk-heading-m">
-				{{ t('register.complete.heading1') }}
-			</h2>
+            <p class="govuk-body">
+                {{ t('register.complete.paragraph3', { link: '<a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u">' + t('register.complete.paragraph3LinkText') + '</a>'}) | safe }}
+            </p>
 
-			<p class="govuk-body">
-				{{ t('register.complete.paragraph3') }}
-			</p>
+            <h2 class="govuk-heading-m">
+                {{ t('register.complete.heading1') }}
+            </h2>
 
-			<h2 class="govuk-heading-m">
-				{{ t('register.complete.heading2') }}
-			</h2>
+            <p class="govuk-body">
+                {{ t('register.complete.paragraph4') }}
+            </p>
 
-			<p class="govuk-body">
-				{{ t('register.complete.paragraph4') }}
-			</p>
+            <p class="govuk-body">
+                {{ t('register.complete.paragraph5') }}
+            </p>
 
-			<p class="govuk-body">
-				{{ t('register.complete.paragraph5') }}
-			</p>
-
-			<p class="govuk-body">
-				{{ t('register.complete.paragraph6', { link: '<a class="govuk-link" href="/having-your-say-guide/have-your-say-examination" target="_blank">' + t('register.complete.paragraph6LinkText') + '</a>'}) | safe }}
-			</p>
-
-			<p class="govuk-body">
-				<a class="govuk-link" id="project-link" href="{{ projectsIndexURL }}">{{ t('register.complete.paragraph7LinkText') }}</a>
-			</p>
-
-			<p class="govuk-body">
-				{{ t('register.complete.paragraph8', { link: '<a class="govuk-link" href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u">' + t('register.complete.paragraph8LinkText') + '</a>'}) | safe }}
-			</p>
-		</div>
-	</div>
+            <p class="govuk-body">
+                <a class="govuk-link" id="project-link" href="{{ projectsIndexURL }}">{{ t('register.complete.paragraph6LinkText') }}</a>
+            </p>
+        </div>
+    </div>
 {% endblock %}
