@@ -7,7 +7,7 @@ const addressDetails = new PO_AddressDetails();
 const emailAddressPage = new PO_EmailAddress();
 
 Given('I navigate to UK address details page', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 	cy.clickOnHref('/register-have-your-say');
 	cy.clickOnHref('who-registering-for');

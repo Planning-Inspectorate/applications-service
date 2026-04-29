@@ -23,8 +23,5 @@ module.exports = (pageName) => {
 		cy.url().should('include', expectation.url);
 	}
 
-	cy.wait(Cypress.env('demoDelay'));
-
-	// cy.checkPageA11y({
-	// });
+	cy.waitForDemoDelay();
 };

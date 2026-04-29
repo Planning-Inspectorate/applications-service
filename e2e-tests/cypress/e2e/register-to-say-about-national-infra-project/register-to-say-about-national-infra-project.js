@@ -11,14 +11,12 @@ Given('I have selected the "Have your say" link from the related guides section'
 });
 
 Given('I have viewed the overview page for a project', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 });
 
 And('I click on show all link', () => {
-	cy.get(
-		'*[class^="app-step-nav__button-text app-step-nav__button-text--all js-step-controls-button-text"]'
-	).click();
+	cy.get('.js-step-controls-button-text').click();
 });
 When('I select the "How to register link"', () => {
 	cy.clickOnHref('/having-your-say-guide/registering-have-your-say');
@@ -40,19 +38,19 @@ And('I click on {string} link', (pageName) => {
 });
 
 And('I click on Next link', () => {
-	cy.get('#main-content > div > div.govuk-grid-column-two-thirds > div > div > a > strong').click();
+	cy.contains('a', 'Get involved in the preliminary meeting').click();
 });
 
 And('I click on Get involved in the preliminary meeting link', () => {
-	cy.get('#main-content > div > div.govuk-grid-column-two-thirds > div > div > a > span').click();
+	cy.contains('a', 'Get involved in the preliminary meeting').click();
 });
 
 And('I click on registering to have your say about a national infrastructure project link', () => {
-	cy.get('#step-panel-registering-to-have-your-say-1').click();
+	cy.contains('a', 'Registering to have your say about a national infrastructure project').click();
 });
 
 And('I click on get involved in the preliminary meeting link', () => {
-	cy.get('#step-panel-get-involved-in-the-preliminary-meeting-1 > p:nth-child(2) > a').click();
+	cy.contains('a', 'Get involved in the preliminary meeting').click();
 });
 
 And('the page does not include a link to a project', () => {
@@ -60,10 +58,5 @@ And('the page does not include a link to a project', () => {
 });
 
 Then('I click on feedback link', () => {
-	cy.get('.govuk-link').each(($e1, index) => {
-		const text = $e1.text();
-		if (text.includes('feedback')) {
-			cy.get('.govuk-link').eq(index).click();
-		}
-	});
+	cy.get('[data-cy="Feedback"]').first().click();
 });

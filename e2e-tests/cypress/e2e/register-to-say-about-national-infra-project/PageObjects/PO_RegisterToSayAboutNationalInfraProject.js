@@ -1,12 +1,17 @@
 class PO_RegisterToSayAboutNationalInfraProject {
+	identifiers = {};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => this[prop].bind(this)
+			}
+		);
+	}
+
 	assertLinksPresentOnPage(table) {
-		const contents = table.hashes();
-		cy.confirmTextOnPage(contents[0].Links);
-		cy.confirmTextOnPage(contents[1].Links);
-		cy.confirmTextOnPage(contents[2].Links);
-		cy.confirmTextOnPage(contents[3].Links);
-		cy.confirmTextOnPage(contents[4].Links);
-		cy.confirmTextOnPage(contents[5].Links);
+		table.hashes().forEach(({ Links }) => cy.confirmTextOnPage(Links));
 	}
 }
 export default PO_RegisterToSayAboutNationalInfraProject;

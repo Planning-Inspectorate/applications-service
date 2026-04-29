@@ -1,11 +1,25 @@
 class PO_AddAnotherComment {
+	identifiers = {
+		changeCommentLink: () => cy.get('[data-cy="comments-change-0"]'),
+		removeCommentLink: () => cy.get('[data-cy="comments-remove-0"]')
+	};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => this[prop].bind(this)
+			}
+		);
+	}
+
 	clickOnLink(linkType) {
 		switch (linkType) {
 			case 'change':
-				cy.get('[data-cy="comments-change-0"]').click();
+				this.identifiers.changeCommentLink().click();
 				break;
 			case 'remove':
-				cy.get('[data-cy="comments-remove-0"]').click();
+				this.identifiers.removeCommentLink().click();
 				break;
 			default:
 				throw console.error('unable to find specified radio option: ' + linkType);

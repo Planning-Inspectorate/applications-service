@@ -9,9 +9,7 @@ Then('I am on the {string} page', (pageName) => {
 });
 
 And('I click on show all link', () => {
-	cy.get(
-		'*[class^="app-step-nav__button-text app-step-nav__button-text--all js-step-controls-button-text"]'
-	).click();
+	cy.get('.js-step-controls-button-text').click();
 });
 
 And('I click on {string} link', (pageName) => {

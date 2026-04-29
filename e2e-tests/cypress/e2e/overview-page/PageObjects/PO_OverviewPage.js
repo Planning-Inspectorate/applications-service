@@ -1,6 +1,20 @@
 class PO_OverviewPage {
+	identifiers = {
+		searchField: () => cy.get('#search'),
+		documentResultsSort: () => cy.get('select#document-results-sort option:selected')
+	};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => this[prop].bind(this)
+			}
+		);
+	}
+
 	enterTextIntoSearchField(inputData) {
-		cy.get('#search').type(inputData);
+		this.identifiers.searchField().type(inputData);
 	}
 
 	assertResultsPresentOnPage(table) {
@@ -11,7 +25,7 @@ class PO_OverviewPage {
 	}
 
 	assertResultsSortedByIsPresent() {
-		cy.get('select#document-results-sort option:selected').should('have.text', 'Recently updated');
+		this.identifiers.documentResultsSort().should('have.text', 'Recently updated');
 	}
 
 	clickOnApplyFilters() {}

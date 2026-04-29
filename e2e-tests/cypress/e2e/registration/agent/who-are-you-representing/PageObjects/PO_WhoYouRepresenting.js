@@ -1,14 +1,29 @@
 class PO_WhoYouRepresenting {
+	identifiers = {
+		personRadio: () => cy.get('[data-cy="answer-person"]'),
+		organisationRadio: () => cy.get('[data-cy="answer-organisation"]'),
+		householdRadio: () => cy.get('[data-cy="answer-family"]')
+	};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => this[prop].bind(this)
+			}
+		);
+	}
+
 	selectRadioOption(radioOption) {
 		switch (radioOption) {
 			case 'A person':
-				cy.get('[data-cy="answer-person"]').click();
+				this.identifiers.personRadio().click();
 				break;
 			case 'An organisation or charity':
-				cy.get('[data-cy="answer-organisation"]').click();
+				this.identifiers.organisationRadio().click();
 				break;
 			case 'A household':
-				cy.get('[data-cy="answer-family"]').click();
+				this.identifiers.householdRadio().click();
 				break;
 		}
 	}

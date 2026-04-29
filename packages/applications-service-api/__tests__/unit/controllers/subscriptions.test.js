@@ -2,10 +2,12 @@ jest.mock('../../../src/services/application.backoffice.service');
 jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/lib/crypto');
 jest.mock('../../../src/services/backoffice.publish.service');
+jest.mock('../../../src/lib/logger');
 
 const { getApplication } = require('../../../src/services/application.backoffice.service');
 const { sendSubscriptionCreateNotification } = require('../../../src/lib/notify');
 const { encrypt, decrypt } = require('../../../src/lib/crypto');
+const logger = require('../../../src/lib/logger');
 const {
 	createSubscription,
 	confirmSubscription,
@@ -131,14 +133,20 @@ describe('subscriptions controller', () => {
 			await expect(() => createSubscription(req, mockRes)).rejects.toEqual(expectedError);
 		});
 
-		it('throws error if notify fails', async () => {
+		it('logs an error if notify fails', async () => {
 			getApplication.mockResolvedValueOnce(APPLICATION_API);
 			encrypt.mockReturnValueOnce('some_encrypted_string');
 
 			const expectedError = new Error('some error');
 			sendSubscriptionCreateNotification.mockRejectedValueOnce(expectedError);
 
-			await expect(() => createSubscription(req, mockRes)).rejects.toEqual(expectedError);
+			await createSubscription(req, mockRes);
+			await new Promise(setImmediate);
+
+			expect(logger.error).toBeCalledWith(expectedError);
+			expect(mockRes.send).toBeCalledWith({
+				subscriptionDetails: 'some_encrypted_string'
+			});
 		});
 	});
 

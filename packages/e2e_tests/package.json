@@ -1,38 +1,18 @@
 {
 	"name": "e2e-tests",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Compatibility shim for the merged root e2e-tests suite",
 	"engines": {
 		"node": ">=22.0.0 <23.0.0"
 	},
-	"main": "index.js",
 	"scripts": {
-		"e2e-open": "npx cypress open",
-		"cy:e2e": "npx cypress run -b chrome",
-		"e2e-chrome-run": "npx cypress run --headed -b chrome",
-		"cy:run": "npx cypress run --env allure=true",
-		"report:allure": "allure generate allure-results --clean -o allure-report && allure open  allure-report",
-		"test:result": "npm run cy:run && npm run report:allure",
-		"cy:qa": "npx cypress run --config baseUrl=https://applications-service-test.planninginspectorate.gov.uk",
-		"cy:dev": "npx cypress run --config baseUrl=https://applications-service-dev.planninginspectorate.gov.uk"
+		"test:open": "npm --prefix ../../e2e-tests run test:open",
+		"test:e2e": "npm --prefix ../../e2e-tests run test:e2e",
+		"test:e2e:demo": "npm --prefix ../../e2e-tests run test:e2e:demo",
+		"lint": "npm --prefix ../../e2e-tests run lint"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"cypress-cucumber-preprocessor": {
-		"nonGlobalStepDefinitions": false,
-		"stepDefinitions": "cypress/e2e/step_definitions"
-	},
-	"dependencies": {
-		"dayjs": "*"
-	},
-	"devDependencies": {
-		"@shelex/cypress-allure-plugin": "*",
-		"allure-commandline": "*",
-		"cypress": "*",
-		"cypress-cucumber-preprocessor": "*",
-		"cypress-file-upload": "*",
-		"cypress-slow-down": "*",
-		"mocha-allure-reporter": "*"
-	}
+	"private": true
 }

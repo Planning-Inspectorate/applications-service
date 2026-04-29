@@ -3,7 +3,7 @@ import PO_FullName from './PageObjects/PO_FullName';
 const fullNamePage = new PO_FullName();
 
 Given('I navigate to what is your full name page selecting {string}', (radiochoice) => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 	cy.clickOnHref('/register-have-your-say');
 	cy.clickOnHref('who-registering-for');
