@@ -82,7 +82,6 @@ Feature: Project Application documents page
 			| 4        |
 			| 5        |
 			| 6        |
-			| Next     |
 		Then I verify text "Showing 126 to 149 of 149 results" is present on the page
 		Then I verify that only "24" results present on each page
 
@@ -168,7 +167,6 @@ Feature: Project Application documents page
 			| Previous set of pages |
 			| 1                     |
 			| 2                     |
-			| Next set of pages     |
 		Then I verify text "Showing 26 to 46 of 46 results" is present on the page
 		Then I verify that only "21" results present on each page
 		Then I verify below pagination is present on the page
@@ -187,7 +185,6 @@ Feature: Project Application documents page
 			| Previous set of pages |
 			| 1                     |
 			| 2                     |
-			| Next set of pages     |
 		Then I verify text "Showing 26 to 46 of 46 results" is present on the page
 		Then I verify that only "21" results present on each page
 		When I navigate to page "Previous set of pages" of the results

@@ -10,5 +10,5 @@ module.exports = (radioChoice) => {
 			throw console.error('unable to find specified radio option: ' + radioChoice);
 	}
 
-	cy.wait(Cypress.env('demoDelay'));
+	cy.waitForDemoDelay();
 };

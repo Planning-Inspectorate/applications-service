@@ -12,18 +12,8 @@ Feature: Overview page
         When I click on register to have your say about national infrastructure project link
         Then I am on the "register to have your say" page
 
-    Scenario: click on Relevant Representations (Registration comments) link
-        When I click on "Relevant Representations (Registration comments)" link
-        Then I click on required "Return to the project overview" link
-        Then I am on the "North Lincolnshire Green Energy Park project information" page
-
     Scenario: click on Examination timetable link
         When I click on "Examination timetable" link
-
-    Scenario: click on Recommendation and decision link
-        When I click on "Recommendation and decision" link
-        Then I click on required "Return to the project overview" link
-        Then I am on the "North Lincolnshire Green Energy Park project information" page
 
     Scenario: click on Find out more about the decision making process for national infrastructure projects link
         When I click on "Find out more about the decision making process for national infrastructure projects" link

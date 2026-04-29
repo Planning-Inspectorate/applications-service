@@ -1,7 +1,17 @@
 class PO_WhatAfterDecisionMade {
+	identifiers = {};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => this[prop].bind(this)
+			}
+		);
+	}
+
 	assertLinksPresentOnPage(table) {
-		const contents = table.hashes();
-		cy.confirmTextOnPage(contents[0].Links);
+		table.hashes().forEach(({ Links }) => cy.confirmTextOnPage(Links));
 	}
 }
 export default PO_WhatAfterDecisionMade;

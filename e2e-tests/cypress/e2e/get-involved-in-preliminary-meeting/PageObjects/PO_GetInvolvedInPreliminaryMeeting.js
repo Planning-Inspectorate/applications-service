@@ -1,9 +1,17 @@
 class PO_GetInvolvedInPreliminaryMeeting {
+	identifiers = {};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => this[prop].bind(this)
+			}
+		);
+	}
+
 	assertLinksPresentOnPage(table) {
-		const contents = table.hashes();
-		cy.confirmTextOnPage(contents[0].Links);
-		cy.confirmTextOnPage(contents[1].Links);
-		cy.confirmTextOnPage(contents[2].Links);
+		table.hashes().forEach(({ Links }) => cy.confirmTextOnPage(Links));
 	}
 }
 export default PO_GetInvolvedInPreliminaryMeeting;

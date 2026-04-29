@@ -1,13 +1,16 @@
 # Cypress E2E tests
 
-This directory contains the legacy Cypress + Cucumber regression suite for the applications service.
+This directory contains the maintained Cypress + Cucumber regression suite for the applications service.
 
 ## What these tests cover
 
-The suite covers both:
+The suite covers:
 
 - the public guidance pages under "Have your say"
 - the "Register to have your say" journey itself, including registration steps and completion pages
+- project information and project navigation journeys
+- relevant representations, section 51 advice, get updates and examination timetable journeys
+- shared service shell behaviour such as locale switching and the beta-banner feedback link
 
 Examples:
 
@@ -15,6 +18,9 @@ Examples:
 - `cypress/e2e/register-to-say-about-national-infra-project.feature`
 - `cypress/e2e/say-about-national-infra-project.feature`
 - `cypress/e2e/registration/**/*.feature`
+- `cypress/e2e/projects/**/*.feature`
+- `cypress/e2e/homepage/**/*.feature`
+- `cypress/e2e/service-feedback/**/*.feature`
 
 ## Test data
 
@@ -87,7 +93,7 @@ npm --prefix e2e-tests run test:open
 npm --prefix e2e-tests run test:e2e
 ```
 
-This runs feature files under `cypress/e2e/**/*.feature` and excludes `@wip` and `@ignore`.
+This runs the single merged feature suite under `cypress/e2e/**/*.feature` and excludes `@wip` and `@ignore`.
 
 ### Run in headed mode with demo delay
 

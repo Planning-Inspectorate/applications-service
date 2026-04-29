@@ -5,7 +5,7 @@ const fullNamePage = new PO_FullName();
 const emailAddressPage = new PO_EmailAddress();
 
 Given('I navigate to email address page', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 	cy.clickOnHref('/register-have-your-say');
 	cy.clickOnHref('who-registering-for');

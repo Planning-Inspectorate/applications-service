@@ -7,6 +7,10 @@ import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageO
 import PO_CyaOrg from './PageObjects/PO_CyaOrg';
 import OrganisationNamePage from '../organisation-name/PageObjects/OrganisationNamePage';
 import PO_WhatIsJobTitle from '../what-is-your-job-title-or-volunteer-role/PageObjects/PO_WhatIsJobTitle';
+import {
+	registerAddAnotherCommentRadioStep,
+	registerTopicFieldStep
+} from '../../shared/registerCommentPageSteps';
 const fullNamePage = new PO_FullName();
 const addressDetails = new PO_AddressDetails();
 const emailAddressPage = new PO_EmailAddress();
@@ -17,7 +21,7 @@ const orgNamePage = new OrganisationNamePage();
 const jobTitlePage = new PO_WhatIsJobTitle();
 
 Given('I navigate to UK address details page using organisation route', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 	cy.clickOnHref('/register-have-your-say');
 	cy.clickOnHref('who-registering-for');
@@ -59,10 +63,6 @@ And('I enter {string} into comments field', (dataInput) => {
 	tellAboutProject.enterTextIntoCommentsField(dataInput);
 });
 
-And('I enter {string} into topic field', (dataInput) => {
-	tellAboutProject.enterTextIntoTopicField(dataInput);
-});
-
 And(
 	'I verify below data is present on Check your answers before registering page',
 	function (table) {
@@ -78,9 +78,5 @@ And('User clicks on accept and continue button for {string}', () => {
 	cy.clickOnHref('/register/organisation/declaration');
 });
 
-When(
-	'user selects {string} radio option on Do you want to add another comment page',
-	(radioChoice) => {
-		cy.selectRadioYesOrNo(radioChoice);
-	}
-);
+registerTopicFieldStep(And, tellAboutProject);
+registerAddAnotherCommentRadioStep(When);

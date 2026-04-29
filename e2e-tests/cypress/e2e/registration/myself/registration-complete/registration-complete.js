@@ -4,6 +4,10 @@ import PO_AddressDetails from '../uk-address-details/PageObjects/PO_AddressDetai
 import PO_EmailAddress from '../what-is-your-email-address/PageObjects/PO_EmailAddress';
 import PO_TeleNumber from '../what-is-your-telephone-number/PageObjects/PO_TeleNumber';
 import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject';
+import {
+	registerAddAnotherCommentRadioStep,
+	registerTopicFieldStep
+} from '../../shared/registerCommentPageSteps';
 
 const fullNamePage = new PO_FullName();
 const addressDetails = new PO_AddressDetails();
@@ -12,7 +16,7 @@ const teleNumberPage = new PO_TeleNumber();
 const tellAboutProject = new PO_TellAboutProject();
 
 Given('I navigate to UK address details page', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 	cy.clickOnHref('/register-have-your-say');
 	cy.clickOnHref('who-registering-for');
@@ -72,24 +76,11 @@ And(
 	}
 );
 
-And('I enter {string} into topic field', (dataInput) => {
-	tellAboutProject.enterTextIntoTopicField(dataInput);
-});
-
-When(
-	'user selects {string} radio option on Do you want to add another comment page',
-	(radioChoice) => {
-		cy.selectRadioYesOrNo(radioChoice);
-	}
-);
+registerTopicFieldStep(And, tellAboutProject);
+registerAddAnotherCommentRadioStep(When);
 
 Then('I click on feedback link', () => {
-	cy.get('.govuk-link').each(($e1, index) => {
-		const text = $e1.text();
-		if (text.includes('feedback')) {
-			cy.get('.govuk-link').eq(index).click();
-		}
-	});
+	cy.get('[data-cy="Feedback"]').first().click();
 });
 
 Then('I click on go back to project page link', () => {

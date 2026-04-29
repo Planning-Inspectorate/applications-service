@@ -37,7 +37,12 @@ const createSubscription = async (req, res) => {
 		}
 	};
 
-	await sendSubscriptionCreateNotification(details);
+	// Do not block the web journey on external Notify latency.
+	void Promise.resolve()
+		.then(() => sendSubscriptionCreateNotification(details))
+		.catch((error) => {
+			logger.error(error);
+		});
 
 	res.send({
 		subscriptionDetails: subscriptionDetails
