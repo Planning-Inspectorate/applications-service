@@ -108,6 +108,12 @@ It is intended for fast PR validation, so it should stay:
 - high-signal for basic service health and navigation
 - free from long multi-step registration journeys unless there is a strong reason to include one
 
+The current smoke lane includes a small mix of:
+
+- service shell coverage such as locale switching, cookies and feedback links
+- project read-only journeys such as overview, project information, examination timetable and relevant representations
+- a lightweight registration entry journey through the start page
+
 ### Run the scheduled regression suite
 
 ```shell
@@ -115,6 +121,7 @@ npm --prefix e2e-tests run test:e2e:regression
 ```
 
 This is the larger maintained suite intended for scheduled runs and manual deeper checks.
+In Azure, manual runs can choose `smoke`, `regression` or `both`.
 
 ### Run in headed mode with demo delay
 
@@ -184,7 +191,7 @@ The automated E2E lanes are split by purpose:
 
 - Azure PR validation runs the small `@smoketest` suite as the required E2E check.
 - Azure scheduled validation runs the broader regression suite in shards on weekdays.
-- GitHub Actions keeps the faster quality checks such as linting and unit/integration tests.
+- Azure CI separately runs the faster quality checks such as linting and unit/integration tests.
 
 ## Accessibility testing
 

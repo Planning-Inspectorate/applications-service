@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: cookies banner page
     As a Test user
     I want to navigate to who are you registering for? page to see cookie banner
@@ -42,5 +42,4 @@ Feature: cookies banner page
             | Your cookie settings were saved |
         And I click on go back to the page you were looking at link
         Then I am on the "who are you registering for?" page
-
 
