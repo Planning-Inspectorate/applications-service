@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: Homepage locale switcher
     As a local user
     I want to change the service language
