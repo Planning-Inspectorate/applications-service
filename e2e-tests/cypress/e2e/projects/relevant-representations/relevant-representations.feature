@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: Relevant representations
     As a local user
     I want to search and review relevant representations

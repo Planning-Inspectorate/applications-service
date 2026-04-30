@@ -1,3 +1,13 @@
+parameters:
+  - name: manualSuite
+    displayName: Manual suite
+    type: string
+    default: smoke
+    values:
+      - smoke
+      - regression
+      - both
+
 name: applications-e2e-$(Date:yyyyMMdd)$(Rev:.r)
 
 trigger: none
@@ -47,137 +57,45 @@ variables:
 jobs:
   - job: Smoke_E2E
     displayName: Smoke E2E (PR)
-    condition: or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual'))
+    condition: >-
+      or(
+        eq(variables['Build.Reason'], 'PullRequest'),
+        and(
+          eq(variables['Build.Reason'], 'Manual'),
+          or(
+            eq('${{ parameters.manualSuite }}', 'smoke'),
+            eq('${{ parameters.manualSuite }}', 'both')
+          )
+        )
+      )
     timeoutInMinutes: 35
     pool:
       vmImage: 'ubuntu-latest'
 
     steps:
-      - checkout: self
-        clean: true
-
-      - task: NodeTool@0
-        displayName: Install Node.js
-        inputs:
-          versionSpec: $(NodeVersion)
-
-      - task: Cache@2
-        displayName: Cache npm
-        inputs:
-          key: 'npm | "$(Agent.OS)" | package-lock.json | e2e-tests/package-lock.json'
-          restoreKeys: |
-            npm | "$(Agent.OS)" | package-lock.json
-          path: $(NpmCacheDir)
-
-      - task: Cache@2
-        displayName: Cache Cypress binary
-        inputs:
-          key: 'cypress | "$(Agent.OS)" | e2e-tests/package-lock.json'
-          restoreKeys: |
-            cypress | "$(Agent.OS)"
-          path: $(CypressCacheDir)
-
-      - script: |
-          mkdir -p e2e-tests/cypress/cucumber-report
-          mkdir -p e2e-tests/cypress/screenshots
-          mkdir -p e2e-tests/artifacts
-        displayName: Prepare artifact directories
-
-      - script: |
-          cat <<EOF > "$(RootCiEnvFile)"
-          ENCRYPTION_SECRET_KEY=azure-pipelines-test-encryption-secret
-          EOF
-        displayName: Create root CI env
-
-      - script: npm ci --cache "$(NpmCacheDir)"
-        displayName: Install root dependencies
-
-      - script: npm --prefix e2e-tests ci --cache "$(NpmCacheDir)"
-        displayName: Install E2E dependencies
-        env:
-          CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
-
-      - script: docker compose up -d mssql db redis api-mock-server
-        displayName: Start infrastructure services
-
-      - script: |
-          if [ ! -f packages/applications-service-api/.env ]; then
-            cp packages/applications-service-api/.env.development packages/applications-service-api/.env
-          fi
-
-          npm run db:generate
-          npm run db:migrate:dev
-          npm run db:seed
-        displayName: Generate, migrate and seed database
-
-      - script: docker compose up -d applications-service-api applications-web-app
-        displayName: Start application services
-
-      - script: |
-          set -e
-
-          for url in http://localhost:3000/health http://localhost:9004/health; do
-            echo "Waiting for $url"
-
-            for attempt in $(seq 1 30); do
-              if curl --fail --silent --show-error "$url" > /dev/null; then
-                echo "$url is healthy"
-                break
-              fi
-
-              if [ "$attempt" -eq 30 ]; then
-                echo "Timed out waiting for $url"
-                exit 1
-              fi
-
-              sleep 10
-            done
-          done
-        displayName: Wait for app health checks
-
-      - script: |
-          cd e2e-tests
-          npm run test:e2e:smoke
-        displayName: Run smoke E2E suite
-        env:
-          CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
-
-      - script: npm --prefix e2e-tests run test:e2e:postprocess
-        displayName: Generate Cypress HTML report
-        condition: always()
-
-      - script: docker compose logs --no-color > e2e-tests/artifacts/docker-compose.log
-        displayName: Capture docker compose logs
-        condition: always()
-
-      - task: PublishPipelineArtifact@1
-        displayName: Publish Cypress screenshots
-        condition: failed()
-        inputs:
-          targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/screenshots'
-          artifact: 'cypress-screenshots-smoke'
-
-      - task: PublishPipelineArtifact@1
-        displayName: Publish Cypress HTML report
-        condition: always()
-        inputs:
-          targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/cucumber-report'
-          artifact: 'cypress-html-report-smoke'
-
-      - task: PublishPipelineArtifact@1
-        displayName: Publish docker logs
-        condition: always()
-        inputs:
-          targetPath: '$(Build.SourcesDirectory)/e2e-tests/artifacts'
-          artifact: 'cypress-supporting-logs-smoke'
-
-      - script: docker compose down -v
-        displayName: Stop docker compose services
-        condition: always()
+      - template: pipelines/templates/e2e-job-steps.yml
+        parameters:
+          runDisplayName: Run smoke E2E suite
+          runScript: |
+            cd e2e-tests
+            npm run test:e2e:smoke
+          screenshotsArtifact: cypress-screenshots-smoke
+          reportArtifact: cypress-html-report-smoke
+          logsArtifact: cypress-supporting-logs-smoke
 
   - job: Regression_E2E
     displayName: Regression E2E (Shard $(SHARD_INDEX)/$(SHARD_COUNT))
-    condition: eq(variables['Build.Reason'], 'Schedule')
+    condition: >-
+      or(
+        eq(variables['Build.Reason'], 'Schedule'),
+        and(
+          eq(variables['Build.Reason'], 'Manual'),
+          or(
+            eq('${{ parameters.manualSuite }}', 'regression'),
+            eq('${{ parameters.manualSuite }}', 'both')
+          )
+        )
+      )
     timeoutInMinutes: 60
     pool:
       vmImage: 'ubuntu-latest'
@@ -204,141 +122,29 @@ jobs:
       maxParallel: 6
 
     steps:
-      - checkout: self
-        clean: true
+      - template: pipelines/templates/e2e-job-steps.yml
+        parameters:
+          runDisplayName: Run regression E2E shard
+          runScript: |
+            cd e2e-tests
 
-      - task: NodeTool@0
-        displayName: Install Node.js
-        inputs:
-          versionSpec: $(NodeVersion)
+            SPEC_LIST="$(
+              find cypress/e2e -type f -name '*.feature' | sort | awk \
+                -v shard_index="$(SHARD_INDEX)" \
+                -v shard_count="$(SHARD_COUNT)" \
+                '((NR - 1) % shard_count) == (shard_index - 1) { print }' | paste -sd, -
+            )"
 
-      - task: Cache@2
-        displayName: Cache npm
-        inputs:
-          key: 'npm | "$(Agent.OS)" | package-lock.json | e2e-tests/package-lock.json'
-          restoreKeys: |
-            npm | "$(Agent.OS)" | package-lock.json
-          path: $(NpmCacheDir)
+            if [ -z "$SPEC_LIST" ]; then
+              echo "No specs were assigned to shard $(SHARD_INDEX) of $(SHARD_COUNT)"
+              exit 0
+            fi
 
-      - task: Cache@2
-        displayName: Cache Cypress binary
-        inputs:
-          key: 'cypress | "$(Agent.OS)" | e2e-tests/package-lock.json'
-          restoreKeys: |
-            cypress | "$(Agent.OS)"
-          path: $(CypressCacheDir)
+            SPEC_GLOB="{$SPEC_LIST}"
 
-      - script: |
-          mkdir -p e2e-tests/cypress/cucumber-report
-          mkdir -p e2e-tests/cypress/screenshots
-          mkdir -p e2e-tests/artifacts
-        displayName: Prepare artifact directories
-
-      - script: |
-          cat <<EOF > "$(RootCiEnvFile)"
-          ENCRYPTION_SECRET_KEY=azure-pipelines-test-encryption-secret
-          EOF
-        displayName: Create root CI env
-
-      - script: npm ci --cache "$(NpmCacheDir)"
-        displayName: Install root dependencies
-
-      - script: npm --prefix e2e-tests ci --cache "$(NpmCacheDir)"
-        displayName: Install E2E dependencies
-        env:
-          CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
-
-      - script: docker compose up -d mssql db redis api-mock-server
-        displayName: Start infrastructure services
-
-      - script: |
-          if [ ! -f packages/applications-service-api/.env ]; then
-            cp packages/applications-service-api/.env.development packages/applications-service-api/.env
-          fi
-
-          npm run db:generate
-          npm run db:migrate:dev
-          npm run db:seed
-        displayName: Generate, migrate and seed database
-
-      - script: docker compose up -d applications-service-api applications-web-app
-        displayName: Start application services
-
-      - script: |
-          set -e
-
-          for url in http://localhost:3000/health http://localhost:9004/health; do
-            echo "Waiting for $url"
-
-            for attempt in $(seq 1 30); do
-              if curl --fail --silent --show-error "$url" > /dev/null; then
-                echo "$url is healthy"
-                break
-              fi
-
-              if [ "$attempt" -eq 30 ]; then
-                echo "Timed out waiting for $url"
-                exit 1
-              fi
-
-              sleep 10
-            done
-          done
-        displayName: Wait for app health checks
-
-      - script: |
-          cd e2e-tests
-
-          SPEC_LIST="$(
-            find cypress/e2e -type f -name '*.feature' | sort | awk \
-              -v shard_index="$(SHARD_INDEX)" \
-              -v shard_count="$(SHARD_COUNT)" \
-              '((NR - 1) % shard_count) == (shard_index - 1) { print }' | paste -sd, -
-          )"
-
-          if [ -z "$SPEC_LIST" ]; then
-            echo "No specs were assigned to shard $(SHARD_INDEX) of $(SHARD_COUNT)"
-            exit 0
-          fi
-
-          SPEC_GLOB="{$SPEC_LIST}"
-
-          echo "Running shard $(SHARD_INDEX) of $(SHARD_COUNT)"
-          echo "$SPEC_LIST" | tr ',' '\n'
-          npx cypress-tags run -b chrome --env TAGS="not (@wip or @ignore)" --glob "$SPEC_GLOB"
-        displayName: Run regression E2E shard
-        env:
-          CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
-
-      - script: npm --prefix e2e-tests run test:e2e:postprocess
-        displayName: Generate Cypress HTML report
-        condition: always()
-
-      - script: docker compose logs --no-color > e2e-tests/artifacts/docker-compose.log
-        displayName: Capture docker compose logs
-        condition: always()
-
-      - task: PublishPipelineArtifact@1
-        displayName: Publish Cypress screenshots
-        condition: failed()
-        inputs:
-          targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/screenshots'
-          artifact: 'cypress-screenshots-regression-$(SHARD_INDEX)'
-
-      - task: PublishPipelineArtifact@1
-        displayName: Publish Cypress HTML report
-        condition: always()
-        inputs:
-          targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/cucumber-report'
-          artifact: 'cypress-html-report-regression-$(SHARD_INDEX)'
-
-      - task: PublishPipelineArtifact@1
-        displayName: Publish docker logs
-        condition: always()
-        inputs:
-          targetPath: '$(Build.SourcesDirectory)/e2e-tests/artifacts'
-          artifact: 'cypress-supporting-logs-regression-$(SHARD_INDEX)'
-
-      - script: docker compose down -v
-        displayName: Stop docker compose services
-        condition: always()
+            echo "Running shard $(SHARD_INDEX) of $(SHARD_COUNT)"
+            echo "$SPEC_LIST" | tr ',' '\n'
+            npx cypress-tags run -b chrome --env TAGS="not (@wip or @ignore)" --glob "$SPEC_GLOB"
+          screenshotsArtifact: cypress-screenshots-regression-$(SHARD_INDEX)
+          reportArtifact: cypress-html-report-regression-$(SHARD_INDEX)
+          logsArtifact: cypress-supporting-logs-regression-$(SHARD_INDEX)
