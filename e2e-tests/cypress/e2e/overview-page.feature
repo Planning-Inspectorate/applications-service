@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: Overview page
     As a Test user
     I want to navigate to Overview page

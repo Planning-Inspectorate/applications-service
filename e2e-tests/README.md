@@ -93,7 +93,28 @@ npm --prefix e2e-tests run test:open
 npm --prefix e2e-tests run test:e2e
 ```
 
-This runs the single merged feature suite under `cypress/e2e/**/*.feature` and excludes `@wip` and `@ignore`.
+This runs the full regression suite under `cypress/e2e/**/*.feature` and excludes `@wip` and `@ignore`.
+
+### Run the PR smoke suite
+
+```shell
+npm --prefix e2e-tests run test:e2e:smoke
+```
+
+The smoke suite is a deliberately small `@smoketest` subset of the maintained `@testSuite` coverage.
+It is intended for fast PR validation, so it should stay:
+
+- read-only where possible
+- high-signal for basic service health and navigation
+- free from long multi-step registration journeys unless there is a strong reason to include one
+
+### Run the scheduled regression suite
+
+```shell
+npm --prefix e2e-tests run test:e2e:regression
+```
+
+This is the larger maintained suite intended for scheduled runs and manual deeper checks.
 
 ### Run in headed mode with demo delay
 
@@ -113,6 +134,7 @@ Examples:
 
 ```shell
 npx cypress-tags run -b chrome --env TAGS="@testSuite"
+npx cypress-tags run -b chrome --env TAGS="@smoketest"
 npx cypress-tags run -b chrome --env TAGS="@registration and @completion"
 ```
 
@@ -155,6 +177,14 @@ After a run, you can post-process the generated cucumber JSON into an HTML repor
 ```shell
 npm --prefix e2e-tests run test:e2e:postprocess
 ```
+
+## CI split
+
+The automated E2E lanes are split by purpose:
+
+- Azure PR validation runs the small `@smoketest` suite as the required E2E check.
+- Azure scheduled validation runs the broader regression suite in shards on weekdays.
+- GitHub Actions keeps the faster quality checks such as linting and unit/integration tests.
 
 ## Accessibility testing
 

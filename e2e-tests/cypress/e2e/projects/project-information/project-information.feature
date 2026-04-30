@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: Project information page
     As a local user
     I want to review the local project information page
