@@ -1,4 +1,4 @@
-const { createNotifyClient, notifyBuilder } = require('@planning-inspectorate/pins-notify');
+const { createNotifyClient, notifyBuilder } = require('#pins-notify');
 const config = require('./config');
 const logger = require('./logger');
 
