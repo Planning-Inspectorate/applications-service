@@ -24,8 +24,8 @@ jest.mock('../../src/lib/prisma', () => ({
 	}
 }));
 
-const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
-jest.mock('@planning-inspectorate/pins-notify', () => ({
+const { notifyBuilder } = require('#pins-notify');
+jest.mock('#pins-notify', () => ({
 	createNotifyClient: {
 		createNotifyClient: jest.fn().mockReturnThis()
 	},
