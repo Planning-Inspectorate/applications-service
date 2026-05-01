@@ -79,7 +79,6 @@
 		"@godaddy/terminus": "^4.7.1",
 		"@ministryofjustice/frontend": "^2.2.0",
 		"@planning-inspectorate/data-model": "^1.15.0",
-		"@planning-inspectorate/pins-components": "^2.2.6",
 		"@prisma/adapter-mssql": "^7.4.2",
 		"@prisma/client": "^7.4.2",
 		"@testing-library/dom": "^7.31.2",

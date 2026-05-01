@@ -14,17 +14,12 @@ const { getFileNameFromDocumentUrl } = require('./lib/get-file-name-from-url');
 
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 const mojFrontendRoot = path.resolve(require.resolve('@ministryofjustice/frontend'), '../..');
-const pinsComponentsRoot = path.resolve(
-	require.resolve('@planning-inspectorate/pins-components'),
-	'../..'
-);
 
 const viewPaths = [
 	govukFrontendRoot,
 	mojFrontendRoot,
 	path.join(__dirname, 'views'),
-	path.join(__dirname, 'pages'),
-	pinsComponentsRoot
+	path.join(__dirname, 'pages')
 ];
 
 function nunjucksConfigure(app) {
