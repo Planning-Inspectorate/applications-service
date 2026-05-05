@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: Examination timetable
     As a local user
     I want to review examination availability

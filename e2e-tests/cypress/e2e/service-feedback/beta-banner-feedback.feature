@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: Beta banner feedback link
     As a local user
     I want to access the service feedback form from the beta banner
