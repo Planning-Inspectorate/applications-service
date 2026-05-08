@@ -1,10 +1,6 @@
 import PageObject from '../../PageObject';
 
 class PO_StartPage extends PageObject {
-	identifiers = {
-		...this.identifiers
-	};
-
 	get functions() {
 		return new Proxy(
 			{},
