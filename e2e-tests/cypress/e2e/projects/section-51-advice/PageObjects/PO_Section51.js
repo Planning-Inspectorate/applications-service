@@ -24,6 +24,18 @@ export class PO_Section51 {
 		this.identifiers.resultsPanel().should('be.visible');
 	}
 
+	openLocalSection51AdvicePage(caseId) {
+		cy.visit(`/projects/${caseId}/s51advice`);
+	}
+
+	assertOnLocalSection51AdvicePage(caseId) {
+		cy.url().should('include', `/projects/${caseId}/s51advice`);
+	}
+
+	assertUrlIncludes(value) {
+		cy.url().should('include', value);
+	}
+
 	verifyResultStructure() {
 		this.identifiers.resultItems().each((result) => {
 			cy.wrap(result).find('h2').should('be.visible');

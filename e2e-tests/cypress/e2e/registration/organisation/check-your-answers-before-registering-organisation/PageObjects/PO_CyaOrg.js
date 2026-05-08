@@ -1,5 +1,8 @@
-class PO_CyaOrg {
+import PageObject from '../../../../PageObject';
+
+class PO_CyaOrg extends PageObject {
 	identifiers = {
+		...this.identifiers,
 		summaryListKeys: () => cy.get('.govuk-summary-list__key'),
 		summaryListValues: () => cy.get('.govuk-summary-list__value'),
 		summaryListActions: () => cy.get('.govuk-summary-list__actions'),
@@ -11,7 +14,8 @@ class PO_CyaOrg {
 		addressChangeLink: () => cy.get('[data-cy="address"]').last(),
 		emailChangeLink: () => cy.get('[data-cy="email"]').last(),
 		telephoneChangeLink: () => cy.get('[data-cy="telephone"]').last(),
-		commentChangeLink: () => cy.get('[data-cy="comment"]').last()
+		commentChangeLink: () => cy.get('[data-cy="comment"]').last(),
+		acceptAndRegisterButton: () => cy.get('[data-cy="button-accept-and-register"]')
 	};
 
 	get functions() {
@@ -86,6 +90,14 @@ class PO_CyaOrg {
 			default:
 				throw new Error('Cannot find change link type');
 		}
+	}
+
+	clickDeclarationLink() {
+		this.clickLinkByHref('/register/organisation/declaration');
+	}
+
+	clickAcceptAndRegister() {
+		this.identifiers.acceptAndRegisterButton().click();
 	}
 }
 

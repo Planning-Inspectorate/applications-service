@@ -8,13 +8,18 @@ class PO_WhoYouRegisterFor extends PageObject {
 
 	navigatetoTypeOfPartyPage() {
 		cy.visit('/project-search');
-		cy.clickProjectLink('North Lincolnshire Green Energy Park');
-		cy.clickOnHref('register-have-your-say');
-		cy.clickOnHref('who-registering-for');
+		this.clickProjectLink('North Lincolnshire Green Energy Park');
+		this.clickLinkByHref('register-have-your-say');
+		this.clickLinkByHref('who-registering-for');
 	}
 
 	validateRadioOptionContent() {
 		this.identifiers.typeOfPartyFieldset();
+	}
+
+	selectPartyAndContinue(radioChoice) {
+		cy.selectRadioOption(radioChoice);
+		this.clickSaveAndContinue();
 	}
 }
 export default PO_WhoYouRegisterFor;

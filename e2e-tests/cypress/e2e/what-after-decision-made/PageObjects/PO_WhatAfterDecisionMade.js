@@ -1,4 +1,6 @@
-class PO_WhatAfterDecisionMade {
+import PageObject from '../PageObject';
+
+class PO_WhatAfterDecisionMade extends PageObject {
 	identifiers = {};
 
 	get functions() {
@@ -8,10 +10,6 @@ class PO_WhatAfterDecisionMade {
 				get: (_, prop) => this[prop].bind(this)
 			}
 		);
-	}
-
-	assertLinksPresentOnPage(table) {
-		table.hashes().forEach(({ Links }) => cy.confirmTextOnPage(Links));
 	}
 }
 export default PO_WhatAfterDecisionMade;

@@ -34,6 +34,14 @@ class PO_DateFilter {
 		this.identifiers.datePublishedLink().click();
 	}
 
+	openLocalDocumentsPage(caseId) {
+		cy.visit(`/projects/${caseId}/documents`);
+	}
+
+	assertOnLocalDocumentsPage(caseId) {
+		cy.url().should('include', `/projects/${caseId}/documents`);
+	}
+
 	fromDay() {
 		return this.identifiers.fromDay();
 	}

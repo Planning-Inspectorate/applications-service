@@ -12,7 +12,8 @@ export class PO_RelevantReps {
 		relevanteRepHeading: () => cy.get('.govuk-heading-l'),
 		backToResultsLink: () => cy.get('[data-cy="back"]'),
 		noResultsMessage: () => cy.get('[data-cy="no-comments-found"]'),
-		clearSearchLink: () => cy.get('[data-cy="clear-search"]')
+		clearSearchLink: () => cy.get('[data-cy="clear-search"]'),
+		pageHeading: () => cy.get('h1')
 	};
 
 	get functions() {
@@ -84,5 +85,17 @@ export class PO_RelevantReps {
 
 	clickClearSearch() {
 		this.identifiers.clearSearchLink().click();
+	}
+
+	openLocalRelevantRepresentationsPage(caseId) {
+		cy.visit(`/projects/${caseId}/representations`);
+	}
+
+	assertRelevantRepresentationsHeading() {
+		this.identifiers.pageHeading().contains('Relevant representations').should('be.visible');
+	}
+
+	assertUrlIncludes(value) {
+		cy.url().should('include', value);
 	}
 }

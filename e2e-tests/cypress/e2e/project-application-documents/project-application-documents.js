@@ -3,16 +3,11 @@ import PO_ProjectAppDocs from './PageObjects/PO_ProjectAppDocs';
 const projectAppDocs = new PO_ProjectAppDocs();
 
 Given('I navigate to {string} project Overview page', (projectName) => {
-	cy.visit('/project-search');
-	if (projectName.includes('Ho Ho Hooo')) {
-		cy.visit('/projects/TR033002');
-	} else {
-		cy.clickProjectLink(projectName);
-	}
+	projectAppDocs.openProjectOverview(projectName);
 });
 
 And('I click on {string} link', (pageName) => {
-	cy.clickContentsLink(pageName);
+	projectAppDocs.clickContentsNavigationLink(pageName);
 });
 
 And('I click on search button', () => {

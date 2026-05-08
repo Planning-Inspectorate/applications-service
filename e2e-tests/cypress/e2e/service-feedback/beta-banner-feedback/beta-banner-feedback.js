@@ -1,12 +1,13 @@
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
+import PO_Homepage from '../../common/PageObjects/PO_Homepage';
+
+const homepage = new PO_Homepage();
 
 Given('I open the local homepage for feedback', () => {
-	cy.visit('/');
-	cy.contains('h1', 'Welcome').should('be.visible');
+	homepage.openHomepage();
+	homepage.assertWelcomeHeading();
 });
 
 Then('the beta banner feedback link points to the service feedback form', () => {
-	cy.get(".govuk-link[data-cy='Feedback']")
-		.should('have.attr', 'href')
-		.and('include', 'forms.office.com/Pages/ResponsePage.aspx');
+	homepage.assertFeedbackLinkTargetIncludes('forms.office.com/Pages/ResponsePage.aspx');
 });
