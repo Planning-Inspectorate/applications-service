@@ -9,7 +9,7 @@ Given('I navigate to the who are you registering for page', () => {
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	cookiePage.assertOnPage(pageName);
 });
 
 And('I click on {string} cookies button', (cookieChoice) => {
@@ -18,7 +18,7 @@ And('I click on {string} cookies button', (cookieChoice) => {
 
 Then('I verify below text is present on the page', function (table) {
 	const data = table.hashes();
-	cy.confirmTextOnPage(data[0].Text);
+	cookiePage.assertTextPresent(data[0].Text);
 });
 
 And('I select {string} radio choice', (radioChoice) => {
@@ -34,5 +34,5 @@ And('I click on go back to the page you were looking at link', () => {
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	cookiePage.clickBackLink();
 });

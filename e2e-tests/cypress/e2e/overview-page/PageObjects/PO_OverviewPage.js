@@ -23,7 +23,7 @@ class PO_OverviewPage extends PageObject {
 	assertResultsPresentOnPage(table) {
 		const contents = table.hashes();
 		for (var i = 0; i < contents.length; i++) {
-			cy.confirmTextOnPage(contents[i].Data);
+			this.assertTextPresent(contents[i].Data);
 		}
 	}
 

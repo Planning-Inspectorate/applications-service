@@ -1,5 +1,8 @@
-class PO_ExaminationTimetable {
+import { BasePage } from '../../shared/PageObjects/BasePage';
+
+class PO_ExaminationTimetable extends BasePage {
 	identifiers = {
+		...this.identifiers,
 		pageHeading: () => cy.get('h1'),
 		bodyText: () => cy.get('body'),
 		pastEvents: () => cy.get('#examination-timetable-events-accordion .section-events__event'),

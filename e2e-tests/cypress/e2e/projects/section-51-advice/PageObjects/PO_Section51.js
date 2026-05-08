@@ -1,5 +1,8 @@
-export class PO_Section51 {
+import { BasePage } from '../../shared/PageObjects/BasePage';
+
+export class PO_Section51 extends BasePage {
 	identifiers = {
+		...this.identifiers,
 		resultsPanel: () => cy.get('.ui-results'),
 		backToListBtn: () => cy.contains('Back to list'),
 		govLink: () => cy.get('.govuk-link'),
