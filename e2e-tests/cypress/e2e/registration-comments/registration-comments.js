@@ -3,16 +3,11 @@ import PO_RegComments from './PageObjects/PO_RegComments';
 const regComments = new PO_RegComments();
 
 Given('I navigate to {string} project Overview page', (projectName) => {
-	cy.visit('/project-search');
-	if (projectName.includes('Ho Ho Hooo')) {
-		cy.visit('/projects/TR033002');
-	} else {
-		cy.clickProjectLink(projectName);
-	}
+	regComments.openProjectOverview(projectName);
 });
 
 And('I click on {string} link', (pageName) => {
-	cy.clickContentsLink(pageName);
+	regComments.clickContentsLink(pageName);
 });
 
 And('I verify below pagination is present on the page', (table) => {
@@ -47,9 +42,7 @@ Then('I verify no pagination is present on the page', () => {
 });
 
 Given('I have navigated to registration comments for the {string} project', (projectName) => {
-	cy.visit('/project-search');
-	cy.clickProjectLink(projectName);
-	cy.clickContentsLink('Relevant representations (registration comments)');
+	regComments.openRegistrationComments(projectName);
 });
 
 When('I search for comments containing {string}', (searchInput) => {
@@ -60,33 +53,22 @@ When('I search for comments containing {string}', (searchInput) => {
 Then(
 	'a list of registration comments with metadata containing {string} is provided',
 	(searchInput) => {
-		cy.get('[data-cy="representation"]').each((element) => {
-			expect(element.text().toLowerCase()).to.contain(searchInput.toLowerCase());
-		});
+		regComments.assertSearchResultsContain(searchInput);
 	}
 );
 
 Then('the list is sorted by received date, newest first', () => {
-	const datesProvided = [];
-	cy.get('[data-cy="published-date"]').each((element) => {
-		datesProvided.push(Date.parse(element.text()));
-	});
-	const sortedDates = [...datesProvided];
-	sortedDates.sort((a, b) => a - b).reverse();
-	expect(datesProvided).to.deep.eq(sortedDates);
+	regComments.assertSortedByReceivedDate();
 });
 
 Then('I am informed that no results were found', () => {
-	cy.get('p[data-cy="no-comments-found"]').should(
-		'contain.text',
-		'No results were found matching your search term or filters.'
-	);
+	regComments.assertNoResultsFound();
 });
 
 Then(
 	'I am given the option to clear the search to list all available registration comments',
 	() => {
-		cy.get('a[data-cy="clear-search"]').should('contain.text', 'Clear');
+		regComments.assertClearSearchOption();
 	}
 );
 
@@ -115,11 +97,9 @@ Then('I can view the registration comment detail page', () => {
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	regComments.returnToList();
 });
 
 Then('I return to the registration comments list', () => {
-	cy.url().should('include', '/representations');
-	cy.get('[data-cy="representation"]').should('have.length.at.least', 1);
-	cy.get('.moj-pagination__results').should('contain.text', 'Showing');
+	regComments.assertReturnedToList();
 });

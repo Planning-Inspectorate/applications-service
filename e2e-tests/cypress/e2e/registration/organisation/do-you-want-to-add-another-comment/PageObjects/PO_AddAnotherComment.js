@@ -1,4 +1,6 @@
-class PO_AddAnotherComment {
+import PageObject from '../../../../PageObject';
+
+class PO_AddAnotherComment extends PageObject {
 	identifiers = {
 		changeCommentLink: () => cy.get('[data-cy="comments-change-0"]'),
 		removeCommentLink: () => cy.get('[data-cy="comments-remove-0"]')
