@@ -1,13 +1,21 @@
 import PageObject from '../PageObject';
 
 class PO_WhatAfterDecisionMade extends PageObject {
-	identifiers = {};
+	identifiers = {
+		...this.identifiers
+	};
 
 	get functions() {
 		return new Proxy(
 			{},
 			{
-				get: (_, prop) => this[prop].bind(this)
+				get: (_, prop) => {
+					const value = this[prop];
+					if (typeof value !== 'function') {
+						throw new Error(`Function "${String(prop)}" was not found on ${this.constructor.name}`);
+					}
+					return value.bind(this);
+				}
 			}
 		);
 	}
