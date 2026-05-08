@@ -88,7 +88,7 @@
 		"@testing-library/user-event": "^12.8.3",
 		"abort-controller": "^3.0.0",
 		"applicationinsights": "^2.9.0",
-		"axios": "^1.12.2",
+		"axios": "^1.15.0",
 		"axios-logger": "^2.6.1",
 		"body-parser": "^1.19.0",
 		"chokidar": "^3.5.3",
@@ -139,7 +139,7 @@
 		"string-strip-html": "^8.3.0",
 		"swagger-ui-express": "^4.1.6",
 		"tcp-ping": "^0.1.1",
-		"uuid": "^8.3.2"
+		"uuid": "11.1.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.18.9",
