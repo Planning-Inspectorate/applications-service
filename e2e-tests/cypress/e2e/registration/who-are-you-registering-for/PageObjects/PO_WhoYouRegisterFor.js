@@ -3,7 +3,10 @@ import PageObject from '../../../PageObject';
 class PO_WhoYouRegisterFor extends PageObject {
 	identifiers = {
 		...this.identifiers,
-		typeOfPartyFieldset: () => cy.get('#type-of-party')
+		typeOfPartyFieldset: () => cy.get('#type-of-party'),
+		myselfRadio: () => cy.get('[data-cy="answer-mySay"]'),
+		organisationRadio: () => cy.get('[data-cy="answer-organisation"]'),
+		agentRadio: () => cy.get('[data-cy="answer-behalf"]')
 	};
 
 	navigatetoTypeOfPartyPage() {
@@ -17,8 +20,26 @@ class PO_WhoYouRegisterFor extends PageObject {
 		this.identifiers.typeOfPartyFieldset();
 	}
 
+	selectParty(radioChoice) {
+		switch (radioChoice) {
+			case 'Myself':
+				this.identifiers.myselfRadio().click();
+				break;
+			case 'Organisation':
+				this.identifiers.organisationRadio().click();
+				break;
+			case 'Agent':
+				this.identifiers.agentRadio().click();
+				break;
+			default:
+				throw new Error(`unable to find specified radio option: ${radioChoice}`);
+		}
+
+		cy.waitForDemoDelay();
+	}
+
 	selectPartyAndContinue(radioChoice) {
-		cy.selectRadioOption(radioChoice);
+		this.selectParty(radioChoice);
 		this.clickSaveAndContinue();
 	}
 }

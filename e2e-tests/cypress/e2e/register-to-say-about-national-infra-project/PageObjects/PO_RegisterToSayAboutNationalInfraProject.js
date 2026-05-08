@@ -69,6 +69,10 @@ class PO_RegisterToSayAboutNationalInfraProject extends PageObject {
 		this.clickGuideLink('registering to have your say about a national infrastructure project');
 	}
 
+	assertProjectLinkPresent() {
+		this.identifiers.projectLinkCard().should('have.attr', 'href', '/projects/EN010116');
+	}
+
 	assertProjectLinkAbsent() {
 		this.identifiers.projectLinkCard().should('not.exist');
 	}

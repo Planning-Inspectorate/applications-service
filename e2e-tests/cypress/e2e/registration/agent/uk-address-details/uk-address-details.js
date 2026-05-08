@@ -10,22 +10,22 @@ const addressDetails = new PO_AddressDetails();
 
 And('I have been asked to provide my postal address', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 });
 
 And('I continue with the following values in the address fields', function (table) {
 	addressDetails.enterTextIntoAddressFields(table);
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	addressDetails.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	addressDetails.assertOnPage(pageName);
 });

@@ -137,6 +137,10 @@ class PageObject {
 		});
 	}
 
+	assertTextPresent(text) {
+		this.identifiers.body().contains(text).should('be.visible');
+	}
+
 	clickContentsLink(contentLink) {
 		this.identifiers.contentLinks().each(($link, index) => {
 			if ($link.text().includes(contentLink)) {

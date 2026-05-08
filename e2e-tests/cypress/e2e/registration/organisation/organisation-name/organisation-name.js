@@ -7,14 +7,14 @@ const organisationNamePage = new OrganisationNamePage();
 
 And('I have been asked for the name of my organisation or charity', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
-	cy.assertUserOnThePage('what is the name of your organisation or charity?');
+	fullNamePage.clickSaveAndContinue();
+	fullNamePage.selectRadioYesOrNo('Yes');
+	fullNamePage.clickSaveAndContinue();
+	organisationNamePage.assertOnPage('what is the name of your organisation or charity?');
 });
 
 Then('below error message should be presented on full name page', function (table) {
-	cy.assertErrorMessage(table);
+	organisationNamePage.assertErrorMessages(table);
 });
 
 And('I can see the text This service is only for Application service', () => {
@@ -22,14 +22,14 @@ And('I can see the text This service is only for Application service', () => {
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	organisationNamePage.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	organisationNamePage.assertOnPage(pageName);
 });
 
 When('I continue with the value {string} in the organisation name field', (text) => {
 	organisationNamePage.enterTextIntoOrganisationNameField(text);
-	cy.clickSaveAndContinue();
+	organisationNamePage.clickSaveAndContinue();
 });
