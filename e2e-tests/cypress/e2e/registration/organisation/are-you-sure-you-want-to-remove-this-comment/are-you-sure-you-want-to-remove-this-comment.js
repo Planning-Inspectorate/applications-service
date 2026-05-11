@@ -7,6 +7,7 @@ import PO_EmailAddress from '../what-is-your-email-address/PageObjects/PO_EmailA
 import PO_TeleNumber from '../what-is-your-telephone-number/PageObjects/PO_TeleNumber';
 import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject';
 import PO_AddAnotherComment from '../do-you-want-to-add-another-comment/PageObjects/PO_AddAnotherComment';
+import { registerTopicFieldStep } from '../../shared/registerCommentPageSteps';
 const fullNamePage = new PO_FullName();
 const orgNamePage = new OrganisationNamePage();
 const jobTitlePage = new PO_WhatIsJobTitle();
@@ -17,7 +18,7 @@ const tellAboutProject = new PO_TellAboutProject();
 const addAnotherComment = new PO_AddAnotherComment();
 
 Given('I navigate to UK address details page using organisation route', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 	cy.clickOnHref('/register-have-your-say');
 	cy.clickOnHref('who-registering-for');
@@ -64,13 +65,11 @@ And('I enter {string} into comments field', (dataInput) => {
 	tellAboutProject.enterTextIntoCommentsField(dataInput);
 });
 
-And('I enter {string} into topic field', (dataInput) => {
-	tellAboutProject.enterTextIntoTopicField(dataInput);
-});
-
 And('User clicks on {string} link', (link) => {
 	addAnotherComment.clickOnLink(link);
 });
+
+registerTopicFieldStep(And, tellAboutProject);
 
 And(
 	'user selects {string} radio option on Are you sure you want to remove this comment page',

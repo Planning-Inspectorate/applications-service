@@ -21,6 +21,7 @@ module.exports = defineConfig({
 			on('file:preprocessor', cucumber());
 		},
 		baseUrl: 'http://localhost:9004',
+		supportFile: 'cypress/support/e2e.js',
 		specPattern: 'cypress/e2e/**/*.feature'
 	}
 });

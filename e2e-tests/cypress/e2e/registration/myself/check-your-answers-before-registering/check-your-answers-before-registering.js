@@ -5,6 +5,10 @@ import PO_EmailAddress from '../what-is-your-email-address/PageObjects/PO_EmailA
 import PO_TeleNumber from '../what-is-your-telephone-number/PageObjects/PO_TeleNumber';
 import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject';
 import PO_CyaBeforeReg from '../check-your-answers-before-registering/PageObjects/PO_CyaBeforeReg';
+import {
+	registerAddAnotherCommentRadioStep,
+	registerTopicFieldStep
+} from '../../shared/registerCommentPageSteps';
 const fullNamePage = new PO_FullName();
 const addressDetails = new PO_AddressDetails();
 const emailAddressPage = new PO_EmailAddress();
@@ -13,7 +17,7 @@ const tellAboutProject = new PO_TellAboutProject();
 const cyaBeforeReg = new PO_CyaBeforeReg();
 
 Given('I navigate to UK address details page', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink('North Lincolnshire Green Energy Park');
 	cy.clickOnHref('/register-have-your-say');
 	cy.clickOnHref('who-registering-for');
@@ -51,10 +55,6 @@ And('I enter {string} into comments field', (dataInput) => {
 	tellAboutProject.enterTextIntoCommentsField(dataInput);
 });
 
-And('I enter {string} into topic field', (dataInput) => {
-	tellAboutProject.enterTextIntoTopicField(dataInput);
-});
-
 And(
 	'I verify below data is present on Check your answers before registering page',
 	function (table) {
@@ -77,9 +77,5 @@ And('User clicks on accept and continue button for {string}', (linkType) => {
 	}
 });
 
-When(
-	'user selects {string} radio option on Do you want to add another comment page',
-	(radioChoice) => {
-		cy.selectRadioYesOrNo(radioChoice);
-	}
-);
+registerTopicFieldStep(And, tellAboutProject);
+registerAddAnotherCommentRadioStep(When);

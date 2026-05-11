@@ -3,7 +3,7 @@ import PO_RegComments from './PageObjects/PO_RegComments';
 const regComments = new PO_RegComments();
 
 Given('I navigate to {string} project Overview page', (projectName) => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	if (projectName.includes('Ho Ho Hooo')) {
 		cy.visit('/projects/TR033002');
 	} else {
@@ -47,7 +47,7 @@ Then('I verify no pagination is present on the page', () => {
 });
 
 Given('I have navigated to registration comments for the {string} project', (projectName) => {
-	cy.visit('/project-search', { failOnStatusCode: false });
+	cy.visit('/project-search');
 	cy.clickProjectLink(projectName);
 	cy.clickContentsLink('Relevant representations (registration comments)');
 });
@@ -110,6 +110,16 @@ Then('I verify below comment is displayed', (table) => {
 	regComments.verifyCommentIsPresent(table);
 });
 
+Then('I can view the registration comment detail page', () => {
+	regComments.verifyCommentDetailPage();
+});
+
 Then('I click on back link', () => {
 	cy.clickOnBackLink();
+});
+
+Then('I return to the registration comments list', () => {
+	cy.url().should('include', '/representations');
+	cy.get('[data-cy="representation"]').should('have.length.at.least', 1);
+	cy.get('.moj-pagination__results').should('contain.text', 'Showing');
 });

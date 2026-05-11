@@ -3,7 +3,11 @@
 // Common
 Cypress.Commands.add('clickSaveAndContinue', require('../common-methods/clickSaveAndContinue'));
 
+Cypress.Commands.add('clickSaveAndReturn', require('../common-methods/clickSaveAndReturn'));
+
 Cypress.Commands.add('confirmTextOnPage', require('../common-methods/confirmTextOnPage'));
+
+Cypress.Commands.add('waitForDemoDelay', require('../common-methods/waitForDemoDelay'));
 
 Cypress.Commands.add('assertErrorMessage', require('../common-methods/assertErrorMessage'));
 

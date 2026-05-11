@@ -1,13 +1,16 @@
 # Cypress E2E tests
 
-This directory contains the legacy Cypress + Cucumber regression suite for the applications service.
+This directory contains the maintained Cypress + Cucumber regression suite for the applications service.
 
 ## What these tests cover
 
-The suite covers both:
+The suite covers:
 
 - the public guidance pages under "Have your say"
 - the "Register to have your say" journey itself, including registration steps and completion pages
+- project information and project navigation journeys
+- relevant representations, section 51 advice, get updates and examination timetable journeys
+- shared service shell behaviour such as locale switching and the beta-banner feedback link
 
 Examples:
 
@@ -15,6 +18,9 @@ Examples:
 - `cypress/e2e/register-to-say-about-national-infra-project.feature`
 - `cypress/e2e/say-about-national-infra-project.feature`
 - `cypress/e2e/registration/**/*.feature`
+- `cypress/e2e/projects/**/*.feature`
+- `cypress/e2e/homepage/**/*.feature`
+- `cypress/e2e/service-feedback/**/*.feature`
 
 ## Test data
 
@@ -87,7 +93,35 @@ npm --prefix e2e-tests run test:open
 npm --prefix e2e-tests run test:e2e
 ```
 
-This runs feature files under `cypress/e2e/**/*.feature` and excludes `@wip` and `@ignore`.
+This runs the full regression suite under `cypress/e2e/**/*.feature` and excludes `@wip` and `@ignore`.
+
+### Run the PR smoke suite
+
+```shell
+npm --prefix e2e-tests run test:e2e:smoke
+```
+
+The smoke suite is a deliberately small `@smoketest` subset of the maintained `@testSuite` coverage.
+It is intended for fast PR validation, so it should stay:
+
+- read-only where possible
+- high-signal for basic service health and navigation
+- free from long multi-step registration journeys unless there is a strong reason to include one
+
+The current smoke lane includes a small mix of:
+
+- service shell coverage such as locale switching, cookies and feedback links
+- project read-only journeys such as overview, project information, examination timetable and relevant representations
+- a lightweight registration entry journey through the start page
+
+### Run the scheduled regression suite
+
+```shell
+npm --prefix e2e-tests run test:e2e:regression
+```
+
+This is the larger maintained suite intended for scheduled runs and manual deeper checks.
+In Azure, manual runs can choose `smoke`, `regression` or `both`.
 
 ### Run in headed mode with demo delay
 
@@ -107,6 +141,7 @@ Examples:
 
 ```shell
 npx cypress-tags run -b chrome --env TAGS="@testSuite"
+npx cypress-tags run -b chrome --env TAGS="@smoketest"
 npx cypress-tags run -b chrome --env TAGS="@registration and @completion"
 ```
 
@@ -149,6 +184,14 @@ After a run, you can post-process the generated cucumber JSON into an HTML repor
 ```shell
 npm --prefix e2e-tests run test:e2e:postprocess
 ```
+
+## CI split
+
+The automated E2E lanes are split by purpose:
+
+- Azure PR validation runs the small `@smoketest` suite as the required E2E check.
+- Azure scheduled validation runs the broader regression suite in shards on weekdays.
+- Azure CI separately runs the faster quality checks such as linting and unit/integration tests.
 
 ## Accessibility testing
 
