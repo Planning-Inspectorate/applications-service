@@ -11,11 +11,11 @@ const getProjectSearchController = async (req, res, next) => {
 	try {
 		const { i18n, query } = req;
 
-		const { applications, filters, pagination } = await getApplications(
+		const { applications, filters, totalItems } = await getApplications(
 			getProjectSearchQueryString(query)
 		);
 
-		res.render(view, getPageData(i18n, query, applications, filters, pagination));
+		res.render(view, getPageData(i18n, query, applications, filters, totalItems));
 	} catch (error) {
 		logger.error(error);
 		next(error);
