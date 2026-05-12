@@ -8,7 +8,7 @@ describe('pages/register-of-advice/index/config', () => {
 	});
 	describe('#registerOfAdviceCaseRef', () => {
 		it('should return the register of advice case reference', () => {
-			expect(registerOfAdviceCaseRef).toEqual('General');
+			expect(registerOfAdviceCaseRef).toEqual('GS5110001');
 		});
 	});
 });

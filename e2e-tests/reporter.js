@@ -1,28 +1,38 @@
-//TODO - either replace this with something proper, or fill in the remaining details. or both.
+const fs = require('fs');
+const path = require('path');
 const report = require('multiple-cucumber-html-reporter');
 
-report.generate({
-	jsonDir: './cypress/cucumber-json',
-	reportPath: './cypress/cucumber-report'
-	// metadata:{
-	//       browser: {
-	//           name: 'chrome',
-	//           version: '60'
-	//       },
-	//       device: 'Local test machine',
-	//       platform: {
-	//           name: 'ubuntu',
-	//           version: '16.04'
-	//       }
-	//   },
-	//   customData: {
-	//       title: 'Run info',
-	//       data: [
-	//           {label: 'Project', value: 'Custom project'},
-	//           {label: 'Release', value: '1.2.3'},
-	//           {label: 'Cycle', value: 'B11221.34321'},
-	//           {label: 'Execution Start Time', value: 'Nov 19th 2017, 02:31 PM EST'},
-	//           {label: 'Execution End Time', value: 'Nov 19th 2017, 02:56 PM EST'}
-	//       ]
-	//   }
-});
+const jsonDir = path.resolve(__dirname, 'cypress/cucumber-json');
+const reportPath = path.resolve(__dirname, 'cypress/cucumber-report');
+
+const hasReadableJsonResults = () => {
+	if (!fs.existsSync(jsonDir)) {
+		return false;
+	}
+
+	try {
+		return fs
+			.readdirSync(jsonDir, { withFileTypes: true })
+			.some((entry) => entry.isFile() && entry.name.endsWith('.json'));
+	} catch (error) {
+		console.warn(`Skipping Cypress HTML report generation: unable to read ${jsonDir}`, error);
+		return false;
+	}
+};
+
+if (!hasReadableJsonResults()) {
+	console.warn(
+		`Skipping Cypress HTML report generation: no cucumber JSON files found in ${jsonDir}`
+	);
+	process.exit(0);
+}
+
+try {
+	report.generate({
+		jsonDir,
+		reportPath
+	});
+} catch (error) {
+	console.warn('Skipping Cypress HTML report generation due to reporter error', error);
+	process.exit(0);
+}

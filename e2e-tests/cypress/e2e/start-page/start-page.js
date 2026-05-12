@@ -1,15 +1,16 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
+import PO_StartPage from './PageObjects/PO_StartPage';
+
+const startPage = new PO_StartPage();
 
 Given('I navigate to Register to have your say page', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
-	cy.clickProjectLink('North Lincolnshire Green Energy Park');
-	cy.clickOnHref('register/register-have-your-say');
+	startPage.openRegisterToHaveYourSayPage('North Lincolnshire Green Energy Park');
 });
 
 When('I click on start now button', () => {
-	cy.clickOnHref('who-registering-for');
+	startPage.clickStartNow();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	startPage.assertOnPage(pageName);
 });

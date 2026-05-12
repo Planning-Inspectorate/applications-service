@@ -49,11 +49,12 @@ const {
 	postRegisterAgentTheirTelephoneController
 } = require('./their-telephone/controller');
 const { getRegisterAgentCheckAnswersController } = require('./check-answers/controller');
-const {
-	getRegisterDeclarationController,
-	postRegisterDeclarationController
-} = require('../_common/declaration/controller');
+const { getRegisterDeclarationController } = require('../_common/declaration/controller');
 const { getRegisterCompleteController } = require('../_common/complete/controller');
+const {
+	getProcessSubmission,
+	postProcessSubmission
+} = require('../_common/process-submission/controller');
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
@@ -98,6 +99,9 @@ const {
 const {
 	getRegisterAgentDeclarationURL
 } = require('./declaration/_utils/get-register-agent-declaration-url');
+const {
+	getRegisterAgentProcessSubmissionURL
+} = require('./process-submission/_utils/get-register-agent-process-submission-url');
 const {
 	getRegisterAgentCompleteURL
 } = require('./complete/_utils/get-register-agent-complete-url');
@@ -156,6 +160,7 @@ const registerAgentAboutProjectURL = getRegisterAgentAboutProjectURL();
 const registerAgentTheirTelephoneURL = getRegisterAgentTheirTelephoneURL();
 const registerAgentCheckAnswersURL = getRegisterAgentCheckAnswersURL();
 const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
+const registerAgentProcessSubmissionURL = getRegisterAgentProcessSubmissionURL();
 const registerAgentCompleteURL = getRegisterAgentCompleteURL();
 const registerAgentAlreadyRegisteredURL = getRegisterAgentAlreadyRegisteredURL();
 
@@ -387,11 +392,19 @@ registerAgentRouter.get(
 	registerMiddleware,
 	getRegisterDeclarationController
 );
+
+registerAgentRouter.get(
+	registerAgentProcessSubmissionURL,
+	registerStartRedirectMiddleware,
+	noCache,
+	registerMiddleware,
+	getProcessSubmission
+);
 registerAgentRouter.post(
-	registerAgentDeclarationURL,
+	registerAgentProcessSubmissionURL,
 	registerStartRedirectMiddleware,
 	registerMiddleware,
-	postRegisterDeclarationController
+	postProcessSubmission
 );
 
 registerAgentRouter.get(

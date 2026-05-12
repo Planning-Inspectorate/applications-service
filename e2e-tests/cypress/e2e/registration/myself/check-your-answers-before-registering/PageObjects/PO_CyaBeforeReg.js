@@ -1,8 +1,34 @@
-class PO_CyaBeforeReg {
+import PageObject from '../../../../PageObject';
+
+class PO_CyaBeforeReg extends PageObject {
+	identifiers = {
+		...this.identifiers,
+		summaryListKeys: () => cy.get('.govuk-summary-list__key'),
+		summaryListValues: () => cy.get('.govuk-summary-list__value'),
+		summaryListActions: () => cy.get('.govuk-summary-list__actions'),
+		whoAreYouChangeLink: () => cy.get('[data-cy="who-are-you"]').first(),
+		fullNameChangeLink: () => cy.get('[data-cy="full-name"]').last(),
+		over18ChangeLink: () => cy.get('[data-cy="over-18"]').last(),
+		addressChangeLink: () => cy.get('[data-cy="address"]').last(),
+		emailChangeLink: () => cy.get('[data-cy="email"]').last(),
+		telephoneChangeLink: () => cy.get('[data-cy="telephone"]').last(),
+		commentChangeLink: () => cy.get('[data-cy="comment"]').last()
+	};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => this[prop].bind(this)
+			}
+		);
+	}
+
 	assertDataOnPage(table) {
 		const data = table.hashes();
 		for (let index = 0; index < data.length; index++) {
-			cy.get('.govuk-summary-list__key')
+			this.identifiers
+				.summaryListKeys()
 				.eq(index)
 				.should(($div) => {
 					const text = $div.text().replace('kr', '').replace('\xa0', '').trim();
@@ -10,7 +36,8 @@ class PO_CyaBeforeReg {
 				});
 		}
 		for (let index = 0; index < data.length; index++) {
-			cy.get('.govuk-summary-list__value')
+			this.identifiers
+				.summaryListValues()
 				.eq(index)
 				.should(($div) => {
 					const text = $div.text().replace(/\s\s+/g, ',').trim();
@@ -18,7 +45,8 @@ class PO_CyaBeforeReg {
 				});
 		}
 		for (let index = 0; index < data.length; index++) {
-			cy.get('.govuk-summary-list__actions')
+			this.identifiers
+				.summaryListActions()
 				.eq(index)
 				.should(($div) => {
 					const text = $div.text().replace('kr', '').replace('\xa0', '').trim();
@@ -30,26 +58,39 @@ class PO_CyaBeforeReg {
 	clickOnChangeLink(linkType) {
 		switch (linkType) {
 			case 'Who are you registering for?':
-				cy.get('[data-cy="who-are-you"]').first().click();
+				this.identifiers.whoAreYouChangeLink().click();
 				break;
 			case 'Full name':
-				cy.get('[data-cy="full-name"]').last().click();
+				this.identifiers.fullNameChangeLink().click();
 				break;
 			case 'Are you 18 or over?':
-				cy.get('[data-cy="over-18"]').last().click();
+				this.identifiers.over18ChangeLink().click();
 				break;
 			case 'Address':
-				cy.get('[data-cy="address"]').last().click();
+				this.identifiers.addressChangeLink().click();
 				break;
 			case 'Email address':
-				cy.get('[data-cy="email"]').last().click();
+				this.identifiers.emailChangeLink().click();
 				break;
 			case 'Telephone number':
-				cy.get('[data-cy="telephone"]').last().click();
+				this.identifiers.telephoneChangeLink().click();
 				break;
 			case 'Your comments change':
-				cy.get('[data-cy="comment"]').last().click();
+				this.identifiers.commentChangeLink().click();
 				break;
+		}
+	}
+
+	clickDeclarationLink(linkType) {
+		switch (linkType) {
+			case 'myself':
+				this.clickLinkByHref('/register/myself/declaration');
+				break;
+			case 'organisation':
+				this.clickLinkByHref('/register/organisation/declaration');
+				break;
+			default:
+				throw new Error(`No declaration link found for ${linkType}`);
 		}
 	}
 }

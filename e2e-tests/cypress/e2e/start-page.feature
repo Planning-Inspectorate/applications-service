@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: Start page - Register to have your say
     As a Test user
     I want to navigate to Register to have your say page

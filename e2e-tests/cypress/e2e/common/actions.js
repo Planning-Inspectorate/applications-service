@@ -1,14 +1,14 @@
 import { Given, When } from 'cypress-cucumber-preprocessor/steps';
+import PO_WhoYouRegisterFor from '../registration/who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
+
+const whoYouRegisterForPage = new PO_WhoYouRegisterFor();
 
 Given('I am registering as an {string}', (radioChoice) => {
-	cy.visit('/project-search', { failOnStatusCode: false });
-	cy.clickProjectLink('North Lincolnshire Green Energy Park');
-	cy.clickOnHref('register-have-your-say');
-	cy.clickOnHref('who-registering-for');
-	cy.selectRadioOption(radioChoice);
-	cy.clickSaveAndContinue();
+	whoYouRegisterForPage.navigatetoTypeOfPartyPage();
+	whoYouRegisterForPage.selectParty(radioChoice);
+	whoYouRegisterForPage.clickSaveAndContinue();
 });
 
 When('I click on the continue button', () => {
-	cy.clickSaveAndContinue();
+	whoYouRegisterForPage.clickSaveAndContinue();
 });

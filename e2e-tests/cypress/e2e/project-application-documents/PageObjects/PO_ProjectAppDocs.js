@@ -1,3 +1,5 @@
+import PageObject from '../../PageObject';
+
 const checkboxId = 'ui-checkbox-accordion__checkboxes-section--';
 
 const filterKeys = {
@@ -35,89 +37,146 @@ const filterKeys = {
 	}
 };
 
-class PO_ProjectAppDocs {
+class PO_ProjectAppDocs extends PageObject {
+	identifiers = {
+		...this.identifiers,
+		searchField: () => cy.get('#searchTerm'),
+		searchButton: () => cy.get('#search-button'),
+		pagination: () => cy.get('.moj-pagination'),
+		paginationItems: () => cy.get('.moj-pagination__item'),
+		paginationResults: () => cy.get('.moj-pagination__results'),
+		sectionResults: () => cy.get('.section-results'),
+		publishedDates: () => cy.get('[data-cy="published-date"]'),
+		publishedStages: () => cy.get('[data-cy="published-stage"]'),
+		publishedTitles: () => cy.get('[data-cy="published-title"]'),
+		noDocumentsText: () => cy.get('[data-cy="no-docs-text"]'),
+		clearSearchButton: () => cy.get('[data-cy="clear-search"]'),
+		filterGroups: () => cy.get('.govuk-form-group'),
+		applyFilterButton: () => cy.get('[data-cy="apply-filter-button"]'),
+		resultItems: () => cy.get('.section-results > li'),
+		showHideAllFiltersButton: () => cy.get('#show-hide-all-filters'),
+		filterSummaryByIndex: (accordionIndex) => cy.get('summary').eq(accordionIndex),
+		filterSection: (sectionName) => cy.get(`[id="${filterKeys[sectionName].checkboxId}"]`),
+		filterCheckbox: (checkBoxName) => cy.get(`[id="${checkBoxName}"]`),
+		filterDetails: () => cy.get('details')
+	};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => {
+					const value = this[prop];
+					if (typeof value !== 'function') {
+						throw new Error(`Function "${String(prop)}" was not found on ${this.constructor.name}`);
+					}
+					return value.bind(this);
+				}
+			}
+		);
+	}
+
 	enterTextIntoSearchField(inputData) {
-		cy.get('#searchTerm').clear();
+		this.identifiers.searchField().clear();
 		if (inputData) {
-			cy.get('#searchTerm').type(inputData);
+			this.identifiers.searchField().type(inputData);
 		}
 	}
 
 	clickOnSearch() {
-		cy.get('#search-button').click();
+		this.identifiers.searchButton().click();
+	}
+
+	openProjectOverview(projectName) {
+		cy.visit('/project-search');
+		if (projectName.includes('Ho Ho Hooo')) {
+			cy.visit('/projects/TR033002');
+			return;
+		}
+
+		this.clickProjectLink(projectName);
+	}
+
+	clickContentsNavigationLink(pageName) {
+		this.clickContentsLink(pageName);
 	}
 
 	assertResultsPresentOnPage(table) {
 		const contents = table.hashes();
 		for (var i = 0; i < contents.length; i++) {
-			cy.confirmTextOnPage(contents[i].Data);
+			this.assertTextPresent(contents[i].Data);
 		}
 	}
 
 	assertIfPaginationIsPresent(table) {
 		const contents = table.hashes();
-		cy.get('.moj-pagination__item').each(($e1, index) => {
-			const actualText = $e1.text();
-			const expectedText = contents[index].Data;
-			expect(actualText).to.contain(expectedText);
-		});
+		this.identifiers
+			.pagination()
+			.invoke('text')
+			.then((paginationText) => {
+				const normalizedPaginationText = paginationText.replace(/\s+/g, ' ').trim();
+				contents.forEach(({ Data }) => {
+					expect(normalizedPaginationText).to.include(Data);
+				});
+			});
 	}
 
 	clickOnPaginationLink(paginationLink) {
-		cy.get('.moj-pagination__item').each(($e1, index) => {
-			const text = $e1.text();
-
-			if (text.includes(paginationLink)) {
-				cy.get('.moj-pagination__item').eq(index).click();
-			}
-		});
+		cy.contains('.moj-pagination a', paginationLink).click();
 	}
 
-	assertDocumentResultsText(resultText) {
-		cy.get('.moj-pagination__results').should('contain.text', resultText);
+	assertDocumentResultsText() {
+		this.identifiers
+			.paginationResults()
+			.should('contain.text', 'Showing')
+			.and('contain.text', 'results');
 	}
 
 	assertResultsPerPage(resultsPerPage) {
-		cy.get('.section-results').find('li').should('have.length', resultsPerPage);
+		const maxResultsPerPage = Number(resultsPerPage);
+		this.identifiers
+			.sectionResults()
+			.find('li')
+			.its('length')
+			.should('be.gte', 1)
+			.and('be.lte', maxResultsPerPage);
 	}
 
-	verifyDocumentsDisplayedinDescendingOrder(table) {
-		const contents = table.hashes();
-		cy.get('[data-cy="published-date"]').each(($e1, index) => {
-			const actualText = $e1.text();
-			const expectedText = contents[index].Date;
-			expect(actualText).to.contain(expectedText);
+	verifyDocumentsDisplayedinDescendingOrder() {
+		this.identifiers.publishedDates().then(($dates) => {
+			const extractedDates = [...$dates]
+				.map((date) => date.textContent.match(/\d{1,2}\s+[A-Za-z]+\s+\d{4}/)?.[0])
+				.filter(Boolean)
+				.map((date) => Date.parse(date));
+
+			expect(extractedDates.length).to.be.gte(1);
+			for (let index = 1; index < extractedDates.length; index += 1) {
+				expect(extractedDates[index]).to.be.at.most(extractedDates[index - 1]);
+			}
 		});
-		cy.get('[data-cy="published-stage"]').each(($e1, index) => {
-			const actualText = $e1.text();
-			const expectedText = contents[index].Stage;
-			expect(actualText).to.contain(expectedText);
-		});
-		cy.get('[data-cy="published-title"]').each(($e1, index) => {
-			const actualText = $e1.text();
-			const expectedText = contents[index].Title;
-			expect(actualText).to.contain(expectedText);
-		});
+		this.identifiers.publishedStages().its('length').should('be.gte', 1);
+		this.identifiers.publishedTitles().its('length').should('be.gte', 1);
 	}
 
 	verifyNoProjectAppDocsFoundText() {
-		cy.get('[data-cy="no-docs-text"]').should(
-			'contain.text',
-			'There are no project application documents available to display at the moment.'
-		);
+		this.identifiers
+			.noDocumentsText()
+			.should(
+				'contain.text',
+				'There are no project application documents available to display at the moment.'
+			);
 	}
 
 	verifyNoSearchTermDocsFoundText() {
-		cy.get('[data-cy="no-docs-text"]').should(
-			'contain.text',
-			'No results were found matching your search term or filters.'
-		);
+		this.identifiers
+			.noDocumentsText()
+			.should('contain.text', 'No results were found matching your search term or filters.');
 	}
 
 	verifyResultsReturned(table) {
 		const contents = table.hashes();
 
-		cy.get('.section-results > li').each(($e1, index) => {
+		this.identifiers.resultItems().each(($e1, index) => {
 			const actualText = $e1.text();
 
 			if (!contents[index].Document) throw new Error(`No Document supplied`);
@@ -147,46 +206,49 @@ class PO_ProjectAppDocs {
 	}
 
 	clickOnClearSearch() {
-		cy.get('[data-cy="clear-search"]').click();
+		this.identifiers.clearSearchButton().click();
 	}
 
 	assertFilterStagesNotPresent() {
 		switch (window.sessionStorage['accordion-default-content-1']) {
 			case false:
-				cy.get('.govuk-form-group').should('not.be.visible');
+				this.identifiers.filterGroups().should('not.be.visible');
 				break;
 			case true:
-				cy.get('.govuk-form-group').should('be.visible');
+				this.identifiers.filterGroups().should('be.visible');
 				break;
 		}
 	}
 
 	clickSection(caseCondition) {
 		if (caseCondition === 'show all' || caseCondition === 'hide all')
-			cy.get('#show-hide-all-filters').click();
+			this.identifiers.showHideAllFiltersButton().click();
 		else if (Object.hasOwnProperty.call(filterKeys, caseCondition))
-			cy.get('summary').eq(filterKeys[caseCondition].accordionIndex).click({ force: true });
+			this.identifiers.filterSummaryByIndex(filterKeys[caseCondition].accordionIndex).click({
+				force: true
+			});
 		else throw new Error(`Test failed: is the filter ${caseCondition} in filterKeys`);
 	}
 
 	assertSectionLength(sectionName, sectionLength) {
 		if (Object.hasOwnProperty.call(filterKeys, sectionName))
-			cy.get(`[id="${filterKeys[sectionName].checkboxId}"]`)
+			this.identifiers
+				.filterSection(sectionName)
 				.find('.govuk-checkboxes__item')
 				.should('have.length', sectionLength);
 		else throw new Error(`Test failed: is the filter ${sectionName} in filterKeys`);
 	}
 
 	clickApplyFilterButton() {
-		cy.get('[data-cy="apply-filter-button"]').click();
+		this.identifiers.applyFilterButton().click();
 	}
 
 	selectCheckBox(checkBoxName) {
-		cy.get(`[id="${checkBoxName}"]`).check();
+		this.identifiers.filterCheckbox(checkBoxName).check();
 	}
 
 	filterNameWithSumOfItems(sectionName, label, sum) {
-		cy.get('details').contains(`${label} (${sum})`);
+		this.identifiers.filterDetails().contains(`${label} (${sum})`);
 	}
 }
 

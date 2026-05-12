@@ -1,4 +1,4 @@
-@testSuite
+@testSuite @smoketest
 Feature: verify footer links
     As a Test user
     I want to click on footer links of the application
