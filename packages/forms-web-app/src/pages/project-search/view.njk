@@ -47,9 +47,6 @@
 				{% include "./includes/active-filters.njk" %}
 
 				{% if applications | length %}
-					<p class="govuk-body">
-						Adding temporarily to verify dev deploy is working as expected.
-					</p>
 					{% include "./includes/projects.njk" %}
 				{% else %}
 					{% include "./includes/no-matching-results.njk" %}
