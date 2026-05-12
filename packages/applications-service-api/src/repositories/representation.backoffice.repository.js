@@ -95,20 +95,21 @@ const getRepresentations = async (options) => {
 		});
 	}
 
-	const representations = await prismaClient.representation.findMany({
-		where,
-		orderBy: {
-			dateReceived: 'desc'
-		},
-		skip: options.offset,
-		take: options.limit,
-		include: {
-			represented: true,
-			representative: true
-		}
-	});
-
-	const count = await prismaClient.representation.count({ where });
+	const [representations, count] = await Promise.all([
+		prismaClient.representation.findMany({
+			where,
+			orderBy: {
+				dateReceived: 'desc'
+			},
+			skip: options.offset,
+			take: options.limit,
+			include: {
+				represented: true,
+				representative: true
+			}
+		}),
+		prismaClient.representation.count({ where })
+	]);
 
 	return { representations, count };
 };

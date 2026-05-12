@@ -36,12 +36,11 @@ Monorepo for all Applications Service services
 |   +-- applications-service-api
 |   +-- back-office-subscribers
 |   +-- common
-|   +-- e2e_tests
 |   +-- forms-web-app
 |   +-- ni-redirects
 ```
 
-- **e2e-tests**: Legacy E2E tests. Still maintained as they continue to be a valuable set of regression tests.
+- **e2e-tests**: The maintained Cypress + Cucumber end-to-end regression suite for the service.
 - **init**: Scripts to create database tables and seed rows.
 
 ### Packages
@@ -51,7 +50,6 @@ Monorepo for all Applications Service services
 | forms-web-app            | User-facing website                                                |
 | applications-service-api | Web API which encapsulates business logic for the website          |
 | back-office-subscribers  | Azure Function App for publishing and consuming Service Bus events |
-| e2e_tests                | Cypress test suites                                                |
 
 
 ## Architecture
@@ -393,5 +391,4 @@ If snapshots need to be updated, from the /applications-service/packages/forms-w
 ```shell
 npm run test:update
 ```
-
 

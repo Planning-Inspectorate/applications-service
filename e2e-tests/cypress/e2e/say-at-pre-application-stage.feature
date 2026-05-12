@@ -38,6 +38,6 @@ Feature: Having your say at the pre-application stage page
         When I click on Next link
         Then I am on the "Registering to have your say about a national infrastructure project" page
 
-    Scenario: click Having your say during the examination of the project link
-        When I click on Having your say during the examination of the project link
+    Scenario: click Registering to have your say about a national infrastructure project link
+        When I click on registering to have your say about a national infrastructure project link
         Then I am on the "Registering to have your say about a national infrastructure project" page

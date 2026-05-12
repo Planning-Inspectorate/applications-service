@@ -7,6 +7,8 @@ import PO_EmailAddress from '../what-is-your-email-address/PageObjects/PO_EmailA
 import PO_TeleNumber from '../what-is-your-telephone-number/PageObjects/PO_TeleNumber';
 import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject';
 import PO_AddAnotherComment from '../do-you-want-to-add-another-comment/PageObjects/PO_AddAnotherComment';
+import PO_WhoYouRegisterFor from '../../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
+import { registerTopicFieldStep } from '../../shared/registerCommentPageSteps';
 const fullNamePage = new PO_FullName();
 const orgNamePage = new OrganisationNamePage();
 const jobTitlePage = new PO_WhatIsJobTitle();
@@ -15,22 +17,19 @@ const emailAddressPage = new PO_EmailAddress();
 const teleNumberPage = new PO_TeleNumber();
 const tellAboutProject = new PO_TellAboutProject();
 const addAnotherComment = new PO_AddAnotherComment();
+const whoYouRegisterForPage = new PO_WhoYouRegisterFor();
 
 Given('I navigate to UK address details page using organisation route', () => {
-	cy.visit('/project-search', { failOnStatusCode: false });
-	cy.clickProjectLink('North Lincolnshire Green Energy Park');
-	cy.clickOnHref('/register-have-your-say');
-	cy.clickOnHref('who-registering-for');
-	cy.selectRadioOption('Organisation');
-	cy.clickSaveAndContinue();
+	whoYouRegisterForPage.navigatetoTypeOfPartyPage();
+	whoYouRegisterForPage.selectPartyAndContinue('Organisation');
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
+	orgNamePage.selectRadioYesOrNo('Yes');
+	orgNamePage.clickSaveAndContinue();
 	orgNamePage.enterTextIntoOrganisationNameField('Test Organisation');
-	cy.clickSaveAndContinue();
+	orgNamePage.clickSaveAndContinue();
 	jobTitlePage.enterTextIntoJobTitleField('Test Volunteer Title');
-	cy.clickSaveAndContinue();
+	jobTitlePage.clickSaveAndContinue();
 });
 
 And('I enter below data into address details page', function (table) {
@@ -38,17 +37,17 @@ And('I enter below data into address details page', function (table) {
 });
 
 And('User clicks on continue button', () => {
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	addAnotherComment.assertOnPage(pageName);
 });
 
 Then(
 	'below error message should be presented on Are you sure you want to remove this comment page',
 	function (table) {
-		cy.assertErrorMessage(table);
+		addAnotherComment.assertErrorMessages(table);
 	}
 );
 
@@ -64,17 +63,15 @@ And('I enter {string} into comments field', (dataInput) => {
 	tellAboutProject.enterTextIntoCommentsField(dataInput);
 });
 
-And('I enter {string} into topic field', (dataInput) => {
-	tellAboutProject.enterTextIntoTopicField(dataInput);
-});
-
 And('User clicks on {string} link', (link) => {
 	addAnotherComment.clickOnLink(link);
 });
 
+registerTopicFieldStep(And, tellAboutProject);
+
 And(
 	'user selects {string} radio option on Are you sure you want to remove this comment page',
 	(radioChoice) => {
-		cy.selectRadioYesOrNo(radioChoice);
+		addAnotherComment.selectRadioYesOrNo(radioChoice);
 	}
 );

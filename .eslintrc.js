@@ -15,7 +15,7 @@ module.exports = {
 		'packages/back-office-subscribers/lib/prisma-client/**/*.js'
 	],
 	parserOptions: {
-		ecmaVersion: 2020,
+		ecmaVersion: 2022,
 		sourceType: 'module'
 	},
 	plugins: ['jest'],

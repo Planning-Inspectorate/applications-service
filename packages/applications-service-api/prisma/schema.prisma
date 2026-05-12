@@ -63,6 +63,7 @@ model Document {
 
 	@@index([caseRef])
 	@@index([representationId])
+	@@index([documentType])
 }
 
 model Representation {

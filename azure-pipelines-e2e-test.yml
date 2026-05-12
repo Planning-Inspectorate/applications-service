@@ -1,57 +1,157 @@
 parameters:
-  - name: environment
-    displayName: Environment
+  - name: manualSuite
+    displayName: Manual suite
     type: string
-    default: 'test'
+    default: smoke
     values:
-      - 'dev'
-      - 'test'
+      - smoke
+      - regression
+      - both
 
-variables:
-  - name: APP
-    value: 'applications'
+name: applications-e2e-$(Date:yyyyMMdd)$(Rev:.r)
 
-pr:
-  branches:
-    include:
-      - main
-  paths:
-    include:
-      - packages/e2e_tests/cypress/e2e
 trigger: none
 
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - azure-pipelines-e2e-test.yml
+      - docker-compose.yml
+      - package.json
+      - package-lock.json
+      - e2e-tests/**
+      - init/**
+      - mock-server/**
+      - packages/applications-service-api/**
+      - packages/common/**
+      - packages/forms-web-app/**
+
+schedules:
+  - cron: "0 2 * * 1-5"
+    displayName: Weekday early regression
+    branches:
+      include:
+        - main
+    always: true
+  - cron: "0 14 * * 1-5"
+    displayName: Weekday afternoon regression
+    branches:
+      include:
+        - main
+    always: true
+
+variables:
+  - name: NodeVersion
+    value: '22.x'
+  - name: NpmCacheDir
+    value: '$(Pipeline.Workspace)/.npm'
+  - name: CypressCacheDir
+    value: '$(Pipeline.Workspace)/.cache/Cypress'
+  - name: RootCiEnvFile
+    value: '$(Build.SourcesDirectory)/.env'
+
 jobs:
-  - job: Run_Cypress_Tests_For_Applications_FO
+  - job: Smoke_E2E
+    displayName: Smoke E2E (PR)
+    condition: >-
+      or(
+        and(
+          eq(variables['Build.Reason'], 'PullRequest'),
+          not(startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/dependabot/'))
+        ),
+        and(
+          eq(variables['Build.Reason'], 'Manual'),
+          or(
+            eq('${{ parameters.manualSuite }}', 'smoke'),
+            eq('${{ parameters.manualSuite }}', 'both')
+          )
+        )
+      )
+    timeoutInMinutes: 35
     pool:
-      vmImage: "ubuntu-latest"
+      name: pins-odt-agent-pool-tests
+      demands:
+        - Agent.OS -equals Linux
 
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: "18.x"
-        displayName: 'Install Node.js'
+      - template: pipelines/templates/e2e-job-steps.yml
+        parameters:
+          runDisplayName: Run smoke E2E suite
+          runScript: |
+            cd e2e-tests
+            npx cypress-tags run -b "$(CypressBrowser)" --env TAGS="@smoketest and not (@wip or @ignore)" --config video=false
+          screenshotsArtifact: cypress-screenshots-smoke
+          reportArtifact: cypress-html-report-smoke
+          logsArtifact: cypress-supporting-logs-smoke
 
-      - task: ShellScript@2
-        inputs:
-          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/install-chromium.sh'
-        displayName: 'Install Chromium'
-        condition: eq(variables['agent.os'], 'Linux')
+  - job: Regression_E2E
+    displayName: Regression E2E
+    condition: >-
+      or(
+        eq(variables['Build.Reason'], 'Schedule'),
+        and(
+          eq(variables['Build.Reason'], 'Manual'),
+          or(
+            eq('${{ parameters.manualSuite }}', 'regression'),
+            eq('${{ parameters.manualSuite }}', 'both')
+          )
+        )
+      )
+    timeoutInMinutes: 60
+    pool:
+      name: pins-odt-agent-pool-tests
+      demands:
+        - Agent.OS -equals Linux
+    strategy:
+      matrix:
+        shard_1_of_6:
+          SHARD_INDEX: '1'
+          SHARD_COUNT: '6'
+        shard_2_of_6:
+          SHARD_INDEX: '2'
+          SHARD_COUNT: '6'
+        shard_3_of_6:
+          SHARD_INDEX: '3'
+          SHARD_COUNT: '6'
+        shard_4_of_6:
+          SHARD_INDEX: '4'
+          SHARD_COUNT: '6'
+        shard_5_of_6:
+          SHARD_INDEX: '5'
+          SHARD_COUNT: '6'
+        shard_6_of_6:
+          SHARD_INDEX: '6'
+          SHARD_COUNT: '6'
+      maxParallel: 6
 
-      - task: Npm@1
-        inputs:
-          command: "install"
-          workingDir: $(System.DefaultWorkingDirectory)/packages/e2e_tests
-        displayName: 'Install Dependencies'
+    steps:
+      - template: pipelines/templates/e2e-job-steps.yml
+        parameters:
+          runDisplayName: Run regression E2E shard
+          runScript: |
+            cd e2e-tests
 
-      - task: ShellScript@2
-        inputs:
-          scriptPath: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/run-tests.sh'
-          args: '${{ parameters.environment }}'
-        displayName: 'Run Cypress Tests'
+            SPEC_LIST="$(
+              find cypress/e2e -type f -name '*.feature' | sort | awk \
+                -v shard_index="$(SHARD_INDEX)" \
+                -v shard_count="$(SHARD_COUNT)" \
+                '((NR - 1) % shard_count) == (shard_index - 1) { print }' | paste -sd, -
+            )"
 
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: '$(System.DefaultWorkingDirectory)/packages/e2e_tests/cypress/screenshots'
-          artifactName: 'FailedTests'
-        displayName: 'Publish Failed Tests Artifacts'
-        condition: failed()
+            if [ -z "$SPEC_LIST" ]; then
+              echo "No specs were assigned to shard $(SHARD_INDEX) of $(SHARD_COUNT)"
+              exit 0
+            fi
+
+            SPEC_GLOB="{$SPEC_LIST}"
+
+            echo "Running shard $(SHARD_INDEX) of $(SHARD_COUNT)"
+            echo "$SPEC_LIST" | tr ',' '\n'
+            npx cypress-tags run -b "$(CypressBrowser)" --env TAGS="not (@wip or @ignore)" --glob "$SPEC_GLOB"
+          screenshotsArtifact: cypress-screenshots-regression-$(SHARD_INDEX)
+          reportArtifact: cypress-html-report-regression-$(SHARD_INDEX)
+          logsArtifact: cypress-supporting-logs-regression-$(SHARD_INDEX)

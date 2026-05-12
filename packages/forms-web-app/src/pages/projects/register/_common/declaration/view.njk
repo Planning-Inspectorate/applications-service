@@ -43,16 +43,9 @@
 				{{ t('register.declaration.paragraph5') }}
 			</p>
 
-			<form autocomplete="off" method="post" novalidate>
-				<input type="hidden" name="declaration-confirmed" value="true">
-
-				{{ govukButton({
-					text: t('common.acceptAndContinue'),
-					type: "Submit",
-  				preventDoubleClick: true,
-					attributes: { "data-cy": "button-accept-and-register"}
-				}) }}
-			</form>
+			<a class="govuk-button" data-cy="button-accept-and-register" href="{{ nextPageUrl }}">
+				{{ t('common.acceptAndContinue') }}
+			</a>
 		</div>
 	</div>
 {% endblock %}
