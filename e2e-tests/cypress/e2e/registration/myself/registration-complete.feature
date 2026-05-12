@@ -1,4 +1,4 @@
-@testSuite @registration @myself @completion
+@testSuite @registration @myself @completion @existingFailing
 Feature: Registration complete page
     As a Test user
     I want to navigate to Registration complete page
@@ -28,3 +28,6 @@ Feature: Registration complete page
     Scenario: click on go back to project page link
         When I click on go back to project page link
         Then I am on the "north lincolnshire green energy park project information" page
+
+    Scenario: click on find out more about having your say
+        When I click on find out more about having your say during the Examination of the application link
