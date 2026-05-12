@@ -9,11 +9,11 @@ const { officeUse } = LOCAL_CASES;
 
 Given('I open the local section 51 advice page', () => {
 	cy.fixture('s51Data').as('s51Data');
-	cy.visit(`/projects/${officeUse.id}/s51advice`);
+	section51.openLocalSection51AdvicePage(officeUse.id);
 });
 
 Then('I am on the local section 51 advice page', () => {
-	cy.url().should('include', `/projects/${officeUse.id}/s51advice`);
+	section51.assertOnLocalSection51AdvicePage(officeUse.id);
 });
 
 Then('the section 51 advice page content is displayed', () => {
@@ -33,7 +33,7 @@ When('I search section 51 advice for an invalid term', () => {
 
 Then('the no section 51 advice results message is displayed', () => {
 	cy.get('@s51Data').then((s51Data) => {
-		cy.url().should('include', s51Data.invalidSearchTerm);
+		section51.assertUrlIncludes(s51Data.invalidSearchTerm);
 		basePage.visibleGovBody(s51Data.noResultsString);
 	});
 });
@@ -53,7 +53,7 @@ When('I change section 51 results per page to {string}', (count) => {
 });
 
 Then('the section 51 advice url includes {string}', (value) => {
-	cy.url().should('include', value);
+	section51.assertUrlIncludes(value);
 });
 
 When('I open the first section 51 advice result', () => {

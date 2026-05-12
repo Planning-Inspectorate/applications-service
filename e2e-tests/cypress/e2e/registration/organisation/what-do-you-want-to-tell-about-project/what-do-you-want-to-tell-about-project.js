@@ -18,25 +18,27 @@ const jobTitlePage = new PO_WhatIsJobTitle();
 
 Given('I have been asked for comments on a proposed project', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
+	fullNamePage.selectRadioYesOrNo('Yes');
+	fullNamePage.clickSaveAndContinue();
 	orgNamePage.enterTextIntoOrganisationNameField('Organisation name');
-	cy.clickSaveAndContinue();
-	cy.assertUserOnThePage('What is your job title or volunteer role?');
+	orgNamePage.clickSaveAndContinue();
+	jobTitlePage.assertOnPage('What is your job title or volunteer role?');
 	jobTitlePage.enterTextIntoJobTitleField('Test job title');
-	cy.clickSaveAndContinue();
+	jobTitlePage.clickSaveAndContinue();
 	emailAddressPage.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddressPage.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0QQ',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 	telephoneNumberPage.enterTextIntoTelephoneNumberField('07859894511');
-	cy.clickSaveAndContinue();
-	cy.assertUserOnThePage('what do you want to tell us about this proposed project? organisation');
+	telephoneNumberPage.clickSaveAndContinue();
+	tellAboutProject.assertOnPage(
+		'what do you want to tell us about this proposed project? organisation'
+	);
 });
 
 registerCommentPageSteps({ And, Then, When }, tellAboutProject, 'testpins2@gmail.com');

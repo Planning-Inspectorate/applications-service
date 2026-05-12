@@ -3,20 +3,19 @@ import PO_OverviewPage from './PageObjects/PO_OverviewPage';
 const overviewPage = new PO_OverviewPage();
 
 Given('I navigate to {string} project Overview page', (projectName) => {
-	cy.visit('/project-search');
-	cy.clickProjectLink(projectName);
+	overviewPage.openProjectOverview(projectName);
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	overviewPage.assertOnPage(pageName);
 });
 
 And('I click on register to have your say about national infrastructure project link', () => {
-	cy.clickOnHref('/register-have-your-say');
+	overviewPage.clickRegisterToHaveYourSayLink();
 });
 
 And('I click on {string} link', (pageName) => {
-	cy.clickContentsLink(pageName);
+	overviewPage.clickContentsNavigationLink(pageName);
 });
 
 And('I click on Apply filters', () => {
@@ -24,5 +23,5 @@ And('I click on Apply filters', () => {
 });
 
 And('I click on Having your say about a national infrastructure project link', () => {
-	cy.clickOnHref('/having-your-say-guide');
+	overviewPage.clickHavingYourSayGuideLink();
 });

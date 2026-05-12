@@ -6,8 +6,8 @@ const relevantReps = new PO_RelevantReps();
 const { stJamesBarton } = LOCAL_CASES;
 
 Given('I open the local relevant representations page', () => {
-	cy.visit(`/projects/${stJamesBarton.id}/representations`);
-	cy.contains('h1', 'Relevant representations').should('be.visible');
+	relevantReps.openLocalRelevantRepresentationsPage(stJamesBarton.id);
+	relevantReps.assertRelevantRepresentationsHeading();
 });
 
 Then('relevant representations are displayed on the first page', () => {
@@ -28,7 +28,7 @@ When('I change relevant representation results per page to {string}', (count) =>
 });
 
 Then('the relevant representations url includes {string}', (value) => {
-	cy.url().should('include', value);
+	relevantReps.assertUrlIncludes(value);
 });
 
 When('I apply the {string} relevant representation filter', (filterName) => {

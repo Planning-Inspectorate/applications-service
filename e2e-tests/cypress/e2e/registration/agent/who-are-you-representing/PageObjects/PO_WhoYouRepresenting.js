@@ -1,5 +1,8 @@
-class PO_WhoYouRepresenting {
+import PageObject from '../../../../PageObject';
+
+class PO_WhoYouRepresenting extends PageObject {
 	identifiers = {
+		...this.identifiers,
 		personRadio: () => cy.get('[data-cy="answer-person"]'),
 		organisationRadio: () => cy.get('[data-cy="answer-organisation"]'),
 		householdRadio: () => cy.get('[data-cy="answer-family"]')
@@ -9,7 +12,13 @@ class PO_WhoYouRepresenting {
 		return new Proxy(
 			{},
 			{
-				get: (_, prop) => this[prop].bind(this)
+				get: (_, prop) => {
+					const value = this[prop];
+					if (typeof value !== 'function') {
+						throw new Error(`Function "${String(prop)}" was not found on ${this.constructor.name}`);
+					}
+					return value.bind(this);
+				}
 			}
 		);
 	}

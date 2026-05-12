@@ -7,7 +7,7 @@ Given('I navigate to the who are you registering for page', () => {
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	whoYouRegisterForPage.assertOnPage(pageName);
 });
 
 And('I can see the radio options content', () => {
@@ -25,16 +25,16 @@ And('I can see the text This service is only for Application service', () => {
 Then(
 	'below error message should be presented on who are you registering for page',
 	function (table) {
-		cy.assertErrorMessage(table);
+		whoYouRegisterForPage.assertErrorMessages(table);
 	}
 );
 
 When('User selects {string}', (radioChoice) => {
-	cy.selectRadioOption(radioChoice);
+	whoYouRegisterForPage.selectParty(radioChoice);
 });
 
 And('User clicks on continue button', () => {
-	cy.clickSaveAndContinue();
+	whoYouRegisterForPage.clickSaveAndContinue();
 });
 
 Then('I click on {string} logo', (logoLink) => {
@@ -55,5 +55,5 @@ Then('I click on feedback link', () => {
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	whoYouRegisterForPage.clickBackLink();
 });

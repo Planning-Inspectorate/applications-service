@@ -1,21 +1,24 @@
 import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
+import PO_GuideNavigation from '../common/PageObjects/PO_GuideNavigation';
+
+const guideNavigation = new PO_GuideNavigation();
 
 Given('I navigate to Decision making process guide page', () => {
-	cy.visit('/decision-making-process-guide');
+	guideNavigation.openDecisionMakingProcessGuide();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	guideNavigation.assertOnPage(pageName);
 });
 
 And('I click on show all link', () => {
-	cy.get('.js-step-controls-button-text').click();
+	guideNavigation.expandAllSteps();
 });
 
 And('I click on {string} link', (pageName) => {
-	cy.clickLinkTonavigateToPage(pageName);
+	guideNavigation.clickGuideLink(pageName);
 });
 
 Then('I verify below links present on Examination page', function (table) {
-	cy.assertLinksPresentOnPage(table);
+	guideNavigation.assertLinksPresentOnPage(table);
 });

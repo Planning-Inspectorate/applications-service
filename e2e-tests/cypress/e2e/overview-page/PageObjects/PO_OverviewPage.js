@@ -1,5 +1,8 @@
-class PO_OverviewPage {
+import PageObject from '../../PageObject';
+
+class PO_OverviewPage extends PageObject {
 	identifiers = {
+		...this.identifiers,
 		searchField: () => cy.get('#search'),
 		documentResultsSort: () => cy.get('select#document-results-sort option:selected')
 	};
@@ -20,7 +23,7 @@ class PO_OverviewPage {
 	assertResultsPresentOnPage(table) {
 		const contents = table.hashes();
 		for (var i = 0; i < contents.length; i++) {
-			cy.confirmTextOnPage(contents[i].Data);
+			this.assertTextPresent(contents[i].Data);
 		}
 	}
 
@@ -29,5 +32,22 @@ class PO_OverviewPage {
 	}
 
 	clickOnApplyFilters() {}
+
+	openProjectOverview(projectName) {
+		cy.visit('/project-search');
+		this.clickProjectLink(projectName);
+	}
+
+	clickRegisterToHaveYourSayLink() {
+		this.clickLinkByHref('/register-have-your-say');
+	}
+
+	clickContentsNavigationLink(pageName) {
+		this.clickContentsLink(pageName);
+	}
+
+	clickHavingYourSayGuideLink() {
+		this.clickLinkByHref('/having-your-say-guide');
+	}
 }
 export default PO_OverviewPage;

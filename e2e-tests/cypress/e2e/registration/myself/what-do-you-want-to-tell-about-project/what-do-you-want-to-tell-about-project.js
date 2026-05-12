@@ -4,36 +4,34 @@ import PO_AddressDetails from '../uk-address-details/PageObjects/PO_AddressDetai
 import PO_TeleNumber from '../what-is-your-telephone-number/PageObjects/PO_TeleNumber';
 import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject';
 import PO_EmailAddress from '../what-is-your-email-address/PageObjects/PO_EmailAddress';
+import PO_WhoYouRegisterFor from '../../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
 import { registerCommentPageSteps } from '../../shared/registerCommentPageSteps';
 const fullNamePage = new PO_FullName();
 const addressDetails = new PO_AddressDetails();
 const emailAddressPage = new PO_EmailAddress();
 const telephoneNumberPage = new PO_TeleNumber();
 const tellAboutProject = new PO_TellAboutProject();
+const whoYouRegisterForPage = new PO_WhoYouRegisterFor();
 
 Given('I navigate to UK address details page', () => {
-	cy.visit('/project-search');
-	cy.clickProjectLink('North Lincolnshire Green Energy Park');
-	cy.clickOnHref('/register-have-your-say');
-	cy.clickOnHref('who-registering-for');
-	cy.selectRadioOption('Myself');
-	cy.clickSaveAndContinue();
+	whoYouRegisterForPage.navigatetoTypeOfPartyPage();
+	whoYouRegisterForPage.selectPartyAndContinue('Myself');
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
+	emailAddressPage.selectRadioYesOrNo('Yes');
+	emailAddressPage.clickSaveAndContinue();
 	emailAddressPage.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddressPage.clickSaveAndContinue();
 });
 
 When('I continue with the following values in the address fields', function (table) {
 	addressDetails.enterTextIntoAddressFields(table);
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the telephone number field', (text) => {
 	telephoneNumberPage.enterTextIntoTelephoneNumberField(text);
-	cy.clickSaveAndContinue();
+	telephoneNumberPage.clickSaveAndContinue();
 });
 
 registerCommentPageSteps({ And, Then, When }, tellAboutProject, 'testpins2@gmail.com');
