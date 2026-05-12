@@ -59,7 +59,10 @@ jobs:
     displayName: Smoke E2E (PR)
     condition: >-
       or(
-        eq(variables['Build.Reason'], 'PullRequest'),
+        and(
+          eq(variables['Build.Reason'], 'PullRequest'),
+          not(startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/dependabot/'))
+        ),
         and(
           eq(variables['Build.Reason'], 'Manual'),
           or(

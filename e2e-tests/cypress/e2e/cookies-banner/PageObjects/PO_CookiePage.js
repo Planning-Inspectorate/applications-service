@@ -1,5 +1,8 @@
-class PO_CookiePage {
+import PageObject from '../../PageObject';
+
+class PO_CookiePage extends PageObject {
 	identifiers = {
+		...this.identifiers,
 		cookieBannerAcceptButton: () => cy.get('[data-cy="cookie-banner-accept-analytics-cookies"]'),
 		cookieBannerRejectButton: () => cy.get('[data-cy="cookie-banner-reject-analytics-cookies"]'),
 		cookieBannerViewLink: () => cy.get('[data-cy="cookie-banner-view-cookies"]'),
@@ -15,7 +18,13 @@ class PO_CookiePage {
 		return new Proxy(
 			{},
 			{
-				get: (_, prop) => this[prop].bind(this)
+				get: (_, prop) => {
+					const value = this[prop];
+					if (typeof value !== 'function') {
+						throw new Error(`Function "${String(prop)}" was not found on ${this.constructor.name}`);
+					}
+					return value.bind(this);
+				}
 			}
 		);
 	}
@@ -40,6 +49,8 @@ class PO_CookiePage {
 			default:
 				throw new Error('Cannot find button type');
 		}
+
+		cy.waitForDemoDelay();
 	}
 
 	selectRadioChoice(radioChoice) {
@@ -53,14 +64,18 @@ class PO_CookiePage {
 			default:
 				throw new Error('Cannot find radio choice type');
 		}
+
+		cy.waitForDemoDelay();
 	}
 
 	clickSaveChangesButton() {
 		this.identifiers.saveChangesButton().click();
+		cy.waitForDemoDelay();
 	}
 
 	clickGoBackToThePageLink() {
 		this.identifiers.goBackToThePageLink().click();
+		cy.waitForDemoDelay();
 	}
 }
 export default PO_CookiePage;

@@ -12,28 +12,28 @@ const telNumber = new PO_TelNumber();
 
 And('I have been asked what is your telephone number', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the telephone number field', (text) => {
 	telNumber.enterTextIntoTelephoneNumberField(text);
-	cy.clickSaveAndContinue();
+	telNumber.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	telNumber.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	telNumber.assertOnPage(pageName);
 });

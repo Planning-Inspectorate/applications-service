@@ -1,3 +1,5 @@
+import PageObject from '../../PageObject';
+
 const checkboxId = 'ui-checkbox-accordion__checkboxes-section--';
 
 const filterKeys = {
@@ -35,8 +37,9 @@ const filterKeys = {
 	}
 };
 
-class PO_ProjectAppDocs {
+class PO_ProjectAppDocs extends PageObject {
 	identifiers = {
+		...this.identifiers,
 		searchField: () => cy.get('#searchTerm'),
 		searchButton: () => cy.get('#search-button'),
 		pagination: () => cy.get('.moj-pagination'),
@@ -84,10 +87,24 @@ class PO_ProjectAppDocs {
 		this.identifiers.searchButton().click();
 	}
 
+	openProjectOverview(projectName) {
+		cy.visit('/project-search');
+		if (projectName.includes('Ho Ho Hooo')) {
+			cy.visit('/projects/TR033002');
+			return;
+		}
+
+		this.clickProjectLink(projectName);
+	}
+
+	clickContentsNavigationLink(pageName) {
+		this.clickContentsLink(pageName);
+	}
+
 	assertResultsPresentOnPage(table) {
 		const contents = table.hashes();
 		for (var i = 0; i < contents.length; i++) {
-			cy.confirmTextOnPage(contents[i].Data);
+			this.assertTextPresent(contents[i].Data);
 		}
 	}
 

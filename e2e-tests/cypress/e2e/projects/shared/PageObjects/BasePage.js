@@ -31,7 +31,7 @@ export class BasePage {
 		privacyNoticeLink: () => cy.get('[data-cy="Privacy"]'),
 		cookiesLink: () => cy.get('[data-cy="Cookies"]'),
 		saveAndContinueBtn: () => cy.get('[data-cy="button-accept-and-regoster"]'),
-		contiuneBtn: () => cy.get('[data-cy="button-submit-and-continue"]'),
+		continueBtn: () => cy.get('[data-cy="button-submit-and-continue"]'),
 		checkBox: () => cy.get('[type="checkbox"]'),
 		govLink: () => cy.get('.govuk-link'),
 		govInput: () => cy.get('.govuk-input'),
@@ -137,7 +137,7 @@ export class BasePage {
 	}
 
 	clickContiuneBtn() {
-		this.identifiers.contiuneBtn().click();
+		this.identifiers.continueBtn().click();
 	}
 
 	clickGovSearchBtn() {
