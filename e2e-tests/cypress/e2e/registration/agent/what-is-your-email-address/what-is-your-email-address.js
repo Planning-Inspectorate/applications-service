@@ -8,20 +8,20 @@ const emailAddress = new PO_EmailAddress();
 
 And('I have been asked what is your email address', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the email address field', (text) => {
 	emailAddress.enterTextIntoEmailField(text);
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	emailAddress.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	emailAddress.assertOnPage(pageName);
 });

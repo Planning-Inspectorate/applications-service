@@ -18,36 +18,36 @@ const repEmailAddress = new PO_RepEmailAddress();
 
 And('I have been asked to provide representee email address', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 	telNumber.enterTextIntoTelephoneNumberField('123456789');
-	cy.clickSaveAndContinue();
+	telNumber.clickSaveAndContinue();
 	whoYouRepresenting.selectRadioOption('A person');
-	cy.clickSaveAndContinue();
+	whoYouRepresenting.clickSaveAndContinue();
 	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	repName.clickSaveAndContinue();
+	repName.selectRadioYesOrNo('Yes');
+	repName.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the representee email address field', (text) => {
 	repEmailAddress.enterTextIntoRepEmailField(text);
-	cy.clickSaveAndContinue();
+	repEmailAddress.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	repEmailAddress.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	repEmailAddress.assertOnPage(pageName);
 });
