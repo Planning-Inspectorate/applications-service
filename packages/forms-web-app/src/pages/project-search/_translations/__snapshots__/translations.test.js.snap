@@ -66,6 +66,6 @@ exports[`pages/project-search/_translations should return the correct Welsh tran
     "promoterName": "Ymgeisydd",
     "stage": "Cam",
   },
-  "switchToMapView": "Newid i olwg map",
+  "switchToMapView": "Newid i'r golwg map",
 }
 `;
