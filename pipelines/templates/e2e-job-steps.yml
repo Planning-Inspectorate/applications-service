@@ -47,10 +47,50 @@ steps:
       EOF
     displayName: Create root CI env
 
-  - script: npm ci --cache "$(NpmCacheDir)"
+  - script: |
+      for attempt in 1 2 3; do
+        echo "Running npm ci for root dependencies (attempt ${attempt}/3)"
+
+        if npm ci \
+          --cache "$(NpmCacheDir)" \
+          --fetch-retries=5 \
+          --fetch-retry-mintimeout=20000 \
+          --fetch-retry-maxtimeout=120000; then
+          exit 0
+        fi
+
+        status=$?
+
+        if [ "$attempt" -eq 3 ]; then
+          exit "$status"
+        fi
+
+        npm cache verify --cache "$(NpmCacheDir)" || true
+        sleep $((attempt * 10))
+      done
     displayName: Install root dependencies
 
-  - script: npm --prefix e2e-tests ci --cache "$(NpmCacheDir)"
+  - script: |
+      for attempt in 1 2 3; do
+        echo "Running npm ci for E2E dependencies (attempt ${attempt}/3)"
+
+        if npm --prefix e2e-tests ci \
+          --cache "$(NpmCacheDir)" \
+          --fetch-retries=5 \
+          --fetch-retry-mintimeout=20000 \
+          --fetch-retry-maxtimeout=120000; then
+          exit 0
+        fi
+
+        status=$?
+
+        if [ "$attempt" -eq 3 ]; then
+          exit "$status"
+        fi
+
+        npm cache verify --cache "$(NpmCacheDir)" || true
+        sleep $((attempt * 10))
+      done
     displayName: Install E2E dependencies
     env:
       CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
