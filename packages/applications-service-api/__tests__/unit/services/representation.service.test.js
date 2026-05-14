@@ -3,8 +3,6 @@ const {
 	getRepresentationsForApplication,
 	getRepresentationByIdAndCaseRef
 } = require('../../../src/services/representation.service');
-const config = require('../../../src/lib/config');
-const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 const {
 	getRepresentationsWithCount: getRepresentationsNIRepository,
 	getRepresentationByIdAndCaseRef: getRepresentationByIdNIRepository,
@@ -39,12 +37,8 @@ jest.mock('../../../src/repositories/document.ni.repository');
 jest.mock('../../../src/repositories/representation.ni.repository');
 jest.mock('../../../src/repositories/representation.backoffice.repository');
 jest.mock('../../../src/repositories/document.backoffice.repository');
-jest.mock('../../../src/utils/is-backoffice-case-reference');
 
 describe('representation.service', () => {
-	beforeAll(() => {
-		isBackOfficeCaseReference.mockImplementation((caseReference) => caseReference === 'BC010001');
-	});
 	const filtersMockData = [
 		{ name: 'Members of the Public/Businesses', count: 23 },
 		{ name: 'Parish Councils', count: 2 }
@@ -96,35 +90,6 @@ describe('representation.service', () => {
 				});
 			});
 		});
-		describe('when case reference is ni', () => {
-			it('should call getRepresentationsWithCountNIRepository with correct params', async () => {
-				await getRepresentationsForApplication({ caseReference: 'EN010009' });
-				expect(getRepresentationsNIRepository).toBeCalledWith({
-					caseReference: 'EN010009',
-					offset: 0,
-					limit: 25,
-					searchTerm: undefined,
-					type: undefined
-				});
-			});
-			it('should get filters by calling getNIFilters', async () => {
-				await getRepresentationsForApplication({ caseReference: 'EN010009' });
-				expect(getNIFilters).toBeCalledWith('RepFrom', 'EN010009');
-			});
-			it('should return mapped representations', async () => {
-				const data = await getRepresentationsForApplication({ caseReference: 'EN010009' });
-				expect(data).toEqual({
-					representations: REPRESENTATION_NI_DATA,
-					currentPage: 1,
-					itemsPerPage: 25,
-					totalItems: 1,
-					totalPages: 1,
-					filters: {
-						typeFilters: filtersMockData
-					}
-				});
-			});
-		});
 	});
 	describe('getRepresentationById', () => {
 		beforeEach(() => {
@@ -157,33 +122,6 @@ describe('representation.service', () => {
 				expect(await getRepresentationByIdAndCaseRef('1', 'BC010001')).toEqual(
 					REPRESENTATION_BACKOFFICE_RESPONSE
 				);
-			});
-		});
-		describe('when case reference is ni', () => {
-			it('should call getRepresentationByIdNIRepository with correct params', async () => {
-				await getRepresentationByIdAndCaseRef('1', 'EN010009');
-				expect(getRepresentationByIdNIRepository).toBeCalledWith('1', 'EN010009');
-			});
-			it('return undefined if no representation found', async () => {
-				getRepresentationByIdNIRepository.mockResolvedValue(null);
-				const data = await getRepresentationByIdAndCaseRef('1', 'EN010009');
-				expect(data).toBeUndefined();
-			});
-			it('should call getDocumentsByDataIdNIRepository with correct params', async () => {
-				await getRepresentationByIdAndCaseRef('1', 'EN010009');
-				expect(getDocumentsByDataIdNIRepository).toBeCalledWith(
-					REPRESENTATION_NI_DATA[0]?.Attachments.split(',')
-				);
-			});
-			it('should return mapped representation', async () => {
-				const data = await getRepresentationByIdAndCaseRef('1', 'EN010009');
-				expect(data).toEqual({
-					...REPRESENTATION_NI_DATA[0],
-					attachments: NI_DB_DOCUMENTS.map((doc) => ({
-						...doc,
-						path: doc.path ? `${config.documentsHost}${doc.path}` : null
-					}))
-				});
 			});
 		});
 	});

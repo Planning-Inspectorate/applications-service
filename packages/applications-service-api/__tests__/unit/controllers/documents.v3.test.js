@@ -10,10 +10,7 @@ const {
 	fetchBackOfficeDocumentsByType,
 	fetchBackOfficeDocumentByDocRef
 } = require('../../../src/services/document.backoffice.service');
-const { fetchNIDocumentsByType } = require('../../../src/services/document.ni.service');
-const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 
-jest.mock('../../../src/utils/is-backoffice-case-reference');
 jest.mock('../../../src/services/document.ni.service');
 jest.mock('../../../src/services/document.backoffice.service');
 const fetchNIDocumentsMock = require('../../../src/services/document.ni.service').fetchNIDocuments;
@@ -24,7 +21,6 @@ describe('documentsV3 controller', () => {
 	let res;
 	beforeEach(() => {
 		res = httpMocks.createResponse();
-		isBackOfficeCaseReference.mockImplementation((caseReference) => caseReference === 'BC0110001');
 	});
 	afterEach(() => {
 		jest.resetAllMocks();
@@ -204,43 +200,6 @@ describe('documentsV3 controller', () => {
 	});
 
 	describe('getDocumentByCaseReference', () => {
-		describe('NI', () => {
-			it('returns a NI document for the case ref and type (Rule 6 Letter)', async () => {
-				fetchNIDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });
-				await getDocumentByCaseReference(
-					{
-						params: { caseReference: 'EN000001' },
-						query: { type: 'RULE_6_LETTER' }
-					},
-					res
-				);
-				expect(fetchNIDocumentsByType).toHaveBeenCalledWith({
-					caseReference: 'EN000001',
-					type: 'RULE_6_LETTER'
-				});
-
-				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-				expect(res._getData()).toEqual(RESPONSE_DOCUMENTS[0]);
-			});
-
-			it('returns a NI document for the case ref and type (Rule 8 Letter)', async () => {
-				fetchNIDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });
-				await getDocumentByCaseReference(
-					{
-						params: { caseReference: 'EN000001' },
-						query: { type: 'RULE_8_LETTER' }
-					},
-					res
-				);
-				expect(fetchNIDocumentsByType).toHaveBeenCalledWith({
-					caseReference: 'EN000001',
-					type: 'RULE_8_LETTER'
-				});
-
-				expect(res._getStatusCode()).toEqual(StatusCodes.OK);
-				expect(res._getData()).toEqual(RESPONSE_DOCUMENTS[0]);
-			});
-		});
 		describe('BO', () => {
 			it('returns a BO document for the case ref and type', async () => {
 				fetchBackOfficeDocumentsByType.mockResolvedValueOnce({ data: RESPONSE_DOCUMENTS[0] });

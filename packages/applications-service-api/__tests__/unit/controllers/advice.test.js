@@ -84,7 +84,7 @@ describe('getAdvice', () => {
 			});
 			const res = httpMocks.createResponse();
 			await getAdviceById(req, res);
-			expect(getAdviceByIdMock).toBeCalledWith('123', 'EN010009');
+			expect(getAdviceByIdMock).toBeCalledWith('123');
 		});
 		it('should return advice from service', async () => {
 			const req = httpMocks.createRequest({

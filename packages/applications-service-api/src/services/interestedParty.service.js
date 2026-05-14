@@ -1,7 +1,3 @@
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
-const {
-	createInterestedParty: createNIInterestedParty
-} = require('../services/interestedParty.ni.service');
 const { publishRegisterRepresentation } = require('./backoffice.publish.service');
 const { sendIPRegistrationConfirmationEmailToIP } = require('../lib/notify');
 const { getApplication } = require('./application.backoffice.service');
@@ -9,15 +5,8 @@ const { mapInterestedParty } = require('../utils/interestedParty.mapper');
 const { isProjectRegionWales } = require('../utils/is-project-region-wales');
 
 const createInterestedParty = async (createInterestedPartyRequest) => {
-	if (isBackOfficeCaseReference(createInterestedPartyRequest.case_ref)) {
-		const { referenceId } = await createBackOfficeInterestedParty(createInterestedPartyRequest);
-		return { referenceId };
-	} else {
-		const interestedParty = await createNIInterestedParty(createInterestedPartyRequest);
-		return {
-			referenceId: interestedParty.ID
-		};
-	}
+	const { referenceId } = await createBackOfficeInterestedParty(createInterestedPartyRequest);
+	return { referenceId };
 };
 
 const createBackOfficeInterestedParty = async (createInterestedPartyRequest) => {

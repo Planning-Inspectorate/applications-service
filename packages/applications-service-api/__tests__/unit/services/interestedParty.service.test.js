@@ -1,4 +1,3 @@
-const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 const {
 	INTERESTED_PARTY_SELF_API,
 	INTERESTED_PARTY_SELF_BACK_OFFICE
@@ -6,10 +5,6 @@ const {
 const { createInterestedParty } = require('../../../src/services/interestedParty.service');
 
 jest.mock('../../../src/services/interestedParty.ni.service');
-const {
-	createInterestedParty: createNIInterestedParty
-} = require('../../../src/services/interestedParty.ni.service');
-
 jest.mock('../../../src/services/backoffice.publish.service');
 const {
 	publishRegisterRepresentation
@@ -28,35 +23,8 @@ jest.mock('../../../src/utils/date-utils');
 const { getDate } = require('../../../src/utils/date-utils');
 
 const { APPLICATION_API } = require('../../__data__/application');
-jest.mock('../../../src/utils/is-backoffice-case-reference');
 describe('interestedParty service', () => {
 	describe('createInterestedParty', () => {
-		beforeEach(() => {
-			isBackOfficeCaseReference.mockImplementation(
-				(caseReference) => caseReference === 'BC0110002'
-			);
-		});
-
-		describe('NI case', () => {
-			const NI_CASE_REFERENCE = 'EN010116';
-
-			it('invokes ni service', async () => {
-				createNIInterestedParty.mockResolvedValueOnce({ ID: '123456' });
-
-				const createInterestedPartyRequest = {
-					...INTERESTED_PARTY_SELF_API,
-					case_ref: NI_CASE_REFERENCE
-				};
-
-				const interestedParty = await createInterestedParty(createInterestedPartyRequest);
-
-				expect(createNIInterestedParty).toHaveBeenCalledWith(createInterestedPartyRequest);
-				expect(interestedParty).toEqual({
-					referenceId: '123456'
-				});
-			});
-		});
-
 		describe('Back Office case', () => {
 			const mockDate = new Date('2022-12-09 13:30:21:123');
 			beforeAll(() => getDate.mockReturnValue(mockDate));

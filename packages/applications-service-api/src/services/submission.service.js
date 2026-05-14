@@ -1,21 +1,14 @@
 const ApiError = require('../error/apiError');
-const { createNISubmission, completeNISubmission } = require('./submission.ni.service');
 const { publishDeadlineSubmission } = require('./backoffice.publish.service');
 const { generateRepresentationPDF, uploadSubmissionFileToBlobStorage } = require('../utils/file');
 const { getApplication } = require('./application.backoffice.service');
 const { sendSubmissionNotification } = require('../lib/notify');
 const { generateId } = require('../utils/generate-id');
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const { isProjectRegionWales } = require('../utils/is-project-region-wales');
-const createSubmission = async (submission) =>
-	isBackOfficeCaseReference(submission.metadata.caseReference)
-		? createBackOfficeSubmission(submission)
-		: createNISubmission(submission);
+const createSubmission = async (submission) => createBackOfficeSubmission(submission);
 
 const completeSubmission = async (submissionDetails) =>
-	isBackOfficeCaseReference(submissionDetails.caseReference)
-		? completeBackOfficeSubmission(submissionDetails)
-		: completeNISubmission(submissionDetails.submissionId);
+	completeBackOfficeSubmission(submissionDetails);
 
 const createBackOfficeSubmission = async (submission) => {
 	const { metadata } = submission;

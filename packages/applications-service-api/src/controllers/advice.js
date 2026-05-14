@@ -27,9 +27,8 @@ const getAdviceById = async (req, res) => {
 	logger.debug(`Retrieving advice by ID...`);
 
 	const { adviceID } = req.params;
-	const { caseReference } = req.query;
 
-	const advice = await getAdviceByIdService(adviceID, caseReference);
+	const advice = await getAdviceByIdService(adviceID);
 
 	if (!advice) {
 		throw ApiError.adviceNotFound(adviceID);
