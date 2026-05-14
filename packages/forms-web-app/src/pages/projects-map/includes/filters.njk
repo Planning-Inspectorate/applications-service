@@ -1,0 +1,21 @@
+{% from "components/ui/checkbox-accordion.njk" import uiCheckboxAccordion with context %}
+{% from "components/layout/slots.njk" import layoutSlots %}
+{% from "components/ui/vertical-tabs.njk" import uiVerticalTabs %}
+
+{{ layoutSlots([
+  uiCheckboxAccordion(
+    true,
+    filters,
+    t('common.filter'),
+    null,
+    "projects-map-filters",
+    'modal-on-tablet'
+  ),
+  uiVerticalTabs(
+    t('projectsMap.sidebar.relatedContent'),
+    null,
+    relatedContentLinks,
+    t('global.relatedContentNavigation'),
+    "h3"
+  )
+]) }}

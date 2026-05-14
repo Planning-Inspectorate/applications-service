@@ -23,18 +23,28 @@ const mockContext = {
 };
 
 const mockMessage = {
-	id: '123'
+	id: '123',
+	correlationId: 'id-1',
+	caseReference: 'mock-case-ref'
 };
 
 describe('nsip-service-user-unpublish', () => {
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-service-user-unpublish function');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`invoking nsip-service-user-unpublish function for caseReference: ${mockMessage.caseReference}`
+		);
 	});
 
 	it('skips unpublish if serviceUserId is missing', async () => {
-		await sendMessage(mockContext, {});
-		expect(mockContext.log).toHaveBeenCalledWith('skipping unpublish as serviceUserId is missing');
+		await sendMessage(mockContext, { correlationId: 'id-1', caseReference: 'mock-case-ref' });
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`skipping nsip-service-user-unpublish function as serviceUserId is missing`,
+			{
+				correlationId: 'id-1',
+				caseReference: 'mock-case-ref'
+			}
+		);
 	});
 
 	it('disconnects service-user from project', async () => {
@@ -57,7 +67,7 @@ describe('nsip-service-user-unpublish', () => {
 			}
 		});
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`unpublished service user with serviceUserId ${mockMessage.id}`
+			`nsip-service-user-unpublish function unpublished service user with serviceUserId ${mockMessage.id} for caseReference: ${mockMessage.caseReference}`
 		);
 	});
 });

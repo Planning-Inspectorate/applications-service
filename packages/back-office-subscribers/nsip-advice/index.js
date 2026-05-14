@@ -3,12 +3,19 @@ const { prismaClient } = require('../lib/prisma');
 const buildMergeQuery = require('../lib/build-merge-query');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-advice function`);
 	const adviceId = message.adviceId;
+	const caseReference = message.caseReference;
 
 	if (!adviceId) {
-		throw new Error('adviceId is required');
+		throw new Error(`adviceId is required for nsip-advice function`, {
+			correlationId: message.correlationId
+		});
 	}
+
+	context.log(
+		`invoking nsip-advice function for caseReference ${caseReference} and adviceId ${adviceId}`
+	);
+
 	const advice = {
 		...pick(message, advicePropertiesFromMessage),
 		attachmentIds: message.attachmentIds?.join(','),
@@ -23,8 +30,11 @@ module.exports = async (context, message) => {
 	);
 
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`upserted advice with adviceId ${adviceId}`);
+	context.log(
+		`nsip-advice function upserted advice with adviceId ${adviceId} for caseReference ${caseReference}`
+	);
 };
+
 const advicePropertiesFromMessage = [
 	'adviceId',
 	'adviceReference',

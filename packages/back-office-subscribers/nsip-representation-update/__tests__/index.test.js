@@ -1,15 +1,14 @@
-const sendMessage = require('../index');
-const buildMergeQuery = require('../../lib/build-merge-query');
-
-const mockExecuteRawUnsafe = jest.fn();
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
-		$executeRawUnsafe: (statement, ...parameters) => mockExecuteRawUnsafe(statement, ...parameters)
+		representation: { updateMany: jest.fn().mockResolvedValue({ count: 1 }) }
 	}
 }));
-jest.mock('../../lib/build-merge-query', () =>
-	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
-);
+
+jest.mock('../../lib/build-prisma-update-query', () => jest.fn().mockResolvedValue({ count: 1 }));
+
+const sendMessage = require('../index');
+const mockPrismaUpdate = require('../../lib/build-prisma-update-query');
+const { prismaClient } = require('../../lib/prisma');
 
 const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
@@ -23,16 +22,20 @@ const mockContext = {
 
 const mockMessage = {
 	representationId: 123,
-	status: 'PUBLISHED'
+	status: 'PUBLISHED',
+	correlationId: 'id-1',
+	caseRef: 'mock-case-reference'
 };
 
 const mockRepresentation = {
-	...mockMessage,
+	representationId: 123,
+	status: 'PUBLISHED',
 	modifiedAt: new Date()
 };
 describe('nsip-representation-update', () => {
 	beforeEach(() => {
-		mockExecuteRawUnsafe.mockReset();
+		mockPrismaUpdate.mockClear();
+		mockContext.log.mockClear();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
@@ -44,57 +47,57 @@ describe('nsip-representation-update', () => {
 
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-representation-update function');
+		expect(mockContext.log).toHaveBeenCalledWith(`invoking nsip-representation-update function`, {
+			correlationId: 'id-1',
+			caseReference: 'mock-case-reference'
+		});
 	});
 
 	it('throws error if representationId is missing', async () => {
 		await expect(async () => await sendMessage(mockContext, {})).rejects.toThrow(
 			'representationId is required'
 		);
-		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
+		expect(mockPrismaUpdate).not.toHaveBeenCalled();
 	});
 
 	it('throws error if status is missing', async () => {
 		await expect(
 			async () => await sendMessage(mockContext, { representationId: 123 })
 		).rejects.toThrow('status is required');
-		expect(mockExecuteRawUnsafe).not.toHaveBeenCalled();
+		expect(mockPrismaUpdate).not.toHaveBeenCalled();
 	});
 
-	it('calls buildMergeQuery with correct parameters', async () => {
+	it('calls buildPrismaUpdateQuery with correct parameters', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(buildMergeQuery).toHaveBeenCalledWith(
-			'representation',
+		expect(mockPrismaUpdate).toHaveBeenCalledWith(
+			prismaClient.representation,
 			'representationId',
 			mockRepresentation,
 			mockEnqueueDateTime
 		);
 	});
 
-	it('runs query to update representation status', async () => {
+	it('logs success after update', async () => {
 		await sendMessage(mockContext, mockMessage);
-		const [receivedStatement, ...receivedParameters] = mockExecuteRawUnsafe.mock.calls[0];
-		const statements = receivedStatement.split('\n');
-		expect(statements[0].trim()).toBe('MERGE INTO [representation] AS Target');
-		expect(statements[1].trim()).toBe(
-			'USING (SELECT @P1, @P2, @P3) AS Source ([representationId], [status], [modifiedAt])'
-		);
-		expect(statements[2].trim()).toBe('ON Target.[representationId] = Source.[representationId]');
-		expect(statements[3].trim()).toBe('WHEN MATCHED');
-		expect(statements[4].trim()).toBe(
-			`AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])`
-		);
-		expect(statements[5].trim()).toBe(
-			'THEN UPDATE SET Target.[status] = Source.[status], Target.[modifiedAt] = Source.[modifiedAt]'
-		);
-		expect(statements[6].trim()).toBe(
-			'WHEN NOT MATCHED THEN INSERT ([representationId], [status], [modifiedAt]) VALUES (@P1, @P2, @P3);'
-		);
-		const expectedParameters = Object.values(mockRepresentation);
-		expect(receivedParameters.length).toBe(expectedParameters.length);
-		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`upserted representation with representationId ${mockMessage.representationId}`
+			`updated representation with representationId ${mockMessage.representationId}`,
+			{
+				correlationId: 'id-1',
+				caseReference: 'mock-case-reference'
+			}
+		);
+	});
+
+	it('logs if no representation was updated', async () => {
+		mockPrismaUpdate.mockReturnValueOnce({ count: 0 });
+		await sendMessage(mockContext, mockMessage);
+
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`no representation updated with representationId ${mockMessage.representationId} - update may be stale or no record exists`,
+			{
+				correlationId: 'id-1',
+				caseReference: 'mock-case-reference'
+			}
 		);
 	});
 });

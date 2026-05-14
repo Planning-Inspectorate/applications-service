@@ -1,0 +1,173 @@
+parameters:
+  - name: runDisplayName
+    type: string
+  - name: runScript
+    type: string
+  - name: screenshotsArtifact
+    type: string
+  - name: reportArtifact
+    type: string
+  - name: logsArtifact
+    type: string
+
+steps:
+  - checkout: self
+    clean: true
+
+  - task: NodeTool@0
+    displayName: Install Node.js
+    inputs:
+      versionSpec: $(NodeVersion)
+
+  - task: Cache@2
+    displayName: Cache npm
+    inputs:
+      key: 'npm | "$(Agent.OS)" | package-lock.json | e2e-tests/package-lock.json'
+      restoreKeys: |
+        npm | "$(Agent.OS)" | package-lock.json
+      path: $(NpmCacheDir)
+
+  - task: Cache@2
+    displayName: Cache Cypress binary
+    inputs:
+      key: 'cypress | "$(Agent.OS)" | e2e-tests/package-lock.json'
+      restoreKeys: |
+        cypress | "$(Agent.OS)"
+      path: $(CypressCacheDir)
+
+  - script: |
+      mkdir -p e2e-tests/cypress/cucumber-report
+      mkdir -p e2e-tests/cypress/screenshots
+      mkdir -p e2e-tests/artifacts
+    displayName: Prepare artifact directories
+
+  - script: |
+      cat <<EOF > "$(RootCiEnvFile)"
+      ENCRYPTION_SECRET_KEY=azure-pipelines-test-encryption-secret
+      EOF
+    displayName: Create root CI env
+
+  - script: npm ci --cache "$(NpmCacheDir)"
+    displayName: Install root dependencies
+
+  - script: npm --prefix e2e-tests ci --cache "$(NpmCacheDir)"
+    displayName: Install E2E dependencies
+    env:
+      CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
+
+  - script: |
+      if docker compose version > /dev/null 2>&1; then
+        echo "Using docker compose"
+        echo "##vso[task.setvariable variable=ComposeCommand]docker compose"
+      elif command -v docker-compose > /dev/null 2>&1; then
+        echo "Using docker-compose"
+        echo "##vso[task.setvariable variable=ComposeCommand]docker-compose"
+      else
+        echo "Neither 'docker compose' nor 'docker-compose' is available on this agent"
+        exit 1
+      fi
+    displayName: Detect Docker Compose command
+
+  - script: |
+      compose_project_name="appsvc${BUILD_BUILDID}_${SYSTEM_JOBPOSITIONINPHASE:-1}_${SYSTEM_JOBATTEMPT:-1}"
+      echo "Using compose project: ${compose_project_name}"
+      echo "##vso[task.setvariable variable=ComposeProjectName]${compose_project_name}"
+    displayName: Set unique Docker Compose project name
+
+  - script: |
+      if command -v google-chrome > /dev/null 2>&1 || command -v google-chrome-stable > /dev/null 2>&1; then
+        echo "Using Chrome for Cypress"
+        echo "##vso[task.setvariable variable=CypressBrowser]chrome"
+      elif command -v chromium > /dev/null 2>&1 || command -v chromium-browser > /dev/null 2>&1; then
+        echo "Using Chromium for Cypress"
+        echo "##vso[task.setvariable variable=CypressBrowser]chromium"
+      else
+        echo "Neither Chrome nor Chromium is available on this agent"
+        exit 1
+      fi
+    displayName: Detect Cypress browser
+
+  - script: $(ComposeCommand) up -d mssql db redis api-mock-server
+    displayName: Start infrastructure services
+    env:
+      COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - script: |
+      if [ ! -f packages/applications-service-api/.env ]; then
+        cp packages/applications-service-api/.env.development packages/applications-service-api/.env
+      fi
+
+      npm run db:generate
+      npm run db:migrate:dev
+      npm run db:seed
+    displayName: Generate, migrate and seed database
+
+  - script: $(ComposeCommand) up -d applications-service-api applications-web-app
+    displayName: Start application services
+    env:
+      COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - script: |
+      set -e
+
+      for url in http://localhost:3000/health http://localhost:9004/health; do
+        echo "Waiting for $url"
+
+        for attempt in $(seq 1 30); do
+          if curl --fail --silent --show-error "$url" > /dev/null; then
+            echo "$url is healthy"
+            break
+          fi
+
+          if [ "$attempt" -eq 30 ]; then
+            echo "Timed out waiting for $url"
+            exit 1
+          fi
+
+          sleep 10
+        done
+      done
+    displayName: Wait for app health checks
+
+  - script: |
+      ${{ parameters.runScript }}
+    displayName: ${{ parameters.runDisplayName }}
+    env:
+      CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
+
+  - script: npm --prefix e2e-tests run test:e2e:postprocess
+    displayName: Generate Cypress HTML report
+    condition: always()
+
+  - script: $(ComposeCommand) logs --no-color > e2e-tests/artifacts/docker-compose.log
+    displayName: Capture docker compose logs
+    condition: always()
+    env:
+      COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish Cypress screenshots
+    condition: failed()
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/screenshots'
+      artifact: ${{ parameters.screenshotsArtifact }}
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish Cypress HTML report
+    condition: always()
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/cucumber-report'
+      artifact: ${{ parameters.reportArtifact }}
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish docker logs
+    condition: always()
+    inputs:
+      targetPath: '$(Build.SourcesDirectory)/e2e-tests/artifacts'
+      artifact: ${{ parameters.logsArtifact }}
+
+  - script: $(ComposeCommand) down -v
+    displayName: Stop docker compose services
+    condition: always()
+    env:
+      COMPOSE_PROJECT_NAME: $(ComposeProjectName)

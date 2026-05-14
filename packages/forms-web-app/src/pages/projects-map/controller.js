@@ -1,62 +1,128 @@
 const logger = require('../../lib/logger');
+const { getApplications } = require('../../services/applications.service');
+const { getMapAccessToken } = require('../_services');
+const { getFilters } = require('../_utils/filters/get-filters');
+const { projectsMapI18nNamespace } = require('./config');
+const {
+	getProjectSearchQueryString
+} = require('../project-search/utils/get-project-search-query-string');
 const { getProjectSearchURL } = require('../project-search/utils/get-project-search-url');
-const { getProjectsMapGeoJSON } = require('../../services/projects-map.service');
-const { maps: mapConfig } = require('../../config');
+const { getRelatedContentLinks } = require('../project-search/utils/get-related-content-links');
+const { getProjectsMapURL } = require('./utils/get-projects-map-url');
+const { queryStringBuilder } = require('../../utils/query-string-builder');
 
 const view = 'projects-map/view.njk';
-const projectSearchURL = getProjectSearchURL();
+
+/**
+ * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
+ * Applications without valid LongLat coordinates are silently excluded.
+ */
+/** Maps numeric DB Stage value to display label. Mirrors NI_MAPPING.stage in application.mapper.js. */
+const STAGE_LABELS = {
+	0: 'Draft',
+	1: 'Pre-application',
+	2: 'Acceptance',
+	3: 'Pre-examination',
+	4: 'Examination',
+	5: 'Recommendation',
+	6: 'Decision',
+	7: 'Post-decision',
+	8: 'Withdrawn'
+};
+
+/**
+ * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
+ * Applications without valid LongLat coordinates are silently excluded.
+ * @param {Object[]} applications
+ * @returns {Object} GeoJSON FeatureCollection
+ */
+const toGeoJSON = (applications) => ({
+	type: 'FeatureCollection',
+	features: applications
+		.map((app) => {
+			const coords = app.LongLat;
+			if (!coords || coords.length < 2 || !coords[0] || !coords[1]) return null;
+			const lng = parseFloat(coords[0]);
+			const lat = parseFloat(coords[1]);
+			if (isNaN(lng) || isNaN(lat)) return null;
+			return {
+				type: 'Feature',
+				geometry: { type: 'Point', coordinates: [lng, lat] },
+				properties: {
+					caseReference: app.CaseReference,
+					projectName: app.ProjectName,
+					stage: STAGE_LABELS[app.Stage] || app.Stage,
+					projectURL: `/projects/${app.CaseReference}`
+				}
+			};
+		})
+		.filter(Boolean)
+});
 
 /**
  * GET /projects-map
- * Renders the projects map page with GeoJSON data and Leaflet configuration.
- *
- * @async
- * @param {Object} req - Express request
- * @param {Object} res - Express response
- * @param {Function} next - Express error handler
+ * Renders the interactive map view with filtered project markers.
+ * Fetches applications and map token in parallel, builds GeoJSON for map rendering.
  */
 const getProjectsMapController = async (req, res, next) => {
 	try {
-		const geojson = await getProjectsMapGeoJSON();
+		const { i18n, query } = req;
 
-		// Leaflet map viewport configuration (zoom, center, bounds)
-		const mapOptions = {
-			minZoom: mapConfig.leafletOptions.minZoom,
-			maxZoom: mapConfig.leafletOptions.maxZoom,
-			center: mapConfig.leafletOptions.center,
-			zoom: mapConfig.leafletOptions.zoom,
-			attributionControl: mapConfig.leafletOptions.attributionControl,
-			maxBounds: mapConfig.leafletOptions.maxBounds
-		};
+		// Redirect to clean URL if only searchTerm with no value exists
+		const { searchTerm, ...filters } = query;
+		if (Object.keys(filters).length === 0 && !searchTerm && req.url.includes('?')) {
+			return res.redirect('/projects-map');
+		}
 
-		// Configuration passed to client for map initialization
-		const renderedMapConfig = {
-			elementId: mapConfig.display.elementId,
-			mapOptions,
-			tileLayer: {
-				url: mapConfig.tileLayer.url,
-				tokenEndpoint: mapConfig.tileLayer.tokenEndpoint,
-				options: {
-					maxZoom: mapConfig.tileLayer.maxZoom,
-					attribution: mapConfig.tileLayer.attribution
-				}
-			},
-			crs: mapConfig.crs,
-			markers: geojson.features,
-			clustered: mapConfig.display.clustered,
-			totalProjects: geojson.features.length
-		};
+		// Fetch applications and OS Maps token concurrently
+		const [{ applications, filters: availableFilters }, mapAccessToken] = await Promise.all([
+			getApplications(getProjectSearchQueryString(query)),
+			getMapAccessToken()
+		]);
+
+		// Build query string from filters
+		const queryParams = searchTerm ? { ...filters, searchTerm } : filters;
+		const queryString = queryStringBuilder(queryParams, Object.keys(queryParams), true);
 
 		res.render(view, {
-			mapConfig: renderedMapConfig,
-			projectSearchURL
+			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
+			mapAccessToken,
+			mapGeoJSON: JSON.stringify(toGeoJSON(applications)),
+			projectSearchURL: getProjectSearchURL(),
+			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
+			query,
+			queryString,
+			showFilters: !!req.session.projectsMapShowFilters
 		});
 	} catch (error) {
-		logger.error('Error in getProjectsMapController:', error);
+		logger.error(error);
 		next(error);
 	}
 };
 
-module.exports = {
-	getProjectsMapController
+/**
+ * POST /projects-map
+ * Toggles filter panel visibility and redirects back with preserved query params.
+ * Reads current state from filterToggleValue, flips it, stores in session.
+ * Extracts query string from referrer to maintain active filters.
+ */
+const postProjectsMapController = (req, res, next) => {
+	try {
+		// Flip the boolean: 'true' → false, anything else → true
+		req.session.projectsMapShowFilters = req.body.filterToggleValue !== 'true';
+
+		// Extract referrer  URL from request
+		const referrer = req.get('Referrer');
+
+		// Extract query string from referrer URL
+		// e.g., '?region=wales&sector=energy' → 'region=wales&sector=energy'
+		const queryString = referrer ? new URL(referrer).search.slice(1) : '';
+
+		res.redirect(`/projects-map${queryString ? `?${queryString}` : ''}`);
+	} catch (error) {
+		logger.error(error);
+		next(error);
+	}
 };
+
+module.exports = { getProjectsMapController, postProjectsMapController };

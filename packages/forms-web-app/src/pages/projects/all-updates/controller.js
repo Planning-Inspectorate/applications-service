@@ -10,10 +10,7 @@ const getProjectsAllUpdatesController = async (req, res, next) => {
 
 		const projectUpdates = await getProjectUpdatesData(caseRef);
 
-		return res.render(
-			'projects/all-updates/view.njk',
-			getPageData(locals, projectUpdates, i18n.language)
-		);
+		return res.render('projects/all-updates/view.njk', getPageData(locals, projectUpdates, i18n));
 	} catch (error) {
 		logger.error(error);
 		next(error);

@@ -1,0 +1,104 @@
+import { BasePage } from '../../shared/PageObjects/BasePage';
+
+export class PO_RelevantReps extends BasePage {
+	identifiers = {
+		...this.identifiers,
+		relevantRepsLink: () => cy.get('a[href*="/representations"]'),
+		listOfRelevantReps: () => cy.get('[data-cy="representation"]'),
+		paginationLink: () => cy.get('.moj-pagination__link'),
+		resultsPerPage: (count) => cy.get(`a[href*="itemsPerPage=${count}"]`),
+		searchInput: () => cy.get('#searchTerm'),
+		searchButton: () => cy.get('[data-cy="search-button"]'),
+		filterOption: () => cy.get('[type="checkbox"]'),
+		applyFilterButton: () => cy.get('[data-cy="apply-filter-button"]'),
+		relevantRepTitle: () => cy.get('.ui-results__result-title-link'),
+		relevantRepHeading: () => cy.get('.govuk-heading-l'),
+		backToResultsLink: () => cy.get('[data-cy="back"]'),
+		noResultsMessage: () => cy.get('[data-cy="no-comments-found"]'),
+		clearSearchLink: () => cy.get('[data-cy="clear-search"]'),
+		pageHeading: () => cy.get('h1')
+	};
+
+	get functions() {
+		return new Proxy(
+			{},
+			{
+				get: (_, prop) => {
+					const value = this[prop];
+					if (typeof value !== 'function') {
+						throw new Error(`Function "${String(prop)}" was not found on ${this.constructor.name}`);
+					}
+					return value.bind(this);
+				}
+			}
+		);
+	}
+
+	clickRelevantRepsLink(string) {
+		this.identifiers.relevantRepsLink().contains(string).click();
+	}
+
+	returnListOfRepresentations() {
+		return this.identifiers.listOfRelevantReps();
+	}
+
+	navigateToPage(string) {
+		this.identifiers.paginationLink().contains(string).click();
+	}
+
+	changeResultsPerPage(string) {
+		this.identifiers.resultsPerPage(string).click();
+	}
+
+	enterSearchTerm(string) {
+		this.identifiers.searchInput().type(string);
+	}
+
+	clickSearchButton() {
+		this.identifiers.searchButton().click();
+	}
+
+	checkFilter(string) {
+		this.identifiers.filterOption().check(string);
+	}
+
+	uncheckFilter(string) {
+		this.identifiers.filterOption().uncheck(string);
+	}
+
+	clickApplyFilters() {
+		this.identifiers.applyFilterButton().click();
+	}
+
+	clickFirstTitle() {
+		this.identifiers.relevantRepTitle().first().click();
+	}
+
+	returnRepHeading() {
+		return this.identifiers.relevantRepHeading();
+	}
+
+	clickBackToResults() {
+		this.identifiers.backToResultsLink().click();
+	}
+
+	noResultsMessage() {
+		return this.identifiers.noResultsMessage();
+	}
+
+	clickClearSearch() {
+		this.identifiers.clearSearchLink().click();
+	}
+
+	openLocalRelevantRepresentationsPage(caseId) {
+		cy.visit(`/projects/${caseId}/representations`);
+	}
+
+	assertRelevantRepresentationsHeading() {
+		this.identifiers.pageHeading().contains('Relevant representations').should('be.visible');
+	}
+
+	assertUrlIncludes(value) {
+		cy.url().should('include', value);
+	}
+}

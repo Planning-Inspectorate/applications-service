@@ -44,7 +44,7 @@ const postCookiesController = (req, res) => {
 	};
 
 	res.cookie(cookieConfig.COOKIE_POLICY_KEY, JSON.stringify(updatedCookiePolicy), {
-		encode: String,
+		encode: encodeURIComponent,
 		expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
 		secure: appConfig.isProduction
 	});

@@ -6,6 +6,10 @@ module.exports = defineConfig({
 	viewportWidth: 1024,
 	viewportHeight: 1600,
 	video: false,
+	retries: {
+		runMode: 1,
+		openMode: 0
+	},
 	env: {
 		demoDelay: 0,
 		APP_APPLICATION_BASE_URL: 'http://forms-web-app:9004',
@@ -17,6 +21,7 @@ module.exports = defineConfig({
 			on('file:preprocessor', cucumber());
 		},
 		baseUrl: 'http://localhost:9004',
+		supportFile: 'cypress/support/e2e.js',
 		specPattern: 'cypress/e2e/**/*.feature'
 	}
 });

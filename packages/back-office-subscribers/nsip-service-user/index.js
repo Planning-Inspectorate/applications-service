@@ -4,9 +4,12 @@ const buildMergeQuery = require('../lib/build-merge-query');
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-service-user function`);
 	const serviceUserId = message.id;
+	const caseReference = message.caseReference;
 
 	if (!serviceUserId) {
-		throw new Error(`id is required`);
+		throw new Error(
+			`id is required for nsip-service-user function for caseReference ${caseReference}`
+		);
 	}
 
 	const serviceUser = mapMessageToServiceUser(message);
@@ -17,7 +20,9 @@ module.exports = async (context, message) => {
 		context.bindingData.enqueuedTimeUtc
 	);
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`updated serviceUser with serviceUserId ${serviceUserId}`);
+	context.log(
+		`updated serviceUser with serviceUserId ${serviceUserId} for caseReference ${caseReference}`
+	);
 };
 
 const mapMessageToServiceUser = (message) => {
@@ -47,6 +52,8 @@ const mapMessageToServiceUser = (message) => {
 				modifiedAt: new Date()
 			};
 		default:
-			throw new Error(`Invalid serviceUserType: ${serviceUserType}`);
+			throw new Error(
+				`Invalid serviceUserType ${serviceUserType} for caseReference ${message.caseReference}`
+			);
 	}
 };

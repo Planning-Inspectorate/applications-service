@@ -22,7 +22,6 @@ exports[`pages/project-search/_translations should return the correct English tr
   "pageTitle": "Project search",
   "paragraph1": "This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.",
   "paragraph2": "Showing {{-from}} to {{-to}} of {{-total}} projects.",
-  "projectsMapLinkText": "Switch to map view",
   "sidebar": {
     "registerOfApplications": "Register of applications",
     "relatedContent": "Related content",
@@ -32,6 +31,7 @@ exports[`pages/project-search/_translations should return the correct English tr
     "promoterName": "Applicant",
     "stage": "Stage",
   },
+  "switchToMapView": "Switch to map view",
 }
 `;
 
@@ -57,7 +57,6 @@ exports[`pages/project-search/_translations should return the correct Welsh tran
   "pageTitle": "Chwilio prosiect",
   "paragraph1": "Dyma restr o'r holl brosiectau. I ddod o hyd i brosiect penodol, defnyddiwch yr opsiynau hidlo neu chwiliwch yn ôl enw'r prosiect neu'r ymgeisydd.",
   "paragraph2": "Yn dangos {{-from}} i {{-to}} o {{-total}} brosiectau.",
-  "projectsMapLinkText": "Newid i olwg map",
   "sidebar": {
     "registerOfApplications": "Cofrestr geisiadau",
     "relatedContent": "Cynnwys cysylltiedig",
@@ -67,5 +66,6 @@ exports[`pages/project-search/_translations should return the correct Welsh tran
     "promoterName": "Ymgeisydd",
     "stage": "Cam",
   },
+  "switchToMapView": "Newid i olwg map",
 }
 `;

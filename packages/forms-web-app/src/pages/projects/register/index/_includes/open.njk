@@ -11,11 +11,11 @@
 </h3>
 
 <p class="govuk-body">
-  {{ t('register.index.open.paragraph2') }}  
+  {{ t('register.index.open.paragraph2') }}
 </p>
 
 <p class="govuk-body">
-  {{ t('register.index.open.paragraph3') }}  
+  {{ t('register.index.open.paragraph3') }}
 </p>
 
 <ul class="govuk-list govuk-list--bullet">
@@ -24,16 +24,20 @@
 </ul>
 
 <p class="govuk-body">
-  {{ t('register.index.open.paragraph4') }}  
+  {{ t('register.index.open.paragraph4') }}
 </p>
 
 {% if closeDate %}
   <p class="govuk-body">
     	{{ t('register.index.open.paragraph5',
-			{ date: closeDate | date('locale', language) | date }) 
+			{ date: closeDate | date('locale', language) | date })
 		}}
   </p>
 {% endif %}
+
+<p class="govuk-body">
+  {{ t('register.index.open.paragraph9') }}
+</p>
 
 <a href="{{ registeringForURL }}" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
   {{ t('register.index.open.buttonText') }}

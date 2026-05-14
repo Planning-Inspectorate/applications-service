@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects/all-updates/_translations should return the correct English all project updates translations 1`] = `
+{
+  "heading1": "All project updates",
+  "paragraph1": "There have not been any project updates yet.",
+  "paragraph2": "{{-link}} about this project to hear when new information is published.",
+  "paragraph2LinkText": "Sign up for email updates",
+}
+`;
+
+exports[`pages/projects/all-updates/_translations should return the correct Welsh all project updates translations 1`] = `
+{
+  "heading1": "Pob diweddariad prosiect",
+  "paragraph1": "Nid oes unrhyw ddiweddariadau prosiect wedi bod eto.",
+  "paragraph2": "{{-link}} am y prosiect hwn i gael gwybod pan fydd gwybodaeth newydd yn cael ei chyhoeddi.",
+  "paragraph2LinkText": "Cofrestrwch i gael diweddariadau e-bost",
+}
+`;

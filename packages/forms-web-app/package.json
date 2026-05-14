@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"engines": {
-		"node": ">=20.0.0 <21.0.0"
+		"node": ">=22.0.0 <23.0.0"
 	},
 	"scripts": {
 		"build": "npm run build:client && npm run build:sass && npm run build:app",
@@ -27,7 +27,7 @@
 	},
 	"dependencies": {
 		"@ministryofjustice/frontend": "*",
-		"@pins/common": "*",
+		"@pins/common": "0.0.0",
 		"@planning-inspectorate/pins-components": "*",
 		"@testing-library/dom": "*",
 		"@testing-library/jest-dom": "*",
@@ -53,18 +53,17 @@
 		"i18next": "*",
 		"i18next-fs-backend": "*",
 		"i18next-http-middleware": "*",
-		"leaflet": "*",
-		"leaflet.markercluster": "*",
 		"lodash": "*",
 		"marked": "*",
 		"moment": "*",
 		"node-fetch": "*",
+		"node-object-hash": "*",
 		"nunjucks": "*",
 		"nunjucks-date-filter": "*",
 		"ol": "*",
+		"ol-ext": "*",
 		"pino": "*",
 		"proj4": "*",
-		"proj4leaflet": "*",
 		"redis": "*",
 		"slugify": "*",
 		"string-collapse-white-space": "*",
@@ -75,7 +74,6 @@
 		"@babel/core": "*",
 		"@babel/preset-env": "*",
 		"babel-loader": "*",
-		"copy-webpack-plugin": "*",
 		"eslint": "*",
 		"eslint-config-prettier": "*",
 		"eslint-plugin-jest": "*",

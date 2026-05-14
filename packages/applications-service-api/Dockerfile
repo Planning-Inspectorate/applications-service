@@ -1,5 +1,5 @@
 # Stage 1/2: Build
-FROM node:20-alpine3.20 AS build
+FROM node:22-alpine3.22 AS build
 
 # TODO: Remove this once these get fixed:
 # - https://github.com/vercel/turborepo/issues/1097
@@ -39,7 +39,7 @@ WORKDIR /opt/app/packages/applications-service-api
 ARG GIT_SHA
 ENV GIT_SHA=$GIT_SHA
 
-RUN npx prisma generate
+RUN npm run db:generate
 
 EXPOSE 3000
 

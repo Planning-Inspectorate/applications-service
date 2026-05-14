@@ -3,7 +3,7 @@ const {
 	getActiveFilterQueryParamsWithRemovedFilter
 } = require('./get-active-filter-query-params-with-removed-filter');
 
-const getActiveFiltersViewModel = (query, filters) => {
+const getActiveFiltersViewModel = (query, filters, basePath = '') => {
 	const localQuery = JSON.parse(JSON.stringify(query));
 	const filtersCopy = JSON.parse(JSON.stringify(filters));
 
@@ -23,7 +23,7 @@ const getActiveFiltersViewModel = (query, filters) => {
 						active.tags.push({
 							icon: 'close',
 							textHtml: `<span class="govuk-visually-hidden">Remove</span> ${item.label} <span class="govuk-visually-hidden">filter</span>`,
-							link: `${getActiveFilterQueryParamsWithRemovedFilter(localQuery, {
+							link: `${basePath}${getActiveFilterQueryParamsWithRemovedFilter(localQuery, {
 								key: filterObj.name,
 								value: item.value
 							})}`

@@ -2,13 +2,16 @@ const { prismaClient } = require('../lib/prisma');
 const buildMergeQuery = require('../lib/build-merge-query');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-project-unpublish function`);
 	const caseReference = message.caseReference;
 
 	if (!caseReference) {
-		context.log(`skipping unpublish as caseReference is missing`);
+		context.log(`skipping nsip-project-unpublish function as caseReference is missing`, {
+			correlationId: message.correlationId
+		});
 		return;
 	}
+
+	context.log(`invoking nsip-project-unpublish function for caseReference: ${caseReference}`);
 
 	const project = {
 		caseReference,
@@ -24,5 +27,7 @@ module.exports = async (context, message) => {
 	);
 
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`unpublished project with caseReference: ${caseReference}`);
+	context.log(
+		`nsip-project-unpublish function unpublished project with caseReference: ${caseReference}`
+	);
 };

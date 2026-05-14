@@ -4,19 +4,26 @@ const buildMergeQuery = require('../lib/build-merge-query');
 const { serviceUserQuery } = require('../lib/queries');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-project function`);
 	const caseReference = message.caseReference;
 
 	if (!caseReference) {
-		throw new Error('caseReference is required');
+		throw new Error(`caseReference is required for nsip-project function`, {
+			correlationId: message.correlationId
+		});
 	}
 
 	if (!message.applicantId) {
-		throw new Error('applicantId is required');
+		throw new Error(`applicantId is required for nsip-project function`, {
+			correlationId: message.correlationId
+		});
 	}
 
+	context.log(`invoking nsip-project function for caseReference: ${caseReference}`);
+
 	await prismaClient.$executeRawUnsafe(serviceUserQuery, message.applicantId);
-	context.log(`created applicant with serviceUserId ${message.applicantId}`);
+	context.log(
+		`created applicant with serviceUserId ${message.applicantId} for caseReference: ${caseReference}`
+	);
 
 	const project = {
 		...pick(message, projectPropertiesFromMessage),
@@ -33,7 +40,7 @@ module.exports = async (context, message) => {
 	);
 
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`upserted project with caseReference ${caseReference}`);
+	context.log(`nsip-project function upserted project with caseReference ${caseReference}`);
 };
 
 const projectPropertiesFromMessage = [

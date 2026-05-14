@@ -5,7 +5,7 @@ module.exports = async (context, req) => {
 	if (!caseReference) {
 		context.res = {
 			status: 400,
-			body: 'Please pass a caseReference on the request body'
+			body: 'Please pass a caseReference on the request body of validate-migration function'
 		};
 		return;
 	}
@@ -17,4 +17,5 @@ module.exports = async (context, req) => {
 	context.res = {
 		body: response.data
 	};
+	context.log(`validate-migration with caseReference: ${caseReference} complete`);
 };

@@ -15,8 +15,10 @@ const createCookie = (document, name, value, days = 365) => {
 	if (process.env.NODE_ENV === 'production') {
 		secure = '; secure';
 	}
+
+	const encodedValue = encodeURIComponent(value);
 	// eslint-disable-next-line no-param-reassign
-	document.cookie = `${name}=${value}${expires}${secure}; path=/`;
+	document.cookie = `${name}=${encodedValue}${expires}${secure}; path=/`;
 };
 
 const readCookie = (document, name) => {
@@ -28,7 +30,7 @@ const readCookie = (document, name) => {
 			c = c.substring(1, c.length);
 		}
 		if (c.indexOf(nameEQ) === 0) {
-			return c.substring(nameEQ.length, c.length);
+			return decodeURIComponent(c.substring(nameEQ.length, c.length));
 		}
 	}
 	return null;

@@ -20,18 +20,27 @@ const mockContext = {
 };
 
 const mockMessage = {
-	adviceId: 'mock-advice-id'
+	adviceId: 'mock-advice-id',
+	caseReference: 'BC0110001',
+	correlationId: 'id-1'
 };
 
 describe('nsip-advice-unpublish', () => {
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-advice-unpublish function');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			'invoking nsip-advice-unpublish function for caseReference: BC0110001 adviceId mock-advice-id'
+		);
 	});
 
 	it('skips unpublish if adviceId is missing', async () => {
-		await sendMessage(mockContext, {});
-		expect(mockContext.log).toHaveBeenCalledWith('skipping unpublish as adviceId is missing');
+		await sendMessage(mockContext, { caseReference: 'BC0110001', correlationId: 'id-1' });
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`skipping nsip-advice-unpublish function as adviceId is missing`,
+			{
+				correlationId: 'id-1'
+			}
+		);
 	});
 
 	it('unpublishes advice', async () => {
@@ -42,7 +51,7 @@ describe('nsip-advice-unpublish', () => {
 			}
 		});
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`unpublished advice with adviceId: ${mockMessage.adviceId}`
+			'nsip-advice-unpublish function published advice for caseReference BC0110001 with adviceId: mock-advice-id'
 		);
 	});
 });

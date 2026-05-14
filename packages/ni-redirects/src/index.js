@@ -58,6 +58,14 @@ export default {
 			// else fallthrough - no redirect
 		}
 
+		// Home page redirects (exact matches only)
+		if (path === '/') {
+			return Response.redirect(`${config.frontOfficeUrl}/`, 301);
+		}
+		if (path === '/cy/') {
+			return Response.redirect(`${config.frontOfficeUrl}/?lang=cy`, 301);
+		}
+
 		// if no redirect configured, return the original request
 		return fetch(request);
 	}

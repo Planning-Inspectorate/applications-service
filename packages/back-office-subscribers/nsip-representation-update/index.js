@@ -1,9 +1,8 @@
 const { prismaClient } = require('../lib/prisma');
-const buildMergeQuery = require('../lib/build-merge-query');
+const buildPrismaUpdateQuery = require('../lib/build-prisma-update-query');
 
 module.exports = async (context, message) => {
-	context.log(`invoking nsip-representation-update function`);
-	const { representationId, status } = message;
+	const { representationId, status, caseRef, correlationId } = message;
 
 	if (!representationId) {
 		throw new Error('representationId is required');
@@ -11,7 +10,10 @@ module.exports = async (context, message) => {
 		throw new Error('status is required');
 	}
 
-	console.log('context.bindingData.enqueuedTimeUtc', context.bindingData.enqueuedTimeUtc);
+	context.log(`invoking nsip-representation-update function`, {
+		correlationId,
+		caseReference: caseRef
+	});
 
 	const representation = {
 		representationId,
@@ -19,13 +21,25 @@ module.exports = async (context, message) => {
 		modifiedAt: new Date()
 	};
 
-	const { statement, parameters } = buildMergeQuery(
-		'representation',
+	const updateResult = await buildPrismaUpdateQuery(
+		prismaClient.representation,
 		'representationId',
 		representation,
 		context.bindingData.enqueuedTimeUtc
 	);
 
-	await prismaClient.$executeRawUnsafe(statement, ...parameters);
-	context.log(`upserted representation with representationId ${representationId}`);
+	if (updateResult?.count > 0) {
+		context.log(`updated representation with representationId ${representationId}`, {
+			correlationId,
+			caseReference: caseRef
+		});
+	} else {
+		context.log(
+			`no representation updated with representationId ${representationId} - update may be stale or no record exists`,
+			{
+				correlationId,
+				caseReference: caseRef
+			}
+		);
+	}
 };

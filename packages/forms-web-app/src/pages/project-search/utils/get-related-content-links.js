@@ -7,9 +7,9 @@ const relatedContentLinkViewModel = (name, url) => ({
 	url
 });
 
-const getRelatedContentLinks = (i18n) => [
+const getRelatedContentLinks = (i18n, namespace = 'projectSearch') => [
 	relatedContentLinkViewModel(
-		i18n.t('projectSearch.sidebar.registerOfApplications'),
+		i18n.t(`${namespace}.sidebar.registerOfApplications`),
 		getRegisterOfApplicationsURL()
 	)
 ];

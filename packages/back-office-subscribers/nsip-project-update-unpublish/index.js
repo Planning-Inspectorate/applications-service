@@ -5,7 +5,9 @@ module.exports = async (context, message) => {
 	const projectUpdateId = message.id;
 
 	if (!projectUpdateId) {
-		context.log(`skipping unpublish as projectUpdateId is missing`);
+		context.log(`skipping nsip-project-update-unpublish function as projectUpdateId is missing`, {
+			correlationId: message.correlationId
+		});
 		return;
 	}
 

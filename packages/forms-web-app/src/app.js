@@ -7,6 +7,7 @@ const pinoExpress = require('express-pino-logger');
 const uuid = require('uuid');
 
 const { configureSessionStore } = require('./lib/session');
+const { initializeCacheClient } = require('./lib/redis-cache');
 const { NotFoundError } = require('./lib/errors');
 const flashMessageCleanupMiddleware = require('./middleware/flash-message-cleanup');
 const flashMessageToNunjucks = require('./middleware/flash-message-to-nunjucks');
@@ -55,6 +56,10 @@ if (config.server.useSecureSessionCookie) {
 }
 
 const sessionStoreConfig = configureSessionStore(session);
+
+if (config.redisCache.enabled) {
+	initializeCacheClient();
+}
 
 // Attach App Insights correlation id to response header
 app.use(attachCorrelationId);

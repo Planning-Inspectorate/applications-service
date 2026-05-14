@@ -3,12 +3,8 @@ const { getContactController } = require('./contact/controller');
 const { getCookiesController, postCookiesController } = require('./cookies/controller');
 const { getTermsAndConditionsController } = require('./terms-and-conditions/controller');
 const { getDetailedInformationController } = require('./detailed-information/controller');
-const {
-	getProjectSearchController,
-	postProjectSearchController
-} = require('./project-search/controller');
+const { getProjectSearchController } = require('./project-search/controller');
 const { getRegisterOfApplicationsController } = require('./register-of-applications/controller');
-const { getProjectsMapController } = require('./projects-map/controller');
 
 const {
 	addCheckboxAccordionTranslationsMiddleware
@@ -37,9 +33,6 @@ const {
 const {
 	addProjectSearchTranslationsMiddleware
 } = require('./project-search/_middleware/add-project-search-translations-middleware');
-const {
-	addProjectsMapTranslationsMiddleware
-} = require('./projects-map/_middleware/add-projects-map-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
@@ -83,11 +76,6 @@ jest.mock('./project-search/_middleware/add-project-search-translations-middlewa
 		addProjectSearchTranslationsMiddleware: jest.fn()
 	};
 });
-jest.mock('./projects-map/_middleware/add-projects-map-translations-middleware', () => {
-	return {
-		addProjectsMapTranslationsMiddleware: jest.fn()
-	};
-});
 jest.mock('./cookies/_validators/validate-cookies', () => {
 	return {
 		cookiesValidationRules: jest.fn()
@@ -100,7 +88,8 @@ jest.mock('../config', () => {
 	return {
 		...originalConfig,
 		featureFlag: {
-			allowHomepage: true
+			allowHomepage: true,
+			enableProjectsMap: true
 		}
 	};
 });
@@ -153,8 +142,6 @@ describe('pages/router', () => {
 				postCookiesController
 			);
 
-			expect(post).toHaveBeenCalledWith('/project-search', postProjectSearchController);
-
 			expect(get).toHaveBeenCalledWith(
 				'/terms-and-conditions',
 				addTermsAndConditionsTranslationsMiddleware,
@@ -182,19 +169,12 @@ describe('pages/router', () => {
 				getRegisterOfApplicationsController
 			);
 
-			expect(get).toHaveBeenCalledWith(
-				'/projects-map',
-				addCommonTranslationsMiddleware,
-				addProjectsMapTranslationsMiddleware,
-				getProjectsMapController
-			);
-
 			expect(use).toHaveBeenCalledWith(projectsRouter);
 
 			expect(use).toHaveBeenCalledWith(registerOfAdviceRouter);
 
 			expect(get).toBeCalledTimes(8);
-			expect(post).toBeCalledTimes(2);
+			expect(post).toBeCalledTimes(3);
 			expect(use).toBeCalledTimes(2);
 		});
 	});

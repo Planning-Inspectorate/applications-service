@@ -3,17 +3,18 @@
 	"version": "1.0.0",
 	"description": "",
 	"engines": {
-		"node": ">=20.0.0 <21.0.0"
+		"node": ">=22.0.0 <23.0.0"
 	},
 	"scripts": {
 		"postinstall": "patch-package",
 		"lint": "eslint ./",
 		"lint:fix": "eslint ./ --fix",
 		"test:open": "demoDelay=1000 cypress open",
-		"test:e2e": "npx cypress-tags run -b chrome --env TAGS=\"not (@wip or @ignore)\"",
+		"test:e2e": "npm run test:e2e:regression",
+		"test:e2e:regression": "npx cypress-tags run -b chrome --env TAGS=\"not (@wip or @ignore)\"",
 		"test:e2e:demo": "cypress-tags run --headed -b chrome --env TAGS=\"not (@wip or @ignore)\",demoDelay=1000",
 		"test:e2e:postprocess": "node ./reporter.js",
-		"test:e2e:smoke": "cypress-tags -b chrome run --env TAGS=\"not (@wip or @ignore) and @smoketest\" --config video=false,baseUrl=$BASEURL"
+		"test:e2e:smoke": "npx cypress-tags run -b chrome --env TAGS=\"@smoketest and not (@wip or @ignore)\" --config video=false"
 	},
 	"author": "",
 	"license": "ISC",

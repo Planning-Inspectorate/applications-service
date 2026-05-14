@@ -26,7 +26,9 @@ const mockMessage = {
 describe('nsip-exam-timetable-unpublish', () => {
 	it('logs message', async () => {
 		await sendMessage(mockContext, mockMessage);
-		expect(mockContext.log).toHaveBeenCalledWith('invoking nsip-exam-timetable-unpublish');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			'invoking nsip-exam-timetable-unpublish for caseReference: mock-case-ref'
+		);
 	});
 
 	it('throws an error if caseReference is missing', async () => {

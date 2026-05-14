@@ -19,6 +19,7 @@ const VIEW = {
 			EMAIL_ADDRESS: 'register/myself/email-address',
 			CHECK_YOUR_ANSWERS: 'register/myself/check-answers',
 			DECLARATION: 'register/myself/declaration',
+			PROCESS_SUBMISSION: 'register/myself/process-submission',
 			REGISTRATION_COMPLETE: 'register/myself/registration-complete',
 			ALREADY_REGISTERED: 'register/myself/already-registered'
 		},
@@ -29,6 +30,7 @@ const VIEW = {
 			EMAIL: 'register/organisation/email-address',
 			CHECK_YOUR_ANSWERS: 'register/organisation/check-answers',
 			DECLARATION: 'register/organisation/declaration',
+			PROCESS_SUBMISSION: 'register/organisation/process-submission',
 			REGISTRATION_COMPLETE: 'register/organisation/registration-complete',
 			ALREADY_REGISTERED: 'register/organisation/already-registered'
 		},
@@ -40,6 +42,7 @@ const VIEW = {
 			ORGANISATION_NAME: 'register/agent/name-of-organisation',
 			CHECK_YOUR_ANSWERS: 'register/agent/check-answers',
 			DECLARATION: 'register/agent/declaration',
+			PROCESS_SUBMISSION: 'register/agent/process-submission',
 			REGISTRATION_COMPLETE: 'register/agent/registration-complete',
 			ALREADY_REGISTERED: 'register/agent/already-registered'
 		}

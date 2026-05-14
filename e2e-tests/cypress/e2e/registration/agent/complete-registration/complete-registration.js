@@ -28,41 +28,41 @@ const shortComment = 'I am against the proposal since it will reduce resident pa
 
 And('I have been asked to check my answers', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 	telNumber.enterTextIntoTelephoneNumberField('123456789');
-	cy.clickSaveAndContinue();
+	telNumber.clickSaveAndContinue();
 	whoYouRepresenting.selectRadioOption('A person');
-	cy.clickSaveAndContinue();
+	whoYouRepresenting.clickSaveAndContinue();
 	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	repName.clickSaveAndContinue();
+	repEmailAddress.selectRadioYesOrNo('Yes');
+	repEmailAddress.clickSaveAndContinue();
 	repEmailAddress.enterTextIntoRepEmailField('representeetestpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	repEmailAddress.clickSaveAndContinue();
 	repAddressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Representee Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	repAddressDetails.clickSaveAndContinue();
 	repTelNumber.enterTextIntoRepTelephoneNumberField('12121212121');
-	cy.clickSaveAndContinue();
+	repTelNumber.clickSaveAndContinue();
 	tellAboutProject.enterTextIntoCommentsField(shortComment);
-	cy.clickSaveAndContinue();
+	tellAboutProject.clickSaveAndContinue();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	cyaBeforeReg.assertOnPage(pageName);
 });
 
 And(
@@ -73,21 +73,11 @@ And(
 );
 
 And('User clicks on accept and continue button for {string}', (linkType) => {
-	switch (linkType) {
-		case 'myself':
-			cy.clickOnHref('/register/myself/declaration');
-			break;
-		case 'organisation':
-			cy.clickOnHref('/register/organisation/declaration');
-			break;
-		case 'on behalf':
-			cy.clickOnHref('/register/agent/declaration');
-			break;
-	}
+	cyaBeforeReg.clickDeclarationLink(linkType);
 });
 
 And('User clicks on accept and register button', () => {
-	cy.get('[data-cy="button-accept-and-regoster"]').click();
+	cyaBeforeReg.clickAcceptAndRegister();
 });
 
 And('I click on {string} change link', (linkType) => {

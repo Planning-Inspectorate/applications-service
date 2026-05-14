@@ -40,19 +40,35 @@ describe('examination/file-upload/fileValidation', () => {
 	describe('#moreThanXAmountFiles', () => {
 		describe('when the amount of files uploaded and in session', () => {
 			describe('are more than the total allowed', () => {
-				const filesToAdd = [21];
-				const currentFiles = 20;
+				const filesToAdd = Array.from({ length: 51 }, (_, i) => i + 1);
+				const currentFiles = 0;
 				const result = moreThanXAmountFiles(i18n, filesToAdd, currentFiles);
 				it('should then return the maximum file upload error', () => {
-					expect(result).toEqual('You can only select a total of 20 files per submission');
+					expect(result).toEqual('You can only select a total of 50 files per submission');
 				});
 			});
 			describe('are less than the total allowed', () => {
 				const filesToAdd = [5];
-				const currentFiles = [1, 2, 3, 4];
+				const currentFiles = 4;
 				const result = moreThanXAmountFiles(i18n, filesToAdd, currentFiles);
 				it('should return empty', () => {
 					expect(result).toEqual();
+				});
+			});
+			describe('are exactly at the total allowed boundary', () => {
+				const filesToAdd = [1];
+				const currentFiles = 49;
+				const result = moreThanXAmountFiles(i18n, filesToAdd, currentFiles);
+				it('should allow the upload', () => {
+					expect(result).toEqual();
+				});
+			});
+			describe('exceed the total allowed when combining current and new files', () => {
+				const filesToAdd = Array.from({ length: 26 }, (_, i) => i + 1);
+				const currentFiles = 25;
+				const result = moreThanXAmountFiles(i18n, filesToAdd, currentFiles);
+				it('should reject the upload', () => {
+					expect(result).toEqual('You can only select a total of 50 files per submission');
 				});
 			});
 		});

@@ -10,15 +10,15 @@ const jobTitlePage = new PO_WhatIsJobTitle();
 
 Given('I have been asked to provide my job title or volunteer role', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
+	fullNamePage.selectRadioYesOrNo('Yes');
+	fullNamePage.clickSaveAndContinue();
 	orgNamePage.enterTextIntoOrganisationNameField('Organisation name');
-	cy.clickSaveAndContinue();
-	cy.assertUserOnThePage('What is your job title or volunteer role?');
+	orgNamePage.clickSaveAndContinue();
+	jobTitlePage.assertOnPage('What is your job title or volunteer role?');
 });
 
 When('I continue with the value {string} in the job title or role field', (inputData) => {
 	jobTitlePage.enterTextIntoJobTitleField(inputData);
-	cy.clickSaveAndContinue();
+	jobTitlePage.clickSaveAndContinue();
 });

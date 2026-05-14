@@ -22,44 +22,44 @@ const repTelNumber = new PO_RepTelNumber();
 
 And('I have been asked what is representee telephone number', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 	telNumber.enterTextIntoTelephoneNumberField('123456789');
-	cy.clickSaveAndContinue();
+	telNumber.clickSaveAndContinue();
 	whoYouRepresenting.selectRadioOption('A person');
-	cy.clickSaveAndContinue();
+	whoYouRepresenting.clickSaveAndContinue();
 	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	repName.clickSaveAndContinue();
+	repName.selectRadioYesOrNo('Yes');
+	repName.clickSaveAndContinue();
 	repEmailAddress.enterTextIntoRepEmailField('representeetestpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	repEmailAddress.clickSaveAndContinue();
 	repAddressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Representee Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	repAddressDetails.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the representee telephone number field', (text) => {
 	repTelNumber.enterTextIntoRepTelephoneNumberField(text);
-	cy.clickSaveAndContinue();
+	repTelNumber.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	repTelNumber.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	repTelNumber.assertOnPage(pageName);
 });

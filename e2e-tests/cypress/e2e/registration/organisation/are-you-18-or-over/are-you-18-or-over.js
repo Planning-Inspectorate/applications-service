@@ -4,9 +4,9 @@ const fullNamePage = new PO_FullName();
 
 And('I have been asked whether I am 18 or over', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 });
 
 When('user selects {string} radio option on are you 18 or over page', (radioChoice) => {
-	cy.selectRadioYesOrNo(radioChoice);
+	fullNamePage.selectRadioYesOrNo(radioChoice);
 });

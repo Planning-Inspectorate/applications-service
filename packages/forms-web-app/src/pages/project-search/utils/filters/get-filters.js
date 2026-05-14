@@ -1,12 +1,8 @@
-const {
-	getActiveFiltersViewModel
-} = require('../../../_utils/filters/get-active-filters-view-model');
-const { getFiltersViewModel } = require('./get-filters-view-model');
+const { getFilters: getSharedFilters } = require('../../../_utils/filters/get-filters');
+const { projectSearchI18nNamespace } = require('../../config');
+const { getProjectSearchURL } = require('../get-project-search-url');
 
-const getFilters = (i18n, query, rawFilters) => {
-	const filtersViewModel = getFiltersViewModel(i18n, rawFilters);
-
-	return getActiveFiltersViewModel(query, filtersViewModel);
-};
+const getFilters = (i18n, query, rawFilters) =>
+	getSharedFilters(i18n, query, rawFilters, projectSearchI18nNamespace, getProjectSearchURL());
 
 module.exports = { getFilters };
