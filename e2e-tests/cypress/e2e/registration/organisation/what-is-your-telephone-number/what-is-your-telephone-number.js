@@ -14,26 +14,26 @@ const jobTitlePage = new PO_WhatIsJobTitle();
 
 Given('I have been asked to provide my telephone number', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
+	fullNamePage.selectRadioYesOrNo('Yes');
+	fullNamePage.clickSaveAndContinue();
 	orgNamePage.enterTextIntoOrganisationNameField('Organisation name');
-	cy.clickSaveAndContinue();
-	cy.assertUserOnThePage('What is your job title or volunteer role?');
+	orgNamePage.clickSaveAndContinue();
+	jobTitlePage.assertOnPage('What is your job title or volunteer role?');
 	jobTitlePage.enterTextIntoJobTitleField('Test job title');
-	cy.clickSaveAndContinue();
+	jobTitlePage.clickSaveAndContinue();
 	emailAddressPage.enterTextIntoEmailField('test@test.com');
-	cy.clickSaveAndContinue();
+	emailAddressPage.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0QQ',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
-	cy.assertUserOnThePage('what is your telephone number? organisation');
+	addressDetails.clickSaveAndContinue();
+	teleNumberPage.assertOnPage('what is your telephone number? organisation');
 });
 
 When('I continue with the value {string} in the telephone number field', (text) => {
 	teleNumberPage.enterTextIntoTelephoneNumberField(text);
-	cy.clickSaveAndContinue();
+	teleNumberPage.clickSaveAndContinue();
 });
