@@ -1,5 +1,5 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_ProjectAppDocs from './PageObjects/PO_ProjectAppDocs';
+import PO_ProjectAppDocs from '../PageObjects/PO_ProjectAppDocs';
 const projectAppDocs = new PO_ProjectAppDocs();
 
 Given('I navigate to {string} project Overview page', (projectName) => {
