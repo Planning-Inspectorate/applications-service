@@ -1,5 +1,5 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import PO_StartPage from './PageObjects/PO_StartPage';
+import PO_StartPage from '../PageObjects/PO_StartPage';
 
 const startPage = new PO_StartPage();
 

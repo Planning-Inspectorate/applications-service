@@ -1,6 +1,6 @@
 import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_GuideNavigation from '../common/PageObjects/PO_GuideNavigation';
-import PO_GetInvolvedInPreliminaryMeeting from './PageObjects/PO_GetInvolvedInPreliminaryMeeting';
+import PO_GuideNavigation from '../../common/PageObjects/PO_GuideNavigation';
+import PO_GetInvolvedInPreliminaryMeeting from '../PageObjects/PO_GetInvolvedInPreliminaryMeeting';
 
 const guideNavigation = new PO_GuideNavigation();
 const getInvolvedInPreliminaryMeeting = new PO_GetInvolvedInPreliminaryMeeting();

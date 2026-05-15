@@ -1,5 +1,5 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_RegisterToSayAboutNationalInfraProject from './PageObjects/PO_RegisterToSayAboutNationalInfraProject';
+import PO_RegisterToSayAboutNationalInfraProject from '../PageObjects/PO_RegisterToSayAboutNationalInfraProject';
 const registerToSayAboutNationalInfraProject = new PO_RegisterToSayAboutNationalInfraProject();
 
 Given('I have navigated to the "Have your say" guide', () => {

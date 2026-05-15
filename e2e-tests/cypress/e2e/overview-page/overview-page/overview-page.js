@@ -1,5 +1,5 @@
 import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_OverviewPage from './PageObjects/PO_OverviewPage';
+import PO_OverviewPage from '../PageObjects/PO_OverviewPage';
 const overviewPage = new PO_OverviewPage();
 
 Given('I navigate to {string} project Overview page', (projectName) => {

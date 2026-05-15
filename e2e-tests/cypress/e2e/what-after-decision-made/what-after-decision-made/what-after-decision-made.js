@@ -1,6 +1,6 @@
 import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_GuideNavigation from '../common/PageObjects/PO_GuideNavigation';
-import PO_WhatAfterDecisionMade from './PageObjects/PO_WhatAfterDecisionMade';
+import PO_GuideNavigation from '../../common/PageObjects/PO_GuideNavigation';
+import PO_WhatAfterDecisionMade from '../PageObjects/PO_WhatAfterDecisionMade';
 
 const guideNavigation = new PO_GuideNavigation();
 const afterDecisionMade = new PO_WhatAfterDecisionMade();
