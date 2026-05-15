@@ -1,6 +1,6 @@
 import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_WhoYouRegisterFor from '../registration/who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
-import PO_CookiePage from './PageObjects/PO_CookiePage';
+import PO_WhoYouRegisterFor from '../../registration/who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
+import PO_CookiePage from '../PageObjects/PO_CookiePage';
 const whoYouRegisterForPage = new PO_WhoYouRegisterFor();
 const cookiePage = new PO_CookiePage();
 

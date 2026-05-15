@@ -23,3 +23,4 @@ Feature: Examination timetable
         When I open the local examination submission page
         Then the no open deadlines message is displayed on the examination submission page
         And the examination submission form is not displayed
+

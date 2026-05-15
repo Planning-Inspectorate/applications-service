@@ -20,7 +20,7 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 			const dateUpcoming = '2023-01-03';
 			const datePast = '2023-01-01';
 			const mockAppData = {
-				CaseReference: 'mock case reference',
+				caseRef: 'mock case reference',
 				dateOfNonAcceptance: '2023-01-01'
 			};
 
@@ -50,6 +50,7 @@ describe('controllers/projects/examination-timetable/utils/events/get-events', (
 			});
 
 			it('should return the events formatted to the view model', () => {
+				expect(getTimetables).toHaveBeenCalledWith('mock case reference');
 				expect(result).toEqual({
 					hasOpenTimetables: false,
 					past: {
