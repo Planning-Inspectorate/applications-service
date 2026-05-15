@@ -16,32 +16,32 @@ const repName = new PO_RepName();
 
 And('I have been asked to provide details of the name of the person you are representing', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 	telNumber.enterTextIntoTelephoneNumberField('123456789');
-	cy.clickSaveAndContinue();
+	telNumber.clickSaveAndContinue();
 	whoYouRepresenting.selectRadioOption('A person');
-	cy.clickSaveAndContinue();
+	whoYouRepresenting.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	repName.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	repName.assertOnPage(pageName);
 });
 
 When('I continue with the value {string} in the representee name field', (text) => {
 	repName.enterTextIntoRepNameField(text);
-	cy.clickSaveAndContinue();
+	repName.clickSaveAndContinue();
 });

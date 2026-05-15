@@ -1,5 +1,8 @@
-class PO_DateFilter {
+import { BasePage } from '../../shared/PageObjects/BasePage';
+
+class PO_DateFilter extends BasePage {
 	identifiers = {
+		...this.identifiers,
 		datePublishedLink: () =>
 			cy.contains('.ui-checkbox-accordion__section-switch-title', 'Date published'),
 		fromDay: () => cy.get('#docments-page-date-from-form-group-day'),
@@ -32,6 +35,14 @@ class PO_DateFilter {
 
 	datePublishedLink() {
 		this.identifiers.datePublishedLink().click();
+	}
+
+	openLocalDocumentsPage(caseId) {
+		cy.visit(`/projects/${caseId}/documents`);
+	}
+
+	assertOnLocalDocumentsPage(caseId) {
+		cy.url().should('include', `/projects/${caseId}/documents`);
 	}
 
 	fromDay() {

@@ -10,7 +10,10 @@ parameters:
 
 name: applications-e2e-$(Date:yyyyMMdd)$(Rev:.r)
 
-trigger: none
+trigger:
+  branches:
+    include:
+      - gh-readonly-queue/main/*
 
 pr:
   autoCancel: true
@@ -59,7 +62,11 @@ jobs:
     displayName: Smoke E2E (PR)
     condition: >-
       or(
-        eq(variables['Build.Reason'], 'PullRequest'),
+        and(
+          eq(variables['Build.Reason'], 'PullRequest'),
+          not(startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/dependabot/'))
+        ),
+        startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue/main/'),
         and(
           eq(variables['Build.Reason'], 'Manual'),
           or(
@@ -70,7 +77,9 @@ jobs:
       )
     timeoutInMinutes: 35
     pool:
-      vmImage: 'ubuntu-latest'
+      name: pins-odt-agent-pool-tests
+      demands:
+        - Agent.OS -equals Linux
 
     steps:
       - template: pipelines/templates/e2e-job-steps.yml
@@ -78,13 +87,13 @@ jobs:
           runDisplayName: Run smoke E2E suite
           runScript: |
             cd e2e-tests
-            npm run test:e2e:smoke
+            npx cypress-tags run -b "$(CypressBrowser)" --env TAGS="@smoketest and not (@wip or @ignore)" --config video=false
           screenshotsArtifact: cypress-screenshots-smoke
           reportArtifact: cypress-html-report-smoke
           logsArtifact: cypress-supporting-logs-smoke
 
   - job: Regression_E2E
-    displayName: Regression E2E (Shard $(SHARD_INDEX)/$(SHARD_COUNT))
+    displayName: Regression E2E
     condition: >-
       or(
         eq(variables['Build.Reason'], 'Schedule'),
@@ -98,28 +107,18 @@ jobs:
       )
     timeoutInMinutes: 60
     pool:
-      vmImage: 'ubuntu-latest'
+      name: pins-odt-agent-pool-tests
+      demands:
+        - Agent.OS -equals Linux
     strategy:
       matrix:
-        shard_1:
+        shard_1_of_2:
           SHARD_INDEX: '1'
-          SHARD_COUNT: '6'
-        shard_2:
+          SHARD_COUNT: '2'
+        shard_2_of_2:
           SHARD_INDEX: '2'
-          SHARD_COUNT: '6'
-        shard_3:
-          SHARD_INDEX: '3'
-          SHARD_COUNT: '6'
-        shard_4:
-          SHARD_INDEX: '4'
-          SHARD_COUNT: '6'
-        shard_5:
-          SHARD_INDEX: '5'
-          SHARD_COUNT: '6'
-        shard_6:
-          SHARD_INDEX: '6'
-          SHARD_COUNT: '6'
-      maxParallel: 6
+          SHARD_COUNT: '2'
+      maxParallel: 2
 
     steps:
       - template: pipelines/templates/e2e-job-steps.yml
@@ -144,7 +143,7 @@ jobs:
 
             echo "Running shard $(SHARD_INDEX) of $(SHARD_COUNT)"
             echo "$SPEC_LIST" | tr ',' '\n'
-            npx cypress-tags run -b chrome --env TAGS="not (@wip or @ignore)" --glob "$SPEC_GLOB"
+            npx cypress-tags run -b "$(CypressBrowser)" --env TAGS="not (@wip or @ignore)" --glob "$SPEC_GLOB"
           screenshotsArtifact: cypress-screenshots-regression-$(SHARD_INDEX)
           reportArtifact: cypress-html-report-regression-$(SHARD_INDEX)
           logsArtifact: cypress-supporting-logs-regression-$(SHARD_INDEX)

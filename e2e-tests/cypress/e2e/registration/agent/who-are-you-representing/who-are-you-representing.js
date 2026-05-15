@@ -14,19 +14,19 @@ const whoYouRepresenting = new PO_WhoYouRepresenting();
 
 And('I have been asked to provide details of who am I representing', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 	telNumber.enterTextIntoTelephoneNumberField('123456789');
-	cy.clickSaveAndContinue();
+	telNumber.clickSaveAndContinue();
 });
 
 And('user selects {string} on who are you representing page', (radioChoice) => {
@@ -34,9 +34,9 @@ And('user selects {string} on who are you representing page', (radioChoice) => {
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	whoYouRepresenting.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	whoYouRepresenting.assertOnPage(pageName);
 });

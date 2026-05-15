@@ -25,35 +25,35 @@ const tellAboutProject = new PO_TellAboutProject();
 
 And('I have been asked to provide comments on a proposed project', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 	emailAddress.enterTextIntoEmailField('testpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	emailAddress.clickSaveAndContinue();
 	addressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 	telNumber.enterTextIntoTelephoneNumberField('123456789');
-	cy.clickSaveAndContinue();
+	telNumber.clickSaveAndContinue();
 	whoYouRepresenting.selectRadioOption('A person');
-	cy.clickSaveAndContinue();
+	whoYouRepresenting.clickSaveAndContinue();
 	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	repName.clickSaveAndContinue();
+	repName.selectRadioYesOrNo('Yes');
+	repName.clickSaveAndContinue();
 	repEmailAddress.enterTextIntoRepEmailField('representeetestpins2@gmail.com');
-	cy.clickSaveAndContinue();
+	repEmailAddress.clickSaveAndContinue();
 	repAddressDetails.enterTextFromObjectIntoAddressFields({
 		AddressLine1: 'Representee Address Line 1',
 		PostCode: 'NE27 0BB',
 		Country: 'United Kingdom'
 	});
-	cy.clickSaveAndContinue();
+	repAddressDetails.clickSaveAndContinue();
 	repTelNumber.enterTextIntoRepTelephoneNumberField('12121212121');
-	cy.clickSaveAndContinue();
+	repTelNumber.clickSaveAndContinue();
 });
 
 registerCommentPageSteps({ And, Then, When }, tellAboutProject, 'testpins2@gmail.com');

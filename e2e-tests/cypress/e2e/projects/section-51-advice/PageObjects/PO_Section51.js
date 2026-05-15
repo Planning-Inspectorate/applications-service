@@ -1,5 +1,8 @@
-export class PO_Section51 {
+import { BasePage } from '../../shared/PageObjects/BasePage';
+
+export class PO_Section51 extends BasePage {
 	identifiers = {
+		...this.identifiers,
 		resultsPanel: () => cy.get('.ui-results'),
 		backToListBtn: () => cy.contains('Back to list'),
 		govLink: () => cy.get('.govuk-link'),
@@ -22,6 +25,18 @@ export class PO_Section51 {
 
 	assertResultsPanel() {
 		this.identifiers.resultsPanel().should('be.visible');
+	}
+
+	openLocalSection51AdvicePage(caseId) {
+		cy.visit(`/projects/${caseId}/s51advice`);
+	}
+
+	assertOnLocalSection51AdvicePage(caseId) {
+		cy.url().should('include', `/projects/${caseId}/s51advice`);
+	}
+
+	assertUrlIncludes(value) {
+		cy.url().should('include', value);
 	}
 
 	verifyResultStructure() {
