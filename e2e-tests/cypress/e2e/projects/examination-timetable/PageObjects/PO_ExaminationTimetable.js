@@ -4,26 +4,10 @@ class PO_ExaminationTimetable extends BasePage {
 	identifiers = {
 		...this.identifiers,
 		pageHeading: () => cy.get('h1'),
-		bodyText: () => cy.get('body'),
 		pastEvents: () => cy.get('#examination-timetable-events-accordion .section-events__event'),
 		projectNavigation: () => cy.get('nav[aria-label="Project navigation"]'),
 		submissionContinueButton: () => cy.get('[data-cy="button-submit-and-continue"]')
 	};
-
-	get functions() {
-		return new Proxy(
-			{},
-			{
-				get: (_, prop) => {
-					const value = this[prop];
-					if (typeof value !== 'function') {
-						throw new Error(`Function "${String(prop)}" was not found on ${this.constructor.name}`);
-					}
-					return value.bind(this);
-				}
-			}
-		);
-	}
 
 	openTimetablePage(caseId) {
 		cy.visit(`/projects/${caseId}/examination-timetable`);
@@ -35,12 +19,12 @@ class PO_ExaminationTimetable extends BasePage {
 
 	assertNoUpcomingDeadlinesState() {
 		this.identifiers.pageHeading().contains('Examination timetable').should('be.visible');
-		this.identifiers.bodyText().should('contain.text', 'Upcoming deadlines and events');
-		this.identifiers.bodyText().should('contain.text', 'There are no deadlines and events');
+		cy.contains('Upcoming deadlines and events').should('be.visible');
+		cy.contains('There are no deadlines and events').should('be.visible');
 	}
 
 	assertPastDeadlinesState() {
-		this.identifiers.bodyText().should('contain.text', 'Past deadlines and events');
+		cy.contains('Past deadlines and events').should('be.visible');
 		this.identifiers.pastEvents().its('length').should('be.gte', 1);
 	}
 
@@ -68,14 +52,12 @@ class PO_ExaminationTimetable extends BasePage {
 
 	assertNoOpenDeadlinesMessage() {
 		this.identifiers.pageHeading().contains('Have your say on an application').should('be.visible');
-		this.identifiers
-			.bodyText()
-			.should('contain.text', 'You cannot submit anything as there are no open deadlines.');
+		cy.contains('You cannot submit anything as there are no open deadlines.').should('be.visible');
 	}
 
 	assertSubmissionFormHidden() {
 		this.identifiers.submissionContinueButton().should('not.exist');
-		this.identifiers.bodyText().should('not.contain.text', 'What is your full name?');
+		cy.contains('What is your full name?').should('not.exist');
 	}
 }
 

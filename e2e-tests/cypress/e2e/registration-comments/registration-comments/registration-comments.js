@@ -1,5 +1,5 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_RegComments from './PageObjects/PO_RegComments';
+import PO_RegComments from '../PageObjects/PO_RegComments';
 const regComments = new PO_RegComments();
 
 Given('I navigate to {string} project Overview page', (projectName) => {
