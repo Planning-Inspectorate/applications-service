@@ -3,6 +3,7 @@ const sharedConfig = require('../../jest.config.js');
 module.exports = {
 	...sharedConfig,
 	clearMocks: true,
+	transformIgnorePatterns: ['/node_modules/(?!(ol|ol-ext|proj4)/)'],
 	collectCoverageFrom: ['./src/**/*.js'],
 	coveragePathIgnorePatterns: [
 		'node_modules',
