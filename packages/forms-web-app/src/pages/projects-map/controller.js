@@ -2,6 +2,7 @@ const logger = require('../../lib/logger');
 const { getApplications } = require('../../services/applications.service');
 const { getMapAccessToken } = require('../_services');
 const { getFilters } = require('../_utils/filters/get-filters');
+const { GeoJSONBuilder } = require('../_utils/geo-json-builder');
 const { projectsMapI18nNamespace } = require('./config');
 const {
 	getProjectSearchQueryString
@@ -12,52 +13,6 @@ const { getProjectsMapURL } = require('./utils/get-projects-map-url');
 const { queryStringBuilder } = require('../../utils/query-string-builder');
 
 const view = 'projects-map/view.njk';
-
-/**
- * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
- * Applications without valid LongLat coordinates are silently excluded.
- */
-/** Maps numeric DB Stage value to display label. Mirrors NI_MAPPING.stage in application.mapper.js. */
-const STAGE_LABELS = {
-	0: 'Draft',
-	1: 'Pre-application',
-	2: 'Acceptance',
-	3: 'Pre-examination',
-	4: 'Examination',
-	5: 'Recommendation',
-	6: 'Decision',
-	7: 'Post-decision',
-	8: 'Withdrawn'
-};
-
-/**
- * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
- * Applications without valid LongLat coordinates are silently excluded.
- * @param {Object[]} applications
- * @returns {Object} GeoJSON FeatureCollection
- */
-const toGeoJSON = (applications) => ({
-	type: 'FeatureCollection',
-	features: applications
-		.map((app) => {
-			const coords = app.LongLat;
-			if (!coords || coords.length < 2 || !coords[0] || !coords[1]) return null;
-			const lng = parseFloat(coords[0]);
-			const lat = parseFloat(coords[1]);
-			if (isNaN(lng) || isNaN(lat)) return null;
-			return {
-				type: 'Feature',
-				geometry: { type: 'Point', coordinates: [lng, lat] },
-				properties: {
-					caseReference: app.CaseReference,
-					projectName: app.ProjectName,
-					stage: STAGE_LABELS[app.Stage] || app.Stage,
-					projectURL: `/projects/${app.CaseReference}`
-				}
-			};
-		})
-		.filter(Boolean)
-});
 
 /**
  * GET /projects-map
@@ -74,7 +29,12 @@ const getProjectsMapController = async (req, res, next) => {
 			return res.redirect('/projects-map');
 		}
 
-		// Fetch applications and OS Maps token concurrently
+		// Fetch applications and OS Maps token concurrently.
+		// getApplications() calls GET /api/v1/applications (list endpoint) which returns
+		// applications in NI legacy PascalCase shape: { CaseReference, LongLat, ProjectName, Stage, ... }.
+		// This is different from GET /api/v1/applications/:caseRef (single endpoint) which
+		// returns camelCase: { caseReference, longLat, projectName, ... }.
+		// toGeoJSON() reads app.LongLat (PascalCase) accordingly.
 		const [{ applications, filters: availableFilters }, mapAccessToken] = await Promise.all([
 			getApplications(getProjectSearchQueryString(query)),
 			getMapAccessToken()
@@ -84,10 +44,11 @@ const getProjectsMapController = async (req, res, next) => {
 		const queryParams = searchTerm ? { ...filters, searchTerm } : filters;
 		const queryString = queryStringBuilder(queryParams, Object.keys(queryParams), true);
 
+		const geoJSON = new GeoJSONBuilder().addApplications(applications).build();
 		res.render(view, {
 			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
 			mapAccessToken,
-			mapGeoJSON: JSON.stringify(toGeoJSON(applications)),
+			mapGeoJSON: JSON.stringify(geoJSON),
 			projectSearchURL: getProjectSearchURL(),
 			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
 			query,

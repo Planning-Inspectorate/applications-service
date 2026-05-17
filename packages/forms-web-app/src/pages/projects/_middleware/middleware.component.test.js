@@ -57,6 +57,7 @@ describe('pages/projects/_middleware/middleware', () => {
 				path: 'mock path',
 				projectName: 'mock project name',
 				projectStages: {
+					0: 'Draft',
 					1: 'Pre-application',
 					2: 'Acceptance',
 					3: 'Pre-examination',

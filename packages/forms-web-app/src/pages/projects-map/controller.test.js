@@ -1,6 +1,6 @@
 const { getProjectsMapController, postProjectsMapController } = require('./controller');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
-const { getMapAccessToken } = require('../_services');
+const { getMapAccessToken, getProjectBoundary } = require('../_services');
 const { getApplicationsFixture } = require('../_fixtures');
 const { mockI18n } = require('../_mocks/i18n');
 
@@ -19,7 +19,8 @@ jest.mock('../../lib/application-api-wrapper', () => ({
 }));
 
 jest.mock('../_services', () => ({
-	getMapAccessToken: jest.fn()
+	getMapAccessToken: jest.fn(),
+	getProjectBoundary: jest.fn()
 }));
 
 describe('pages/projects-map/controller', () => {
@@ -30,6 +31,7 @@ describe('pages/projects-map/controller', () => {
 		res = { render: jest.fn() };
 		next = jest.fn();
 		jest.resetAllMocks();
+		getProjectBoundary.mockResolvedValue(null);
 	});
 
 	it('renders view with filters and mapAccessToken', async () => {

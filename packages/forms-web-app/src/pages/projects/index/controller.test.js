@@ -137,7 +137,10 @@ describe('pages/projects/index/controller', () => {
 					proposal: 'Generating Stations',
 					rule6Document: undefined,
 					rule8Document: undefined,
-					recommendationCompletedDate: null
+					recommendationCompletedDate: null,
+					mapGeoJSON:
+						'{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-0.118092,51.509865]},"properties":{}}]}',
+					hasProjectBoundary: false
 				});
 			});
 		});
@@ -187,7 +190,10 @@ describe('pages/projects/index/controller', () => {
 					rule8Document: undefined,
 					decisionCompletedDate: null,
 					recommendationCompletedDate: null,
-					backOfficeCase: false
+					backOfficeCase: false,
+					mapGeoJSON:
+						'{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-0.118092,51.509865]},"properties":{}}]}',
+					hasProjectBoundary: false
 				});
 			});
 		});
