@@ -1,3 +1,14 @@
+/**
+ * @fileoverview Unit tests for {@link module:scripts/projects-map/cluster-style}.
+ *
+ * `clusterStyle` is the OpenLayers style function attached to the AnimatedCluster
+ * layer on /projects-map. It is called once per cluster feature and must return:
+ *   - `null`  when a cluster has been expanded (0 inner features)
+ *   - an array of two Style objects (drop-shadow circle + main circle) for any
+ *     non-empty cluster
+ *
+ * All OL style constructors are mocked so tests run without a browser or canvas.
+ */
 'use strict';
 
 jest.mock('ol/style/Style.js', () => ({
@@ -27,6 +38,16 @@ const Fill = require('ol/style/Fill.js').default;
 const Stroke = require('ol/style/Stroke.js').default;
 const Text = require('ol/style/Text.js').default;
 
+/**
+ * Creates a minimal OL Feature stub that mimics the shape of a cluster feature
+ * as produced by `ol/source/Cluster`.
+ *
+ * AnimatedCluster calls `feature.get('features')` to retrieve the array of
+ * inner (real) features that were grouped into this cluster.
+ *
+ * @param {number} innerCount - Number of inner features the cluster should appear to contain.
+ * @returns {{ get: jest.Mock }} A plain object with a `get` spy.
+ */
 function makeFeature(innerCount) {
 	const inner = Array.from({ length: innerCount }, () => ({}));
 	return { get: jest.fn((key) => (key === 'features' ? inner : undefined)) };

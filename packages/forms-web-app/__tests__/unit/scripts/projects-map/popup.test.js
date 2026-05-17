@@ -1,3 +1,20 @@
+/**
+ * @fileoverview Unit tests for {@link module:scripts/projects-map/popup}.
+ *
+ * `buildPopup` creates the ol-ext Popup overlay added to the /projects-map.
+ * `renderPopup` generates the HTML content shown when a cluster is selected,
+ * listing each grouped project as a linked table row.
+ *
+ * Tests cover:
+ *   - Popup constructor options (close box, auto-pan, positioning)
+ *   - HTML structure: heading count (singular/plural), project link href and
+ *     text, stage cell content, one row per feature
+ *   - Edge cases: missing projectName falls back to caseReference; absent stage
+ *     renders an empty cell
+ *
+ * The ol-ext Popup class is mocked; `show` and `hide` are Jest spies so the
+ * rendered HTML can be inspected without a real overlay or DOM.
+ */
 'use strict';
 
 jest.mock('ol-ext/src/overlay/Popup.js', () => ({ __esModule: true, default: jest.fn() }));
@@ -5,18 +22,28 @@ jest.mock('ol-ext/src/overlay/Popup.js', () => ({ __esModule: true, default: jes
 const { buildPopup, renderPopup } = require('../../../../src/scripts/projects-map/popup');
 const Popup = require('ol-ext/src/overlay/Popup.js').default;
 
-// ─── helpers ─────────────────────────────────────────────────────────────────
-
+/**
+ * Creates a minimal popup stub with `show` and `hide` spies.
+ * Used in `renderPopup` tests to capture the HTML string passed to `show`.
+ *
+ * @returns {{ show: jest.Mock, hide: jest.Mock }}
+ */
 function makePopupInstance() {
 	return { show: jest.fn(), hide: jest.fn() };
 }
 
+/**
+ * Creates a minimal OL Feature stub whose `getProperties()` returns the
+ * project metadata fields that `renderPopup` reads.
+ *
+ * @param {string} caseReference - Project case reference (e.g. `'EN010001'`).
+ * @param {string|undefined} projectName - Human-readable project name.
+ * @param {string|undefined} stage - Current stage label (e.g. `'Examination'`).
+ * @returns {{ getProperties: () => object }}
+ */
 function makeFeature(caseReference, projectName, stage) {
 	return { getProperties: () => ({ caseReference, projectName, stage }) };
 }
-
-// ─── buildPopup ──────────────────────────────────────────────────────────────
-
 describe('buildPopup', () => {
 	it('instantiates Popup with the expected configuration', () => {
 		buildPopup();
@@ -34,8 +61,6 @@ describe('buildPopup', () => {
 		expect(buildPopup()).toBe(instance);
 	});
 });
-
-// ─── renderPopup ─────────────────────────────────────────────────────────────
 
 describe('renderPopup', () => {
 	it('calls popup.show with the provided coordinate', () => {

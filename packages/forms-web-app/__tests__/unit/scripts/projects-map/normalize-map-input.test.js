@@ -1,3 +1,21 @@
+/**
+ * @fileoverview Unit tests for {@link module:scripts/projects-map/normalize-map-input}.
+ *
+ * `normalizeMapInput` accepts any of the map input shapes that controllers can
+ * pass via `data-geojson` and returns a normalised `{ features, mode, warnings }`
+ * object consumed by `projectsMap.initiate()`.
+ *
+ * Input shapes and expected render modes:
+ *   - `null` / `undefined`              → `singlePoint` + warning
+ *   - GeoJSON FeatureCollection (Points) → `singlePoint` (1 feature) or `multiPoint`
+ *   - GeoJSON FeatureCollection (mixed)  → `geojson` (polygon/boundary render)
+ *   - `[lng, lat]` number array          → `singlePoint`
+ *   - `[[lng,lat], ...]` array of arrays → `singlePoint` (1) or `multiPoint` (2+)
+ *   - any other type                     → `singlePoint` + warning
+ *
+ * OL's GeoJSON format, Feature, Point, and proj are all mocked so tests run
+ * in Node without a browser or canvas context.
+ */
 'use strict';
 
 jest.mock('ol/format/GeoJSON.js', () => ({ __esModule: true, default: jest.fn() }));
@@ -37,8 +55,6 @@ beforeEach(() => {
 		this.readFeatures = mockReadFeatures;
 	});
 });
-
-// ─── Tests ───────────────────────────────────────────────────────────────────
 
 describe('normalizeMapInput', () => {
 	describe('null / undefined input', () => {

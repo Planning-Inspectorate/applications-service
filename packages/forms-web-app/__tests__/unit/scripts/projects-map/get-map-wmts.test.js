@@ -1,3 +1,17 @@
+/**
+ * @fileoverview Unit tests for {@link module:scripts/projects-map/get-map-wmts}.
+ *
+ * `getMapWMTS` fetches the OS Maps WMTS GetCapabilities XML that OpenLayers
+ * needs to configure the tile layer. Tests cover:
+ *   - the request is sent to the correct OS Maps capabilities endpoint
+ *   - the OS Maps bearer token is forwarded as an `Authorization` header
+ *   - a successful response body is returned as text
+ *   - non-2xx responses throw an error containing the HTTP status code
+ *
+ * `fetchMock` is the `jest-fetch-mock` global configured in
+ * `__tests__/setupTests.js` via `fetchMock.enableMocks()`. It intercepts
+ * all `fetch` calls so no real HTTP requests are made.
+ */
 'use strict';
 
 /* global fetchMock */
