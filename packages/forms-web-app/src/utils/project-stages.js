@@ -53,6 +53,7 @@ const projectStagesTranslations = {
 };
 
 const projectInfoProjectStages = {
+	0: 'Draft',
 	1: 'Pre-application',
 	2: 'Acceptance',
 	3: 'Pre-examination',
