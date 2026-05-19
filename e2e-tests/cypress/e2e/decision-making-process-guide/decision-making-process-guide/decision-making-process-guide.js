@@ -1,5 +1,5 @@
 import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_GuideNavigation from '../common/PageObjects/PO_GuideNavigation';
+import PO_GuideNavigation from '../../common/PageObjects/PO_GuideNavigation';
 
 const guideNavigation = new PO_GuideNavigation();
 
@@ -17,8 +17,4 @@ And('I click on show all link', () => {
 
 And('I click on {string} link', (pageName) => {
 	guideNavigation.clickGuideLink(pageName);
-});
-
-Then('I verify below links present on Acceptance page', function (table) {
-	guideNavigation.assertLinksPresentOnPage(table);
 });

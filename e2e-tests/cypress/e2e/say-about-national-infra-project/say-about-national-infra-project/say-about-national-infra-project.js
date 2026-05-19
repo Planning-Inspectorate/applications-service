@@ -1,10 +1,10 @@
 import { Given, Then, And } from 'cypress-cucumber-preprocessor/steps';
-import PO_GuideNavigation from '../common/PageObjects/PO_GuideNavigation';
+import PO_GuideNavigation from '../../common/PageObjects/PO_GuideNavigation';
 
 const guideNavigation = new PO_GuideNavigation();
 
-Given('I navigate to Decision making process guide page', () => {
-	guideNavigation.openDecisionMakingProcessGuide();
+Given('I navigate to Having your say about a national infrastructure project page', () => {
+	guideNavigation.openHavingYourSayGuide();
 });
 
 Then('I am on the {string} page', (pageName) => {
