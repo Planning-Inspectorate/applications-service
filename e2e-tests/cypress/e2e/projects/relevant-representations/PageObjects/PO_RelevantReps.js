@@ -1,18 +1,22 @@
-export class PO_RelevantReps {
+import { BasePage } from '../../shared/PageObjects/BasePage';
+
+export class PO_RelevantReps extends BasePage {
 	identifiers = {
+		...this.identifiers,
 		relevantRepsLink: () => cy.get('a[href*="/representations"]'),
 		listOfRelevantReps: () => cy.get('[data-cy="representation"]'),
 		paginationLink: () => cy.get('.moj-pagination__link'),
 		resultsPerPage: (count) => cy.get(`a[href*="itemsPerPage=${count}"]`),
 		searchInput: () => cy.get('#searchTerm'),
 		searchButton: () => cy.get('[data-cy="search-button"]'),
-		FilterOption: () => cy.get('[type="checkbox"]'),
+		filterOption: () => cy.get('[type="checkbox"]'),
 		applyFilterButton: () => cy.get('[data-cy="apply-filter-button"]'),
 		relevantRepTitle: () => cy.get('.ui-results__result-title-link'),
-		relevanteRepHeading: () => cy.get('.govuk-heading-l'),
+		relevantRepHeading: () => cy.get('.govuk-heading-l'),
 		backToResultsLink: () => cy.get('[data-cy="back"]'),
 		noResultsMessage: () => cy.get('[data-cy="no-comments-found"]'),
-		clearSearchLink: () => cy.get('[data-cy="clear-search"]')
+		clearSearchLink: () => cy.get('[data-cy="clear-search"]'),
+		pageHeading: () => cy.get('h1')
 	};
 
 	get functions() {
@@ -55,11 +59,11 @@ export class PO_RelevantReps {
 	}
 
 	checkFilter(string) {
-		this.identifiers.FilterOption().check(string);
+		this.identifiers.filterOption().check(string);
 	}
 
 	uncheckFilter(string) {
-		this.identifiers.FilterOption().uncheck(string);
+		this.identifiers.filterOption().uncheck(string);
 	}
 
 	clickApplyFilters() {
@@ -71,7 +75,7 @@ export class PO_RelevantReps {
 	}
 
 	returnRepHeading() {
-		return this.identifiers.relevanteRepHeading();
+		return this.identifiers.relevantRepHeading();
 	}
 
 	clickBackToResults() {
@@ -84,5 +88,17 @@ export class PO_RelevantReps {
 
 	clickClearSearch() {
 		this.identifiers.clearSearchLink().click();
+	}
+
+	openLocalRelevantRepresentationsPage(caseId) {
+		cy.visit(`/projects/${caseId}/representations`);
+	}
+
+	assertRelevantRepresentationsHeading() {
+		this.identifiers.pageHeading().contains('Relevant representations').should('be.visible');
+	}
+
+	assertUrlIncludes(value) {
+		cy.url().should('include', value);
 	}
 }

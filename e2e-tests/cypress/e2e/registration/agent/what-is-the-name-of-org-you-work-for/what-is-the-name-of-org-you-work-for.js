@@ -6,18 +6,18 @@ const orgYouWorkFor = new PO_OrgYouWorkFor();
 
 And('I have been asked what is the name of the organisation you work for', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 });
 
 When('I continue with the value {string} in the organisation name field', (text) => {
 	orgYouWorkFor.enterTextIntoOrgNameField(text);
-	cy.clickSaveAndContinue();
+	orgYouWorkFor.clickSaveAndContinue();
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	orgYouWorkFor.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	orgYouWorkFor.assertOnPage(pageName);
 });

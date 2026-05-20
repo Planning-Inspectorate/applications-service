@@ -10,7 +10,10 @@ parameters:
 
 name: applications-e2e-$(Date:yyyyMMdd)$(Rev:.r)
 
-trigger: none
+trigger:
+  branches:
+    include:
+      - gh-readonly-queue/main/*
 
 pr:
   autoCancel: true
@@ -59,7 +62,11 @@ jobs:
     displayName: Smoke E2E (PR)
     condition: >-
       or(
-        eq(variables['Build.Reason'], 'PullRequest'),
+        and(
+          eq(variables['Build.Reason'], 'PullRequest'),
+          not(startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/dependabot/'))
+        ),
+        startsWith(variables['Build.SourceBranch'], 'refs/heads/gh-readonly-queue/main/'),
         and(
           eq(variables['Build.Reason'], 'Manual'),
           or(
@@ -105,25 +112,13 @@ jobs:
         - Agent.OS -equals Linux
     strategy:
       matrix:
-        shard_1_of_6:
+        shard_1_of_2:
           SHARD_INDEX: '1'
-          SHARD_COUNT: '6'
-        shard_2_of_6:
+          SHARD_COUNT: '2'
+        shard_2_of_2:
           SHARD_INDEX: '2'
-          SHARD_COUNT: '6'
-        shard_3_of_6:
-          SHARD_INDEX: '3'
-          SHARD_COUNT: '6'
-        shard_4_of_6:
-          SHARD_INDEX: '4'
-          SHARD_COUNT: '6'
-        shard_5_of_6:
-          SHARD_INDEX: '5'
-          SHARD_COUNT: '6'
-        shard_6_of_6:
-          SHARD_INDEX: '6'
-          SHARD_COUNT: '6'
-      maxParallel: 6
+          SHARD_COUNT: '2'
+      maxParallel: 2
 
     steps:
       - template: pipelines/templates/e2e-job-steps.yml

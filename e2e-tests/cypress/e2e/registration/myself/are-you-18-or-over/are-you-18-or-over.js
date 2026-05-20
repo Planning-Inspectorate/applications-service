@@ -1,30 +1,28 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_FullName from '../full-name/PageObjects/PO_FullName';
+import PO_WhoYouRegisterFor from '../../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
 const fullNamePage = new PO_FullName();
+const whoYouRegisterForPage = new PO_WhoYouRegisterFor();
 
 Given('I navigate to Are you 18 or over page', () => {
-	cy.visit('/project-search');
-	cy.clickProjectLink('North Lincolnshire Green Energy Park');
-	cy.clickOnHref('/register-have-your-say');
-	cy.clickOnHref('who-registering-for');
-	cy.selectRadioOption('Myself');
-	cy.clickSaveAndContinue();
+	whoYouRegisterForPage.navigatetoTypeOfPartyPage();
+	whoYouRegisterForPage.selectPartyAndContinue('Myself');
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 });
 
 And('User clicks on continue button', () => {
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 });
 
 Then('below error message should be presented on are you 18 or over page', function (table) {
-	cy.assertErrorMessage(table);
+	fullNamePage.assertErrorMessages(table);
 });
 
 When('user selects {string} radio option on are you 18 or over page', (radioChoice) => {
-	cy.selectRadioYesOrNo(radioChoice);
+	fullNamePage.selectRadioYesOrNo(radioChoice);
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	fullNamePage.assertOnPage(pageName);
 });

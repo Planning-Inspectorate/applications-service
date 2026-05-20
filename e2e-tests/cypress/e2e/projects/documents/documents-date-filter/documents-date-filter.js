@@ -26,8 +26,8 @@ function assertPublishedDatesMatch(predicate) {
 }
 
 Given('I open the local documents page', () => {
-	cy.visit(`/projects/${northLincolnshire.id}/documents`);
-	cy.url().should('include', `/projects/${northLincolnshire.id}/documents`);
+	dateFilter.openLocalDocumentsPage(northLincolnshire.id);
+	dateFilter.assertOnLocalDocumentsPage(northLincolnshire.id);
 });
 
 When('I enter {string} {string} {string} into the from published date filter', (dd, mm, yyyy) => {

@@ -1,5 +1,8 @@
-class PO_CyaBeforeReg {
+import PageObject from '../../../../PageObject';
+
+class PO_CyaBeforeReg extends PageObject {
 	identifiers = {
+		...this.identifiers,
 		summaryListKeys: () => cy.get('.govuk-summary-list__key'),
 		summaryListValues: () => cy.get('.govuk-summary-list__value'),
 		summaryListActions: () => cy.get('.govuk-summary-list__actions'),
@@ -75,6 +78,19 @@ class PO_CyaBeforeReg {
 			case 'Your comments change':
 				this.identifiers.commentChangeLink().click();
 				break;
+		}
+	}
+
+	clickDeclarationLink(linkType) {
+		switch (linkType) {
+			case 'myself':
+				this.clickLinkByHref('/register/myself/declaration');
+				break;
+			case 'organisation':
+				this.clickLinkByHref('/register/organisation/declaration');
+				break;
+			default:
+				throw new Error(`No declaration link found for ${linkType}`);
 		}
 	}
 }
