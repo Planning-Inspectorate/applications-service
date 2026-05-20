@@ -51,36 +51,6 @@ const cssVar = (name, fallback) =>
 
 function projectsMap() {
 	/**
-	 * Reads all map configuration from an element's dataset and calls `initiate`.
-	 * Expects the element to have: data-token, data-geojson, and optionally data-zoom.
-	 * @param {string} elementId
-	 */
-	this.initiateFromElement = (el) => {
-		if (!el) {
-			logger.error('[projects-map] initiateFromElement: element not found');
-			return;
-		}
-		const { token, geojson, longlat, zoom } = el.dataset;
-		if (!token) {
-			logger.error('[projects-map] initiateFromElement: missing data-token on #' + el.id);
-			return;
-		}
-		let parsedGeojson = null;
-		if (geojson && geojson !== 'null') {
-			try {
-				parsedGeojson = JSON.parse(geojson);
-			} catch {
-				logger.error('[projects-map] initiateFromElement: malformed data-geojson on #' + el.id);
-			}
-		}
-		const coords = longlat ? longlat.split(',').map(Number) : null;
-		const parsedLonglat = coords && coords.every(isFinite) ? coords : null;
-		const mapInput = parsedGeojson || parsedLonglat;
-		const options = { zoom: zoom !== undefined ? Number(zoom) : undefined };
-		return this.initiate(token, el.id, mapInput, options);
-	};
-
-	/**
 	 * Initialises the map on the given DOM element.
 	 *
 	 * Accepts a GeoJSON FeatureCollection, a single `[lng, lat]` coordinate, or an array

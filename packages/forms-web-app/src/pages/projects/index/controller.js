@@ -52,7 +52,7 @@ const getProjectsIndexController = async (req, res, next) => {
 			]);
 
 		// TODO: set to applicationData.geojson once the API returns boundary GeoJSON on the application record
-		const hasProjectBoundary = false;
+		const hasProjectBoundary = applicationData.geojson != null;
 		const mapGeoJSON = hasProjectBoundary
 			? JSON.stringify(applicationData.geojson)
 			: JSON.stringify(new GeoJSONBuilder().addPoint(applicationData.longLat).build());

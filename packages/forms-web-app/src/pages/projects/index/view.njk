@@ -24,7 +24,7 @@
 				src: "https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"
 			},
 			{
-				callback: "new appScripts['projects-map'].default().initiateFromElement(document.getElementById('map'));",
+				callback: "var el = document.getElementById('map'); var map = new appScripts['projects-map'].default(); map.initiate(el.dataset.token, 'map', JSON.parse(el.dataset.geojson), { zoom: Number(el.dataset.zoom) });",
 				src: "/public/scripts/projects-map.script.js"
 			}
 	), initiateScriptsConfig) %}
