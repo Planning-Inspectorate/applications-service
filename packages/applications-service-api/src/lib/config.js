@@ -14,7 +14,6 @@ module.exports = {
 	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
 	backOfficeIntegration: {
 		caseReferences: parseCSV(process.env.BACK_OFFICE_API_INTEGRATION_CASE_REFERENCES),
-		getAllApplications: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS,
 		serviceBus: {
 			enabled: process.env.BACK_OFFICE_SERVICE_BUS_ENABLED === 'true',
 			hostname: process.env.BACK_OFFICE_SERVICE_BUS_HOSTNAME,

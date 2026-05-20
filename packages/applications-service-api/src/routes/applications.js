@@ -9,15 +9,12 @@ const {
 	parseIntegerQueryParams,
 	parseBooleanQueryParams
 } = require('../middleware/parseParamProperties');
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 
 const router = express.Router();
 
 const getApplicationsRoute = (req, res, next) => {
 	// TODO combine the two controllers into one, and have new single controller invoke getApplication from application.service, then remove this middleware
-	const route = isBackOfficeCaseReference(req.params.caseReference)
-		? applicationsControllerV2.getApplication
-		: applicationsController.getApplication;
+	const route = applicationsControllerV2.getApplication;
 
 	return asyncRoute(route)(req, res, next);
 };

@@ -1,8 +1,7 @@
 const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
 const { decrypt, encrypt } = require('../../src/lib/crypto');
 const { request } = require('../__data__/supertest');
-const { APPLICATION_DB, APPLICATION_FO } = require('../__data__/application');
-const { isBackOfficeCaseReference } = require('../../src/utils/is-backoffice-case-reference');
+const { APPLICATION_DB } = require('../__data__/application');
 
 const mockFindUnique = jest.fn();
 jest.mock('../../src/lib/prisma', () => ({
@@ -24,8 +23,6 @@ jest.mock('../../src/models', () => {
 
 const dateSpy = jest.spyOn(Date, 'now');
 
-jest.mock('../../src/utils/is-backoffice-case-reference');
-
 jest.mock('@planning-inspectorate/pins-notify', () => ({
 	createNotifyClient: {
 		createNotifyClient: jest.fn().mockReturnThis()
@@ -44,9 +41,6 @@ jest.mock('@planning-inspectorate/pins-notify', () => ({
 describe('/api/v1/subscriptions/:caseReference', () => {
 	const mockTime = new Date('2023-07-06T11:06:00.000Z');
 
-	beforeEach(() => {
-		isBackOfficeCaseReference.mockReturnValue(true);
-	});
 	afterEach(() => {
 		mockFindUnique.mockReset();
 		mockProjectFindOne.mockReset();
@@ -106,32 +100,6 @@ describe('/api/v1/subscriptions/:caseReference', () => {
 				project_name: 'North Lincolnshire Green Energy Park',
 				project_email: 'webteam@planninginspectorate.gov.uk',
 				project_name_welsh: 'Welsh project name'
-			});
-		});
-
-		it('given NI case with caseReference exists, returns 200', async () => {
-			isBackOfficeCaseReference.mockReturnValue(false);
-			dateSpy.mockImplementation(() => mockTime.getTime());
-			mockProjectFindOne.mockResolvedValueOnce({ dataValues: APPLICATION_FO });
-
-			const response = await request.post('/api/v1/subscriptions/EN010116').send({
-				email: 'test@example.org',
-				subscriptionTypes: ['applicationSubmitted', 'applicationDecided']
-			});
-
-			expect(response.status).toEqual(200);
-			expect(decrypt(response.body.subscriptionDetails)).toEqual(
-				JSON.stringify({
-					email: 'test@example.org',
-					subscriptionTypes: ['applicationSubmitted', 'applicationDecided'],
-					date: mockTime
-				})
-			);
-			expect(notifyBuilder.setDestinationEmailAddress).toHaveBeenCalledWith('test@example.org');
-			expect(notifyBuilder.setTemplateVariablesFromObject).toHaveBeenCalledWith({
-				subscription_url: `http://forms-web-app:9004/projects/EN010116/get-updates/subscribed?subscriptionDetails=${response.body.subscriptionDetails}`,
-				project_name: 'North Lincolnshire Green Energy Park',
-				project_email: 'webteam@planninginspectorate.gov.uk'
 			});
 		});
 

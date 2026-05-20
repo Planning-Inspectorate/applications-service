@@ -10,39 +10,22 @@ const {
 	getAllApplications: getAllApplicationsRepository
 } = require('../../../src/repositories/project.backoffice.repository');
 const {
-	getAllNIApplications,
-	getNIApplication,
-	getAllNIApplicationsDownload
-} = require('../../../src/services/application.ni.service');
-const {
-	getAllMergedApplications,
-	getAllMergedApplicationsDownload
-} = require('../../../src/services/application.merge.service');
-const {
 	mapBackOfficeApplicationToApi,
 	mapBackOfficeApplicationsToApi,
-	mapNIApplicationToApi,
 	buildApplicationsFiltersFromBOApplications
 } = require('../../../src/utils/application.mapper');
 const {
 	APPLICATION_DB,
-	APPLICATION_FO,
 	APPLICATION_API,
 	APPLICATIONS_FO_FILTERS
 } = require('../../__data__/application');
 const { mapApplicationsToCSV } = require('../../../src/utils/map-applications-to-csv');
-const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 jest.mock('../../../src/utils/application.mapper');
 jest.mock('../../../src/services/application.ni.service');
 jest.mock('../../../src/services/application.merge.service');
 jest.mock('../../../src/utils/map-applications-to-csv');
-jest.mock('../../../src/utils/is-backoffice-case-reference');
 
 describe('application.backoffice.service', () => {
-	beforeAll(() => {
-		config.logger.level = 'info';
-		isBackOfficeCaseReference.mockImplementation((caseReference) => caseReference === 'BC0110001');
-	});
 	describe('getApplication', () => {
 		it('invokes getBackOfficeApplication if BO caseReference', async () => {
 			getByCaseReference.mockResolvedValueOnce(APPLICATION_DB);
@@ -52,35 +35,10 @@ describe('application.backoffice.service', () => {
 			expect(getByCaseReference).toHaveBeenCalledWith('BC0110001');
 			expect(mapBackOfficeApplicationToApi).toHaveBeenCalledWith(APPLICATION_DB);
 		});
-
-		it('invokes getNIApplication if NI caseReference', async () => {
-			getNIApplication.mockResolvedValueOnce(APPLICATION_FO);
-
-			await getApplication('EN010009');
-
-			expect(getNIApplication).toHaveBeenCalledWith('EN010009');
-			expect(mapNIApplicationToApi).toHaveBeenCalledWith(APPLICATION_FO);
-		});
 	});
 	describe('getAllApplications', () => {
-		it('invokes getAllNIApplications if NI', async () => {
-			config.backOfficeIntegration.getAllApplications = 'NI';
-			await getAllApplications();
-			expect(getAllNIApplications).toHaveBeenCalled();
-		});
-		it('invokes getAllNIApplications if getAllApplications is not set', async () => {
-			config.backOfficeIntegration.getAllApplications = undefined;
-			await getAllApplications();
-			expect(getAllNIApplications).toHaveBeenCalled();
-		});
-		it('invokes getAllMergedApplications if MERGE', async () => {
-			config.backOfficeIntegration.getAllApplications = 'MERGE';
-			await getAllApplications();
-			expect(getAllMergedApplications).toHaveBeenCalled();
-		});
 		describe('when BO', () => {
 			beforeEach(() => {
-				config.backOfficeIntegration.getAllApplications = 'BO';
 				getAllApplicationsRepository
 					// getting applications
 					.mockResolvedValueOnce({
@@ -288,24 +246,6 @@ describe('application.backoffice.service', () => {
 		});
 	});
 	describe('getAllApplicationsDownload', () => {
-		describe('when NI', () => {
-			beforeEach(() => {
-				config.backOfficeIntegration.getAllApplications = 'NI';
-			});
-			it('invokes getAllNIApplicationsDownload', async () => {
-				await getAllApplicationsDownload();
-				expect(getAllNIApplicationsDownload).toHaveBeenCalled();
-			});
-		});
-		describe('when MERGE', () => {
-			beforeEach(() => {
-				config.backOfficeIntegration.getAllApplications = 'MERGE';
-			});
-			it('invokes getAllMergedApplicationsDownload', async () => {
-				await getAllApplicationsDownload();
-				expect(getAllMergedApplicationsDownload).toHaveBeenCalled();
-			});
-		});
 		describe('when BO', () => {
 			beforeEach(() => {
 				config.backOfficeIntegration.getAllApplications = 'BO';

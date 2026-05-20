@@ -1,7 +1,6 @@
 const { request } = require('../__data__/supertest');
 //const { Op } = require('sequelize');
 //const config = require('../../src/lib/config');
-const { isBackOfficeCaseReference } = require('../../src/utils/is-backoffice-case-reference');
 const {
 	//REPRESENTATION_BACKOFFICE_RESPONSE,
 	REPRESENTATION_BACKOFFICE_DATA,
@@ -37,7 +36,6 @@ jest.mock('../../src/models', () => ({
 		col: jest.fn()
 	}
 }));
-jest.mock('../../src/utils/is-backoffice-case-reference');
 jest.mock('../../src/lib/prisma', () => ({
 	prismaClient: {
 		representation: {
@@ -57,9 +55,6 @@ jest.mock('../../src/repositories/document.ni.repository', () => ({
 }));
 
 describe('api/v1/representations', () => {
-	beforeAll(() => {
-		isBackOfficeCaseReference.mockImplementation((caseReference) => caseReference.startsWith('BC'));
-	});
 	describe(' GET /api/v1/representations/{representationId}?caseReference={caseReference}', () => {
 		beforeEach(() => {
 			mockNIRepresentationFindOne.mockResolvedValue(REPRESENTATION_NI_DATA[0]);

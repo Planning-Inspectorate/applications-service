@@ -1,16 +1,11 @@
 const { generateId } = require('../../../src/utils/generate-id');
 const {
-	createNISubmission,
-	completeNISubmission
-} = require('../../../src/services/submission.ni.service');
-const {
 	generateRepresentationPDF,
 	uploadSubmissionFileToBlobStorage
 } = require('../../../src/utils/file');
 const { publishDeadlineSubmission } = require('../../../src/services/backoffice.publish.service');
 const { getApplication } = require('../../../src/services/application.backoffice.service');
 const { sendSubmissionNotification } = require('../../../src/lib/notify');
-const { isBackOfficeCaseReference } = require('../../../src/utils/is-backoffice-case-reference');
 
 const {
 	createSubmission,
@@ -43,14 +38,8 @@ jest.mock('../../../src/services/backoffice.publish.service');
 jest.mock('../../../src/services/application.backoffice.service');
 jest.mock('../../../src/lib/notify');
 jest.mock('../../../src/utils/generate-id');
-jest.mock('../../../src/utils/is-backoffice-case-reference');
 
 describe('submission.service', () => {
-	beforeAll(() => {
-		isBackOfficeCaseReference.mockImplementation(
-			(caseReference) => caseReference === BACK_OFFICE_CASE_REFERENCE
-		);
-	});
 	describe('createSubmission', () => {
 		describe('Back Office case', () => {
 			const mockGuid = 'd3ae5a1c-6b97-4708-a61f-217670ebaba1';
@@ -178,21 +167,6 @@ describe('submission.service', () => {
 				});
 			});
 		});
-
-		describe('NI case', () => {
-			const submission = {
-				metadata: {
-					...SUBMISSION_DATA,
-					caseReference: 'EN010009'
-				}
-			};
-
-			it('invokes createNISubmission', async () => {
-				await createSubmission(submission);
-
-				expect(createNISubmission).toBeCalledWith(submission);
-			});
-		});
 	});
 
 	describe('completeSubmission', () => {
@@ -263,18 +237,6 @@ describe('submission.service', () => {
 						errors: ['Project with case reference BC0110001 not found']
 					}
 				});
-			});
-		});
-
-		describe('NI case', () => {
-			it('invokes createNISubmission', async () => {
-				await completeSubmission({
-					caseReference: 'EN010120',
-					email: 'person@example.org',
-					submissionId: 1
-				});
-
-				expect(completeNISubmission).toBeCalledWith(1);
 			});
 		});
 	});

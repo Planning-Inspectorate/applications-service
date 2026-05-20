@@ -2,27 +2,16 @@ const {
 	getByCaseReference: getBackOfficeApplication,
 	getAllApplications: getAllBOApplicationsRepository
 } = require('../repositories/project.backoffice.repository');
-const { getAllNIApplications } = require('./application.ni.service');
 const { mapApplicationsToCSV } = require('../utils/map-applications-to-csv');
-const {
-	getAllMergedApplications,
-	getAllMergedApplicationsDownload
-} = require('./application.merge.service');
-const { getNIApplication, getAllNIApplicationsDownload } = require('./application.ni.service');
-const config = require('../lib/config');
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const { isEmpty } = require('lodash');
 const {
-	mapNIApplicationToApi,
 	mapBackOfficeApplicationToApi,
 	mapBackOfficeApplicationsToApi,
 	buildApplicationsFiltersFromBOApplications
 } = require('../utils/application.mapper');
 
 const getApplication = async (caseReference) =>
-	isBackOfficeCaseReference(caseReference)
-		? mapBackOfficeApplicationToApi(await getBackOfficeApplication(caseReference))
-		: mapNIApplicationToApi(await getNIApplication(caseReference));
+	mapBackOfficeApplicationToApi(await getBackOfficeApplication(caseReference));
 
 const createQueryFilters = (query) => {
 	// Sorting
@@ -63,16 +52,7 @@ const createQueryFilters = (query) => {
 	};
 };
 const getAllApplications = async (query) => {
-	const getApplications = config.backOfficeIntegration.getAllApplications;
-	switch (getApplications) {
-		case 'BO':
-			return getAllBOApplications(query);
-		case 'MERGE':
-			return getAllMergedApplications(query);
-		// NI is the default
-		default:
-			return getAllNIApplications(query);
-	}
+	return getAllBOApplications(query);
 };
 
 const getAllBOApplications = async (query) => {
@@ -87,16 +67,7 @@ const getAllBOApplications = async (query) => {
 };
 
 const getAllApplicationsDownload = async () => {
-	const getApplications = config.backOfficeIntegration.getAllApplications;
-	switch (getApplications) {
-		case 'BO':
-			return getAllBOApplicationsDownload();
-		case 'MERGE':
-			return getAllMergedApplicationsDownload();
-		// NI is the default
-		default:
-			return getAllNIApplicationsDownload();
-	}
+	return getAllBOApplicationsDownload();
 };
 
 const getAllBOApplicationsDownload = async () => {

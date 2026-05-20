@@ -1,7 +1,6 @@
 const express = require('express');
 const documentsV3Controller = require('../controllers/documents.v3');
 const { validateRequestWithOpenAPI } = require('../middleware/validator/openapi');
-const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
 const { asyncRoute } = require('@pins/common/src/utils/async-route');
 
 const router = express.Router();
@@ -19,10 +18,7 @@ router.get(
 );
 
 const getDocumentsRoute = (req, res, next) => {
-	const route = isBackOfficeCaseReference(req.body.caseReference)
-		? documentsV3Controller.getBackOfficeDocuments
-		: documentsV3Controller.getNIDocuments;
-
+	const route = documentsV3Controller.getBackOfficeDocuments;
 	return asyncRoute(route)(req, res, next);
 };
 
