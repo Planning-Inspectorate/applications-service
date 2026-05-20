@@ -19,7 +19,10 @@ const mockControlsCollection = {};
 jest.mock('ol/control/defaults.js', () => ({ defaults: jest.fn() }));
 
 const { defaults } = require('ol/control/defaults.js');
-const { getControls } = require('../../../../src/scripts/projects-map/get-controls');
+const {
+	getControls,
+	updateZoomButtons
+} = require('../../../../src/scripts/projects-map/get-controls');
 
 beforeEach(() => {
 	defaults.mockReturnValue(mockControlsCollection);
@@ -51,5 +54,60 @@ describe('getControls', () => {
 
 	it('returns the controls collection produced by defaults()', () => {
 		expect(getControls()).toBe(mockControlsCollection);
+	});
+});
+
+describe('updateZoomButtons', () => {
+	let mockMap;
+	let mockView;
+	let zoomInBtn;
+	let zoomOutBtn;
+
+	beforeEach(() => {
+		zoomInBtn = document.createElement('button');
+		zoomInBtn.className = 'ol-zoom-in';
+
+		zoomOutBtn = document.createElement('button');
+		zoomOutBtn.className = 'ol-zoom-out';
+
+		const targetElement = document.createElement('div');
+		targetElement.appendChild(zoomInBtn);
+		targetElement.appendChild(zoomOutBtn);
+
+		mockView = {
+			getZoom: jest.fn(),
+			getMaxZoom: jest.fn().mockReturnValue(9),
+			getMinZoom: jest.fn().mockReturnValue(0)
+		};
+
+		mockMap = {
+			getView: jest.fn().mockReturnValue(mockView),
+			getTargetElement: jest.fn().mockReturnValue(targetElement)
+		};
+	});
+
+	it('adds no-zoom class to zoom-in button if at max zoom', () => {
+		mockView.getZoom.mockReturnValue(9);
+		updateZoomButtons(mockMap);
+		expect(zoomInBtn.classList.contains('no-zoom')).toBe(true);
+		expect(zoomOutBtn.classList.contains('no-zoom')).toBe(false);
+	});
+
+	it('adds no-zoom class to zoom-out button if at min zoom', () => {
+		mockView.getZoom.mockReturnValue(0);
+		updateZoomButtons(mockMap);
+		expect(zoomOutBtn.classList.contains('no-zoom')).toBe(true);
+		expect(zoomInBtn.classList.contains('no-zoom')).toBe(false);
+	});
+
+	it('removes no-zoom class from both buttons if between min and max zoom', () => {
+		zoomInBtn.classList.add('no-zoom');
+		zoomOutBtn.classList.add('no-zoom');
+
+		mockView.getZoom.mockReturnValue(5);
+		updateZoomButtons(mockMap);
+
+		expect(zoomInBtn.classList.contains('no-zoom')).toBe(false);
+		expect(zoomOutBtn.classList.contains('no-zoom')).toBe(false);
 	});
 });
