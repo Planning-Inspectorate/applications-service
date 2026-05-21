@@ -1,5 +1,7 @@
 /**
- * @fileoverview Unit tests for `clusterStyle` ({@link module:scripts/projects-map/layers}).
+ * @jest-environment jsdom
+ *
+ * @fileoverview Unit tests for `clusterStyle` and `cssVar` ({@link module:scripts/projects-map/layers}).
  */
 'use strict';
 
@@ -24,7 +26,7 @@ jest.mock('ol/style/Text.js', () => ({
 	default: jest.fn((opts) => ({ _type: 'Text', opts }))
 }));
 
-const { clusterStyle } = require('../../../../src/scripts/projects-map/layers');
+const { clusterStyle, cssVar } = require('../../../../src/scripts/projects-map/layers');
 const Circle = require('ol/style/Circle.js').default;
 const Fill = require('ol/style/Fill.js').default;
 const Stroke = require('ol/style/Stroke.js').default;
@@ -93,5 +95,25 @@ describe('clusterStyle', () => {
 	it('adds a drop-shadow circle with a fixed displacement', () => {
 		clusterStyle(makeFeature(1), 'red', 'white');
 		expect(Circle).toHaveBeenCalledWith(expect.objectContaining({ displacement: [2, -2] }));
+	});
+});
+
+describe('cssVar', () => {
+	beforeEach(() => {
+		document.documentElement.style = '';
+	});
+
+	it('returns the CSS variable value if it is set', () => {
+		document.documentElement.style.setProperty('--cluster-bg', '#ff0000');
+		expect(cssVar('--cluster-bg', '#000000')).toBe('#ff0000');
+	});
+
+	it('returns the fallback value if the CSS variable is not set', () => {
+		expect(cssVar('--cluster-bg', '#000000')).toBe('#000000');
+	});
+
+	it('trims whitespace from the returned CSS variable value', () => {
+		document.documentElement.style.setProperty('--cluster-bg', '  #00ff00  ');
+		expect(cssVar('--cluster-bg', '#000000')).toBe('#00ff00');
 	});
 });

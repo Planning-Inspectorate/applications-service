@@ -1,5 +1,5 @@
 /**
- * @fileoverview Unit tests for {@link module:scripts/projects-map/tile-layer} (`getMapWMTS`).
+ * @fileoverview Unit tests for `getMapWMTS` ({@link module:scripts/projects-map/tile-layer}).
  */
 'use strict';
 
