@@ -7,9 +7,7 @@ import { setupEpsg27700 } from './setup-epsg27700.js';
 import { buildTileLayer } from './build-tile-layer.js';
 import { buildPopup } from './popup.js';
 import { normalizeMapInput } from './normalize-map-input.js';
-import { buildSinglePointLayer } from './build-single-point-layer.js';
-import { buildGeoJsonLayer } from './build-geojson-layer.js';
-import { buildClusterLayer } from './build-cluster-layer.js';
+import { buildSinglePointLayer, buildGeoJsonLayer, buildClusterLayer } from './layers.js';
 import {
 	EPSG_27700,
 	UK_CENTRE_EPSG27700,
@@ -33,7 +31,7 @@ function projectsMap() {
 	 * @param {string} accessToken OS Maps bearer token
 	 * @param {string} target DOM element id that will contain the map
 	 * @param {Object|number[]} mapInput GeoJSON FeatureCollection | [lng,lat] | [[lng,lat],...]
-	 * @param {{ zoom?: number, fitStrategy?: 'auto'|'fitAll'|'centerOnly' }} [options]
+	 * @param {{ zoom?: number, fitStrategy?: 'auto'|'fitAll'|'centerOnly', enableClustering?: boolean, enablePopup?: boolean }} [options]
 	 */
 	this.initiate = async (accessToken, target, mapInput, options = {}) => {
 		try {
@@ -48,6 +46,8 @@ function projectsMap() {
 			warnings.forEach((w) => logger.error(w));
 
 			const fitStrategy = options.fitStrategy ?? 'centerOnly';
+			const enableClustering = options.enableClustering ?? true;
+			const enablePopup = options.enablePopup ?? true;
 			const initialCenter =
 				mode === RENDER_MODE_SINGLE_POINT && features.length > 0
 					? features[0].getGeometry().getCoordinates()
@@ -76,8 +76,11 @@ function projectsMap() {
 			} else if (mode === RENDER_MODE_GEOJSON) {
 				map.addLayer(buildGeoJsonLayer(map, features));
 			} else {
-				const popup = buildPopup();
-				buildClusterLayer(map, features, fitStrategy, popup);
+				const popup = enablePopup ? buildPopup() : null;
+				buildClusterLayer(map, features, fitStrategy, popup, {
+					enableClustering,
+					enablePopup
+				});
 			}
 
 			map.on('pointermove', (e) => {

@@ -11,7 +11,12 @@
 {% if mapAccessToken %}
   <div class="pins-map">
     <div class="pins-map__container">
-      <div id="map" class="pins-map__content" role="region" aria-roledescription="map" aria-labelledby="project-location"
+      <div id="map" class="pins-map__content" role="region" aria-roledescription="map"
+        {% if applicationData.projectLocation %}
+          aria-labelledby="project-location"
+        {% else %}
+          aria-label="{{ t('projectsIndex.projectLocation.heading1') }}"
+        {% endif %}
         data-token="{{ mapAccessToken }}"
         data-geojson="{{ mapGeoJSON | escape }}"
         data-zoom="{{ applicationData.mapZoomLevel }}"></div>

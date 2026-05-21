@@ -42,20 +42,23 @@ const getProjectsIndexController = async (req, res, next) => {
 		} = res;
 		const { caseRef } = applicationData;
 
+		const pointGeoJSON = new GeoJSONBuilder().addPoint(applicationData.longLat).build();
+		const hasPointLocation = pointGeoJSON.features.length > 0;
+		const hasProjectBoundary = applicationData.geojson != null;
+		const hasMapData = hasProjectBoundary || hasPointLocation;
+
 		const [projectUpdates, rule6Document, rule8Document, applicationDecision, mapAccessToken] =
 			await Promise.all([
 				getProjectUpdatesData(caseRef),
 				getRule6DocumentType(caseRef),
 				getRule8DocumentType(caseRef),
 				getMiscDataByStageName(applicationData.status.text, caseRef),
-				getMapAccessToken()
+				hasMapData ? getMapAccessToken() : Promise.resolve(null)
 			]);
 
-		// TODO: set to applicationData.geojson once the API returns boundary GeoJSON on the application record
-		const hasProjectBoundary = applicationData.geojson != null;
 		const mapGeoJSON = hasProjectBoundary
 			? JSON.stringify(applicationData.geojson)
-			: JSON.stringify(new GeoJSONBuilder().addPoint(applicationData.longLat).build());
+			: JSON.stringify(pointGeoJSON);
 		const preExamSubStages = getPreExaminationSubStage(applicationData, rule6Document);
 		const recommendationCompletedDate = getExaminationOrDecisionCompletedDate(
 			applicationData.dateTimeExaminationEnds,

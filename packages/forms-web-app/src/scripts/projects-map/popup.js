@@ -20,6 +20,9 @@ function buildPopup() {
 /**
  * Renders a list of projects into the cluster popup at the given map coordinate.
  *
+ * The popup root element width is set to 80% of the map viewport width so
+ * content wraps within the available space rather than forcing the popup wider.
+ *
  * Each feature must expose `caseReference`, `projectName`, and `stage` via
  * `getProperties()`. `projectName` is used as the link label when available;
  * `caseReference` is used as fallback.
@@ -27,8 +30,14 @@ function buildPopup() {
  * @param {{ show: Function }} popup ol-ext Popup instance
  * @param {Array<{ getProperties: Function }>} features OL features in the selected cluster
  * @param {number[]} coordinate EPSG:27700 coordinate `[x, y]`
+ * @param {import('ol/Map').default} map OL Map instance — used to read viewport width
  */
-function renderPopup(popup, features, coordinate) {
+function renderPopup(popup, features, coordinate, map) {
+	const mapViewport = typeof map.getViewport === 'function' ? map.getViewport() : null;
+	const mapTarget = map.getTargetElement();
+	const mapWidth = mapViewport?.offsetWidth || mapTarget?.offsetWidth || 0;
+	const popupWidth = Math.round(mapWidth * 0.8);
+
 	const count = features.length;
 	const rows = features
 		.map((f) => {
@@ -51,6 +60,12 @@ function renderPopup(popup, features, coordinate) {
 			<table class="cluster-popup-table">${rows}</table>
 		</div>`
 	);
+
+	const popupElement =
+		popup.element || (typeof popup.getElement === 'function' ? popup.getElement() : null);
+	if (popupElement) {
+		popupElement.style.width = `${popupWidth}px`;
+	}
 }
 
 module.exports = { buildPopup, renderPopup };

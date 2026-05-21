@@ -44,7 +44,18 @@ const getProjectsMapController = async (req, res, next) => {
 		const queryParams = searchTerm ? { ...filters, searchTerm } : filters;
 		const queryString = queryStringBuilder(queryParams, Object.keys(queryParams), true);
 
-		const geoJSON = new GeoJSONBuilder().addApplications(applications).build();
+		const applicationsWithGeoJSON = (applications || []).map((application) => {
+			if (application?.geojson) return application;
+			application.geojson = new GeoJSONBuilder().addApplications([application]).build();
+			return application;
+		});
+
+		const geoJSON = {
+			type: 'FeatureCollection',
+			features: applicationsWithGeoJSON.flatMap((application) =>
+				Array.isArray(application?.geojson?.features) ? application.geojson.features : []
+			)
+		};
 		res.render(view, {
 			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
 			mapAccessToken,
@@ -75,9 +86,19 @@ const postProjectsMapController = (req, res, next) => {
 		// Extract referrer  URL from request
 		const referrer = req.get('Referrer');
 
-		// Extract query string from referrer URL
-		// e.g., '?region=wales&sector=energy' → 'region=wales&sector=energy'
-		const queryString = referrer ? new URL(referrer).search.slice(1) : '';
+		// Preserve filter query only when the referrer is the projects-map page.
+		// Handles absolute and relative referrers; malformed values are ignored.
+		let queryString = '';
+		if (referrer) {
+			try {
+				const referrerUrl = new URL(referrer, 'http://localhost');
+				if (referrerUrl.pathname === '/projects-map') {
+					queryString = referrerUrl.search.slice(1);
+				}
+			} catch {
+				queryString = '';
+			}
+		}
 
 		res.redirect(`/projects-map${queryString ? `?${queryString}` : ''}`);
 	} catch (error) {
