@@ -2,16 +2,6 @@
  * @jest-environment jsdom
  *
  * @fileoverview Unit tests for `getControls` / `updateZoomButtons` ({@link module:scripts/projects-map/map-setup}).
- *
- * `getControls` builds the OL control collection passed to `new Map({ controls })`.
- * Key design decisions verified here:
- *   - OL's built-in Attribution control is disabled because the OS Maps branding
- *     script (`os-api-branding`) renders attribution instead.
- *   - The zoom-in / zoom-out button labels use GOV.UK-accessible markup: a
- *     visible symbol wrapped in `aria-hidden` plus a `.govuk-visually-hidden`
- *     screen-reader label.
- *
- * jsdom is required so `document.createElement` works inside `getControls`.
  */
 'use strict';
 

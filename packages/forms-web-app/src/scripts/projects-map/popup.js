@@ -3,11 +3,7 @@
 const Popup = require('ol-ext/src/overlay/Popup.js').default;
 const { POPUP_ANIMATION_DURATION_MS } = require('./constants');
 
-/**
- * Creates an ol-ext `Popup` overlay instance with standard project-map settings.
- *
- * @returns {import('ol-ext/src/overlay/Popup').default}
- */
+/** @returns {import('ol-ext/src/overlay/Popup').default} */
 function buildPopup() {
 	return new Popup({
 		popupClass: 'default',
@@ -18,19 +14,10 @@ function buildPopup() {
 }
 
 /**
- * Renders a list of projects into the cluster popup at the given map coordinate.
- *
- * The popup root element width is set to 80% of the map viewport width so
- * content wraps within the available space rather than forcing the popup wider.
- *
- * Each feature must expose `caseReference`, `projectName`, and `stage` via
- * `getProperties()`. `projectName` is used as the link label when available;
- * `caseReference` is used as fallback.
- *
- * @param {{ show: Function }} popup ol-ext Popup instance
- * @param {Array<{ getProperties: Function }>} features OL features in the selected cluster
- * @param {number[]} coordinate EPSG:27700 coordinate `[x, y]`
- * @param {import('ol/Map').default} map OL Map instance — used to read viewport width
+ * @param {{ show: Function }} popup
+ * @param {Array<{ getProperties: Function }>} features
+ * @param {number[]} coordinate EPSG:27700 `[x, y]`
+ * @param {import('ol/Map').default} [map] used to read viewport width for 80% popup sizing
  */
 function renderPopup(popup, features, coordinate, map) {
 	const mapViewport = map && typeof map.getViewport === 'function' ? map.getViewport() : null;

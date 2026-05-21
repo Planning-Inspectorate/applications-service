@@ -1,15 +1,5 @@
 /**
  * @fileoverview Unit tests for `setupEpsg27700` ({@link module:scripts/projects-map/map-setup}).
- *
- * `setupEpsg27700` registers the British National Grid (EPSG:27700) coordinate
- * reference system so that OpenLayers can render OS Maps tiles in their native
- * projection. The setup sequence is:
- *   1. Define the proj4 string for EPSG:27700.
- *   2. Register the proj4 instance with OL so it becomes aware of the CRS.
- *   3. Set the BNG bounding extent on the OL projection object.
- *
- * All three external dependencies (proj4, `ol/proj/proj4`, `ol/proj`) are mocked
- * to keep tests fast and side-effect-free.
  */
 'use strict';
 

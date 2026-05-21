@@ -14,11 +14,7 @@ const { queryStringBuilder } = require('../../utils/query-string-builder');
 
 const view = 'projects-map/view.njk';
 
-/**
- * GET /projects-map
- * Renders the interactive map view with filtered project markers.
- * Fetches applications and map token in parallel, builds GeoJSON for map rendering.
- */
+/** GET /projects-map — renders the map with filtered project markers. */
 const getProjectsMapController = async (req, res, next) => {
 	try {
 		const { i18n, query } = req;
@@ -30,17 +26,12 @@ const getProjectsMapController = async (req, res, next) => {
 		}
 
 		// Fetch applications and OS Maps token concurrently.
-		// getApplications() calls GET /api/v1/applications (list endpoint) which returns
-		// applications in NI legacy PascalCase shape: { CaseReference, LongLat, ProjectName, Stage, ... }.
-		// This is different from GET /api/v1/applications/:caseRef (single endpoint) which
-		// returns camelCase: { caseReference, longLat, projectName, ... }.
-		// toGeoJSON() reads app.LongLat (PascalCase) accordingly.
 		const [{ applications, filters: availableFilters }, mapAccessToken] = await Promise.all([
 			getApplications(getProjectSearchQueryString(query)),
 			getMapAccessToken()
 		]);
 
-		// Build query string from filters
+		// Build query string
 		const queryParams = searchTerm ? { ...filters, searchTerm } : filters;
 		const queryString = queryStringBuilder(queryParams, Object.keys(queryParams), true);
 
@@ -72,22 +63,12 @@ const getProjectsMapController = async (req, res, next) => {
 	}
 };
 
-/**
- * POST /projects-map
- * Toggles filter panel visibility and redirects back with preserved query params.
- * Reads current state from filterToggleValue, flips it, stores in session.
- * Extracts query string from referrer to maintain active filters.
- */
+/** POST /projects-map — toggles filter panel visibility and redirects back. */
 const postProjectsMapController = (req, res, next) => {
 	try {
-		// Flip the boolean: 'true' → false, anything else → true
 		req.session.projectsMapShowFilters = req.body.filterToggleValue !== 'true';
 
-		// Extract referrer  URL from request
 		const referrer = req.get('Referrer');
-
-		// Preserve filter query only when the referrer is the projects-map page.
-		// Handles absolute and relative referrers; malformed values are ignored.
 		let queryString = '';
 		if (referrer) {
 			try {

@@ -2,32 +2,11 @@
 
 const { projectInfoProjectStages } = require('../../utils/project-stages');
 
-/**
- * Builds a GeoJSON FeatureCollection from application records or a coordinate pair.
- *
- * @example
- * // all-projects map (list endpoint — PascalCase shape)
- * new GeoJSONBuilder().addApplications(applications).build()
- *
- * @example
- * // single-project map (single endpoint — camelCase shape)
- * new GeoJSONBuilder().addPoint(applicationData.longLat).build()
- *
- * @example
- * // smart dispatch — detects input type automatically
- * new GeoJSONBuilder().add(input).build()
- */
+/** Builds a GeoJSON FeatureCollection from application records or a coordinate pair. */
 class GeoJSONBuilder {
 	#features = [];
 
-	/**
-	 * Adds Point features from an array of application records.
-	 * Reads `app.LongLat` (PascalCase) from the list endpoint shape.
-	 * Applications with missing or invalid coordinates are silently skipped.
-	 *
-	 * @param {Object[]} applications
-	 * @returns {this}
-	 */
+	/** @param {Object[]} applications list-endpoint shape (PascalCase: `LongLat`, `CaseReference`, etc.) */
 	addApplications(applications) {
 		for (const app of applications || []) {
 			const coords = app.LongLat;
@@ -49,14 +28,7 @@ class GeoJSONBuilder {
 		return this;
 	}
 
-	/**
-	 * Adds a single Point feature from a [lng, lat] coordinate pair.
-	 * Reads the camelCase `longLat` shape from the single-project endpoint.
-	 * Does nothing when coordinates are missing or invalid.
-	 *
-	 * @param {Array} longLat  [lng, lat] as strings or numbers
-	 * @returns {this}
-	 */
+	/** @param {Array} longLat [lng, lat] as strings or numbers */
 	addPoint(longLat) {
 		const [lng, lat] = longLat || [];
 		const parsedLng = parseFloat(lng);
@@ -71,14 +43,7 @@ class GeoJSONBuilder {
 		return this;
 	}
 
-	/**
-	 * Detects the input type and delegates to `addApplications` or `addPoint`.
-	 * Detection: an array whose first element is an object with a `LongLat` key is
-	 * treated as an applications array; anything else is treated as a coordinate pair.
-	 *
-	 * @param {Object[]|Array} input  applications array or [lng, lat] pair
-	 * @returns {this}
-	 */
+	/** @param {Object[]|Array} input applications array or [lng, lat] pair */
 	add(input) {
 		if (!Array.isArray(input) || input.length === 0) return this;
 		if (input[0] !== null && typeof input[0] === 'object' && 'LongLat' in input[0]) {

@@ -51,28 +51,10 @@ const {
 	CLUSTER_COUNT_FONT
 } = require('./constants');
 
-/**
- * Reads a CSS custom property from the document root.
- *
- * @param {string} name CSS variable name (e.g. `'--cluster-bg'`)
- * @param {string} fallback Value to use when the property is not set
- * @returns {string}
- */
 const cssVar = (name, fallback) =>
 	getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
 
-/**
- * Computes an OL `Style` array for a cluster feature.
- *
- * A single feature gets a fixed-radius circle; multiple features get a
- * larger radius and a text label showing the count.
- * Returns `null` for a cluster with 0 features.
- *
- * @param {import('ol').Feature} feature Cluster feature from `ol/source/Cluster`
- * @param {string} markerFill  CSS colour for the circle fill
- * @param {string} markerStroke CSS colour for the circle stroke and count label
- * @returns {import('ol/style/Style').default[]|null}
- */
+/** @returns {import('ol/style/Style').default[]|null} null for an expanded (empty) cluster */
 function clusterStyle(feature, markerFill, markerStroke) {
 	const features = feature.get(OL_CLUSTER_FEATURES_KEY) || [];
 	const count = features.length;

@@ -16,11 +16,8 @@ const logger = (typeof window !== 'undefined' && window.appLogger) || {
 };
 
 /**
- * Fetches the OS Maps WMTS GetCapabilities document.
- *
- * @param {string} accessToken OS Maps bearer token
- * @returns {Promise<string>} Raw capabilities XML string
- * @throws {Error} If the HTTP response status is not OK
+ * @param {string} accessToken
+ * @returns {Promise<string>} capabilities XML
  */
 async function getMapWMTS(accessToken) {
 	const response = await fetch(WMTS_CAPABILITIES_URL, {
@@ -31,12 +28,7 @@ async function getMapWMTS(accessToken) {
 }
 
 /**
- * Fetches the OS Maps WMTS capabilities and builds an authenticated OL tile layer
- * for the `Outdoor_27700` layer in the EPSG:27700 matrix set.
- *
- * Tile requests are authenticated with the provided bearer token.
- * Individual tile load failures are logged and do not interrupt the map.
- *
+
  * @param {string} accessToken OS Maps bearer token
  * @returns {Promise<{ tileLayer: import('ol/layer/Tile').default, wmtsOptions: Object }>}
  */

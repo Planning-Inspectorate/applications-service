@@ -1,48 +1,13 @@
 /**
  * @fileoverview Unit tests for {@link module:scripts/projects-map/normalize-map-input}.
- *
- * `normalizeMapInput` accepts any of the map input shapes that controllers can
- * pass via `data-geojson` and returns a normalised `{ features, mode, warnings }`
- * object consumed by `projectsMap.initiate()`.
- *
- * Input shapes and expected render modes:
- *   - `null` / `undefined`              → `singlePoint` + warning
- *   - GeoJSON FeatureCollection (Points) → `singlePoint` (1 feature) or `multiPoint`
- *   - GeoJSON FeatureCollection (mixed)  → `geojson` (polygon/boundary render)
- *   - `[lng, lat]` number array          → `singlePoint`
- *   - `[[lng,lat], ...]` array of arrays → `singlePoint` (1) or `multiPoint` (2+)
- *   - any other type                     → `singlePoint` + warning
- *
- * OL's GeoJSON format, Feature, Point, and proj are all mocked so tests run
- * in Node without a browser or canvas context.
  */
 'use strict';
 
 jest.mock('ol/format/GeoJSON.js', () => ({ __esModule: true, default: jest.fn() }));
-jest.mock('ol/Feature.js', () => ({
-	__esModule: true,
-	default: jest.fn(function (props) {
-		this.props = props;
-		this.getGeometry = () => props.geometry;
-	})
-}));
-jest.mock('ol/geom/Point.js', () => ({
-	__esModule: true,
-	default: jest.fn(function (coords) {
-		this.coords = coords;
-		this.getCoordinates = () => coords;
-	})
-}));
-jest.mock('ol/proj.js', () => ({
-	transform: jest.fn((coords) => coords),
-	get: jest.fn()
-}));
 
 const { normalizeMapInput } = require('../../../../src/scripts/projects-map/normalize-map-input');
 const MockGeoJSON = require('ol/format/GeoJSON.js').default;
-const { transform } = require('ol/proj.js');
 
-// convenience alias
 const normalize = (mapInput) => normalizeMapInput(mapInput);
 
 let mockReadFeatures;
@@ -170,9 +135,19 @@ describe('normalizeMapInput', () => {
 			expect(normalize([-0.118092, 51.509865]).features).toHaveLength(1);
 		});
 
-		it('calls transform with the coordinate pair in EPSG:4326 → EPSG:27700', () => {
+		it('passes coordinates through readFeatures with correct projections', () => {
 			normalizeMapInput([-0.118092, 51.509865]);
-			expect(transform).toHaveBeenCalledWith([-0.118092, 51.509865], 'EPSG:4326', 'EPSG:27700');
+			expect(mockReadFeatures).toHaveBeenCalledWith(
+				expect.objectContaining({
+					type: 'FeatureCollection',
+					features: [
+						expect.objectContaining({
+							geometry: { type: 'Point', coordinates: [-0.118092, 51.509865] }
+						})
+					]
+				}),
+				{ dataProjection: 'EPSG:4326', featureProjection: 'EPSG:27700' }
+			);
 		});
 
 		it('accepts numeric strings produced by Nunjucks array interpolation', () => {

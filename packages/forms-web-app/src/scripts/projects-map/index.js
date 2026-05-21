@@ -20,26 +20,17 @@ const logger = window.appLogger || { debug: () => {}, error: console.error };
 
 function projectsMap() {
 	/**
-	 * Initialises the map on the given DOM element.
-	 *
-	 * Accepts a GeoJSON FeatureCollection, a single `[lng, lat]` coordinate, or an array
-	 * of `[lng, lat]` pairs. The render mode (single-point icon vs animated cluster) is
-	 * chosen automatically from the detected input shape.
-	 *
-	 * @param {string} accessToken OS Maps bearer token
-	 * @param {string} target DOM element id that will contain the map
+	 * @param {string} accessToken
+	 * @param {string} target DOM element id
 	 * @param {Object|number[]} mapInput GeoJSON FeatureCollection | [lng,lat] | [[lng,lat],...]
 	 * @param {{ zoom?: number, fitStrategy?: 'auto'|'fitAll'|'centerOnly', enableClustering?: boolean, enablePopup?: boolean }} [options]
 	 */
 	this.initiate = async (accessToken, target, mapInput, options = {}) => {
 		try {
-			const { tileLayer, wmtsOptions } = await buildTileLayer(accessToken);
 			const epsg27700 = setupEpsg27700();
+			const { tileLayer, wmtsOptions } = await buildTileLayer(accessToken);
 
 			const { features, mode, warnings } = normalizeMapInput(mapInput);
-			// normalizeMapInput returns warnings rather than logging them directly
-			// because it has no access to window.appLogger (it's a CJS module used in
-			// both the browser bundle and Jest). We log them here where the logger is available.
 			warnings.forEach((w) => logger.error(w));
 
 			const fitStrategy = options.fitStrategy ?? 'centerOnly';

@@ -6,12 +6,7 @@ const { get: getProjection } = require('ol/proj.js');
 const { defaults } = require('ol/control/defaults.js');
 const { EPSG_27700, EPSG27700_PROJ4_DEF, EPSG27700_EXTENT } = require('./constants');
 
-/**
- * Registers the EPSG:27700 (British National Grid) projection with proj4 and OL,
- * then sets its valid extent and returns the configured OL projection object.
- *
- * @returns {import('ol/proj/Projection').default}
- */
+/** @returns {import('ol/proj/Projection').default} */
 function setupEpsg27700() {
 	proj4.defs(EPSG_27700, EPSG27700_PROJ4_DEF);
 	register(proj4);
@@ -20,12 +15,7 @@ function setupEpsg27700() {
 	return projection;
 }
 
-/**
- * Returns OL map controls configured with accessible GOV.UK zoom labels.
- * Attribution is handled by os-api-branding, not the OL Attribution control.
- *
- * @returns {import('ol/Collection').default} Control collection for use in `new Map({ controls })`
- */
+/** @returns {import('ol/Collection').default} */
 function getControls() {
 	const makeLabel = (symbol, tip) => {
 		const span = document.createElement('span');
@@ -42,12 +32,7 @@ function getControls() {
 	});
 }
 
-/**
- * Updates the disabled state on zoom controls based on the current view resolution.
- * Should be bound to map 'change:resolution' and 'rendercomplete' events.
- *
- * @param {import('ol/Map').default} map OL Map instance
- */
+/** @param {import('ol/Map').default} map */
 function updateZoomButtons(map) {
 	const view = map.getView();
 	const zoom = view.getZoom();
