@@ -33,8 +33,9 @@ function buildPopup() {
  * @param {import('ol/Map').default} map OL Map instance — used to read viewport width
  */
 function renderPopup(popup, features, coordinate, map) {
-	const mapViewport = typeof map.getViewport === 'function' ? map.getViewport() : null;
-	const mapTarget = map.getTargetElement();
+	const mapViewport = map && typeof map.getViewport === 'function' ? map.getViewport() : null;
+	const mapTarget =
+		map && typeof map.getTargetElement === 'function' ? map.getTargetElement() : null;
 	const mapWidth = mapViewport?.offsetWidth || mapTarget?.offsetWidth || 0;
 	const popupWidth = Math.round(mapWidth * 0.8);
 
