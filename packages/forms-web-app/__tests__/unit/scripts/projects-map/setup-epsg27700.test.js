@@ -1,5 +1,5 @@
 /**
- * @fileoverview Unit tests for {@link module:scripts/projects-map/setup-epsg27700}.
+ * @fileoverview Unit tests for `setupEpsg27700` ({@link module:scripts/projects-map/map-setup}).
  *
  * `setupEpsg27700` registers the British National Grid (EPSG:27700) coordinate
  * reference system so that OpenLayers can render OS Maps tiles in their native
@@ -20,7 +20,7 @@ jest.mock('ol/proj.js', () => ({
 	transform: jest.fn((coords) => coords)
 }));
 
-const { setupEpsg27700 } = require('../../../../src/scripts/projects-map/setup-epsg27700');
+const { setupEpsg27700 } = require('../../../../src/scripts/projects-map/map-setup');
 const {
 	EPSG_27700,
 	EPSG27700_PROJ4_DEF,

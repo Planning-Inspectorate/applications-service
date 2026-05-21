@@ -1,11 +1,11 @@
 /**
  * @jest-environment jsdom
  *
- * @fileoverview Unit tests for {@link module:scripts/projects-map/utils}.
+ * @fileoverview Unit tests for `cssVar` ({@link module:scripts/projects-map/layers}).
  */
 'use strict';
 
-const { cssVar } = require('../../../../src/scripts/projects-map/utils');
+const { cssVar } = require('../../../../src/scripts/projects-map/layers');
 
 describe('cssVar', () => {
 	beforeEach(() => {

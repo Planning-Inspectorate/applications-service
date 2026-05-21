@@ -1,10 +1,8 @@
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 
-import { getMapWMTS } from './get-map-wmts.js';
-import { getControls, updateZoomButtons } from './get-controls.js';
-import { setupEpsg27700 } from './setup-epsg27700.js';
-import { buildTileLayer } from './build-tile-layer.js';
+import { buildTileLayer } from './tile-layer.js';
+import { getControls, updateZoomButtons, setupEpsg27700 } from './map-setup.js';
 import { buildPopup } from './popup.js';
 import { normalizeMapInput } from './normalize-map-input.js';
 import { buildSinglePointLayer, buildGeoJsonLayer, buildClusterLayer } from './layers.js';
@@ -35,9 +33,8 @@ function projectsMap() {
 	 */
 	this.initiate = async (accessToken, target, mapInput, options = {}) => {
 		try {
-			const wmtsXml = await getMapWMTS(accessToken);
+			const { tileLayer, wmtsOptions } = await buildTileLayer(accessToken);
 			const epsg27700 = setupEpsg27700();
-			const { tileLayer, wmtsOptions } = buildTileLayer(accessToken, wmtsXml);
 
 			const { features, mode, warnings } = normalizeMapInput(mapInput);
 			// normalizeMapInput returns warnings rather than logging them directly

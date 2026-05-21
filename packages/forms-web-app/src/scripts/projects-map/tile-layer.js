@@ -3,7 +3,12 @@
 const WMTSCapabilities = require('ol/format/WMTSCapabilities.js').default;
 const { default: WMTS, optionsFromCapabilities } = require('ol/source/WMTS.js');
 const TileLayer = require('ol/layer/Tile.js').default;
-const { EPSG_27700, OS_MAPS_LAYER_NAME, BEARER_TOKEN_PREFIX } = require('./constants');
+const {
+	WMTS_CAPABILITIES_URL,
+	BEARER_TOKEN_PREFIX,
+	EPSG_27700,
+	OS_MAPS_LAYER_NAME
+} = require('./constants');
 
 const logger = (typeof window !== 'undefined' && window.appLogger) || {
 	debug: () => {},
@@ -11,17 +16,32 @@ const logger = (typeof window !== 'undefined' && window.appLogger) || {
 };
 
 /**
- * Parses WMTS capabilities XML and builds an authenticated OL tile layer
- * for the OS Maps `Outdoor_27700` layer in the EPSG:27700 matrix set.
+ * Fetches the OS Maps WMTS GetCapabilities document.
+ *
+ * @param {string} accessToken OS Maps bearer token
+ * @returns {Promise<string>} Raw capabilities XML string
+ * @throws {Error} If the HTTP response status is not OK
+ */
+async function getMapWMTS(accessToken) {
+	const response = await fetch(WMTS_CAPABILITIES_URL, {
+		headers: { Authorization: BEARER_TOKEN_PREFIX + accessToken }
+	});
+	if (!response.ok) throw new Error(`WMTS GetCapabilities failed: ${response.status}`);
+	return response.text();
+}
+
+/**
+ * Fetches the OS Maps WMTS capabilities and builds an authenticated OL tile layer
+ * for the `Outdoor_27700` layer in the EPSG:27700 matrix set.
  *
  * Tile requests are authenticated with the provided bearer token.
  * Individual tile load failures are logged and do not interrupt the map.
  *
  * @param {string} accessToken OS Maps bearer token
- * @param {string} wmtsXml Raw capabilities XML from {@link module:get-map-wmts}
- * @returns {{ tileLayer: import('ol/layer/Tile').default, wmtsOptions: Object }}
+ * @returns {Promise<{ tileLayer: import('ol/layer/Tile').default, wmtsOptions: Object }>}
  */
-function buildTileLayer(accessToken, wmtsXml) {
+async function buildTileLayer(accessToken) {
+	const wmtsXml = await getMapWMTS(accessToken);
 	const parser = new WMTSCapabilities();
 	const result = parser.read(wmtsXml);
 	const wmtsOptions = optionsFromCapabilities(result, {
@@ -50,4 +70,4 @@ function buildTileLayer(accessToken, wmtsXml) {
 	return { tileLayer: new TileLayer({ source: tileSource }), wmtsOptions };
 }
 
-module.exports = { buildTileLayer };
+module.exports = { getMapWMTS, buildTileLayer };

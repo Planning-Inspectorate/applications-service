@@ -1,5 +1,5 @@
 /**
- * @fileoverview Unit tests for {@link module:scripts/projects-map/get-map-wmts}.
+ * @fileoverview Unit tests for {@link module:scripts/projects-map/tile-layer} (`getMapWMTS`).
  *
  * `getMapWMTS` fetches the OS Maps WMTS GetCapabilities XML that OpenLayers
  * needs to configure the tile layer. Tests cover:
@@ -15,7 +15,7 @@
 'use strict';
 
 /* global fetchMock */
-const { getMapWMTS } = require('../../../../src/scripts/projects-map/get-map-wmts');
+const { getMapWMTS } = require('../../../../src/scripts/projects-map/tile-layer');
 const { WMTS_CAPABILITIES_URL } = require('../../../../src/scripts/projects-map/constants');
 
 describe('getMapWMTS', () => {

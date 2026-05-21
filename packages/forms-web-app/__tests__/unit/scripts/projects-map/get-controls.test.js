@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  *
- * @fileoverview Unit tests for {@link module:scripts/projects-map/get-controls}.
+ * @fileoverview Unit tests for `getControls` / `updateZoomButtons` ({@link module:scripts/projects-map/map-setup}).
  *
  * `getControls` builds the OL control collection passed to `new Map({ controls })`.
  * Key design decisions verified here:
@@ -22,7 +22,7 @@ const { defaults } = require('ol/control/defaults.js');
 const {
 	getControls,
 	updateZoomButtons
-} = require('../../../../src/scripts/projects-map/get-controls');
+} = require('../../../../src/scripts/projects-map/map-setup');
 
 beforeEach(() => {
 	defaults.mockReturnValue(mockControlsCollection);

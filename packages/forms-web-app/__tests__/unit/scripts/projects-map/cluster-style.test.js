@@ -1,5 +1,5 @@
 /**
- * @fileoverview Unit tests for {@link module:scripts/projects-map/cluster-style}.
+ * @fileoverview Unit tests for `clusterStyle` ({@link module:scripts/projects-map/layers}).
  *
  * `clusterStyle` is the OpenLayers style function attached to the AnimatedCluster
  * layer on /projects-map. It is called once per cluster feature and must return:
@@ -32,7 +32,7 @@ jest.mock('ol/style/Text.js', () => ({
 	default: jest.fn((opts) => ({ _type: 'Text', opts }))
 }));
 
-const { clusterStyle } = require('../../../../src/scripts/projects-map/cluster-style');
+const { clusterStyle } = require('../../../../src/scripts/projects-map/layers');
 const Circle = require('ol/style/Circle.js').default;
 const Fill = require('ol/style/Fill.js').default;
 const Stroke = require('ol/style/Stroke.js').default;
