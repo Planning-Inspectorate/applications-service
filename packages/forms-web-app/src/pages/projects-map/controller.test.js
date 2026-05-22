@@ -1,4 +1,9 @@
-const { getProjectsMapController, postProjectsMapController } = require('./controller');
+const { Readable } = require('stream');
+const {
+	getProjectsMapController,
+	postProjectsMapController,
+	downloadMasterGeoJsonController
+} = require('./controller');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../_services');
 const { getApplicationsFixture } = require('../_fixtures');
@@ -27,8 +32,14 @@ describe('pages/projects-map/controller', () => {
 
 	beforeEach(() => {
 		req = { i18n, query: {}, body: {}, session: {}, url: '/projects-map' };
-		res = { render: jest.fn() };
+		res = {
+			render: jest.fn(),
+			setHeader: jest.fn()
+		};
 		next = jest.fn();
+
+		global.fetch = jest.fn();
+
 		jest.resetAllMocks();
 	});
 
@@ -151,6 +162,78 @@ describe('pages/projects-map/controller', () => {
 
 			expect(req.session.projectsMapShowFilters).toBe(true);
 			expect(res.redirect).toHaveBeenCalledWith('/projects-map');
+		});
+	});
+
+	describe('downloadMasterGeoJsonController', () => {
+		it('streams the GeoJson file as a download', async () => {
+			const mockPipe = jest.fn();
+
+			const mockNodeStream = {
+				pipe: mockPipe
+			};
+
+			jest.spyOn(Readable, 'fromWeb').mockReturnValue(mockNodeStream);
+
+			fetch.mockResolvedValue({
+				ok: true,
+				body: {}
+			});
+
+			await downloadMasterGeoJsonController(req, res, next);
+
+			expect(fetch).toHaveBeenCalled();
+
+			expect(res.setHeader).toHaveBeenCalledWith(
+				'Content-Disposition',
+				'attachment; filename="all-project-boundaries.geojson"'
+			);
+
+			expect(res.setHeader).toHaveBeenCalledWith('Content-Type', 'application/geo+json');
+
+			expect(Readable.fromWeb).toHaveBeenCalledWith({});
+
+			expect(mockPipe).toHaveBeenCalledWith(res);
+
+			expect(next).not.toHaveBeenCalled();
+		});
+
+		it('calls next when fetch rejects', async () => {
+			fetch.mockRejectedValue(new Error('download failed'));
+
+			await downloadMasterGeoJsonController(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(expect.any(Error));
+
+			expect(res.setHeader).not.toHaveBeenCalled();
+		});
+
+		it('calls next when response is not ok', async () => {
+			fetch.mockResolvedValue({
+				ok: false,
+				status: 500
+			});
+
+			await downloadMasterGeoJsonController(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(expect.any(Error));
+
+			expect(res.setHeader).not.toHaveBeenCalled();
+		});
+
+		it('calls next when response body is missing', async () => {
+			fetch.mockResolvedValue({
+				ok: true,
+				body: undefined
+			});
+
+			await downloadMasterGeoJsonController(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(
+				expect.objectContaining({
+					message: 'geoJson response body missing'
+				})
+			);
 		});
 	});
 });
