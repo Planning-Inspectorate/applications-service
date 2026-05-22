@@ -106,8 +106,8 @@ function buildGeoJsonLayer(map, features) {
 	const layer = new VectorLayer({
 		source: boundarySource,
 		style: new Style({
-			fill: new Fill({ color: cssVar('--boundary-fill', 'rgba(228, 0, 75, 0.15)') }),
-			stroke: new Stroke({ color: cssVar('--boundary-stroke', '#e4004b'), width: 2 })
+			fill: new Fill({ color: cssVar('--boundary-fill', 'rgba(255, 0, 0, 0.2)') }),
+			stroke: new Stroke({ color: cssVar('--boundary-stroke', '#ff0000'), width: 1.5 })
 		})
 	});
 
