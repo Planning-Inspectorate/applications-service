@@ -45,6 +45,15 @@
 				{{ t('projectsMap.paragraph1') }}
 			</p>
 
+			<p class="govuk-body govuk-!-margin-top-4">
+				<a
+					class="govuk-link"
+					href={{ downloadBoundariesURL }}
+					>
+					{{ t('projectsMap.boundariesDownloadLink') }}
+					</a>
+			</p>
+
 			{% include "./includes/search.njk" %}
 
 			{% include "./includes/filter-toggle.njk" %}

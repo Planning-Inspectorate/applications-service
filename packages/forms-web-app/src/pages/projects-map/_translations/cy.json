@@ -1,6 +1,7 @@
 {
 	"pageTitle": "Map prosiectau",
 	"heading1": "Map prosiectau",
+	"boundariesDownloadLink": "Lawrlwythwch ffeil geoofodol sy'n cynnwys map o holl ffiniau'r prosiect sydd ar gael (JSON)",
 	"paragraph1": "Dewiswch farc ar y map i weld prosiect yn yr ardal.",
 	"searchAccessibilityText": "Chwilio map prosiectau",
 	"showFilters": "Dangos hidlyddion",
