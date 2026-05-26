@@ -12,7 +12,8 @@ const {
 } = require('./project-search/controller');
 const {
 	getProjectsMapController,
-	postProjectsMapController
+	postProjectsMapController,
+	downloadMasterGeoJsonController
 } = require('./projects-map/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
@@ -23,6 +24,7 @@ const { getContactURL } = require('./contact/_utils/get-contact-url');
 const { getCookiesURL } = require('./cookies/_utils/get-cookies-url');
 const { getProjectSearchURL } = require('./project-search/utils/get-project-search-url');
 const { getProjectsMapURL } = require('./projects-map/utils/get-projects-map-url');
+const { getGeoJsonDownloadURL } = require('./projects-map/utils/get-master-geo-json-download-url');
 const {
 	getDetailedInformationURL
 } = require('./detailed-information/_utils/get-detailed-information-url');
@@ -73,6 +75,7 @@ const contactURL = getContactURL();
 const cookiesURL = getCookiesURL();
 const projectSearchURL = getProjectSearchURL();
 const projectsMapURL = getProjectsMapURL();
+const masterGeoJsonDownloadURL = getGeoJsonDownloadURL();
 const detailedInformationURL = getDetailedInformationURL();
 const registerOfApplicationsURL = getRegisterOfApplicationsURL();
 
@@ -121,6 +124,8 @@ if (featureFlag.enableProjectsMap) {
 		addProjectsMapTranslationsMiddleware,
 		getProjectsMapController
 	);
+
+	pagesRouter.get(masterGeoJsonDownloadURL, downloadMasterGeoJsonController);
 }
 
 pagesRouter.get(

@@ -1,4 +1,6 @@
 const logger = require('../../lib/logger');
+const { Readable } = require('stream');
+const { maps } = require('../../config');
 const { getApplications } = require('../../services/applications.service');
 const { getMapAccessToken } = require('../_services');
 const { getFilters } = require('../_utils/filters/get-filters');
@@ -10,6 +12,7 @@ const {
 const { getProjectSearchURL } = require('../project-search/utils/get-project-search-url');
 const { getRelatedContentLinks } = require('../project-search/utils/get-related-content-links');
 const { getProjectsMapURL } = require('./utils/get-projects-map-url');
+const { getGeoJsonDownloadURL } = require('./utils/get-master-geo-json-download-url');
 const { queryStringBuilder } = require('../../utils/query-string-builder');
 
 const view = 'projects-map/view.njk';
@@ -52,6 +55,7 @@ const getProjectsMapController = async (req, res, next) => {
 			mapAccessToken,
 			mapGeoJSON: JSON.stringify(geoJSON),
 			projectSearchURL: getProjectSearchURL(),
+			downloadBoundariesURL: getGeoJsonDownloadURL(),
 			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
 			query,
 			queryString,
@@ -88,4 +92,35 @@ const postProjectsMapController = (req, res, next) => {
 	}
 };
 
-module.exports = { getProjectsMapController, postProjectsMapController };
+/**
+ * GET /projects-map/download-boundaries
+ * Streams the master GeoJSON file to the browser as a download.
+ */
+const downloadMasterGeoJsonController = async (req, res, next) => {
+	try {
+		const response = await fetch(maps.masterGeoJsonUrl);
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch GeoJSON: ${response.status}`);
+		}
+
+		res.setHeader('Content-Disposition', 'attachment; filename="all-project-boundaries.geojson"');
+
+		res.setHeader('Content-Type', 'application/geo+json');
+
+		if (!response.body) {
+			throw new Error('geoJson response body missing');
+		}
+
+		Readable.fromWeb(response.body).pipe(res);
+	} catch (error) {
+		logger.error(error);
+		next(error);
+	}
+};
+
+module.exports = {
+	getProjectsMapController,
+	postProjectsMapController,
+	downloadMasterGeoJsonController
+};
