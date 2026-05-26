@@ -97,6 +97,10 @@ module.exports = {
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
 		advicePagesWelsh:
 			'https://www.gov.uk/government/collections/prosiectau-seilwaith-o-arwyddocad-cenedlaethol-tudalennau-cyngor',
+		commonTerms:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-terms-commonly-used-in-the-process',
+		commonTermsWelsh:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-terms-commonly-used-in-the-process.cy',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
 		crownCopyright:
 			'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
