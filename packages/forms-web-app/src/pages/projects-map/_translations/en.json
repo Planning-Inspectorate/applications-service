@@ -1,6 +1,7 @@
 {
 	"pageTitle": "Projects map",
 	"heading1": "Projects map",
+	"boundariesDownloadLink": "Download a geospatial file containing a map of all available project boundaries (JSON)",
 	"paragraph1": "Select a marker on the map to view a project in the area.",
 	"searchAccessibilityText": "Search projects map",
 	"showFilters": "Show filters",
