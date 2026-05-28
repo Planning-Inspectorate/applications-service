@@ -3,6 +3,7 @@
 exports[`pages/projects-map/_translations should return the correct English translations 1`] = `
 {
   "applyFilters": "Apply filters",
+  "boundariesDownloadLink": "Download a geospatial file containing a map of all available project boundaries (JSON)",
   "filterLabels": {
     "region": "Location",
     "sector": "Sector",
@@ -30,6 +31,7 @@ exports[`pages/projects-map/_translations should return the correct English tran
 exports[`pages/projects-map/_translations should return the correct Welsh translations 1`] = `
 {
   "applyFilters": "Cymhwyso hidlwyr",
+  "boundariesDownloadLink": "Lawrlwythwch ffeil geoofodol sy'n cynnwys map o holl ffiniau'r prosiect sydd ar gael (JSON)",
   "filterLabels": {
     "region": "Lleoliad",
     "sector": "Sector",
