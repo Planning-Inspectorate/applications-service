@@ -11,6 +11,8 @@ const {
 	getExaminationSession
 } = require('../../_session/examination-session');
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const handleProcessSubmission = async (session) => {
 	logger.info('Attempting process submission');
 	try {
@@ -19,7 +21,14 @@ const handleProcessSubmission = async (session) => {
 		for (const item of examinationSession.submissionItems) {
 			const listOfCommentAndFiles = getListOfFormData(session, item);
 			for (let form of listOfCommentAndFiles) {
-				if (submissionId) form.append('submissionId', submissionId);
+				if (submissionId) {
+					form.append('submissionId', submissionId);
+
+					//Due to a bug with Prisma 7, preventing from assigning individual timeouts, we stagger the document submissions
+					//to prevent CBOS from being overwhelmed and timing out
+					//https://github.com/prisma/prisma/issues/28002
+					await sleep(3000);
+				}
 				const response = await postSubmission(session.caseRef, form);
 				submissionId = response.data.submissionId;
 			}
