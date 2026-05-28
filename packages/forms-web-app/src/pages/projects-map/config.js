@@ -4,4 +4,11 @@ const projectsMapI18nNamespace = 'projectsMap';
 
 const masterGeoJsonDownloadRoute = 'download-boundaries';
 
-module.exports = { projectsMapRoute, projectsMapI18nNamespace, masterGeoJsonDownloadRoute };
+const masterGeoJsonMapDisplayRoute = 'geojson';
+
+module.exports = {
+	projectsMapRoute,
+	projectsMapI18nNamespace,
+	masterGeoJsonDownloadRoute,
+	masterGeoJsonMapDisplayRoute
+};
