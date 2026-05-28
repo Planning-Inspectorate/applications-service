@@ -32,7 +32,7 @@ services:
       # BACK_OFFICE_INTEGRATION_POST_INTERESTED_PARTY_CASE_REFERENCES: BC0110001
       # BACK_OFFICE_INTEGRATION_POST_SUBMISSIONS_CASE_REFERENCES: BC0110001
       # BACK_OFFICE_INTEGRATION_GET_REPRESENTATION_CASE_REFERENCES: BC0110001
-      BACK_OFFICE_SERVICE_BUS_ENABLED: false
+      BACK_OFFICE_SERVICE_BUS_ENABLED: 'false'
       BACK_OFFICE_INTEGRATION_GET_APPLICATIONS: MERGE
       BACK_OFFICE_SERVICE_BUS_HOSTNAME: pins-sb-back-office-dev-ukw-001.servicebus.windows.net
       DATABASE_URL: sqlserver://mssql:1433;database=pins_applications_development;user=sa;password=dbPASSw0_rd;trustServerCertificate=true
@@ -106,7 +106,6 @@ services:
       FEATURE_SHOW_AFFECTED_AREA_SECTION: 'false'
       FEATURE_ENABLED_CONTENT_SECURITY_POLICY: 'true'
       FEATURE_ENABLE_GENERALISED_FORM_SANITISATION: 'true'
-      FEATURE_GENERAL_S51_BO: 'true'
       FEATURE_PROJECT_INFORMATION: 'true'
       FEATURE_REGISTER_OF_ADVICE: 'true'
       FILE_UPLOAD_DEBUG: 'false'
@@ -116,6 +115,7 @@ services:
       GLOBAL_BANNER_TEXT: ''
       GOOGLE_ANALYTICS_ID: G-X21W2S2FN3
       HOST_URL: http://localhost:9004/
+      MASTER_GEOJSON_URL: "https://back-office-applications-docs-dev.planninginspectorate.gov.uk/published-documents/gis-boundaries/all-project-boundaries.geojson"
       OPEN_REGISTRATION_CASE_REFERENCES: 'EN010102, EN013014'
       PDF_SERVICE_API_URL: http://pdf-service-api:3000
       PLANNED_OUTAGE_RESUME_TEXT: 'Sample service resume text'

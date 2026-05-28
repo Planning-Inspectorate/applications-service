@@ -3,14 +3,14 @@ const shortComment = 'I am against the proposal since it will reduce resident pa
 const continueWithFixtureComment = (tellAboutProject, fixtureName) => {
 	cy.fixture(fixtureName).then((comment) => {
 		tellAboutProject.enterTextIntoCommentsFieldDirectly(comment.trim());
-		cy.clickSaveAndContinue();
+		tellAboutProject.clickSaveAndContinue();
 	});
 };
 
 const saveAndReturnWithFixtureComment = (tellAboutProject, fixtureName) => {
 	cy.fixture(fixtureName).then((comment) => {
 		tellAboutProject.enterTextIntoCommentsFieldDirectly(comment.trim());
-		cy.clickSaveAndReturn();
+		tellAboutProject.clickSaveAndReturn();
 	});
 };
 
@@ -20,22 +20,22 @@ export const registerTopicFieldStep = (And, tellAboutProject) => {
 	});
 };
 
-export const registerAddAnotherCommentRadioStep = (When) => {
+export const registerAddAnotherCommentRadioStep = (When, pageObject) => {
 	When(
 		'user selects {string} radio option on Do you want to add another comment page',
 		(radioChoice) => {
-			cy.selectRadioYesOrNo(radioChoice);
+			pageObject.selectRadioYesOrNo(radioChoice);
 		}
 	);
 };
 
 export const registerCommentPageSteps = ({ And, Then, When }, tellAboutProject, emailAddress) => {
 	And('I continue with an empty value in the comments field', () => {
-		cy.clickSaveAndContinue();
+		tellAboutProject.clickSaveAndContinue();
 	});
 
 	And('I save and exit with an empty value in the comments field', () => {
-		cy.clickSaveAndReturn();
+		tellAboutProject.clickSaveAndReturn();
 	});
 
 	And('I continue with a comment beyond the maximum characters allowed', () => {
@@ -56,16 +56,16 @@ export const registerCommentPageSteps = ({ And, Then, When }, tellAboutProject, 
 
 	And('I continue with a short comment', () => {
 		tellAboutProject.enterTextIntoCommentsField(shortComment);
-		cy.clickSaveAndContinue();
+		tellAboutProject.clickSaveAndContinue();
 	});
 
 	And('I save and exit with a short comment', () => {
 		tellAboutProject.enterTextIntoCommentsField(shortComment);
-		cy.clickSaveAndReturn();
+		tellAboutProject.clickSaveAndReturn();
 	});
 
 	registerTopicFieldStep(And, tellAboutProject);
-	registerAddAnotherCommentRadioStep(When);
+	registerAddAnotherCommentRadioStep(When, tellAboutProject);
 
 	Then('advice to not include any personal details is present on the page', () => {
 		tellAboutProject.assertDoNotIncludePersonalDetailsPresent();

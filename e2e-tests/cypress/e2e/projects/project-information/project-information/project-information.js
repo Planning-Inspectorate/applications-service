@@ -1,17 +1,18 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import { BasePage } from '../../shared/PageObjects/BasePage';
+import PO_ProjectInformation from '../PageObjects/PO_ProjectInformation';
 import { LOCAL_CASES } from '../../shared/localCases';
 
 const basePage = new BasePage();
+const projectInformation = new PO_ProjectInformation();
 const { northLincolnshire } = LOCAL_CASES;
 
 Given('I open the local project information page', () => {
-	cy.visit(`/projects/${northLincolnshire.id}`);
+	projectInformation.openProjectInformationPage(northLincolnshire.id);
 });
 
 Then('I am on the local project information page', () => {
-	cy.url().should('include', `/projects/${northLincolnshire.id}`);
-	basePage.locateH1ByText('Project information');
+	projectInformation.assertOnProjectInformationPage(northLincolnshire.id);
 });
 
 Then('the project information page shows these sections', (dataTable) => {
@@ -31,25 +32,23 @@ Then('the project location map is displayed', () => {
 });
 
 When('I open the register to have your say journey from the project information page', () => {
-	basePage.clickProjectInformationMenuLink('register-to-have-your-say');
+	projectInformation.clickProjectInformationMenuLink('register-to-have-your-say');
 });
 
 Then('I am on the register to have your say page', () => {
-	cy.url().should('include', '/register-have-your-say');
-	cy.contains('h1', 'Register to have your say').should('be.visible');
+	projectInformation.assertOnRegisterToHaveYourSayPage();
 });
 
 When('I return to the local project information page from project navigation', () => {
-	basePage.clickProjectInformationMenuLink('projects');
+	projectInformation.clickProjectInformationMenuLink('projects');
 });
 
 When('I open the get updates journey from the project information page', () => {
-	basePage.clickProjectInformationMenuLink('get-updates');
+	projectInformation.clickProjectInformationMenuLink('get-updates');
 });
 
 Then('I am on the get updates start page', () => {
-	cy.url().should('include', `/projects/${northLincolnshire.id}/get-updates/start`);
-	cy.contains('h1', 'Get updates').should('be.visible');
+	projectInformation.assertOnGetUpdatesStartPage(northLincolnshire.id);
 });
 
 Then('the get updates privacy notice link is displayed', () => {

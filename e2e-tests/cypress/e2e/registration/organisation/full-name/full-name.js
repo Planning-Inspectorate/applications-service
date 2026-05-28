@@ -1,18 +1,16 @@
 import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_FullName from './PageObjects/PO_FullName';
+import PO_WhoYouRegisterFor from '../../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
 const fullNamePage = new PO_FullName();
+const whoYouRegisterForPage = new PO_WhoYouRegisterFor();
 
 Given('I navigate to what is your full name page selecting {string}', (radiochoice) => {
-	cy.visit('/project-search');
-	cy.clickProjectLink('North Lincolnshire Green Energy Park');
-	cy.clickOnHref('/register-have-your-say');
-	cy.clickOnHref('who-registering-for');
-	cy.selectRadioOption(radiochoice);
-	cy.clickSaveAndContinue();
+	whoYouRegisterForPage.navigatetoTypeOfPartyPage();
+	whoYouRegisterForPage.selectPartyAndContinue(radiochoice);
 });
 
 Then('below error message should be presented on full name page', function (table) {
-	cy.assertErrorMessage(table);
+	fullNamePage.assertErrorMessages(table);
 });
 
 And('I can see the logo gov uk text', () => {
@@ -24,14 +22,14 @@ And('I can see the text This service is only for Application service', () => {
 });
 
 Then('I click on back link', () => {
-	cy.clickOnBackLink();
+	fullNamePage.clickBackLink();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cy.assertUserOnThePage(pageName);
+	fullNamePage.assertOnPage(pageName);
 });
 
 When('I continue with the value {string} in the full name field', (text) => {
 	fullNamePage.enterTextIntoFullNameField(text);
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
 });

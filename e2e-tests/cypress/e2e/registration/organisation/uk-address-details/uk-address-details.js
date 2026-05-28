@@ -12,20 +12,20 @@ const jobTitlePage = new PO_WhatIsJobTitle();
 
 Given('I have been asked to provide my postal address', () => {
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
-	cy.clickSaveAndContinue();
-	cy.selectRadioYesOrNo('Yes');
-	cy.clickSaveAndContinue();
+	fullNamePage.clickSaveAndContinue();
+	fullNamePage.selectRadioYesOrNo('Yes');
+	fullNamePage.clickSaveAndContinue();
 	orgNamePage.enterTextIntoOrganisationNameField('Organisation name');
-	cy.clickSaveAndContinue();
-	cy.assertUserOnThePage('What is your job title or volunteer role?');
+	orgNamePage.clickSaveAndContinue();
+	jobTitlePage.assertOnPage('What is your job title or volunteer role?');
 	jobTitlePage.enterTextIntoJobTitleField('Test job title');
-	cy.clickSaveAndContinue();
+	jobTitlePage.clickSaveAndContinue();
 	emailAddressPage.enterTextIntoEmailField('test@test.com');
-	cy.clickSaveAndContinue();
-	cy.assertUserOnThePage('what is your address? organisation');
+	emailAddressPage.clickSaveAndContinue();
+	addressDetails.assertOnPage('what is your address? organisation');
 });
 
 And('I continue with the following values in the address fields', function (table) {
 	addressDetails.enterTextIntoAddressFields(table);
-	cy.clickSaveAndContinue();
+	addressDetails.clickSaveAndContinue();
 });
