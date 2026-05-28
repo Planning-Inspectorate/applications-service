@@ -49,8 +49,8 @@ const { sendMessages } = require('../../src/lib/eventClient');
 jest.mock('../../src/utils/date-utils');
 const { getDate } = require('../../src/utils/date-utils');
 jest.mock('../../src/utils/is-backoffice-case-reference');
-const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
-jest.mock('@planning-inspectorate/pins-notify', () => ({
+const { notifyBuilder } = require('#pins-notify');
+jest.mock('#pins-notify', () => ({
 	createNotifyClient: {
 		createNotifyClient: jest.fn().mockReturnThis()
 	},
