@@ -156,8 +156,64 @@ const downloadMasterGeoJsonController = async (req, res, next) => {
 	}
 };
 
+const getMasterGeoJsonController = async (req, res, next) => {
+	try {
+		// Retrieve blob metadata without downloading the full GeoJSON file.
+		// This allows us to compare ETags and avoid unnecessarily transferring
+		// a potentially large master boundary file if the browser already has
+		// the latest version cached
+		const headResponse = await fetch(maps.masterGeoJsonUrl, {
+			method: 'HEAD'
+		});
+
+		if (!headResponse.ok) {
+			throw new Error(`Failed to fetch GeoJSON headers: ${headResponse.status}`);
+		}
+
+		const etag = headResponse.headers.get('etag');
+		const lastModified = headResponse.headers.get('last-modified');
+
+		// Instruct browsers to cache the response but revalidate before use.
+		// If the GeoJSON has not changed, we can return 304 Not Modified and
+		// the browser will reuse its cached copy rather than downloading the
+		// entire file again
+		res.set('Cache-Control', 'public, max-age=0, must-revalidate');
+
+		if (etag && req.headers['if-none-match'] === etag) {
+			logger.info('Returning 304 for cached master geojson');
+
+			return res.status(304).send();
+		}
+
+		if (etag) {
+			res.setHeader('ETag', etag);
+		}
+
+		if (lastModified) {
+			res.setHeader('Last-Modified', lastModified);
+		}
+
+		// GeoJSON has changed (or browser has no cached copy), so download
+		// the latest version from blob storage and return it to the client.
+		const response = await fetch(maps.masterGeoJsonUrl);
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch GeoJSON: ${response.status}`);
+		}
+
+		const geoJson = await response.json();
+
+		return res.json(geoJson);
+	} catch (error) {
+		logger.error(error);
+
+		next(error);
+	}
+};
+
 module.exports = {
 	getProjectsMapController,
 	postProjectsMapController,
-	downloadMasterGeoJsonController
+	downloadMasterGeoJsonController,
+	getMasterGeoJsonController
 };

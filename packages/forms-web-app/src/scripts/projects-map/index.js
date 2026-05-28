@@ -4,6 +4,8 @@ import { get as getProjection } from 'ol/proj.js';
 import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS.js';
 import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
 import TileLayer from 'ol/layer/Tile.js';
+import VectorLayer from 'ol/layer/Vector.js';
+import Feature from 'ol/Feature.js';
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
@@ -19,6 +21,7 @@ import SelectCluster from 'ol-ext/src/interaction/SelectCluster.js';
 import Popup from 'ol-ext/src/overlay/Popup.js';
 import { getMapWMTS } from '../map/get-map-wmts.js';
 import { getControls } from '../map/get-controls.js';
+import { getGeoJsonURL } from '../../pages/projects-map/utils/get-master-geo-json-url';
 
 const UK_CENTRE_EPSG27700 = [366154, 289239];
 const DEFAULT_ZOOM = 0;
@@ -67,6 +70,18 @@ function clusterStyle(feature, MARKER_FILL, MARKER_STROKE) {
 	});
 
 	return [shadow, marker];
+}
+
+function boundaryStyle() {
+	return new Style({
+		stroke: new Stroke({
+			color: '#FF0000',
+			width: 1.5
+		}),
+		fill: new Fill({
+			color: 'rgba(255, 0, 0, 0.2)'
+		})
+	});
 }
 
 /** Registers EPSG:27700 projection with proj4 and returns the OL projection object. */
@@ -154,6 +169,50 @@ function renderPopup(popup, features, coordinate) {
 	);
 }
 
+async function loadBoundaryLayer(map, fallbackVectorSource) {
+	try {
+		const response = await fetch(getGeoJsonURL());
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch boundaries: ${response.status}`);
+		}
+
+		const boundaryGeoJSON = await response.json();
+
+		renderBoundaryLayer(map, boundaryGeoJSON, fallbackVectorSource);
+	} catch (error) {
+		logger.error('[projects-map] failed loading boundaries:', error);
+	}
+}
+
+function renderBoundaryLayer(map, boundaryGeoJSON, fallbackVectorSource) {
+	const boundaryFeatures = new GeoJSON().readFeatures(boundaryGeoJSON, {
+		dataProjection: 'EPSG:4326',
+		featureProjection: 'EPSG:27700'
+	});
+
+	const polygonProjects = new Set(boundaryFeatures.map((feature) => feature.get('caseRef')));
+
+	fallbackVectorSource.getFeatures().forEach((feature) => {
+		const caseReference = feature.get('caseReference');
+
+		if (polygonProjects.has(caseReference)) {
+			fallbackVectorSource.removeFeature(feature);
+		}
+	});
+
+	const boundarySource = new VectorSource({
+		features: boundaryFeatures
+	});
+
+	const boundaryLayer = new VectorLayer({
+		source: boundarySource,
+		style: boundaryStyle()
+	});
+
+	map.addLayer(boundaryLayer);
+}
+
 function projectsMap() {
 	/**
 	 * Initialises the projects map.
@@ -167,27 +226,29 @@ function projectsMap() {
 			const epsg27700 = setupEpsg27700();
 			const { tileLayer, wmtsOptions } = buildTileLayer(accessToken, wmtsXml);
 
-			const geojsonFeatures = geojsonData
+			const MARKER_FILL = cssVar('--cluster-bg', '#d4351c');
+			const MARKER_STROKE = cssVar('--cluster-text', 'white');
+			const styleWithColours = (feature) => clusterStyle(feature, MARKER_FILL, MARKER_STROKE);
+
+			const fallbackFeatures = geojsonData
 				? new GeoJSON().readFeatures(geojsonData, {
 						dataProjection: 'EPSG:4326',
 						featureProjection: 'EPSG:27700'
 				  })
 				: [];
 
-			const vectorSource = new VectorSource({ features: geojsonFeatures });
-
-			const clusterSource = new Cluster({
-				distance: 40,
-				source: vectorSource
+			const fallbackVectorSource = new VectorSource({
+				features: fallbackFeatures
 			});
 
-			const MARKER_FILL = cssVar('--cluster-bg', '#d4351c');
-			const MARKER_STROKE = cssVar('--cluster-text', 'white');
-			const styleWithColours = (feature) => clusterStyle(feature, MARKER_FILL, MARKER_STROKE);
+			const fallbackClusterSource = new Cluster({
+				distance: 40,
+				source: fallbackVectorSource
+			});
 
 			// AnimatedCluster (ol-ext) — wraps cluster source with expand animation on click
-			const clusterLayer = new AnimatedCluster({
-				source: clusterSource,
+			const fallbackClusterLayer = new AnimatedCluster({
+				source: fallbackClusterSource,
 				animationDuration: 300,
 				style: styleWithColours
 			});
@@ -195,7 +256,7 @@ function projectsMap() {
 			const map = new Map({
 				controls: getControls(),
 				target,
-				layers: [tileLayer, clusterLayer],
+				layers: [tileLayer, fallbackClusterLayer],
 				overlays: [],
 				view: new View({
 					projection: 'EPSG:27700',
@@ -213,6 +274,7 @@ function projectsMap() {
 
 			// SelectCluster (ol-ext) — handles cluster click, fires 'select' with cluster feature
 			const selectCluster = new SelectCluster({
+				layers: [fallbackClusterLayer],
 				animate: true,
 				animationDuration: 300,
 				spiral: true,
@@ -243,9 +305,28 @@ function projectsMap() {
 				renderPopup(popup, clusterFeatures, coordinate);
 			});
 
-			// Close popup on map click outside a cluster
-			map.on('click', (e) => {
-				if (!map.hasFeatureAtPixel(e.pixel)) popup.hide();
+			map.on('singleclick', (event) => {
+				let featureClicked = false;
+
+				map.forEachFeatureAtPixel(event.pixel, (feature) => {
+					featureClicked = true;
+
+					const geometryType = feature.getGeometry()?.getType();
+
+					if (geometryType === 'Polygon' || geometryType === 'MultiPolygon') {
+						const popupFeature = new Feature({
+							caseReference: feature.get('caseRef'),
+							projectName: feature.get('projName'),
+							stage: feature.get('geomStage')
+						});
+
+						renderPopup(popup, [popupFeature], event.coordinate);
+					}
+				});
+
+				if (!featureClicked) {
+					popup.hide();
+				}
 			});
 
 			map.getView().on('change:resolution', () => popup.hide());
@@ -259,6 +340,7 @@ function projectsMap() {
 			};
 			map.getView().on('change:resolution', updateZoomButtons);
 			map.once('rendercomplete', updateZoomButtons);
+			loadBoundaryLayer(map, fallbackVectorSource);
 		} catch (error) {
 			logger.error('[projects-map] initiate failed:', error);
 		}
