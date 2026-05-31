@@ -16,6 +16,7 @@ const { getProjectUpdates, getDocumentByType } = require('../../../lib/applicati
 const { getMapAccessToken } = require('../../_services');
 const fetch = require('node-fetch');
 
+jest.mock('node-fetch', () => jest.fn());
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getProjectUpdates: jest.fn(),
 	getDocumentByType: jest.fn()
@@ -115,7 +116,8 @@ describe('pages/projects/index/controller', () => {
 				getDocumentByType
 					.mockReturnValueOnce({})
 					.mockReturnValueOnce({})
-					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
+					.mockReturnValueOnce(getApplicationApprovalDocumentFixture)
+					.mockReturnValueOnce({ resp_code: 404 });
 				getMapAccessToken.mockReturnValue('mock map access token');
 
 				await getProjectsIndexController(req, res, next);
@@ -168,7 +170,8 @@ describe('pages/projects/index/controller', () => {
 				getDocumentByType
 					.mockReturnValueOnce({})
 					.mockReturnValueOnce({})
-					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
+					.mockReturnValueOnce(getApplicationApprovalDocumentFixture)
+					.mockReturnValueOnce({ resp_code: 404 });
 
 				await getProjectsIndexController(req, res, next);
 			});
