@@ -1,38 +1,9 @@
 'use strict';
 
 const { GeoJSONBuilder } = require('../geojson-builder');
-
-/**
- * Property 3: GeoJSON Builder round-trip
- * Validates: Requirements 6.1, 6.2, 6.3
- *
- * For any sequence of addApplications and addPoint calls with valid coordinates,
- * the build() output SHALL be a valid GeoJSON FeatureCollection whose feature count
- * equals the total number of valid inputs added, and each feature's coordinates
- * SHALL match the corresponding input coordinate.
- *
- * Uses randomized inputs (no external libraries) to verify round-trip invariants.
- */
+const { randomLng, randomLat, randomString, shuffle, isValidCoordinate } = require('./test-utils');
 
 const NUM_ITERATIONS = 100;
-
-function randomLng() {
-	return Math.random() * 360 - 180;
-}
-
-function randomLat() {
-	return Math.random() * 180 - 90;
-}
-
-function randomString(minLen = 1, maxLen = 20) {
-	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	const len = Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
-	let result = '';
-	for (let i = 0; i < len; i++) {
-		result += chars[Math.floor(Math.random() * chars.length)];
-	}
-	return result;
-}
 
 function randomApplication() {
 	return {
@@ -43,7 +14,41 @@ function randomApplication() {
 	};
 }
 
-describe('GeoJSON Builder - Property 3: Round-trip', () => {
+function randomValidApp() {
+	return {
+		LongLat: [randomLng(), randomLat()],
+		CaseReference: randomString(5, 12),
+		ProjectName: randomString(3, 30),
+		Stage: Math.floor(Math.random() * 9)
+	};
+}
+
+function randomInvalidCoordinate() {
+	const invalidTypes = [
+		null,
+		undefined,
+		[],
+		[Math.random()],
+		['abc', 'def'],
+		[NaN, randomLat()],
+		[randomLng(), NaN],
+		'not-an-array',
+		42
+	];
+	return invalidTypes[Math.floor(Math.random() * invalidTypes.length)];
+}
+
+function randomInvalidApp() {
+	return {
+		LongLat: randomInvalidCoordinate(),
+		CaseReference: randomString(5, 12),
+		ProjectName: randomString(3, 30),
+		Stage: Math.floor(Math.random() * 9)
+	};
+}
+
+// GeoJSON Builder round-trip - build() output matches input coordinates
+describe('GeoJSON Builder - Round-trip', () => {
 	it('build() feature count equals the number of valid application records added', () => {
 		for (let i = 0; i < NUM_ITERATIONS; i++) {
 			const count = Math.floor(Math.random() * 20);
@@ -130,6 +135,72 @@ describe('GeoJSON Builder - Property 3: Round-trip', () => {
 
 			expect(result.type).toBe('FeatureCollection');
 			expect(result.features).toHaveLength(appCount + pointCount);
+		}
+	});
+});
+
+// GeoJSON Builder excludes invalid coordinates from output
+describe('GeoJSON Builder - excludes invalid coordinates', () => {
+	it('output feature count equals count of valid input records', () => {
+		for (let i = 0; i < NUM_ITERATIONS; i++) {
+			const validCount = Math.floor(Math.random() * 8);
+			const invalidCount = Math.floor(Math.random() * 8);
+			const apps = shuffle([
+				...Array.from({ length: validCount }, randomValidApp),
+				...Array.from({ length: invalidCount }, randomInvalidApp)
+			]);
+
+			const result = new GeoJSONBuilder().addApplications(apps).build();
+			const expectedValidCount = apps.filter((app) => isValidCoordinate(app.LongLat)).length;
+
+			expect(result.features).toHaveLength(expectedValidCount);
+		}
+	});
+
+	it('only records with valid [lng, lat] coordinates appear in output', () => {
+		for (let i = 0; i < NUM_ITERATIONS; i++) {
+			const validCount = Math.floor(Math.random() * 6) + 1;
+			const invalidCount = Math.floor(Math.random() * 6) + 1;
+			const apps = shuffle([
+				...Array.from({ length: validCount }, randomValidApp),
+				...Array.from({ length: invalidCount }, randomInvalidApp)
+			]);
+
+			const result = new GeoJSONBuilder().addApplications(apps).build();
+
+			for (const feature of result.features) {
+				const [lng, lat] = feature.geometry.coordinates;
+				expect(typeof lng).toBe('number');
+				expect(typeof lat).toBe('number');
+				expect(isNaN(lng)).toBe(false);
+				expect(isNaN(lat)).toBe(false);
+			}
+		}
+	});
+
+	it('output features correspond only to valid input records in order', () => {
+		for (let i = 0; i < NUM_ITERATIONS; i++) {
+			const validCount = Math.floor(Math.random() * 6) + 1;
+			const invalidCount = Math.floor(Math.random() * 6) + 1;
+			const apps = shuffle([
+				...Array.from({ length: validCount }, randomValidApp),
+				...Array.from({ length: invalidCount }, randomInvalidApp)
+			]);
+
+			const result = new GeoJSONBuilder().addApplications(apps).build();
+			const validRecords = apps.filter((app) => isValidCoordinate(app.LongLat));
+
+			expect(result.features).toHaveLength(validRecords.length);
+
+			for (let j = 0; j < result.features.length; j++) {
+				const feature = result.features[j];
+				const expectedRecord = validRecords[j];
+				const expectedLng = parseFloat(expectedRecord.LongLat[0]);
+				const expectedLat = parseFloat(expectedRecord.LongLat[1]);
+
+				expect(feature.geometry.coordinates[0]).toBe(expectedLng);
+				expect(feature.geometry.coordinates[1]).toBe(expectedLat);
+			}
 		}
 	});
 });
