@@ -1,4 +1,4 @@
-const projectsMapRoute = 'projects-map';
+const projectsMapRoute = '/projects-map';
 const projectsMapViewPath = 'projects-map/view.njk';
 const projectsMapI18nNamespace = 'projectsMap';
 const masterGeoJsonDownloadRoute = 'download-boundaries';

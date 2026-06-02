@@ -43,10 +43,62 @@ function isValidCoordinate(coordinate) {
 	return !isNaN(lng) && !isNaN(lat);
 }
 
+/**
+ * Generate random application object for property-based testing
+ */
+const NUM_ITERATIONS = 100;
+
+function randomApplication() {
+	return {
+		LongLat: [randomLng(), randomLat()],
+		CaseReference: randomString(5, 12),
+		ProjectName: randomString(3, 30),
+		Stage: Math.floor(Math.random() * 9)
+	};
+}
+
+function randomValidApp() {
+	return {
+		LongLat: [randomLng(), randomLat()],
+		CaseReference: randomString(5, 12),
+		ProjectName: randomString(3, 30),
+		Stage: Math.floor(Math.random() * 9)
+	};
+}
+
+function randomInvalidCoordinate() {
+	const invalidTypes = [
+		null,
+		undefined,
+		[],
+		[Math.random()],
+		['abc', 'def'],
+		[NaN, randomLat()],
+		[randomLng(), NaN],
+		'not-an-array',
+		42
+	];
+	return invalidTypes[Math.floor(Math.random() * invalidTypes.length)];
+}
+
+function randomInvalidApp() {
+	return {
+		LongLat: randomInvalidCoordinate(),
+		CaseReference: randomString(5, 12),
+		ProjectName: randomString(3, 30),
+		Stage: Math.floor(Math.random() * 9)
+	};
+}
+
 module.exports = {
 	randomLng,
 	randomLat,
 	randomString,
 	shuffle,
-	isValidCoordinate
+	isValidCoordinate,
+	NUM_ITERATIONS,
+	randomApplication,
+	randomValidApp,
+	randomInvalidCoordinate,
+	randomInvalidApp
 };

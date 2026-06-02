@@ -8,31 +8,6 @@ jest.mock('ol-ext/src/overlay/Popup.js', () => {
 const { renderPopupHTML } = require('../popup');
 const { NUM_ITERATIONS, randomProjects } = require('./test-helpers');
 
-const NUM_ITERATIONS = 100;
-
-function randomString(minLen = 1, maxLen = 20) {
-	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-	const len = Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
-	let result = '';
-	for (let i = 0; i < len; i++) {
-		result += chars[Math.floor(Math.random() * chars.length)];
-	}
-	return result;
-}
-
-function randomProject() {
-	return {
-		caseReference: randomString(5, 12),
-		projectName: randomString(3, 30),
-		stage: randomString(3, 15)
-	};
-}
-
-function randomProjects(minCount = 1, maxCount = 10) {
-	const count = Math.floor(Math.random() * (maxCount - minCount + 1)) + minCount;
-	return Array.from({ length: count }, randomProject);
-}
-
 describe('scripts/projects-map/popup', () => {
 	describe('#renderPopupHTML', () => {
 		describe('single project', () => {
