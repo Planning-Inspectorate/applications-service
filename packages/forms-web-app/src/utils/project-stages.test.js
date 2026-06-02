@@ -57,6 +57,7 @@ describe('utils/project-stages', () => {
 	describe('#projectInfoProjectStages', () => {
 		it('should return the project info project stages', () => {
 			expect(projectInfoProjectStages).toEqual({
+				0: 'Draft',
 				1: 'Pre-application',
 				2: 'Acceptance',
 				3: 'Pre-examination',

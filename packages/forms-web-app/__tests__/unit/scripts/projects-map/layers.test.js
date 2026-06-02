@@ -1,0 +1,119 @@
+/**
+ * @jest-environment jsdom
+ *
+ * @fileoverview Unit tests for `clusterStyle` and `cssVar` ({@link module:scripts/projects-map/layers}).
+ */
+'use strict';
+
+jest.mock('ol/style/Style.js', () => ({
+	__esModule: true,
+	default: jest.fn((opts) => ({ _type: 'Style', opts }))
+}));
+jest.mock('ol/style/Circle.js', () => ({
+	__esModule: true,
+	default: jest.fn((opts) => ({ _type: 'Circle', opts }))
+}));
+jest.mock('ol/style/Fill.js', () => ({
+	__esModule: true,
+	default: jest.fn((opts) => ({ _type: 'Fill', opts }))
+}));
+jest.mock('ol/style/Stroke.js', () => ({
+	__esModule: true,
+	default: jest.fn((opts) => ({ _type: 'Stroke', opts }))
+}));
+jest.mock('ol/style/Text.js', () => ({
+	__esModule: true,
+	default: jest.fn((opts) => ({ _type: 'Text', opts }))
+}));
+
+const { clusterStyle, cssVar } = require('../../../../src/scripts/projects-map/layers');
+const Circle = require('ol/style/Circle.js').default;
+const Fill = require('ol/style/Fill.js').default;
+const Stroke = require('ol/style/Stroke.js').default;
+const Text = require('ol/style/Text.js').default;
+
+function makeFeature(innerCount) {
+	const inner = Array.from({ length: innerCount }, () => ({}));
+	return { get: jest.fn((key) => (key === 'features' ? inner : undefined)) };
+}
+
+describe('clusterStyle', () => {
+	it('returns null for a cluster with 0 inner features (expanded state)', () => {
+		expect(clusterStyle(makeFeature(0), 'red', 'white')).toBeNull();
+	});
+
+	it('returns an array of exactly two Style objects for a single feature', () => {
+		const result = clusterStyle(makeFeature(1), 'red', 'white');
+		expect(Array.isArray(result)).toBe(true);
+		expect(result).toHaveLength(2);
+	});
+
+	it('returns an array of exactly two Style objects for multiple features', () => {
+		expect(clusterStyle(makeFeature(5), 'red', 'white')).toHaveLength(2);
+	});
+
+	it('uses radius 8 for a single feature', () => {
+		clusterStyle(makeFeature(1), 'red', 'white');
+		const radiusValues = Circle.mock.calls.map((c) => c[0].radius);
+		expect(radiusValues).toContain(8);
+	});
+
+	it('uses a larger radius for multiple features (base 12 + count)', () => {
+		clusterStyle(makeFeature(5), 'red', 'white');
+		const expectedRadius = 12 + 5;
+		const radiusValues = Circle.mock.calls.map((c) => c[0].radius);
+		expect(radiusValues).toContain(expectedRadius);
+	});
+
+	it('caps the count contribution to the radius at 20', () => {
+		clusterStyle(makeFeature(25), 'red', 'white');
+		const radiusValues = Circle.mock.calls.map((c) => c[0].radius);
+		expect(radiusValues).toContain(12 + 20);
+		expect(radiusValues).not.toContain(12 + 25);
+	});
+
+	it('does not create a Text label for a single feature', () => {
+		clusterStyle(makeFeature(1), 'red', 'white');
+		expect(Text).not.toHaveBeenCalled();
+	});
+
+	it('creates a Text label showing the count for multiple features', () => {
+		clusterStyle(makeFeature(7), 'red', 'white');
+		expect(Text).toHaveBeenCalledWith(expect.objectContaining({ text: '7' }));
+	});
+
+	it('applies markerFill to the circle fill colour', () => {
+		clusterStyle(makeFeature(3), '#ff0000', '#ffffff');
+		expect(Fill).toHaveBeenCalledWith(expect.objectContaining({ color: '#ff0000' }));
+	});
+
+	it('applies markerStroke to the circle stroke colour and count label fill', () => {
+		clusterStyle(makeFeature(3), '#ff0000', '#ffffff');
+		expect(Stroke).toHaveBeenCalledWith(expect.objectContaining({ color: '#ffffff', width: 2 }));
+	});
+
+	it('adds a drop-shadow circle with a fixed displacement', () => {
+		clusterStyle(makeFeature(1), 'red', 'white');
+		expect(Circle).toHaveBeenCalledWith(expect.objectContaining({ displacement: [2, -2] }));
+	});
+});
+
+describe('cssVar', () => {
+	beforeEach(() => {
+		document.documentElement.style = '';
+	});
+
+	it('returns the CSS variable value if it is set', () => {
+		document.documentElement.style.setProperty('--cluster-bg', '#ff0000');
+		expect(cssVar('--cluster-bg', '#000000')).toBe('#ff0000');
+	});
+
+	it('returns the fallback value if the CSS variable is not set', () => {
+		expect(cssVar('--cluster-bg', '#000000')).toBe('#000000');
+	});
+
+	it('trims whitespace from the returned CSS variable value', () => {
+		document.documentElement.style.setProperty('--cluster-bg', '  #00ff00  ');
+		expect(cssVar('--cluster-bg', '#000000')).toBe('#00ff00');
+	});
+});

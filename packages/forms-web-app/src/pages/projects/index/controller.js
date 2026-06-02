@@ -15,6 +15,7 @@ const {
 	getExaminationOrDecisionCompletedDate
 } = require('./_utils/examination-or-decision-completed-date');
 const { getMapAccessToken } = require('../../_services');
+const { GeoJSONBuilder } = require('../../_utils/geo-json-builder');
 const { isBackOfficeCaseReference } = require('./_utils/is-backoffice-case-reference');
 
 const view = 'projects/index/view.njk';
@@ -41,15 +42,23 @@ const getProjectsIndexController = async (req, res, next) => {
 		} = res;
 		const { caseRef } = applicationData;
 
+		const pointGeoJSON = new GeoJSONBuilder().addPoint(applicationData.longLat).build();
+		const hasPointLocation = pointGeoJSON.features.length > 0;
+		const hasProjectBoundary = applicationData.geojson != null;
+		const hasMapData = hasProjectBoundary || hasPointLocation;
+
 		const [projectUpdates, rule6Document, rule8Document, applicationDecision, mapAccessToken] =
 			await Promise.all([
 				getProjectUpdatesData(caseRef),
 				getRule6DocumentType(caseRef),
 				getRule8DocumentType(caseRef),
 				getMiscDataByStageName(applicationData.status.text, caseRef),
-				applicationData.longLat ? getMapAccessToken() : Promise.resolve(null)
+				hasMapData ? getMapAccessToken() : Promise.resolve(null)
 			]);
 
+		const mapGeoJSON = hasProjectBoundary
+			? JSON.stringify(applicationData.geojson)
+			: JSON.stringify(pointGeoJSON);
 		const preExamSubStages = getPreExaminationSubStage(applicationData, rule6Document);
 		const recommendationCompletedDate = getExaminationOrDecisionCompletedDate(
 			applicationData.dateTimeExaminationEnds,
@@ -70,7 +79,9 @@ const getProjectsIndexController = async (req, res, next) => {
 			recommendationCompletedDate,
 			decisionCompletedDate,
 			mapAccessToken,
-			backOfficeCase
+			backOfficeCase,
+			mapGeoJSON,
+			hasProjectBoundary
 		});
 	} catch (error) {
 		logger.error(error);

@@ -5,7 +5,7 @@ const {
 	downloadMasterGeoJsonController
 } = require('./controller');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
-const { getMapAccessToken } = require('../_services');
+const { getMapAccessToken, getProjectBoundary } = require('../_services');
 const { getApplicationsFixture } = require('../_fixtures');
 const { mockI18n } = require('../_mocks/i18n');
 
@@ -24,7 +24,8 @@ jest.mock('../../lib/application-api-wrapper', () => ({
 }));
 
 jest.mock('../_services', () => ({
-	getMapAccessToken: jest.fn()
+	getMapAccessToken: jest.fn(),
+	getProjectBoundary: jest.fn()
 }));
 
 describe('pages/projects-map/controller', () => {
@@ -41,6 +42,7 @@ describe('pages/projects-map/controller', () => {
 		global.fetch = jest.fn();
 
 		jest.resetAllMocks();
+		getProjectBoundary.mockResolvedValue(null);
 	});
 
 	it('renders view with filters and mapAccessToken', async () => {
@@ -140,6 +142,68 @@ describe('pages/projects-map/controller', () => {
 		);
 	});
 
+	it('uses applications[0].geojson when present', async () => {
+		const boundaryGeoJSON = {
+			type: 'FeatureCollection',
+			features: [
+				{
+					type: 'Feature',
+					geometry: {
+						type: 'Polygon',
+						coordinates: [
+							[
+								[-1.0, 51.0],
+								[-1.0, 51.1],
+								[-0.9, 51.1],
+								[-1.0, 51.0]
+							]
+						]
+					},
+					properties: {}
+				}
+			]
+		};
+
+		const fixtureWithBoundary = JSON.parse(JSON.stringify(getApplicationsFixture));
+		fixtureWithBoundary.data.applications[0].geojson = boundaryGeoJSON;
+		fixtureWithBoundary.data.applications[0].LongLat = null;
+
+		getAllProjectList.mockResolvedValue(fixtureWithBoundary);
+		getMapAccessToken.mockResolvedValue('mock-token');
+
+		await getProjectsMapController(req, res, next);
+
+		const { mapGeoJSON } = res.render.mock.calls[0][1];
+		const geojson = JSON.parse(mapGeoJSON);
+		expect(geojson.type).toBe('FeatureCollection');
+		expect(geojson.features.length).toBe(3);
+		expect(geojson.features[0].geometry.type).toBe('Polygon');
+		expect(geojson.features[1].geometry.type).toBe('Point');
+		expect(geojson.features[2].geometry.type).toBe('Point');
+		expect(fixtureWithBoundary.data.applications.every((application) => application.geojson)).toBe(
+			true
+		);
+	});
+
+	it('falls back to LongLat-derived GeoJSON when applications[0].geojson is missing', async () => {
+		const fixtureWithoutBoundary = JSON.parse(JSON.stringify(getApplicationsFixture));
+		fixtureWithoutBoundary.data.applications[0].geojson = null;
+
+		getAllProjectList.mockResolvedValue(fixtureWithoutBoundary);
+		getMapAccessToken.mockResolvedValue('mock-token');
+
+		await getProjectsMapController(req, res, next);
+
+		const { mapGeoJSON } = res.render.mock.calls[0][1];
+		const geojson = JSON.parse(mapGeoJSON);
+		expect(geojson.type).toBe('FeatureCollection');
+		expect(Array.isArray(geojson.features)).toBe(true);
+		expect(geojson.features.length).toBe(3);
+		expect(
+			fixtureWithoutBoundary.data.applications.every((application) => application.geojson)
+		).toBe(true);
+	});
+
 	describe('postProjectsMapController', () => {
 		it('toggles filter visibility and redirects using referrer query string', async () => {
 			req.session.projectsMapShowFilters = true;
@@ -161,6 +225,26 @@ describe('pages/projects-map/controller', () => {
 			await postProjectsMapController(req, res, next);
 
 			expect(req.session.projectsMapShowFilters).toBe(true);
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map');
+		});
+
+		it('ignores malformed referrer values and still redirects safely', async () => {
+			req.body = { filterToggleValue: 'false' };
+			req.get = jest.fn().mockReturnValue('http://%invalid-url');
+			res.redirect = jest.fn();
+
+			await postProjectsMapController(req, res, next);
+
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map');
+		});
+
+		it('does not preserve query when referrer is not /projects-map', async () => {
+			req.body = { filterToggleValue: 'false' };
+			req.get = jest.fn().mockReturnValue('http://localhost:9004/project-search?term=wind');
+			res.redirect = jest.fn();
+
+			await postProjectsMapController(req, res, next);
+
 			expect(res.redirect).toHaveBeenCalledWith('/projects-map');
 		});
 	});

@@ -137,7 +137,10 @@ describe('pages/projects/index/controller', () => {
 					proposal: 'Generating Stations',
 					rule6Document: undefined,
 					rule8Document: undefined,
-					recommendationCompletedDate: null
+					recommendationCompletedDate: null,
+					mapGeoJSON:
+						'{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-0.118092,51.509865]},"properties":{}}]}',
+					hasProjectBoundary: false
 				});
 			});
 		});
@@ -163,6 +166,7 @@ describe('pages/projects/index/controller', () => {
 					.mockReturnValueOnce({})
 					.mockReturnValueOnce({})
 					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
+				getMapAccessToken.mockReturnValue('mock map access token');
 
 				await getProjectsIndexController(req, res, next);
 			});
@@ -187,8 +191,110 @@ describe('pages/projects/index/controller', () => {
 					rule8Document: undefined,
 					decisionCompletedDate: null,
 					recommendationCompletedDate: null,
-					backOfficeCase: false
+					backOfficeCase: false,
+					mapGeoJSON:
+						'{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-0.118092,51.509865]},"properties":{}}]}',
+					hasProjectBoundary: false
 				});
+			});
+		});
+
+		describe('When boundary GeoJSON is present', () => {
+			const req = {
+				i18n
+			};
+			const boundaryGeoJSON = {
+				type: 'FeatureCollection',
+				features: [
+					{
+						type: 'Feature',
+						geometry: {
+							type: 'Polygon',
+							coordinates: [
+								[
+									[-1.0, 51.0],
+									[-1.0, 51.1],
+									[-0.9, 51.1],
+									[-1.0, 51.0]
+								]
+							]
+						},
+						properties: {}
+					}
+				]
+			};
+			const res = {
+				render: jest.fn(),
+				locals: {
+					applicationData: {
+						...applicationDataFixture,
+						longLat: null,
+						geojson: boundaryGeoJSON
+					}
+				}
+			};
+			const next = jest.fn();
+
+			beforeEach(async () => {
+				getProjectUpdates.mockReturnValue(getProjectUpdatesSuccessfulFixture);
+				getDocumentByType
+					.mockReturnValueOnce({})
+					.mockReturnValueOnce({})
+					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
+				getMapAccessToken.mockReturnValue('mock map access token');
+
+				await getProjectsIndexController(req, res, next);
+			});
+
+			it('should set boundary mode values and request a map token', () => {
+				expect(getMapAccessToken).toHaveBeenCalled();
+				expect(res.render).toHaveBeenCalledWith(
+					'projects/index/view.njk',
+					expect.objectContaining({
+						hasProjectBoundary: true,
+						mapGeoJSON: JSON.stringify(boundaryGeoJSON),
+						mapAccessToken: 'mock map access token'
+					})
+				);
+			});
+		});
+
+		describe('When there is no map data', () => {
+			const req = {
+				i18n
+			};
+			const res = {
+				render: jest.fn(),
+				locals: {
+					applicationData: {
+						...applicationDataFixture,
+						longLat: null,
+						geojson: null
+					}
+				}
+			};
+			const next = jest.fn();
+
+			beforeEach(async () => {
+				getProjectUpdates.mockReturnValue(getProjectUpdatesSuccessfulNoUpdatesFixture);
+				getDocumentByType
+					.mockReturnValueOnce({})
+					.mockReturnValueOnce({})
+					.mockReturnValueOnce(getApplicationApprovalDocumentFixture);
+
+				await getProjectsIndexController(req, res, next);
+			});
+
+			it('should not request a map token and should render mapAccessToken as null', () => {
+				expect(getMapAccessToken).not.toHaveBeenCalled();
+				expect(res.render).toHaveBeenCalledWith(
+					'projects/index/view.njk',
+					expect.objectContaining({
+						mapAccessToken: null,
+						hasProjectBoundary: false,
+						mapGeoJSON: '{"type":"FeatureCollection","features":[]}'
+					})
+				);
 			});
 		});
 	});

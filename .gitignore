@@ -122,14 +122,16 @@ junit.xml
 # Mac OS generated
 .DS_Store
 
-
-
 uploads/*
 !uploads/.gitkeep
 .vs
 
+# mssql
 init/mssql
 !init/mssql/mssql.conf
+
+# build
+packages/forms-web-app/src/public/
 
 # Azurite artifacts
 __blobstorage__

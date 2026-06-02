@@ -15,6 +15,7 @@
 	{% block stylesheet %}
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.css"/>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.0/ol.css"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol-ext@4.0.38/dist/ol-ext.min.css"/>
 	{% endblock %}
 
 	{% block script %}
@@ -23,8 +24,8 @@
 				src: "https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"
 			},
 			{
-				callback: "var map = new appScripts.map.default(); map.initiate('" + mapAccessToken + "', 'map', [" + applicationData.longLat + "], " + applicationData.mapZoomLevel + ");",
-				src: "/public/scripts/map.script.js"
+				callback: "var el = document.getElementById('map'); if (!el) return; var map = new appScripts['projects-map'].default(); map.initiate(el.dataset.token, 'map', JSON.parse(el.dataset.geojson), { zoom: Number(el.dataset.zoom) });",
+				src: "/public/scripts/projects-map.script.js"
 			}
 	), initiateScriptsConfig) %}
 	{% endblock %}
