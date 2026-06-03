@@ -103,7 +103,7 @@ describe('#registerMiddleware', () => {
 				correlationId: 'app-insights-correlation-id'
 			});
 		});
-		it('registerMiddleware - no caseRef in session', () => {
+		it('registerMiddleware - caseRef in session and caseRef in params do not match', () => {
 			const next = jest.fn();
 			const req = {
 				get: jest.fn().mockReturnValue('referrer-response'),
