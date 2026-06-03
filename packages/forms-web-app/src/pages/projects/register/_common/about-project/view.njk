@@ -96,16 +96,14 @@
           attributes: { "data-cy": "button-save-and-continue"}
         }) }}
 
-        {% if featureFlag.allowSaveAndExitOption %}
-          {{ govukButton({
-            text: t('common.saveAndExit'),
-            type: "Submit",
-            attributes: { "data-cy": "button-save-and-return"},
-            classes: "govuk-button--secondary",
-            name: "mode",
-            value: "draft"
-          }) }}
-        {% endif %}
+				{{ govukButton({
+					text: t('common.saveAndExit'),
+					type: "Submit",
+					attributes: { "data-cy": "button-save-and-return"},
+					classes: "govuk-button--secondary",
+					name: "mode",
+					value: "draft"
+				}) }}
       </form>
     </div>
   </div>

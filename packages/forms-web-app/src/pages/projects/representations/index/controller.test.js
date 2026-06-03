@@ -100,7 +100,6 @@ describe('pages/projects/representations/index/controller', () => {
 			expect(res.render).toHaveBeenCalledWith('projects/representations/index/view.njk', {
 				langIsWelsh: false,
 				activeFilters: [],
-				allowProjectInformation: true,
 				caseRef: 'EN010009',
 				filterNameID: 'type',
 				filters: [],

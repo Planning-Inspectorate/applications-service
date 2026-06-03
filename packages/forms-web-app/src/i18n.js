@@ -8,9 +8,6 @@ const {
 	localesQueryCookieID,
 	localesQueryStringID
 } = require('./locales/config');
-const {
-	featureFlag: { allowWelshTranslation }
-} = require('./config');
 const { buildQueryString } = require('./pages/_utils/build-query-string');
 
 const i18nRedirect = (req, res, next) => {
@@ -18,13 +15,7 @@ const i18nRedirect = (req, res, next) => {
 	const localesQuery = query[localesQueryStringID];
 	const localesCookie = cookies[localesQueryCookieID];
 
-	if (
-		method === 'GET' &&
-		allowWelshTranslation &&
-		!localesQuery &&
-		localesCookie &&
-		localesCookie !== defaultLocale.code
-	) {
+	if (method === 'GET' && !localesQuery && localesCookie && localesCookie !== defaultLocale.code) {
 		const queryString = buildQueryString({ ...query, [localesQueryStringID]: localesCookie });
 
 		return res.redirect(path + queryString);
@@ -35,9 +26,7 @@ const i18nRedirect = (req, res, next) => {
 
 const getSupportedLngs = () => {
 	const supportedLngs = [locales.en.code];
-
-	if (allowWelshTranslation) supportedLngs.push(locales.cy.code);
-
+	supportedLngs.push(locales.cy.code);
 	return supportedLngs;
 };
 

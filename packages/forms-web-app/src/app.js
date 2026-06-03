@@ -45,7 +45,7 @@ app.use(
 	})
 );
 
-if (config.featureFlag.contentSecurityPolicy) configureCSP(app);
+configureCSP(app);
 
 const govukFrontendRoot = path.resolve(require.resolve('govuk-frontend'), '../..');
 
