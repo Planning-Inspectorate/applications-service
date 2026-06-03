@@ -33,7 +33,7 @@ const getProjectsMapController = async (req, res, next) => {
 		// Redirect to clean URL if only searchTerm with no value exists
 		const { searchTerm, ...filters } = query;
 		if (Object.keys(filters).length === 0 && !searchTerm && req.url.includes('?')) {
-			return res.redirect(projectsMapRoute);
+			return res.redirect(`/${projectsMapRoute}`);
 		}
 
 		// Fetch applications and OS Maps token concurrently
@@ -84,7 +84,7 @@ const postProjectsMapController = (req, res, next) => {
 		if (referrer) {
 			try {
 				const referrerUrl = new URL(referrer, 'http://localhost');
-				if (referrerUrl.pathname === projectsMapRoute) {
+				if (referrerUrl.pathname === `/${projectsMapRoute}`) {
 					queryString = referrerUrl.search.slice(1);
 				}
 			} catch {
@@ -92,7 +92,7 @@ const postProjectsMapController = (req, res, next) => {
 			}
 		}
 
-		res.redirect(`${projectsMapRoute}${queryString ? `?${queryString}` : ''}`);
+		res.redirect(`/${projectsMapRoute}${queryString ? `?${queryString}` : ''}`);
 	} catch (error) {
 		logger.error(error);
 		next(error);
