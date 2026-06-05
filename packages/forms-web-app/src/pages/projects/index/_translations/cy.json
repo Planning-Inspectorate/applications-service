@@ -11,7 +11,8 @@
 		"linkText1": "Gweld gwefan y datblygwr"
 	},
 	"projectLocation": {
-		"heading1": "Lleoliad y prosiect"
+		"heading1": "Lleoliad y prosiect",
+		"boundaryDownloadText": "Lawrlwythwch y ffeil ffiniau map geo-ofodol (JSON)"
 	},
 	"getUpdates": {
 		"heading1": "Cael diweddariadau",

@@ -97,6 +97,7 @@ exports[`pages/examination/_translations should return the correct English trans
     "stage7name": "What happens after the decision is made",
   },
   "projectLocation": {
+    "boundaryDownloadText": "Download the geospatial map boundary file (JSON)",
     "heading1": "Project location",
   },
   "projectStage": {
@@ -310,6 +311,7 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "stage7name": "Beth fydd yn digwydd ar ôl i'r penderfyniad gael ei wneud",
   },
   "projectLocation": {
+    "boundaryDownloadText": "Lawrlwythwch y ffeil ffiniau map geo-ofodol (JSON)",
     "heading1": "Lleoliad y prosiect",
   },
   "projectStage": {
