@@ -8,6 +8,14 @@
   </p>
 {% endif %}
 
+{% if boundaryDocument %}
+	<a
+		class="govuk-link"
+		href="{{ boundaryDownloadURL }}"
+	>
+		{{ t('projectsIndex.projectLocation.boundaryDownloadText') }}
+{% endif %}
+
 {% if mapAccessToken %}
   <div class="pins-map">
     <div class="pins-map__container">

@@ -11,7 +11,8 @@
 		"linkText1": "View the developer's website"
 	},
 	"projectLocation": {
-		"heading1": "Project location"
+		"heading1": "Project location",
+		"boundaryDownloadText": "Download the geospatial map boundary file (JSON)"
 	},
 	"getUpdates": {
 		"heading1": "Get updates",
