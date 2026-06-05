@@ -5,7 +5,9 @@ const {
 	getProjectDecisionDocument,
 	getRule6DocumentType,
 	getRule8DocumentType,
-	getProjectUpdatesData
+	getProjectUpdatesData,
+	getProjectBoundaryDocument,
+	getProjectBoundaryGeoJSON
 } = require('../../services');
 const { projectInfoProjectStages } = require('../../../utils/project-stages');
 const { getApplicationDecision } = require('./_utils/get-application-decision');
@@ -18,39 +20,10 @@ const {
 const { getMapAccessToken } = require('../../_services');
 const { isBackOfficeCaseReference } = require('./_utils/is-backoffice-case-reference');
 const { GeoJSONBuilder } = require('../../../lib/geojson-builder');
-const { getDocumentByType } = require('../../../lib/application-api-wrapper');
-const { geoJsonMimeType } = require('./config');
+
+const { getProjectsBoundaryDownloadURL } = require('./_utils/get-projects-boundary-download-url');
 
 const view = 'projects/index/view.njk';
-
-const getProjectBoundaryGeoJSON = async (caseRef) => {
-	try {
-		const { data, resp_code } = await getDocumentByType(caseRef, documentTypes.GIS_SHAPEFILE);
-
-		if (resp_code !== 200 || !data?.path || data?.mime !== geoJsonMimeType) {
-			// It's common for a project not to have a shapefile, so a 404 is not an error.
-			if (resp_code !== 404) {
-				logger.warn(
-					`GIS_SHAPEFILE rejected for ${caseRef}: resp_code=${resp_code}, path=${data?.path}, mime=${data?.mime}`
-				);
-			}
-			return null;
-		}
-
-		const response = await fetch(data.path);
-
-		if (!response.ok) {
-			logger.warn(`Failed to fetch GIS_SHAPEFILE for ${caseRef}: HTTP ${response.status}`);
-			return null;
-		}
-
-		const geoJson = await response.json();
-		return JSON.stringify(geoJson);
-	} catch (error) {
-		logger.error(`Error fetching GIS_SHAPEFILE for ${caseRef}:`, error);
-		return null;
-	}
-};
 
 const getMiscDataByStageName = async (stageName, caseRef) => {
 	stageName = stageName.toLowerCase();
@@ -74,14 +47,20 @@ const getProjectsIndexController = async (req, res, next) => {
 		} = res;
 		const { caseRef } = applicationData;
 
-		const [projectUpdates, rule6Document, rule8Document, applicationDecision, mapGeoJSON] =
+		const boundaryDownloadURL = getProjectsBoundaryDownloadURL(caseRef);
+
+		const [projectUpdates, rule6Document, rule8Document, applicationDecision, boundaryDocument] =
 			await Promise.all([
 				getProjectUpdatesData(caseRef),
 				getRule6DocumentType(caseRef),
 				getRule8DocumentType(caseRef),
 				getMiscDataByStageName(applicationData.status.text, caseRef),
-				getProjectBoundaryGeoJSON(caseRef)
+				getProjectBoundaryDocument(caseRef)
 			]);
+
+		const mapGeoJSON = boundaryDocument
+			? await getProjectBoundaryGeoJSON(boundaryDocument, caseRef)
+			: null;
 
 		const hasMapData = mapGeoJSON || applicationData.longLat;
 		const mapAccessToken = hasMapData ? await getMapAccessToken() : null;
@@ -116,7 +95,9 @@ const getProjectsIndexController = async (req, res, next) => {
 			decisionCompletedDate,
 			mapAccessToken,
 			mapGeoJSON: finalMapGeoJSON,
-			backOfficeCase
+			backOfficeCase,
+			boundaryDocument,
+			boundaryDownloadURL
 		});
 	} catch (error) {
 		logger.error(error);
@@ -124,6 +105,36 @@ const getProjectsIndexController = async (req, res, next) => {
 	}
 };
 
+const downloadProjectBoundaryController = async (req, res, next) => {
+	try {
+		const { case_ref } = req.params;
+
+		const boundaryDocument = await getProjectBoundaryDocument(case_ref);
+
+		if (!boundaryDocument?.path) {
+			return res.status(404).render('error/not-found');
+		}
+
+		const response = await fetch(boundaryDocument.path);
+
+		if (!response.ok) {
+			logger.warn(`Failed to fetch GIS_SHAPEFILE for ${case_ref}: HTTP ${response.status}`);
+
+			return res.status(404).render('error/not-found');
+		}
+
+		res.setHeader('Content-Disposition', `attachment; filename="${case_ref}-boundary.geojson"`);
+
+		res.setHeader('Content-Type', 'application/geo+json');
+
+		response.body.pipe(res);
+	} catch (error) {
+		logger.error(error);
+		next(error);
+	}
+};
+
 module.exports = {
-	getProjectsIndexController
+	getProjectsIndexController,
+	downloadProjectBoundaryController
 };

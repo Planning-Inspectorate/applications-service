@@ -127,6 +127,8 @@ describe('pages/projects/index/controller', () => {
 				expect(res.render).toHaveBeenCalledWith(projectsIndexViewPath, {
 					applicationDecision: 'granted',
 					backOfficeCase: false,
+					boundaryDocument: null,
+					boundaryDownloadURL: '/projects/EN010085/download-boundary',
 					contactEmailAddress: 'nienquiries@planninginspectorate.gov.uk',
 					decisionCompletedDate: null,
 					latestUpdate: { content: 'mock english content update 1', date: '1 January 2021' },
@@ -180,6 +182,8 @@ describe('pages/projects/index/controller', () => {
 				expect(res.render).toHaveBeenCalledWith(projectsIndexViewPath, {
 					applicationDecision: 'granted',
 					contactEmailAddress: 'mock@email.com',
+					boundaryDocument: null,
+					boundaryDownloadURL: '/projects/EN010085/download-boundary',
 					latestUpdate: null,
 					mapAccessToken: 'mock map access token',
 					mapGeoJSON:
@@ -259,6 +263,11 @@ describe('pages/projects/index/controller', () => {
 				expect(res.render).toHaveBeenCalledWith(projectsIndexViewPath, {
 					applicationDecision: null,
 					backOfficeCase: false,
+					boundaryDocument: {
+						mime: 'application/geo+json',
+						path: 'https://example.com/boundary.geojson'
+					},
+					boundaryDownloadURL: '/projects/EN010085/download-boundary',
 					contactEmailAddress: 'nienquiries@planninginspectorate.gov.uk',
 					decisionCompletedDate: null,
 					latestUpdate: { content: 'mock english content update 1', date: '1 January 2021' },

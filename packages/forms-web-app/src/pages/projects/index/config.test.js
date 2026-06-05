@@ -1,9 +1,20 @@
-const { projectsIndexRoute, projectsIndexI18nNamespace, geoJsonMimeType } = require('./config');
+const {
+	projectsIndexRoute,
+	projectsIndexI18nNamespace,
+	geoJsonMimeType,
+	projectBoundaryDownloadRoute
+} = require('./config');
 
 describe('pages/projects/index/config', () => {
 	describe('#projectsIndexRoute', () => {
 		it('should return the projects index route', () => {
 			expect(projectsIndexRoute).toEqual('');
+		});
+	});
+
+	describe('#projectsIBoundaryDownloadRoute', () => {
+		it('should return the projects index route', () => {
+			expect(projectBoundaryDownloadRoute).toEqual('download-boundary');
 		});
 	});
 
