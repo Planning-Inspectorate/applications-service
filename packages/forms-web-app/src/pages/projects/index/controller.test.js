@@ -1,5 +1,7 @@
 const { getProjectsIndexController } = require('./controller');
 
+const projectsIndexViewPath = 'projects/index/view.njk';
+
 const { mockI18n } = require('../../_mocks/i18n');
 
 const {
@@ -12,6 +14,7 @@ const {
 
 const { getProjectUpdates, getDocumentByType } = require('../../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../../_services');
+const fetch = require('node-fetch');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
 	getProjectUpdates: jest.fn(),
@@ -20,6 +23,7 @@ jest.mock('../../../lib/application-api-wrapper', () => ({
 jest.mock('../../_services', () => ({
 	getMapAccessToken: jest.fn()
 }));
+jest.mock('node-fetch', () => jest.fn());
 
 const processGuideStages = {
 	acceptance: {
@@ -118,13 +122,15 @@ describe('pages/projects/index/controller', () => {
 			});
 
 			it('should render the page with the latest update', () => {
-				expect(res.render).toHaveBeenCalledWith('projects/index/view.njk', {
+				expect(res.render).toHaveBeenCalledWith(projectsIndexViewPath, {
 					applicationDecision: 'granted',
 					backOfficeCase: false,
 					contactEmailAddress: 'nienquiries@planninginspectorate.gov.uk',
 					decisionCompletedDate: null,
 					latestUpdate: { content: 'mock english content update 1', date: '1 January 2021' },
 					mapAccessToken: 'mock map access token',
+					mapGeoJSON:
+						'{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-0.118092,51.509865]},"properties":{}}]}',
 					preExamSubStages: {
 						CLOSED_REPS: false,
 						OPEN_REPS: false,
@@ -168,11 +174,13 @@ describe('pages/projects/index/controller', () => {
 			});
 
 			it('should render the page with NO latest update', () => {
-				expect(res.render).toHaveBeenCalledWith('projects/index/view.njk', {
+				expect(res.render).toHaveBeenCalledWith(projectsIndexViewPath, {
 					applicationDecision: 'granted',
 					contactEmailAddress: 'mock@email.com',
 					latestUpdate: null,
 					mapAccessToken: 'mock map access token',
+					mapGeoJSON:
+						'{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-0.118092,51.509865]},"properties":{}}]}',
 					preExamSubStages: {
 						CLOSED_REPS: false,
 						OPEN_REPS: false,
@@ -188,6 +196,84 @@ describe('pages/projects/index/controller', () => {
 					decisionCompletedDate: null,
 					recommendationCompletedDate: null,
 					backOfficeCase: false
+				});
+			});
+		});
+
+		describe('When there is a boundary GeoJSON but no point location', () => {
+			const req = {
+				i18n
+			};
+			const res = {
+				render: jest.fn(),
+				locals: {
+					applicationData: {
+						...applicationDataFixture,
+						longLat: null
+					}
+				}
+			};
+			const next = jest.fn();
+			const boundaryGeoJson = {
+				type: 'FeatureCollection',
+				features: [
+					{
+						type: 'Feature',
+						geometry: {
+							type: 'Polygon',
+							coordinates: [[[0, 0]]]
+						},
+						properties: {
+							name: 'boundary'
+						}
+					}
+				]
+			};
+
+			beforeEach(async () => {
+				getProjectUpdates.mockReturnValue(getProjectUpdatesSuccessfulFixture);
+				getDocumentByType
+					.mockReturnValueOnce({})
+					.mockReturnValueOnce({})
+					.mockReturnValue({
+						data: {
+							path: 'https://example.com/boundary.geojson',
+							mime: 'application/geo+json'
+						},
+						resp_code: 200
+					});
+				fetch.mockResolvedValue({
+					ok: true,
+					json: jest.fn().mockResolvedValue(boundaryGeoJson)
+				});
+				getMapAccessToken.mockReturnValue('mock map access token');
+
+				await getProjectsIndexController(req, res, next);
+			});
+
+			it('should render the boundary geojson and still fetch a map token', () => {
+				expect(getMapAccessToken).toHaveBeenCalled();
+				expect(res.render).toHaveBeenCalledWith(projectsIndexViewPath, {
+					applicationDecision: null,
+					backOfficeCase: false,
+					contactEmailAddress: 'nienquiries@planninginspectorate.gov.uk',
+					decisionCompletedDate: null,
+					latestUpdate: { content: 'mock english content update 1', date: '1 January 2021' },
+					mapAccessToken: 'mock map access token',
+					mapGeoJSON: JSON.stringify(boundaryGeoJson),
+					preExamSubStages: {
+						CLOSED_REPS: false,
+						OPEN_REPS: false,
+						PRE_REPS: true,
+						PUBLISHED_REPS: false,
+						RULE_6_PUBLISHED_REPS: false
+					},
+					processGuideStages,
+					projectsAllUpdatesURL: '/projects/EN010085/project-updates',
+					proposal: 'Generating Stations',
+					rule6Document: undefined,
+					rule8Document: undefined,
+					recommendationCompletedDate: null
 				});
 			});
 		});
