@@ -8,10 +8,18 @@
   </p>
 {% endif %}
 
+{% if boundaryDocument %}
+	<a
+		class="govuk-link"
+		href="{{ boundaryDownloadURL }}"
+	>
+		{{ t('projectsIndex.projectLocation.boundaryDownloadText') }}
+{% endif %}
+
 {% if mapAccessToken %}
   <div class="pins-map">
     <div class="pins-map__container">
-      <div id="map" class="pins-map__content" role="region" aria-roledescription="map" aria-labelledby="project-location"></div>
+      <div id="map" class="pins-map__content" role="region" aria-roledescription="map" aria-labelledby="project-location" data-token="{{ mapAccessToken }}" data-geojson="{{ mapGeoJSON | escape }}"></div>
     </div>
   </div>
 {% endif %}

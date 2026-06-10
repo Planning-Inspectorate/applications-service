@@ -507,7 +507,8 @@ paths:
                 'RULE_8_LETTER',
                 'EXAMINATION_LIBRARY',
                 'DECISION_LETTER_APPROVE',
-                'DECISION_LETTER_REFUSE'
+                'DECISION_LETTER_REFUSE',
+                'GIS_SHAPEFILE'
               ]
       responses:
         '200':
@@ -1583,6 +1584,9 @@ components:
         mime:
           type: string
           example: 'application/pdf'
+        publishedDocumentURI:
+          type: string
+          example: 'https://example.com/published/myDoc.pdf'
         path:
           type: string
           example: 'TR040009/TR040009-000004-Regulation 24 Transboundary Screening document.pdf'
@@ -1656,6 +1660,9 @@ components:
         mime:
           type: string
           example: 'application/pdf'
+        publishedDocumentURI:
+          type: string
+          example: 'https://example.com/published/myDoc.pdf'
         path:
           type: string
           example: 'TR040009/TR040009-000004-Regulation 24 Transboundary Screening document.pdf'
