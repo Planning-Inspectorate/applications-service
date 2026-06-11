@@ -67,6 +67,15 @@ function projectsMap() {
 	 * @param {Object} [options] Configuration options
 	 */
 	this.initiate = async (accessToken, target, mapData, options = {}) => {
+		const mapElement = document.getElementById(target);
+		let popupText = { projectSelected: '', projectsSelected: '' };
+		if (mapElement && target === 'projects-map') {
+			popupText = {
+				projectSelected: mapElement.dataset?.projectSelected || '',
+				projectsSelected: mapElement.dataset?.projectsSelected || ''
+			};
+		}
+
 		const {
 			zoom,
 			fitStrategy = 'center',
@@ -145,7 +154,8 @@ function projectsMap() {
 						showProjectPopup(
 							popup,
 							clusterFeatures,
-							selectedFeature.getGeometry().getCoordinates()
+							selectedFeature.getGeometry().getCoordinates(),
+							popupText
 						);
 					}
 				});
@@ -169,7 +179,7 @@ function projectsMap() {
 								projectName: feature.get(PROP_PROJECT_NAME),
 								stage: feature.get(PROP_STAGE)
 							});
-							showProjectPopup(popup, [popupFeature], event.coordinate);
+							showProjectPopup(popup, [popupFeature], event.coordinate, popupText);
 						}
 					});
 

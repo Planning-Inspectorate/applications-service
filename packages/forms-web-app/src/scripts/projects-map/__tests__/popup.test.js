@@ -8,10 +8,15 @@ jest.mock('ol-ext/src/overlay/Popup.js', () => {
 const { renderPopupHTML } = require('../popup');
 const { NUM_ITERATIONS, randomProjects } = require('./test-helpers');
 
+const popupText = {
+	projectSelected: 'project selected',
+	projectsSelected: 'projects selected'
+};
+
 describe('scripts/projects-map/popup', () => {
 	describe('#renderPopupHTML', () => {
 		describe('single project', () => {
-			it('should contain the project name, case reference, and stage', () => {
+			it('should contain the project name, case reference and stage', () => {
 				const projects = [
 					{
 						caseReference: 'EN010001',
@@ -20,7 +25,7 @@ describe('scripts/projects-map/popup', () => {
 					}
 				];
 
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 
 				expect(html).toContain('Example Wind Farm');
 				expect(html).toContain('EN010001');
@@ -36,7 +41,7 @@ describe('scripts/projects-map/popup', () => {
 					}
 				];
 
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 
 				expect(html).toContain('href="/projects/EN010001"');
 			});
@@ -50,7 +55,7 @@ describe('scripts/projects-map/popup', () => {
 					}
 				];
 
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 
 				expect(html).toContain('1 project selected');
 			});
@@ -76,7 +81,7 @@ describe('scripts/projects-map/popup', () => {
 			];
 
 			it('should contain all project names, case references, and stages', () => {
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 
 				expect(html).toContain('Example Wind Farm');
 				expect(html).toContain('EN010001');
@@ -92,7 +97,7 @@ describe('scripts/projects-map/popup', () => {
 			});
 
 			it('should include links to /projects/{caseReference} for each project', () => {
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 
 				expect(html).toContain('href="/projects/EN010001"');
 				expect(html).toContain('href="/projects/EN010002"');
@@ -100,7 +105,7 @@ describe('scripts/projects-map/popup', () => {
 			});
 
 			it('should display "3 projects selected" header', () => {
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 
 				expect(html).toContain('3 projects selected');
 			});
@@ -116,7 +121,7 @@ describe('scripts/projects-map/popup', () => {
 					}
 				];
 
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 
 				expect(html).toContain('>EN010004</a>');
 				expect(html).toContain('href="/projects/EN010004"');
@@ -131,7 +136,7 @@ describe('scripts/projects-map/popup', () => {
 					}
 				];
 
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 
 				expect(html).toContain('No Stage Project');
 				expect(html).toContain('cluster-popup-cell-stage');
@@ -143,7 +148,7 @@ describe('scripts/projects-map/popup', () => {
 		it('should contain every project caseReference in the output HTML', () => {
 			for (let i = 0; i < NUM_ITERATIONS; i++) {
 				const projects = randomProjects();
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 				for (const project of projects) {
 					expect(html).toContain(project.caseReference);
 				}
@@ -153,7 +158,7 @@ describe('scripts/projects-map/popup', () => {
 		it('should contain every project projectName in the output HTML', () => {
 			for (let i = 0; i < NUM_ITERATIONS; i++) {
 				const projects = randomProjects();
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 				for (const project of projects) {
 					expect(html).toContain(project.projectName);
 				}
@@ -163,7 +168,7 @@ describe('scripts/projects-map/popup', () => {
 		it('should contain every project stage in the output HTML', () => {
 			for (let i = 0; i < NUM_ITERATIONS; i++) {
 				const projects = randomProjects();
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 				for (const project of projects) {
 					expect(html).toContain(project.stage);
 				}
@@ -173,7 +178,7 @@ describe('scripts/projects-map/popup', () => {
 		it('should include a link to /projects/{caseReference} for every project', () => {
 			for (let i = 0; i < NUM_ITERATIONS; i++) {
 				const projects = randomProjects();
-				const html = renderPopupHTML(projects);
+				const html = renderPopupHTML(projects, popupText);
 				for (const project of projects) {
 					expect(html).toContain(`href="/projects/${project.caseReference}"`);
 				}
