@@ -10,8 +10,8 @@
 	"switchToMapView": "Switch to map view",
 	"applyFilters": "Apply filters",
 	"filteredResults": "Filtered results",
-	"projectSelected": "{{count}} project selected",
-	"projectsSelected": "{{count}} projects selected",
+	"projectSelected": "project selected",
+	"projectsSelected": "projects selected",
 	"warningText": "Project boundaries shown are for illustrative purposes only. To view the exact boundaries, refer to latest relevant plans and drawings.",
 	"filterLabels": {
 		"region": "Location",

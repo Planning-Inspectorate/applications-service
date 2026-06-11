@@ -47,12 +47,15 @@ const getProjectsMapController = async (req, res, next) => {
 		const queryString = queryStringBuilder(queryParams, Object.keys(queryParams), true);
 
 		const mapGeoJSON = new GeoJSONBuilder().addApplications(applications).build();
+		const baseGeoJsonUrl = getGeoJsonURL();
+		const langQuery = req.query && req.query.lang ? `?lang=${req.query.lang}` : '';
+		const geoJsonMapDisplayURL = `${baseGeoJsonUrl}${langQuery}`;
 
 		res.render(projectsMapViewPath, {
 			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
 			mapAccessToken,
 			mapGeoJSON: JSON.stringify(mapGeoJSON),
-			geoJsonMapDisplayURL: getGeoJsonURL(),
+			geoJsonMapDisplayURL: geoJsonMapDisplayURL,
 			projectSearchURL: getProjectSearchURL(),
 			downloadBoundariesURL: getGeoJsonDownloadURL(),
 			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
