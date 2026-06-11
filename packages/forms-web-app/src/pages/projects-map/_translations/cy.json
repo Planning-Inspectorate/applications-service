@@ -10,9 +10,9 @@
 	"switchToMapView": "Newid i'r golwg map",
 	"applyFilters": "Cymhwyso hidlwyr",
 	"filteredResults": "Canlyniadau wedi'u hidlo",
-	"projectSelected": "{{count}} prosiect wedi'i ddewis",
-	"projectsSelected": "{{count}} prosiect wedi'u dewis",
-	"warningText": "Mae ffiniau'r prosiect a ddangosir er diben darluniadol yn unig. I weld y ffiniau union, cyfeiriwch at y cynlluniau a'r lluniadau perthnasol diweddaraf.",
+	"projectSelected": "prosiect wedi'i ddewis",
+	"projectsSelected": "prosiect wedi'u dewis",
+	"warningText": "Mae'r ffiniau prosiect a ddangosir er diben darluniadol yn unig. I weld y ffiniau union, cyfeiriwch at y cynlluniau a'r lluniadau perthnasol diweddaraf.",
 	"filterLabels": {
 		"region": "Lleoliad",
 		"sector": "Sector",
