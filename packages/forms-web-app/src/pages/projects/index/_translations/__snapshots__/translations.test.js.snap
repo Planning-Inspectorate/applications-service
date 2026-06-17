@@ -97,7 +97,11 @@ exports[`pages/examination/_translations should return the correct English trans
     "stage7name": "What happens after the decision is made",
   },
   "projectLocation": {
+    "boundaryDownloadText": "Download the geospatial map boundary file (JSON)",
     "heading1": "Project location",
+    "iconFallbackText": "Warning",
+    "warningText1": "Project boundaries shown are for illustrative purposes only. To view the exact boundaries, refer to latest relevant plans and drawings.",
+    "warningText2": "Map view boundaries are currently unavailable for this project. Refer to the latest plans and drawings to view the project's boundaries.",
   },
   "projectStage": {
     "acceptance": {
@@ -310,7 +314,11 @@ exports[`pages/examination/_translations should return the correct Welsh transla
     "stage7name": "Beth fydd yn digwydd ar ôl i'r penderfyniad gael ei wneud",
   },
   "projectLocation": {
+    "boundaryDownloadText": "Lawrlwythwch y ffeil ffiniau map geo-ofodol (JSON)",
     "heading1": "Lleoliad y prosiect",
+    "iconFallbackText": "Rhybudd",
+    "warningText1": "Mae'r ffiniau prosiect a ddangosir er diben darluniadol yn unig. I weld y ffiniau union, cyfeiriwch at y cynlluniau a'r lluniadau perthnasol diweddaraf.",
+    "warningText2": "Nid yw ffiniau'r golwg map ar gael ar hyn o bryd ar gyfer y prosiect. Cyfeiriwch at y cynlluniau a'r lluniadau diweddaraf i weld ffiniau'r prosiect.",
   },
   "projectStage": {
     "acceptance": {

@@ -3,7 +3,8 @@ const documentTypes = {
 	RULE_8_LETTER: 'RULE_8_LETTER',
 	EXAMINATION_LIBRARY: 'EXAMINATION_LIBRARY',
 	DECISION_LETTER_APPROVE: 'DECISION_LETTER_APPROVE',
-	DECISION_LETTER_REFUSE: 'DECISION_LETTER_REFUSE'
+	DECISION_LETTER_REFUSE: 'DECISION_LETTER_REFUSE',
+	GIS_SHAPEFILE: 'GIS_SHAPEFILE'
 };
 
 const documentTypeDictionary = {
@@ -26,6 +27,10 @@ const documentTypeDictionary = {
 	[documentTypes.DECISION_LETTER_REFUSE]: {
 		bo: 'DCO decision letter (SoS)(refuse)',
 		ni: 'DCO decision letter (SoS)(refuse)'
+	},
+	[documentTypes.GIS_SHAPEFILE]: {
+		bo: 'GIS shapefile',
+		ni: 'GIS shapefile'
 	}
 };
 

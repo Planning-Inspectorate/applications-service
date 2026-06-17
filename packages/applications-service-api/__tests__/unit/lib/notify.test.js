@@ -1,4 +1,4 @@
-const { notifyBuilder, createNotifyClient } = require('@planning-inspectorate/pins-notify');
+const { notifyBuilder, createNotifyClient } = require('#pins-notify');
 const logger = require('../../../src/lib/logger');
 const {
 	sendIPRegistrationConfirmationEmailToIP,
@@ -36,7 +36,7 @@ jest.mock('../../../src/lib/config', () => ({
 	}
 }));
 
-jest.mock('@planning-inspectorate/pins-notify', () => ({
+jest.mock('#pins-notify', () => ({
 	createNotifyClient: {
 		createNotifyClient: jest.fn().mockReturnThis()
 	},

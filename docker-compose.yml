@@ -98,6 +98,7 @@ services:
       FEATURE_HOME_PAGE: 'true'
       FEATURE_REDIS_SESSION_STORE: 'true'
       FEATURE_ENABLE_GENERALISED_FORM_SANITISATION: 'true'
+      FEATURE_GENERAL_S51_BO: 'true'
       FEATURE_REGISTER_OF_ADVICE: 'true'
       FILE_UPLOAD_DEBUG: 'false'
       FILE_UPLOAD_MAX_FILE_SIZE_BYTES: 15000000
@@ -106,6 +107,7 @@ services:
       GLOBAL_BANNER_TEXT: ''
       GOOGLE_ANALYTICS_ID: G-X21W2S2FN3
       HOST_URL: http://localhost:9004/
+      MASTER_GEOJSON_URL: "https://back-office-applications-docs-dev.planninginspectorate.gov.uk/published-documents/gis-boundaries/all-project-boundaries.geojson"
       OPEN_REGISTRATION_CASE_REFERENCES: 'EN010102, EN013014'
       PDF_SERVICE_API_URL: http://pdf-service-api:3000
       PLANNED_OUTAGE_RESUME_TEXT: 'Sample service resume text'

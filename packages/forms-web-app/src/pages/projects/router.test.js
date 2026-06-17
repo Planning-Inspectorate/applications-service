@@ -112,7 +112,7 @@ describe('pages/projects/router', () => {
 
 			expect(use).toHaveBeenCalledWith(registerRouter);
 
-			expect(get).toBeCalledTimes(4);
+			expect(get).toBeCalledTimes(5);
 			expect(post).toBeCalledTimes(2);
 			expect(use).toBeCalledTimes(5);
 		});

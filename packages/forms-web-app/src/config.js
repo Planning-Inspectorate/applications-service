@@ -56,10 +56,10 @@ module.exports = {
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
+    useGeneralS51BackOffice: process.env.FEATURE_GENERAL_S51_BO === 'true',
 		openRegistrationCaseReferences: splitStringToArray(
 			process.env.OPEN_REGISTRATION_CASE_REFERENCES
 		),
-		allowApplicationsPagination: process.env.BACK_OFFICE_INTEGRATION_GET_APPLICATIONS !== 'MERGE',
 		allowWelshCases: process.env.FEATURE_ALLOW_WELSH_CASES === 'true',
 		enableProjectsMap: process.env.FEATURE_ENABLE_PROJECTS_MAP === 'true',
 		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
@@ -90,6 +90,10 @@ module.exports = {
 			'https://www.gov.uk/government/collections/national-infrastructure-planning-advice-notes',
 		advicePagesWelsh:
 			'https://www.gov.uk/government/collections/prosiectau-seilwaith-o-arwyddocad-cenedlaethol-tudalennau-cyngor',
+		commonTerms:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-terms-commonly-used-in-the-process',
+		commonTermsWelsh:
+			'https://www.gov.uk/guidance/nationally-significant-infrastructure-projects-terms-commonly-used-in-the-process.cy',
 		administrativeCourtURL: 'https://www.gov.uk/courts-tribunals/administrative-court',
 		crownCopyright:
 			'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
@@ -169,6 +173,7 @@ module.exports = {
 	},
 	maps: {
 		osMapsApiKey: process.env.OS_MAPS_API_KEY,
-		osMapsApiSecret: process.env.OS_MAPS_API_SECRET
+		osMapsApiSecret: process.env.OS_MAPS_API_SECRET,
+		masterGeoJsonUrl: process.env.MASTER_GEOJSON_URL
 	}
 };

@@ -3,6 +3,9 @@ const sharedConfig = require('../../jest.config.js');
 module.exports = {
 	...sharedConfig,
 	clearMocks: true,
+	transform: {
+		'\\.js$': ['babel-jest', { configFile: require('path').resolve(__dirname, 'babel.config.js') }]
+	},
 	collectCoverageFrom: ['./src/**/*.js'],
 	coveragePathIgnorePatterns: [
 		'node_modules',

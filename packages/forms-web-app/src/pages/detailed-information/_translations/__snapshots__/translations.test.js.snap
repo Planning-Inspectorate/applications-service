@@ -11,6 +11,7 @@ exports[`pages/detailed-information/_translations should return the correct Engl
   "linkParagraph6": "The Planning Inspectorate has a series of advice pages covering a range of process details.",
   "linkParagraph7": "Find out what National Policy Statements (NPSs) are, what they include and how they fit into the Planning Act 2008 process.",
   "linkParagraph8": "Here you can view all advice provided by the Planning Inspectorate since 2008.",
+  "linkParagraph9": "Words we use to talk about aspects of the application and decision-making process.",
   "linkTitle1": "See the process",
   "linkTitle2": "How to have your say on a project",
   "linkTitle3": "Guide for applicants",
@@ -19,6 +20,7 @@ exports[`pages/detailed-information/_translations should return the correct Engl
   "linkTitle6": "See advice pages",
   "linkTitle7": "National Policy Statements",
   "linkTitle8": "Register of advice",
+  "linkTitle9": "Common terms",
   "paragraph1": "Find further legislation and guidance resources. Information on this page may be useful for those applying to use the service and the general public.",
 }
 `;
@@ -34,6 +36,7 @@ exports[`pages/detailed-information/_translations should return the correct Wels
   "linkParagraph6": "Mae gan yr Arolygiaeth Gynllunio gyfres o tudalennau cyngor sy'n ymdrin ag ystod o fanylion proses.",
   "linkParagraph7": "Dysgwch beth yw Datganiadau Polisi Cenedlaethol (NPSau), beth maen nhw'n ei gynnwys a sut maen nhw'n berthnasol i broses Deddf Cynllunio 2008.",
   "linkParagraph8": "Gallwch weld yr holl gyngor a roddwyd gan yr Arolygiaeth Gynllunio ers 2008.",
+  "linkParagraph9": "Geiriau a ddefnyddiwn i siarad am agweddau ar y broses ymgeisio a gwneud penderfyniadau.",
   "linkTitle1": "Gweld y broses",
   "linkTitle2": "Sut i leisio'ch barn am brosiect",
   "linkTitle3": "Canllaw i ymgeiswyr",
@@ -42,6 +45,7 @@ exports[`pages/detailed-information/_translations should return the correct Wels
   "linkTitle6": "Gweld tudalennau cyngor",
   "linkTitle7": "Datganiadau Polisi Cenedlaethol",
   "linkTitle8": "Cofrestr gyngor",
+  "linkTitle9": "Termau cyffredin",
   "paragraph1": "Dewch o hyd i ragor o ddeddfwriaeth ac adnoddau canllaw. Gallai'r wybodaeth ar y dudalen hon fod yn ddefnyddiol i'r rhai sy'n gwneud cais i ddefnyddio'r gwasanaeth ac i'r cyhoedd.",
 }
 `;
