@@ -66,9 +66,9 @@ const projectsRouter = express.Router();
 projectsRouter.use(addProjectsTranslationsMiddleware);
 
 projectsRouter.get(
-  projectBoundaryDownloadURL,
-  projectsMiddleware,
-  downloadProjectBoundaryController
+	projectBoundaryDownloadURL,
+	projectsMiddleware,
+	downloadProjectBoundaryController
 );
 
 projectsRouter.get(
