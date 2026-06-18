@@ -1,7 +1,8 @@
 {
 	"pageTitle": "Projects map",
 	"heading1": "Projects map",
-	"paragraph1": "Select a marker on the map to view a project in the area.",
+	"boundariesDownloadLink": "Download a geospatial file containing a map of all available project boundaries (JSON)",
+	"paragraph1": "This is a map of all project boundaries. To find a specific project select a project boundary.",
 	"searchAccessibilityText": "Search projects map",
 	"showFilters": "Show filters",
 	"hideFilters": "Hide filters",
@@ -9,8 +10,9 @@
 	"switchToMapView": "Switch to map view",
 	"applyFilters": "Apply filters",
 	"filteredResults": "Filtered results",
-	"projectsSelected": "{{count}} projects selected",
-	"warningText": "Marker locations are approximate only. Refer to the latest plans and drawings to view project boundaries",
+	"projectSelected": "project selected",
+	"projectsSelected": "projects selected",
+	"warningText": "Project boundaries shown are for illustrative purposes only. To view the exact boundaries, refer to latest relevant plans and drawings.",
 	"filterLabels": {
 		"region": "Location",
 		"sector": "Sector",

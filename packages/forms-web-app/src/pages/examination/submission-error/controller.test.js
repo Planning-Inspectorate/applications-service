@@ -10,20 +10,24 @@ describe('examination/submission-error/controller', () => {
 	describe('#getSubmissionError', () => {
 		describe('When getting the submission error page', () => {
 			const req = {
-				session: { text: 'mock session' },
-				query: { text: 'mock query' }
+				params: { case_ref: 'mock-case-ref' },
+				query: { text: 'mock query' },
+				session: { text: 'mock session' }
 			};
 			const res = {
 				render: jest.fn(),
 				status: jest.fn(() => res)
 			};
+			const indexURL = '/projects/mock-case-ref/examination/have-your-say-during-examination';
 			describe('and there are no errors thrown', () => {
 				beforeEach(() => {
 					handleProcessSubmissionRetry.mockReturnValue();
 					getSubmissionError(req, res);
 				});
 				it('should return the page template and page data', () => {
-					expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
+					expect(res.render).toHaveBeenCalledWith('error/have-your-say-submission-failed', {
+						indexURL
+					});
 				});
 			});
 			describe('and an error is thrown', () => {

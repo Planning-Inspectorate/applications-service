@@ -1,3 +1,3 @@
 {% if mapAccessToken %}
-	<div id="projects-map" class="pins-map__content" role="region" aria-label="{{ t('projectsMap.heading1') }}" data-token="{{ mapAccessToken }}" data-geojson="{{ mapGeoJSON | escape }}"></div>
+	<div id="projects-map" class="pins-map__content" role="region" aria-label="{{ t('projectsMap.heading1') }}" data-token="{{ mapAccessToken }}" data-geojson="{{ mapGeoJSON | escape }}" data-geojson-url="{{ geoJsonMapDisplayURL }}" data-project-selected="{{ t('projectsMap.projectSelected') }}" data-projects-selected="{{ t('projectsMap.projectsSelected') }}"></div>
 {% endif %}

@@ -1,4 +1,11 @@
-const { getProjectsMapController, postProjectsMapController } = require('./controller');
+const { Readable } = require('stream');
+const { maps } = require('../../config');
+const {
+	getProjectsMapController,
+	postProjectsMapController,
+	downloadMasterGeoJsonController,
+	getMasterGeoJsonController
+} = require('./controller');
 const { getAllProjectList } = require('../../lib/application-api-wrapper');
 const { getMapAccessToken } = require('../_services');
 const { getApplicationsFixture } = require('../_fixtures');
@@ -22,14 +29,35 @@ jest.mock('../_services', () => ({
 	getMapAccessToken: jest.fn()
 }));
 
+jest.mock('../../config', () => {
+	const actualConfig = jest.requireActual('../../config');
+	return {
+		...actualConfig,
+		maps: {
+			...actualConfig.maps,
+			masterGeoJsonUrl: 'https://example.com/test.geojson'
+		}
+	};
+});
+
 describe('pages/projects-map/controller', () => {
 	let req, res, next;
 
 	beforeEach(() => {
-		req = { i18n, query: {}, body: {}, session: {}, url: '/projects-map' };
-		res = { render: jest.fn() };
-		next = jest.fn();
 		jest.resetAllMocks();
+
+		req = { i18n, query: {}, body: {}, session: {}, url: '/projects-map', headers: {} };
+		res = {
+			render: jest.fn(),
+			setHeader: jest.fn(),
+			set: jest.fn(),
+			status: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+			json: jest.fn()
+		};
+		next = jest.fn();
+
+		global.fetch = jest.fn();
 	});
 
 	it('renders view with filters and mapAccessToken', async () => {
@@ -151,6 +179,185 @@ describe('pages/projects-map/controller', () => {
 
 			expect(req.session.projectsMapShowFilters).toBe(true);
 			expect(res.redirect).toHaveBeenCalledWith('/projects-map');
+		});
+	});
+
+	describe('downloadMasterGeoJsonController', () => {
+		it('streams the GeoJson file as a download', async () => {
+			const mockPipe = jest.fn();
+
+			const mockNodeStream = {
+				pipe: mockPipe
+			};
+
+			jest.spyOn(Readable, 'fromWeb').mockReturnValue(mockNodeStream);
+
+			fetch.mockResolvedValue({
+				ok: true,
+				body: {}
+			});
+
+			await downloadMasterGeoJsonController(req, res, next);
+
+			expect(fetch).toHaveBeenCalled();
+
+			expect(res.setHeader).toHaveBeenCalledWith(
+				'Content-Disposition',
+				'attachment; filename="all-project-boundaries.geojson"'
+			);
+
+			expect(res.setHeader).toHaveBeenCalledWith('Content-Type', 'application/geo+json');
+
+			expect(Readable.fromWeb).toHaveBeenCalledWith({});
+
+			expect(mockPipe).toHaveBeenCalledWith(res);
+
+			expect(next).not.toHaveBeenCalled();
+		});
+
+		it('calls next when fetch rejects', async () => {
+			fetch.mockRejectedValue(new Error('download failed'));
+
+			await downloadMasterGeoJsonController(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(expect.any(Error));
+
+			expect(res.setHeader).not.toHaveBeenCalled();
+		});
+
+		it('calls next when response is not ok', async () => {
+			fetch.mockResolvedValue({
+				ok: false,
+				status: 500
+			});
+
+			await downloadMasterGeoJsonController(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(expect.any(Error));
+
+			expect(res.setHeader).not.toHaveBeenCalled();
+		});
+
+		it('calls next when response body is missing', async () => {
+			fetch.mockResolvedValue({
+				ok: true,
+				body: undefined
+			});
+
+			await downloadMasterGeoJsonController(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(
+				expect.objectContaining({
+					message: 'geoJson response body missing'
+				})
+			);
+		});
+	});
+
+	describe('getMasterGeoJsonController', () => {
+		it('returns geojson with cache headers', async () => {
+			const mockGeoJson = {
+				type: 'FeatureCollection',
+				features: []
+			};
+
+			fetch
+				.mockResolvedValueOnce({
+					ok: true,
+					headers: {
+						get: jest.fn().mockImplementation((header) => {
+							if (header === 'etag') {
+								return 'test-etag';
+							}
+
+							if (header === 'last-modified') {
+								return 'yesterday';
+							}
+
+							return null;
+						})
+					}
+				})
+				.mockResolvedValueOnce({
+					ok: true,
+					json: jest.fn().mockResolvedValue(mockGeoJson)
+				});
+
+			await getMasterGeoJsonController(req, res, next);
+
+			expect(fetch).toHaveBeenNthCalledWith(1, maps.masterGeoJsonUrl, { method: 'HEAD' });
+
+			expect(fetch).toHaveBeenNthCalledWith(2, expect.any(String));
+
+			expect(res.set).toHaveBeenCalledWith('Cache-Control', 'public, max-age=0, must-revalidate');
+
+			expect(res.setHeader).toHaveBeenCalledWith('ETag', 'test-etag');
+
+			expect(res.setHeader).toHaveBeenCalledWith('Last-Modified', 'yesterday');
+
+			expect(res.json).toHaveBeenCalledWith(mockGeoJson);
+
+			expect(next).not.toHaveBeenCalled();
+		});
+
+		it('returns 304 when etag matches request header', async () => {
+			req.headers = {
+				'if-none-match': 'matching-etag'
+			};
+
+			fetch.mockResolvedValue({
+				ok: true,
+				headers: {
+					get: jest.fn().mockImplementation((header) => {
+						if (header === 'etag') {
+							return 'matching-etag';
+						}
+
+						return null;
+					})
+				}
+			});
+
+			await getMasterGeoJsonController(req, res, next);
+
+			expect(res.status).toHaveBeenCalledWith(304);
+
+			expect(res.send).toHaveBeenCalled();
+
+			expect(res.json).not.toHaveBeenCalled();
+
+			expect(next).not.toHaveBeenCalled();
+		});
+
+		it('calls next when HEAD request fails', async () => {
+			fetch.mockResolvedValue({
+				ok: false,
+				status: 500
+			});
+
+			await getMasterGeoJsonController(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(expect.any(Error));
+
+			expect(res.json).not.toHaveBeenCalled();
+		});
+
+		it('calls next when geojson fetch fails', async () => {
+			fetch
+				.mockResolvedValueOnce({
+					ok: true,
+					headers: {
+						get: jest.fn()
+					}
+				})
+				.mockResolvedValueOnce({
+					ok: false,
+					status: 500
+				});
+
+			await getMasterGeoJsonController(req, res, next);
+
+			expect(next).toHaveBeenCalledWith(expect.any(Error));
 		});
 	});
 });

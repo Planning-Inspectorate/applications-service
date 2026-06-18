@@ -1,9 +1,12 @@
+const fetch = require('node-fetch');
 const {
 	getProjectUpdates,
 	getDocumentByType,
 	getDocumentUriByDocRef
 } = require('../lib/application-api-wrapper');
 const { documentTypes } = require('@pins/common/src/constants');
+const { geoJsonMimeType } = require('./projects/index/config');
+const logger = require('../lib/logger');
 
 const getProjectUpdatesData = async (caseRef) => {
 	const response = await getProjectUpdates(caseRef);
@@ -58,11 +61,53 @@ const getShortDocLink = async (docRef) => {
 	return resp_code === 200 ? data : undefined;
 };
 
+const getProjectBoundaryDocument = async (caseRef) => {
+	try {
+		const { data, resp_code } = await getDocumentByType(caseRef, documentTypes.GIS_SHAPEFILE);
+
+		if (resp_code !== 200 || !data?.path || data?.mime !== geoJsonMimeType) {
+			// It's common for a project not to have a shapefile
+			if (resp_code !== 404) {
+				logger.warn(
+					`GIS_SHAPEFILE rejected for ${caseRef}: resp_code=${resp_code}, path=${data?.path}, mime=${data?.mime}`
+				);
+			}
+
+			return null;
+		}
+
+		return data;
+	} catch (error) {
+		logger.error(`Error fetching GIS_SHAPEFILE metadata for ${caseRef}:`, error);
+		return null;
+	}
+};
+
+const getProjectBoundaryGeoJSON = async (boundaryDocument, caseRef) => {
+	try {
+		const response = await fetch(boundaryDocument.path);
+
+		if (!response.ok) {
+			logger.warn(`Failed to fetch GIS_SHAPEFILE for ${caseRef}: HTTP ${response.status}`);
+			return null;
+		}
+
+		const geoJson = await response.json();
+
+		return JSON.stringify(geoJson);
+	} catch (error) {
+		logger.error(`Error fetching GIS_SHAPEFILE for ${caseRef}:`, error);
+		return null;
+	}
+};
+
 module.exports = {
 	getProjectUpdatesData,
 	getRule6DocumentType,
 	getRule8DocumentType,
 	getExaminationLibraryDocument,
 	getProjectDecisionDocument,
-	getShortDocLink
+	getShortDocLink,
+	getProjectBoundaryDocument,
+	getProjectBoundaryGeoJSON
 };

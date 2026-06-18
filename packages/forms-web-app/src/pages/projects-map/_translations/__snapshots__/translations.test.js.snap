@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pages/projects-map/_translations should return the correct English translations 1`] = `
+{
+  "applyFilters": "Apply filters",
+  "boundariesDownloadLink": "Download a geospatial file containing a map of all available project boundaries (JSON)",
+  "filterLabels": {
+    "region": "Location",
+    "sector": "Sector",
+    "stage": "Stage",
+  },
+  "filteredResults": "Filtered results",
+  "heading1": "Projects map",
+  "hideFilters": "Hide filters",
+  "pageTitle": "Projects map",
+  "paragraph1": "This is a map of all project boundaries. To find a specific project select a project boundary.",
+  "projectSelected": "project selected",
+  "projectsSelected": "projects selected",
+  "searchAccessibilityText": "Search projects map",
+  "showFilters": "Show filters",
+  "sidebar": {
+    "registerOfApplications": "Register of applications",
+    "relatedContent": "Related content",
+  },
+  "switchToListView": "Switch to list view",
+  "switchToMapView": "Switch to map view",
+  "warningText": "Project boundaries shown are for illustrative purposes only. To view the exact boundaries, refer to latest relevant plans and drawings.",
+}
+`;
+
+exports[`pages/projects-map/_translations should return the correct Welsh translations 1`] = `
+{
+  "applyFilters": "Cymhwyso hidlwyr",
+  "boundariesDownloadLink": "Lawrlwythwch ffeil geoofodol sy'n cynnwys map o holl ffiniau'r prosiect sydd ar gael (JSON)",
+  "filterLabels": {
+    "region": "Lleoliad",
+    "sector": "Sector",
+    "stage": "Cam",
+  },
+  "filteredResults": "Canlyniadau wedi'u hidlo",
+  "heading1": "Map prosiectau",
+  "hideFilters": "Cuddio hidlwyr",
+  "pageTitle": "Map prosiectau",
+  "paragraph1": "Dyma fap o holl ffiniau'r prosiectau. I ddod o hyd i brosiect penodol, dewiswch ffin prosiect.",
+  "projectSelected": "prosiect wedi'i ddewis",
+  "projectsSelected": "prosiect wedi'u dewis",
+  "searchAccessibilityText": "Chwilio map prosiectau",
+  "showFilters": "Dangos hidlwyr",
+  "sidebar": {
+    "registerOfApplications": "Cofrestr geisiadau",
+    "relatedContent": "Cynnwys cysylltiedig",
+  },
+  "switchToListView": "Newid i'r golwg rhestr",
+  "switchToMapView": "Newid i'r golwg map",
+  "warningText": "Mae'r ffiniau prosiect a ddangosir er diben darluniadol yn unig. I weld y ffiniau union, cyfeiriwch at y cynlluniau a'r lluniadau perthnasol diweddaraf.",
+}
+`;
