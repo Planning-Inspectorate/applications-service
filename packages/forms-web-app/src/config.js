@@ -54,9 +54,9 @@ module.exports = {
 		allowHomepage: process.env.FEATURE_HOME_PAGE === 'true',
 		googleTagManager: process.env.FEATURE_FLAG_GOOGLE_TAG_MANAGER === 'true',
 		useRedisSessionStore: process.env.FEATURE_REDIS_SESSION_STORE === 'true',
+		useGeneralS51BackOffice: process.env.FEATURE_GENERAL_S51_BO === 'true',
 		generalisedFormSanitisation:
 			process.env.FEATURE_ENABLE_GENERALISED_FORM_SANITISATION === 'true',
-    useGeneralS51BackOffice: process.env.FEATURE_GENERAL_S51_BO === 'true',
 		openRegistrationCaseReferences: splitStringToArray(
 			process.env.OPEN_REGISTRATION_CASE_REFERENCES
 		),
