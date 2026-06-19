@@ -5,8 +5,6 @@ const {
 
 const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
-const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
-
 jest.mock('../../../../../lib/application-api-wrapper');
 jest.mock('../../../../../lib/logger');
 jest.mock('../../../../../config');
@@ -22,12 +20,6 @@ describe('pages/projects/register/organisation/about-project/controller', () => 
 		};
 		res = mockRes();
 		jest.resetAllMocks();
-
-		postRegistration.mockImplementation(() =>
-			Promise.resolve({ resp_code: 200, data: '30020010' })
-		);
-
-		putComments.mockImplementation(() => Promise.resolve({ resp_code: 200, data: {} }));
 	});
 
 	describe('#getRegisterOrganisationAboutProjectController', () => {
@@ -59,14 +51,14 @@ describe('pages/projects/register/organisation/about-project/controller', () => 
 	});
 
 	describe('#postRegisterOrganisationAboutProjectController', () => {
-		it('should post data and redirect to register organisation check answers page if comments is provided and mode is edit', async () => {
+		it('should post data and redirect to register organisation check answers page if comments is provided', async () => {
 			const mockRequest = {
 				...req,
 				body: {
 					comment: 'test'
 				},
 				query: {
-					mode: 'edit'
+					mode: ''
 				}
 			};
 			await postRegisterOrganisationAboutProjectController(mockRequest, res);
@@ -76,23 +68,24 @@ describe('pages/projects/register/organisation/about-project/controller', () => 
 			);
 		});
 
-		it('should post data and redirect to register organisation confirmation page if comments is provided and mode is draft', async () => {
+		it('should post data and redirect to register organisation check answers page if comments is provided and mode is edit', async () => {
 			const mockRequest = {
 				...req,
 				body: {
-					comments: 'test'
+					comment: 'updated comment'
 				},
 				query: {
-					mode: 'draft'
+					mode: 'edit'
 				},
 				session: {
-					comment: 'comment',
-					orgRegdata: {}
+					comment: 'test'
 				}
 			};
 			await postRegisterOrganisationAboutProjectController(mockRequest, res);
 
-			expect(res.redirect).toHaveBeenCalledWith('/mock-base-url/mock-case-ref/undefined');
+			expect(res.redirect).toHaveBeenCalledWith(
+				'/mock-base-url/mock-case-ref/register/organisation/check-answers'
+			);
 		});
 
 		it('should re-render the template with errors if there is any validation error', async () => {

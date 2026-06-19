@@ -5,8 +5,6 @@ const {
 
 const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
-const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
-
 jest.mock('../../../../../lib/application-api-wrapper');
 jest.mock('../../../../../lib/logger');
 jest.mock('../../../../../config');
@@ -22,12 +20,6 @@ describe('pages/projects/register/agent/about-project/controller', () => {
 		};
 		res = mockRes();
 		jest.resetAllMocks();
-
-		postRegistration.mockImplementation(() =>
-			Promise.resolve({ resp_code: 200, data: '30020010' })
-		);
-
-		putComments.mockImplementation(() => Promise.resolve({ resp_code: 200, data: {} }));
 	});
 
 	describe('#getRegisterAgentAboutProjectController', () => {
@@ -80,40 +72,19 @@ describe('pages/projects/register/agent/about-project/controller', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					comments: 'test'
+					comments: 'updated comment'
 				},
 				query: {
 					mode: 'edit'
 				},
 				session: {
-					comments: []
+					comment: 'test'
 				}
 			};
 			await postRegisterAgentAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
 				'/mock-base-url/mock-case-ref/register/agent/check-answers'
-			);
-		});
-
-		it(`'should post data and redirect to the register agent complete page if comments is provided and mode is draft`, async () => {
-			const mockRequest = {
-				...req,
-				body: {
-					comments: 'test'
-				},
-				query: {
-					mode: 'draft'
-				},
-				session: {
-					comment: 'comment',
-					behalfRegdata: {}
-				}
-			};
-			await postRegisterAgentAboutProjectController(mockRequest, res);
-
-			expect(res.redirect).toHaveBeenCalledWith(
-				'/mock-base-url/mock-case-ref/register/agent/registration-complete'
 			);
 		});
 
