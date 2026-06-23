@@ -37,7 +37,7 @@ const getBoundaryPopupProperties = (feature) => ({
  * Fetches boundary polygons from the server, removes duplicate point markers
  * for projects that have polygon boundaries, and adds the boundary layer to the map.
  */
-async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
+async function loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl) {
 	try {
 		const response = await fetch(boundaryGeoJsonUrl);
 
@@ -64,6 +64,43 @@ async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
 	} catch (error) {
 		logger.error('[projects-map] failed loading boundaries:', error);
 	}
+}
+
+async function loadFilteredBoundaries(map, pointSource) {
+	const caseRefs = pointSource.getFeatures().map((f) => f.get(PROP_CASE_REFERENCE));
+
+	const boundarySource = new VectorSource();
+
+	const boundaryLayer = buildBoundaryLayer([], boundarySource);
+
+	map.addLayer(boundaryLayer);
+
+	caseRefs.forEach(async (caseRef) => {
+		try {
+			const response = await fetch(`/projects/${caseRef}/boundary-geojson`);
+
+			// some cases do not have boundaries
+			if (response.status === 204) {
+				logger.debug(`[projects-map] no boundary found for ${caseRef}`);
+				return;
+			}
+
+			if (!response.ok) {
+				return;
+			}
+
+			const geoJson = await response.json();
+
+			const features = new GeoJSON().readFeatures(geoJson, {
+				dataProjection: SOURCE_PROJECTION,
+				featureProjection: TARGET_PROJECTION
+			});
+
+			boundarySource.addFeatures(features);
+		} catch (error) {
+			logger.error(`[projects-map] failed loading boundary ${caseRef}`, error);
+		}
+	});
 }
 
 function projectsMap() {
@@ -168,8 +205,17 @@ function projectsMap() {
 					}
 				});
 
-				if (shouldLoadBoundaries && boundaryGeoJsonUrl) {
-					loadBoundaries(map, pointSource, boundaryGeoJsonUrl);
+				const searchParams = new URLSearchParams(window.location.search);
+				searchParams.delete('lang');
+
+				const hasActiveFilters = searchParams.toString().length > 0;
+
+				if (shouldLoadBoundaries) {
+					if (hasActiveFilters) {
+						loadFilteredBoundaries(map, pointSource);
+					} else if (boundaryGeoJsonUrl) {
+						loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl);
+					}
 				}
 			}
 

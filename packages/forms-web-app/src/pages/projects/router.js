@@ -2,7 +2,8 @@ const express = require('express');
 
 const {
 	getProjectsIndexController,
-	downloadProjectBoundaryController
+	downloadProjectBoundaryController,
+	getProjectBoundaryGeoJsonController
 } = require('./index/controller');
 const {
 	getProjectsDocumentsController,
@@ -23,6 +24,7 @@ const {
 const {
 	getProjectsBoundaryDownloadURL
 } = require('./index/_utils/get-projects-boundary-download-url');
+const { getProjectsBoundaryURL } = require('./index/_utils/get-projects-boundary-url');
 
 const {
 	addProjectsTranslationsMiddleware
@@ -62,6 +64,7 @@ const projectsAllUpdatesURL = getProjectsAllUpdatesURL();
 const projectsDocumentsURL = getProjectsDocumentsURL();
 const examinationTimetableURL = getProjectsExaminationTimetableURL();
 const projectBoundaryDownloadURL = getProjectsBoundaryDownloadURL();
+const projectsBoundaryURL = getProjectsBoundaryURL();
 
 const projectsRouter = express.Router();
 
@@ -73,6 +76,8 @@ if (featureFlag.allowProjectInformation) {
 		projectsMiddleware,
 		downloadProjectBoundaryController
 	);
+
+	projectsRouter.get(projectsBoundaryURL, projectsMiddleware, getProjectBoundaryGeoJsonController);
 
 	projectsRouter.get(
 		projectsIndexURL,
