@@ -2,7 +2,6 @@ import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
-import Feature from 'ol/Feature.js';
 import SelectCluster from 'ol-ext/src/interaction/SelectCluster.js';
 import {
 	UK_CENTRE_EPSG27700,
@@ -12,7 +11,6 @@ import {
 	ANIMATION_DURATION,
 	SOURCE_PROJECTION,
 	TARGET_PROJECTION,
-	PROP_CASE_REF,
 	PROP_CASE_REFERENCE,
 	PROP_PROJECT_NAME,
 	PROP_STAGE,
@@ -26,6 +24,14 @@ import { createPopup, showProjectPopup } from './popup.js';
 import { normalizeMapInput } from './normalize-map-input.js';
 
 const logger = window.appLogger || { debug: () => {}, error: console.error };
+
+const getCaseReference = (feature) => feature.get(PROP_CASE_REFERENCE) || undefined;
+
+const getBoundaryPopupProperties = (feature) => ({
+	caseReference: getCaseReference(feature),
+	projectName: feature.get(PROP_PROJECT_NAME),
+	stage: feature.get(PROP_STAGE)
+});
 
 /**
  * Fetches boundary polygons from the server, removes duplicate point markers
@@ -44,10 +50,12 @@ async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
 			featureProjection: TARGET_PROJECTION
 		});
 
-		const polygonProjects = new Set(boundaryFeatures.map((feature) => feature.get(PROP_CASE_REF)));
+		const polygonProjects = new Set(
+			boundaryFeatures.map((feature) => getCaseReference(feature)).filter(Boolean)
+		);
 
 		pointSource.getFeatures().forEach((feature) => {
-			if (polygonProjects.has(feature.get(PROP_CASE_REFERENCE))) {
+			if (polygonProjects.has(getCaseReference(feature))) {
 				pointSource.removeFeature(feature);
 			}
 		});
@@ -174,11 +182,7 @@ function projectsMap() {
 
 						if (geometryType === 'Polygon' || geometryType === 'MultiPolygon') {
 							featureClicked = true;
-							const popupFeature = new Feature({
-								caseReference: feature.get(PROP_CASE_REF),
-								projectName: feature.get(PROP_PROJECT_NAME),
-								stage: feature.get(PROP_STAGE)
-							});
+							const popupFeature = { getProperties: () => getBoundaryPopupProperties(feature) };
 							showProjectPopup(popup, [popupFeature], event.coordinate, popupText);
 						}
 					});

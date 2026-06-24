@@ -34,10 +34,9 @@ export const SOURCE_PROJECTION = 'EPSG:4326';
 export const TARGET_PROJECTION = 'EPSG:27700';
 
 // Feature property keys (as stored in GeoJSON from the server)
-export const PROP_CASE_REF = 'caseRef';
 export const PROP_CASE_REFERENCE = 'caseReference';
-export const PROP_PROJECT_NAME = 'projName';
-export const PROP_STAGE = 'geomStage';
+export const PROP_PROJECT_NAME = 'projectName';
+export const PROP_STAGE = 'stage';
 
 // Interaction
 export const CIRCLE_MAX_OBJECTS = 10;
