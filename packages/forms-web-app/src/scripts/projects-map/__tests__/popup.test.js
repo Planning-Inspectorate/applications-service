@@ -5,9 +5,13 @@ jest.mock('ol-ext/src/overlay/Popup.js', () => {
 	}));
 });
 
-const { renderPopupHTML, mapFeaturePropertiesToPopupProject, showProjectPopup } = require('../popup');
+const {
+	renderPopupHTML,
+	mapFeaturePropertiesToPopupProject,
+	showProjectPopup
+} = require('../popup');
 const { NUM_ITERATIONS, randomProjects } = require('./test-helpers');
-const boundariesNewSchema = require('./fixtures/boundaries-new-schema.geojson');
+const boundariesNewSchema = require('./fixtures/boundaries-new-schema.json');
 
 const popupText = {
 	projectSelected: 'project selected',

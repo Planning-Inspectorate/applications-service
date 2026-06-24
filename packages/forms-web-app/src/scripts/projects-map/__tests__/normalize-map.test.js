@@ -6,7 +6,7 @@ import {
 	randomPointFeature,
 	randomPolygonFeature
 } from './test-helpers';
-import boundariesNewSchema from './fixtures/boundaries-new-schema.geojson';
+import boundariesNewSchema from './fixtures/boundaries-new-schema.json';
 
 jest.mock('ol/format/GeoJSON.js', () => {
 	return jest.fn().mockImplementation(() => ({
