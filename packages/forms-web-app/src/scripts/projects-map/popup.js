@@ -1,5 +1,25 @@
 import Popup from 'ol-ext/src/overlay/Popup.js';
 
+const UNKNOWN_PROJECT_LABEL = 'Unknown project';
+
+const toValue = (value) => {
+	if (typeof value !== 'string') return value || undefined;
+	const trimmedValue = value.trim();
+	return trimmedValue || undefined;
+};
+
+export function mapFeaturePropertiesToPopupProject(properties = {}) {
+	const caseReference = toValue(properties.caseReference);
+	const projectName = toValue(properties.projectName) || caseReference || UNKNOWN_PROJECT_LABEL;
+	const stage = toValue(properties.stage) || '';
+
+	return {
+		caseReference,
+		projectName,
+		stage
+	};
+}
+
 /** Creates an ol-ext Popup overlay. */
 export function createPopup() {
 	return new Popup({
@@ -21,11 +41,14 @@ export function renderPopupHTML(projects, popupText) {
 	const formattedPopupText = formatPopupText(count, popupText);
 	const rows = projects
 		.map(({ caseReference, projectName, stage }) => {
+			const projectLabel = projectName || caseReference || UNKNOWN_PROJECT_LABEL;
+			const projectCell = caseReference
+				? `<a href="/projects/${caseReference}" class="govuk-link cluster-popup-link">${projectLabel}</a>`
+				: `<span class="cluster-popup-link">${projectLabel}</span>`;
+
 			return `<tr class="cluster-popup-row">
 				<td class="cluster-popup-cell-name">
-					<a href="/projects/${caseReference}" class="govuk-link cluster-popup-link">${
-				projectName || caseReference
-			}</a>
+					${projectCell}
 				</td>
 				<td class="cluster-popup-cell-stage">${stage || ''}</td>
 			</tr>`;
@@ -40,10 +63,7 @@ export function renderPopupHTML(projects, popupText) {
 
 /** Shows a popup at the given coordinate with project info from the features. */
 export function showProjectPopup(popup, features, coordinate, popupText) {
-	const projects = features.map((f) => {
-		const { caseReference, projectName, stage } = f.getProperties();
-		return { caseReference, projectName, stage };
-	});
+	const projects = features.map((f) => mapFeaturePropertiesToPopupProject(f.getProperties()));
 
 	const html = renderPopupHTML(projects, popupText);
 	popup.show(coordinate, html);
