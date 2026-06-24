@@ -6,6 +6,7 @@ import {
 	randomPointFeature,
 	randomPolygonFeature
 } from './test-helpers';
+import boundariesNewSchema from './fixtures/boundaries-new-schema.geojson';
 
 jest.mock('ol/format/GeoJSON.js', () => {
 	return jest.fn().mockImplementation(() => ({
@@ -143,6 +144,13 @@ describe('scripts/projects-map/normalize-map-input', () => {
 	});
 
 	describe('FeatureCollection with Polygon geometries', () => {
+		it('should return geojson mode for provided boundary GeoJSON fixture', () => {
+			const result = normalizeMapInput(boundariesNewSchema);
+
+			expect(result.mode).toBe('geojson');
+			expect(result.features).toHaveLength(boundariesNewSchema.features.length);
+		});
+
 		it('should return geojson mode', () => {
 			const input = {
 				type: 'FeatureCollection',

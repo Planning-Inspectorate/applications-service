@@ -1,0 +1,121 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "caseReference": "EN010201",
+        "projectName": "Northvale Solar Farm",
+        "fileName": "northvale-boundary.geojson",
+        "receivedDate": "2026-06-24T09:15:00.000Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-0.7412, 51.412],
+            [-0.7125, 51.412],
+            [-0.7125, 51.43],
+            [-0.7412, 51.43],
+            [-0.7412, 51.412]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "caseReference": "EN010202",
+        "projectName": "East Haven Wind Extension",
+        "fileName": "east-haven-boundary.geojson",
+        "receivedDate": "2026-06-24T09:20:00.000Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-1.205, 52.875],
+            [-1.168, 52.875],
+            [-1.168, 52.901],
+            [-1.205, 52.901],
+            [-1.205, 52.875]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "caseReference": "EN010203",
+        "projectName": "Southport Grid Connection",
+        "fileName": "southport-grid-boundary.geojson",
+        "receivedDate": "2026-06-24T09:25:00.000Z"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [-2.997, 53.597],
+              [-2.97, 53.597],
+              [-2.97, 53.614],
+              [-2.997, 53.614],
+              [-2.997, 53.597]
+            ]
+          ],
+          [
+            [
+              [-2.955, 53.584],
+              [-2.937, 53.584],
+              [-2.937, 53.596],
+              [-2.955, 53.596],
+              [-2.955, 53.584]
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "caseReference": "EN010204",
+        "projectName": "Riverside Port Upgrade",
+        "fileName": "riverside-port-boundary.geojson",
+        "receivedDate": "2026-06-24T09:30:00.000Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-0.505, 53.62],
+            [-0.475, 53.62],
+            [-0.475, 53.645],
+            [-0.505, 53.645],
+            [-0.505, 53.62]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "caseReference": "EN010205",
+        "projectName": "Westmoor Hydrogen Facility",
+        "fileName": "westmoor-h2-boundary.geojson",
+        "receivedDate": "2026-06-24T09:35:00.000Z"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-3.212, 51.51],
+            [-3.18, 51.51],
+            [-3.18, 51.532],
+            [-3.212, 51.532],
+            [-3.212, 51.51]
+          ]
+        ]
+      }
+    }
+  ]
+}
