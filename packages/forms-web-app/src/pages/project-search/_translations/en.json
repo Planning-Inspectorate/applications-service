@@ -4,7 +4,7 @@
 	},
 	"pageTitle": "Project search",
 	"heading1": "Projects",
-	"paragraph1": "This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.",
+	"paragraph1": "To find a specific national infrastructure project in England or Wales, use the filters or search by project name or applicant.",
 	"linkText1": "Download a table containing a complete list of all {{-totalApplications}} projects (CSV)",
 	"accessibilityText1": "Search projects",
 	"heading2": "Filtered results",
