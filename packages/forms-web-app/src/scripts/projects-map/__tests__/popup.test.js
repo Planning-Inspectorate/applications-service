@@ -5,8 +5,13 @@ jest.mock('ol-ext/src/overlay/Popup.js', () => {
 	}));
 });
 
-const { renderPopupHTML } = require('../popup');
+const {
+	renderPopupHTML,
+	mapFeaturePropertiesToPopupProject,
+	showProjectPopup
+} = require('../popup');
 const { NUM_ITERATIONS, randomProjects } = require('./test-helpers');
+const boundariesNewSchema = require('./fixtures/boundaries-new-schema.json');
 
 const popupText = {
 	projectSelected: 'project selected',
@@ -14,6 +19,62 @@ const popupText = {
 };
 
 describe('scripts/projects-map/popup', () => {
+	describe('#mapFeaturePropertiesToPopupProject', () => {
+		it('should use new schema keys', () => {
+			const result = mapFeaturePropertiesToPopupProject({
+				caseReference: 'EN010101',
+				projectName: 'New Schema Project',
+				stage: 'Examination'
+			});
+
+			expect(result).toEqual({
+				caseReference: 'EN010101',
+				projectName: 'New Schema Project',
+				stage: 'Examination'
+			});
+		});
+
+		it('should ignore legacy keys when only legacy keys are provided', () => {
+			const result = mapFeaturePropertiesToPopupProject({
+				caseRef: 'EN010102',
+				projName: 'Legacy Project',
+				geomStage: 'Pre-application'
+			});
+
+			expect(result).toEqual({
+				caseReference: undefined,
+				projectName: 'Unknown project',
+				stage: ''
+			});
+		});
+
+		it('should provide safe fallback values for mixed and missing fields', () => {
+			const result = mapFeaturePropertiesToPopupProject({
+				caseReference: 'EN010103',
+				projectName: '   ',
+				stage: 'Accepted'
+			});
+
+			expect(result).toEqual({
+				caseReference: 'EN010103',
+				projectName: 'EN010103',
+				stage: 'Accepted'
+			});
+		});
+
+		it('should use Unknown project when both projectName and caseReference are missing', () => {
+			const result = mapFeaturePropertiesToPopupProject({
+				projectName: ''
+			});
+
+			expect(result).toEqual({
+				caseReference: undefined,
+				projectName: 'Unknown project',
+				stage: ''
+			});
+		});
+	});
+
 	describe('#renderPopupHTML', () => {
 		describe('single project', () => {
 			it('should contain the project name, case reference and stage', () => {
@@ -141,6 +202,66 @@ describe('scripts/projects-map/popup', () => {
 				expect(html).toContain('No Stage Project');
 				expect(html).toContain('cluster-popup-cell-stage');
 			});
+
+			it('should not render undefined when caseReference and projectName are missing', () => {
+				const projects = [
+					{
+						caseReference: undefined,
+						projectName: undefined,
+						stage: 'Accepted'
+					}
+				];
+
+				const html = renderPopupHTML(projects, popupText);
+
+				expect(html).toContain('Unknown project');
+				expect(html).not.toContain('undefined');
+				expect(html).not.toContain('href="/projects/undefined"');
+			});
+		});
+	});
+
+	describe('#showProjectPopup', () => {
+		it('should render boundary popup text from new schema feature properties without undefined', () => {
+			const popup = { show: jest.fn(), hide: jest.fn() };
+			const features = [
+				{
+					getProperties: () => ({
+						caseReference: 'EN010201',
+						projectName: 'Boundary Wind Farm',
+						receivedDate: '2026-06-01'
+					})
+				}
+			];
+
+			showProjectPopup(popup, features, [0, 0], popupText);
+
+			expect(popup.show).toHaveBeenCalledTimes(1);
+			const html = popup.show.mock.calls[0][1];
+			expect(html).toContain('Boundary Wind Farm');
+			expect(html).toContain('href="/projects/EN010201"');
+			expect(html).not.toContain('undefined');
+		});
+
+		it('should render popup rows correctly for provided boundary GeoJSON fixture', () => {
+			const popup = { show: jest.fn(), hide: jest.fn() };
+			const features = boundariesNewSchema.features.map((feature) => ({
+				getProperties: () => feature.properties
+			}));
+
+			showProjectPopup(popup, features, [100, 200], popupText);
+
+			expect(popup.show).toHaveBeenCalledTimes(1);
+			const html = popup.show.mock.calls[0][1];
+			expect(html).toContain('5 projects selected');
+			expect(html).toContain('Northvale Solar Farm');
+			expect(html).toContain('East Haven Wind Extension');
+			expect(html).toContain('Southport Grid Connection');
+			expect(html).toContain('Riverside Port Upgrade');
+			expect(html).toContain('Westmoor Hydrogen Facility');
+			expect(html).toContain('href="/projects/EN010201"');
+			expect(html).toContain('href="/projects/EN010205"');
+			expect(html).not.toContain('undefined');
 		});
 	});
 
