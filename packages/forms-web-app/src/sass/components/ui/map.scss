@@ -42,6 +42,34 @@
 	}
 }
 
+.projects-map__view-toggle-container {
+	display: flex;
+	align-items: center;
+}
+
+.projects-map__view-toggle {
+	display: flex;
+	padding: 5px 10px;
+	margin: 0;
+	list-style: none;
+}
+
+.projects-map__view-toggle__separator {
+	margin: 0 10px;
+}
+
+.projects-map__view-toggle__button {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	color: #1a65a6;
+
+	&:hover {
+		color: #0f385c
+	}
+}
+
 .no-zoom {
 	opacity: 0.5;
 	pointer-events: none;

@@ -29,10 +29,11 @@ const logger = window.appLogger || { debug: () => {}, error: console.error };
 
 /**
  * Fetches boundary polygons from the server, removes duplicate point markers
- * for projects that have polygon boundaries, and adds the boundary layer to the map.
+ * for projects that have polygon boundaries for individual project map, and adds the boundary layer to the map.
  */
-async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
+async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl, target) {
 	try {
+		const projectMap = 'map';
 		const response = await fetch(boundaryGeoJsonUrl);
 
 		if (!response.ok) {
@@ -44,18 +45,80 @@ async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
 			featureProjection: TARGET_PROJECTION
 		});
 
-		const polygonProjects = new Set(boundaryFeatures.map((feature) => feature.get(PROP_CASE_REF)));
+		if (target === projectMap) {
+			const polygonProjects = new Set(
+				boundaryFeatures.map((feature) => feature.get(PROP_CASE_REF))
+			);
 
-		pointSource.getFeatures().forEach((feature) => {
-			if (polygonProjects.has(feature.get(PROP_CASE_REFERENCE))) {
-				pointSource.removeFeature(feature);
-			}
-		});
+			pointSource.getFeatures().forEach((feature) => {
+				if (polygonProjects.has(feature.get(PROP_CASE_REFERENCE))) {
+					pointSource.removeFeature(feature);
+				}
+			});
+		}
 
 		map.addLayer(buildBoundaryLayer(boundaryFeatures));
 	} catch (error) {
 		logger.error('[projects-map] failed loading boundaries:', error);
 	}
+}
+
+function getBoundariesPopup(map, popup, popupText) {
+	if (popup) {
+		map.on('singleclick', (event) => {
+			let featureClicked = false;
+
+			map.forEachFeatureAtPixel(event.pixel, (feature) => {
+				const geometryType = feature.getGeometry()?.getType();
+
+				if (geometryType === 'Polygon' || geometryType === 'MultiPolygon') {
+					featureClicked = true;
+					const popupFeature = new Feature({
+						caseReference: feature.get(PROP_CASE_REF),
+						projectName: feature.get(PROP_PROJECT_NAME),
+						stage: feature.get(PROP_STAGE)
+					});
+					showProjectPopup(popup, [popupFeature], event.coordinate, popupText);
+				}
+			});
+
+			if (!featureClicked) popup.hide();
+		});
+
+		map.getView().on('change:resolution', () => popup.hide());
+	}
+}
+
+function getMarkersPopup(map, layers, popup, popupText) {
+	const selectCluster = new SelectCluster({
+		layers: [layers[1]],
+		animate: true,
+		animationDuration: ANIMATION_DURATION,
+		spiral: true,
+		circleMaxObjects: CIRCLE_MAX_OBJECTS
+	});
+
+	map.addInteraction(selectCluster);
+
+	selectCluster.on('select', (event) => {
+		if (!event.selected.length) {
+			popup.hide();
+			return;
+		}
+
+		const selectedFeature = event.selected[0];
+		if (selectedFeature.get('selectclusterlink')) return;
+
+		const clusterFeatures = selectedFeature.get('features');
+		if (clusterFeatures?.length) {
+			showProjectPopup(
+				popup,
+				clusterFeatures,
+				selectedFeature.getGeometry().getCoordinates(),
+				popupText
+			);
+		}
+	});
 }
 
 function projectsMap() {
@@ -68,12 +131,26 @@ function projectsMap() {
 	 */
 	this.initiate = async (accessToken, target, mapData, options = {}) => {
 		const mapElement = document.getElementById(target);
+		const allProjectsMap = 'projects-map';
+		const projectMap = 'map';
+		const boundariesMapView = 'boundaries';
+		const markersMapView = 'markers';
+
 		let popupText = { projectSelected: '', projectsSelected: '' };
-		if (mapElement && target === 'projects-map') {
-			popupText = {
-				projectSelected: mapElement.dataset?.projectSelected || '',
-				projectsSelected: mapElement.dataset?.projectsSelected || ''
-			};
+		let activeMapView = '';
+
+		if (target === allProjectsMap) {
+			if (mapElement) {
+				popupText = {
+					projectSelected: mapElement.dataset?.projectSelected || '',
+					projectsSelected: mapElement.dataset?.projectsSelected || ''
+				};
+			}
+
+			activeMapView =
+				mapElement.dataset?.activeMapView === boundariesMapView
+					? boundariesMapView
+					: markersMapView;
 		}
 
 		const {
@@ -92,13 +169,28 @@ function projectsMap() {
 			const layers = [tileLayer];
 			const pointSource = new VectorSource({ features });
 
-			if (mode === 'multiPoint' && enableClustering) {
-				layers.push(buildClusterLayer(pointSource).clusterLayer);
-			} else if (mode === 'singlePoint') {
-				const coordinate = features[0]?.getGeometry().getCoordinates();
-				if (coordinate) layers.push(buildMarkerLayer(coordinate));
-			} else if (mode === 'geojson') {
-				layers.push(buildBoundaryLayer(features));
+			if (target === projectMap) {
+				if (mode === 'multiPoint' && enableClustering) {
+					layers.push(buildClusterLayer(pointSource).clusterLayer);
+				} else if (mode === 'singlePoint') {
+					const coordinate = features[0]?.getGeometry().getCoordinates();
+					if (coordinate) layers.push(buildMarkerLayer(coordinate));
+				} else if (mode === 'geojson') {
+					layers.push(buildBoundaryLayer(features));
+				}
+			} else if (target === allProjectsMap) {
+				if (activeMapView === boundariesMapView) {
+					if (mode === 'geojson') {
+						layers.push(buildBoundaryLayer(features));
+					}
+				} else {
+					if (mode === 'multiPoint' && enableClustering) {
+						layers.push(buildClusterLayer(pointSource).clusterLayer);
+					} else if (mode === 'singlePoint') {
+						const coordinate = features[0]?.getGeometry().getCoordinates();
+						if (coordinate) layers.push(buildMarkerLayer(coordinate));
+					}
+				}
 			}
 
 			const center =
@@ -129,64 +221,21 @@ function projectsMap() {
 			const popup = enablePopup ? createPopup() : null;
 			if (popup) map.addOverlay(popup);
 
-			if (mode === 'multiPoint' && enableClustering && popup) {
-				const selectCluster = new SelectCluster({
-					layers: [layers[1]],
-					animate: true,
-					animationDuration: ANIMATION_DURATION,
-					spiral: true,
-					circleMaxObjects: CIRCLE_MAX_OBJECTS
-				});
-
-				map.addInteraction(selectCluster);
-
-				selectCluster.on('select', (event) => {
-					if (!event.selected.length) {
-						popup.hide();
-						return;
-					}
-
-					const selectedFeature = event.selected[0];
-					if (selectedFeature.get('selectclusterlink')) return;
-
-					const clusterFeatures = selectedFeature.get('features');
-					if (clusterFeatures?.length) {
-						showProjectPopup(
-							popup,
-							clusterFeatures,
-							selectedFeature.getGeometry().getCoordinates(),
-							popupText
-						);
-					}
-				});
-
+			if (target === projectMap) {
 				if (shouldLoadBoundaries && boundaryGeoJsonUrl) {
-					loadBoundaries(map, pointSource, boundaryGeoJsonUrl);
+					await loadBoundaries(map, pointSource, boundaryGeoJsonUrl, target);
 				}
-			}
-
-			if (popup) {
-				map.on('singleclick', (event) => {
-					let featureClicked = false;
-
-					map.forEachFeatureAtPixel(event.pixel, (feature) => {
-						const geometryType = feature.getGeometry()?.getType();
-
-						if (geometryType === 'Polygon' || geometryType === 'MultiPolygon') {
-							featureClicked = true;
-							const popupFeature = new Feature({
-								caseReference: feature.get(PROP_CASE_REF),
-								projectName: feature.get(PROP_PROJECT_NAME),
-								stage: feature.get(PROP_STAGE)
-							});
-							showProjectPopup(popup, [popupFeature], event.coordinate, popupText);
-						}
-					});
-
-					if (!featureClicked) popup.hide();
-				});
-
-				map.getView().on('change:resolution', () => popup.hide());
+			} else if (target === allProjectsMap) {
+				if (activeMapView === boundariesMapView) {
+					if (shouldLoadBoundaries && boundaryGeoJsonUrl) {
+						await loadBoundaries(map, pointSource, boundaryGeoJsonUrl, target);
+						getBoundariesPopup(map, popup, popupText);
+					}
+				} else {
+					if (mode === 'multiPoint' && enableClustering && popup) {
+						getMarkersPopup(map, layers, popup, popupText);
+					}
+				}
 			}
 
 			map.on('pointermove', (event) => {
