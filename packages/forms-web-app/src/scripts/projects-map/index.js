@@ -2,7 +2,6 @@ import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
-import Feature from 'ol/Feature.js';
 import SelectCluster from 'ol-ext/src/interaction/SelectCluster.js';
 import {
 	UK_CENTRE_EPSG27700,
@@ -12,7 +11,6 @@ import {
 	ANIMATION_DURATION,
 	SOURCE_PROJECTION,
 	TARGET_PROJECTION,
-	PROP_CASE_REF,
 	PROP_CASE_REFERENCE,
 	PROP_PROJECT_NAME,
 	PROP_STAGE,
@@ -27,11 +25,19 @@ import { normalizeMapInput } from './normalize-map-input.js';
 
 const logger = window.appLogger || { debug: () => {}, error: console.error };
 
+const getCaseReference = (feature) => feature.get(PROP_CASE_REFERENCE) || undefined;
+
+const getBoundaryPopupProperties = (feature) => ({
+	caseReference: getCaseReference(feature),
+	projectName: feature.get(PROP_PROJECT_NAME),
+	stage: feature.get(PROP_STAGE)
+});
+
 /**
  * Fetches boundary polygons from the server, removes duplicate point markers
  * for projects that have polygon boundaries, and adds the boundary layer to the map.
  */
-async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
+async function loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl) {
 	try {
 		const response = await fetch(boundaryGeoJsonUrl);
 
@@ -44,10 +50,12 @@ async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
 			featureProjection: TARGET_PROJECTION
 		});
 
-		const polygonProjects = new Set(boundaryFeatures.map((feature) => feature.get(PROP_CASE_REF)));
+		const polygonProjects = new Set(
+			boundaryFeatures.map((feature) => getCaseReference(feature)).filter(Boolean)
+		);
 
 		pointSource.getFeatures().forEach((feature) => {
-			if (polygonProjects.has(feature.get(PROP_CASE_REFERENCE))) {
+			if (polygonProjects.has(getCaseReference(feature))) {
 				pointSource.removeFeature(feature);
 			}
 		});
@@ -56,6 +64,43 @@ async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
 	} catch (error) {
 		logger.error('[projects-map] failed loading boundaries:', error);
 	}
+}
+
+async function loadFilteredBoundaries(map, pointSource) {
+	const caseRefs = pointSource.getFeatures().map((f) => f.get(PROP_CASE_REFERENCE));
+
+	const boundarySource = new VectorSource();
+
+	const boundaryLayer = buildBoundaryLayer([], boundarySource);
+
+	map.addLayer(boundaryLayer);
+
+	caseRefs.forEach(async (caseRef) => {
+		try {
+			const response = await fetch(`/projects/${caseRef}/boundary-geojson`);
+
+			// some cases do not have boundaries
+			if (response.status === 204) {
+				logger.debug(`[projects-map] no boundary found for ${caseRef}`);
+				return;
+			}
+
+			if (!response.ok) {
+				return;
+			}
+
+			const geoJson = await response.json();
+
+			const features = new GeoJSON().readFeatures(geoJson, {
+				dataProjection: SOURCE_PROJECTION,
+				featureProjection: TARGET_PROJECTION
+			});
+
+			boundarySource.addFeatures(features);
+		} catch (error) {
+			logger.error(`[projects-map] failed loading boundary ${caseRef}`, error);
+		}
+	});
 }
 
 function projectsMap() {
@@ -160,8 +205,17 @@ function projectsMap() {
 					}
 				});
 
-				if (shouldLoadBoundaries && boundaryGeoJsonUrl) {
-					loadBoundaries(map, pointSource, boundaryGeoJsonUrl);
+				const searchParams = new URLSearchParams(window.location.search);
+				searchParams.delete('lang');
+
+				const hasActiveFilters = searchParams.toString().length > 0;
+
+				if (shouldLoadBoundaries) {
+					if (hasActiveFilters) {
+						loadFilteredBoundaries(map, pointSource);
+					} else if (boundaryGeoJsonUrl) {
+						loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl);
+					}
 				}
 			}
 
@@ -174,11 +228,7 @@ function projectsMap() {
 
 						if (geometryType === 'Polygon' || geometryType === 'MultiPolygon') {
 							featureClicked = true;
-							const popupFeature = new Feature({
-								caseReference: feature.get(PROP_CASE_REF),
-								projectName: feature.get(PROP_PROJECT_NAME),
-								stage: feature.get(PROP_STAGE)
-							});
+							const popupFeature = { getProperties: () => getBoundaryPopupProperties(feature) };
 							showProjectPopup(popup, [popupFeature], event.coordinate, popupText);
 						}
 					});

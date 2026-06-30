@@ -2,7 +2,7 @@
 	"pageTitle": "Projects map",
 	"heading1": "Projects map",
 	"boundariesDownloadLink": "Download a geospatial file containing a map of all available project boundaries (JSON)",
-	"paragraph1": "This is a map of all project boundaries. To find a specific project select a project boundary.",
+	"paragraph1": "Explore our map to find a national infrastructure project in England and Wales. You can filter by application stage, location or sector.",
 	"searchAccessibilityText": "Search projects map",
 	"showFilters": "Show filters",
 	"hideFilters": "Hide filters",
@@ -12,7 +12,7 @@
 	"filteredResults": "Filtered results",
 	"projectSelected": "project selected",
 	"projectsSelected": "projects selected",
-	"warningText": "Project boundaries shown are for illustrative purposes only. To view the exact boundaries, refer to latest relevant plans and drawings.",
+	"warningText": "Project boundaries and markers are approximate. Some projects may not have boundaries available. For exact locations, check a project's latest plans and drawings.",
 	"filterLabels": {
 		"region": "Location",
 		"sector": "Sector",
