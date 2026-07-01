@@ -11,12 +11,14 @@
 {% endif %}
 
 {% if boundaryDocument %}
-	<a
-		class="govuk-link"
-		href="{{ boundaryDownloadURL }}"
-	>
-		{{ t('projectsIndex.projectLocation.boundaryDownloadText') }}
-	</a>
+	<p class="govuk-body">
+		<a
+			class="govuk-link"
+			href="{{ boundaryDownloadURL }}"
+		>
+			{{ t('projectsIndex.projectLocation.boundaryDownloadText') }}
+		</a>
+	</p>
 {% endif %}
 
 {% if mapAccessToken %}
