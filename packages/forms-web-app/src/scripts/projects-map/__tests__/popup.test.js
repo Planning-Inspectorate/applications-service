@@ -5,11 +5,37 @@ jest.mock('ol-ext/src/overlay/Popup.js', () => {
 	}));
 });
 
+jest.mock('ol-ext/src/interaction/SelectCluster.js', () => {
+	return jest.fn().mockImplementation(() => ({
+		on: jest.fn()
+	}));
+});
+
+jest.mock('../constants', () => ({
+	ANIMATION_DURATION: 250,
+	CIRCLE_MAX_OBJECTS: 10,
+	MULTI_POLYGON: 'MultiPolygon',
+	POLYGON: 'Polygon',
+	PROP_PROJECT_NAME: 'projectName',
+	PROP_STAGE: 'stage'
+}));
+
+jest.mock('../index', () => ({
+	getCaseReference: jest.fn()
+}));
+
+const SelectCluster = require('ol-ext/src/interaction/SelectCluster.js');
+const { getCaseReference } = require('../index');
+
 const {
 	renderPopupHTML,
 	mapFeaturePropertiesToPopupProject,
-	showProjectPopup
+	showProjectPopup,
+	getBoundaryPopupProperties,
+	getBoundariesPopup,
+	getMarkersPopup
 } = require('../popup');
+
 const { NUM_ITERATIONS, randomProjects } = require('./test-helpers');
 const boundariesNewSchema = require('./fixtures/boundaries-new-schema.json');
 
@@ -304,6 +330,309 @@ describe('scripts/projects-map/popup', () => {
 					expect(html).toContain(`href="/projects/${project.caseReference}"`);
 				}
 			}
+		});
+	});
+
+	describe('#getBoundaryPopupProperties', () => {
+		beforeEach(() => {
+			jest.clearAllMocks();
+		});
+
+		it('should return caseReference, projectName and stage from the feature', () => {
+			getCaseReference.mockReturnValue('EN010201');
+
+			const feature = {
+				get: jest.fn((key) => {
+					if (key === 'projectName') return 'Northvale Solar Farm';
+					if (key === 'stage') return 'Examination';
+					return undefined;
+				})
+			};
+
+			const result = getBoundaryPopupProperties(feature);
+
+			expect(getCaseReference).toHaveBeenCalledWith(feature);
+			expect(feature.get).toHaveBeenCalledWith('projectName');
+			expect(feature.get).toHaveBeenCalledWith('stage');
+
+			expect(result).toEqual({
+				caseReference: 'EN010201',
+				projectName: 'Northvale Solar Farm',
+				stage: 'Examination'
+			});
+		});
+
+		it('should allow missing projectName and stage', () => {
+			getCaseReference.mockReturnValue('EN010202');
+
+			const feature = {
+				get: jest.fn(() => undefined)
+			};
+
+			const result = getBoundaryPopupProperties(feature);
+
+			expect(result).toEqual({
+				caseReference: 'EN010202',
+				projectName: undefined,
+				stage: undefined
+			});
+		});
+	});
+
+	describe('#getBoundariesPopup', () => {
+		let mockMap;
+		let mockPopup;
+		let singleclickHandler;
+		let resolutionHandler;
+		let mockView;
+
+		beforeEach(() => {
+			jest.clearAllMocks();
+
+			mockPopup = {
+				show: jest.fn(),
+				hide: jest.fn()
+			};
+
+			mockView = {
+				on: jest.fn((event, handler) => {
+					if (event === 'change:resolution') resolutionHandler = handler;
+				})
+			};
+
+			mockMap = {
+				on: jest.fn((event, handler) => {
+					if (event === 'singleclick') singleclickHandler = handler;
+				}),
+				forEachFeatureAtPixel: jest.fn(),
+				getView: jest.fn(() => mockView)
+			};
+		});
+
+		it('registers singleclick listener on map', () => {
+			getBoundariesPopup(mockMap, mockPopup, popupText);
+
+			expect(mockMap.on).toHaveBeenCalledWith('singleclick', expect.any(Function));
+		});
+
+		it('registers change:resolution listener on map view', () => {
+			getBoundariesPopup(mockMap, mockPopup, popupText);
+
+			expect(mockMap.getView).toHaveBeenCalledTimes(1);
+			expect(mockView.on).toHaveBeenCalledWith('change:resolution', expect.any(Function));
+		});
+
+		it('does not register listeners when popup is null', () => {
+			getBoundariesPopup(mockMap, null, popupText);
+
+			expect(mockMap.on).not.toHaveBeenCalled();
+			expect(mockMap.getView).not.toHaveBeenCalled();
+		});
+
+		it('shows popup when a POLYGON feature is clicked', () => {
+			getCaseReference.mockReturnValue('EN010001');
+			getBoundariesPopup(mockMap, mockPopup, popupText);
+
+			const polygonFeature = {
+				getGeometry: jest.fn(() => ({ getType: jest.fn(() => 'Polygon') })),
+				get: jest.fn((key) => {
+					if (key === 'projectName') return 'Test Project';
+					if (key === 'stage') return 'Examination';
+					return undefined;
+				})
+			};
+
+			mockMap.forEachFeatureAtPixel.mockImplementation((_, iterateFeature) => {
+				iterateFeature(polygonFeature);
+			});
+
+			singleclickHandler({ pixel: [100, 200], coordinate: [10, 20] });
+
+			expect(getCaseReference).toHaveBeenCalledWith(polygonFeature);
+			expect(mockPopup.show).toHaveBeenCalledTimes(1);
+			expect(mockPopup.hide).not.toHaveBeenCalled();
+		});
+
+		it('shows popup when a MULTI_POLYGON feature is clicked', () => {
+			getCaseReference.mockReturnValue('EN010002');
+			getBoundariesPopup(mockMap, mockPopup, popupText);
+
+			const multiPolygonFeature = {
+				getGeometry: jest.fn(() => ({ getType: jest.fn(() => 'MultiPolygon') })),
+				get: jest.fn((key) => {
+					if (key === 'projectName') return 'Another Project';
+					if (key === 'stage') return 'Accepted';
+					return undefined;
+				})
+			};
+
+			mockMap.forEachFeatureAtPixel.mockImplementation((_, iterateFeature) => {
+				iterateFeature(multiPolygonFeature);
+			});
+
+			singleclickHandler({ pixel: [1, 2], coordinate: [3, 4] });
+
+			expect(mockPopup.show).toHaveBeenCalledTimes(1);
+			expect(mockPopup.hide).not.toHaveBeenCalled();
+		});
+
+		it('hides popup when no boundary feature is clicked', () => {
+			getBoundariesPopup(mockMap, mockPopup, popupText);
+
+			mockMap.forEachFeatureAtPixel.mockImplementation(() => {});
+
+			singleclickHandler({ pixel: [100, 200], coordinate: [10, 20] });
+
+			expect(mockPopup.hide).toHaveBeenCalledTimes(1);
+			expect(mockPopup.show).not.toHaveBeenCalled();
+		});
+
+		it('hides popup when non-boundary geometry is clicked', () => {
+			getBoundariesPopup(mockMap, mockPopup, popupText);
+
+			const pointFeature = {
+				getGeometry: jest.fn(() => ({ getType: jest.fn(() => 'Point') })),
+				get: jest.fn()
+			};
+
+			mockMap.forEachFeatureAtPixel.mockImplementation((_, iterateFeature) => {
+				iterateFeature(pointFeature);
+			});
+
+			singleclickHandler({ pixel: [5, 6], coordinate: [7, 8] });
+
+			expect(mockPopup.hide).toHaveBeenCalledTimes(1);
+			expect(mockPopup.show).not.toHaveBeenCalled();
+		});
+
+		it('hides popup on resolution change', () => {
+			getBoundariesPopup(mockMap, mockPopup, popupText);
+
+			resolutionHandler();
+
+			expect(mockPopup.hide).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	describe('#getMarkersPopup', () => {
+		let mockMap;
+		let mockPopup;
+		let mockLayers;
+		let mockSelectClusterInstance;
+		let selectClusterOnCallback;
+
+		beforeEach(() => {
+			jest.clearAllMocks();
+
+			mockPopup = {
+				show: jest.fn(),
+				hide: jest.fn()
+			};
+
+			mockSelectClusterInstance = {
+				on: jest.fn((event, callback) => {
+					if (event === 'select') {
+						selectClusterOnCallback = callback;
+					}
+				})
+			};
+
+			SelectCluster.mockImplementation(() => mockSelectClusterInstance);
+
+			mockLayers = [{ id: 'base' }, { id: 'cluster' }];
+
+			mockMap = {
+				addInteraction: jest.fn()
+			};
+		});
+
+		it('should instantiate SelectCluster with correct config', () => {
+			getMarkersPopup(mockMap, mockLayers, mockPopup, popupText);
+
+			const SelectCluster = require('ol-ext/src/interaction/SelectCluster.js');
+			expect(SelectCluster).toHaveBeenCalledWith(
+				expect.objectContaining({
+					layers: [mockLayers[1]],
+					animate: true,
+					animationDuration: 250,
+					spiral: true,
+					circleMaxObjects: 10
+				})
+			);
+		});
+
+		it('should add SelectCluster interaction to map', () => {
+			getMarkersPopup(mockMap, mockLayers, mockPopup, popupText);
+
+			expect(mockMap.addInteraction).toHaveBeenCalledWith(mockSelectClusterInstance);
+		});
+
+		it('should register select listener on SelectCluster', () => {
+			getMarkersPopup(mockMap, mockLayers, mockPopup, popupText);
+
+			expect(mockSelectClusterInstance.on).toHaveBeenCalledWith('select', expect.any(Function));
+		});
+
+		it('should hide popup when no features are selected', () => {
+			getMarkersPopup(mockMap, mockLayers, mockPopup, popupText);
+
+			const event = { selected: [] };
+			selectClusterOnCallback(event);
+
+			expect(mockPopup.hide).toHaveBeenCalled();
+		});
+
+		it('should show popup when cluster features are selected', () => {
+			getMarkersPopup(mockMap, mockLayers, mockPopup, popupText);
+
+			const mockClusterFeature = {
+				get: jest.fn((key) => {
+					if (key === 'features') {
+						return [
+							{
+								getProperties: jest.fn(() => ({
+									caseReference: 'EN010001',
+									projectName: 'Project 1',
+									stage: 'Examination'
+								}))
+							},
+							{
+								getProperties: jest.fn(() => ({
+									caseReference: 'EN010002',
+									projectName: 'Project 2',
+									stage: 'Accepted'
+								}))
+							}
+						];
+					}
+					if (key === 'selectclusterlink') return false;
+					return undefined;
+				}),
+				getGeometry: jest.fn(() => ({
+					getCoordinates: jest.fn(() => [100, 200])
+				}))
+			};
+
+			const event = { selected: [mockClusterFeature] };
+			selectClusterOnCallback(event);
+
+			expect(mockPopup.show).toHaveBeenCalled();
+		});
+
+		it('should not show popup when selectclusterlink is true', () => {
+			getMarkersPopup(mockMap, mockLayers, mockPopup, popupText);
+
+			const mockClusterFeature = {
+				get: jest.fn((key) => {
+					if (key === 'selectclusterlink') return true;
+					return undefined;
+				})
+			};
+
+			const event = { selected: [mockClusterFeature] };
+			selectClusterOnCallback(event);
+
+			expect(mockPopup.show).not.toHaveBeenCalled();
 		});
 	});
 });

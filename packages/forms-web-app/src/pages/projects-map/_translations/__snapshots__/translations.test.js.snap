@@ -3,6 +3,7 @@
 exports[`pages/projects-map/_translations should return the correct English translations 1`] = `
 {
   "applyFilters": "Apply filters",
+  "boundaries": "Boundaries",
   "boundariesDownloadLink": "Download a geospatial file containing a map of all available project boundaries (JSON)",
   "filterLabels": {
     "region": "Location",
@@ -12,12 +13,14 @@ exports[`pages/projects-map/_translations should return the correct English tran
   "filteredResults": "Filtered results",
   "heading1": "Projects map",
   "hideFilters": "Hide filters",
+  "markers": "Markers",
   "pageTitle": "Projects map",
   "paragraph1": "Explore our map to find a national infrastructure project in England and Wales. You can filter by application stage, location or sector.",
   "projectSelected": "project selected",
   "projectsSelected": "projects selected",
   "searchAccessibilityText": "Search projects map",
   "showFilters": "Show filters",
+  "showProjectsAs": "Show projects as",
   "sidebar": {
     "registerOfApplications": "Register of applications",
     "relatedContent": "Related content",
@@ -31,6 +34,7 @@ exports[`pages/projects-map/_translations should return the correct English tran
 exports[`pages/projects-map/_translations should return the correct Welsh translations 1`] = `
 {
   "applyFilters": "Cymhwyso hidlwyr",
+  "boundaries": "Ffiniau",
   "boundariesDownloadLink": "Lawrlwythwch ffeil geoofodol sy'n cynnwys map o holl ffiniau'r prosiect sydd ar gael (JSON)",
   "filterLabels": {
     "region": "Lleoliad",
@@ -40,12 +44,14 @@ exports[`pages/projects-map/_translations should return the correct Welsh transl
   "filteredResults": "Canlyniadau wedi'u hidlo",
   "heading1": "Map prosiectau",
   "hideFilters": "Cuddio hidlwyr",
+  "markers": "Marcwyr",
   "pageTitle": "Map prosiectau",
   "paragraph1": "Archwiliwch ein map i ddod o hyd i brosiect seilwaith cenedlaethol yng Nghymru a Lloegr. Gallwch hidlo yn ôl cam y cais, lleoliad neu sector.",
   "projectSelected": "prosiect wedi'i ddewis",
   "projectsSelected": "prosiect wedi'u dewis",
   "searchAccessibilityText": "Chwilio map prosiectau",
   "showFilters": "Dangos hidlwyr",
+  "showProjectsAs": "Gweld prosiectau fel",
   "sidebar": {
     "registerOfApplications": "Cofrestr geisiadau",
     "relatedContent": "Cynnwys cysylltiedig",

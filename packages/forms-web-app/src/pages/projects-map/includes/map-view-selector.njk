@@ -1,0 +1,39 @@
+{% set markersViewLink %}
+	{% if activeMapView === 'markers' %}
+		<span>{{ t('projectsMap.markers') }}</span>
+	{% else %}
+		<form  method="post" action="/projects-map">
+			<input type="hidden" name="mapView" value="markers"/>
+			<button type="submit" class="govuk-link projects-map__view-toggle__button">{{ t('projectsMap.markers') }}</button>
+		</form>
+	{% endif %}
+{% endset %}
+
+{% set boundariesViewLink %}
+	{% if activeMapView === 'boundaries' %}
+		<span>{{ t('projectsMap.boundaries') }}</span>
+	{% else %}
+		<form  method="post" action="/projects-map">
+			<input type="hidden" name="mapView" value="boundaries"/>
+			<button type="submit" class="govuk-link projects-map__view-toggle__button">{{ t('projectsMap.boundaries') }}</button>
+		</form>
+	{% endif %}
+{% endset %}
+
+<div class="projects-map__view-toggle-container">
+	<p class="govuk-body">
+		<strong>{{ t('projectsMap.showProjectsAs') }}</strong>
+	</p>
+
+	<ul class="projects-map__view-toggle">
+		<li class="govuk-body">
+			{{ markersViewLink | safe }}
+		</li>
+		<li>
+			<span class="projects-map__view-toggle__separator" aria-hidden="true">|</span>
+		</li>
+		<li class="govuk-body">
+			{{ boundariesViewLink | safe }}
+		</li>
+	</ul>
+</div>
