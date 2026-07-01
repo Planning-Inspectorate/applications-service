@@ -1,4 +1,14 @@
 import Popup from 'ol-ext/src/overlay/Popup.js';
+import SelectCluster from 'ol-ext/src/interaction/SelectCluster.js';
+import {
+	ANIMATION_DURATION,
+	CIRCLE_MAX_OBJECTS,
+	MULTI_POLYGON,
+	POLYGON,
+	PROP_PROJECT_NAME,
+	PROP_STAGE
+} from './constants';
+import { getCaseReference } from './index';
 
 const UNKNOWN_PROJECT_LABEL = 'Unknown project';
 
@@ -67,4 +77,67 @@ export function showProjectPopup(popup, features, coordinate, popupText) {
 
 	const html = renderPopupHTML(projects, popupText);
 	popup.show(coordinate, html);
+}
+
+/** Gets project properties to be displayed in popup. */
+export const getBoundaryPopupProperties = (feature) => ({
+	caseReference: getCaseReference(feature),
+	projectName: feature.get(PROP_PROJECT_NAME),
+	stage: feature.get(PROP_STAGE)
+});
+
+/** Displays popup for project boundaries. */
+export function getBoundariesPopup(map, popup, popupText) {
+	if (popup) {
+		map.on('singleclick', (event) => {
+			let featureClicked = false;
+
+			map.forEachFeatureAtPixel(event.pixel, (feature) => {
+				const geometryType = feature.getGeometry()?.getType();
+
+				if (geometryType === POLYGON || geometryType === MULTI_POLYGON) {
+					featureClicked = true;
+					const popupFeature = { getProperties: () => getBoundaryPopupProperties(feature) };
+					showProjectPopup(popup, [popupFeature], event.coordinate, popupText);
+				}
+			});
+
+			if (!featureClicked) popup.hide();
+		});
+
+		map.getView().on('change:resolution', () => popup.hide());
+	}
+}
+
+/** Displays popup for project markers. */
+export function getMarkersPopup(map, layers, popup, popupText) {
+	const selectCluster = new SelectCluster({
+		layers: [layers[1]],
+		animate: true,
+		animationDuration: ANIMATION_DURATION,
+		spiral: true,
+		circleMaxObjects: CIRCLE_MAX_OBJECTS
+	});
+
+	map.addInteraction(selectCluster);
+
+	selectCluster.on('select', (event) => {
+		if (!event.selected.length) {
+			popup.hide();
+			return;
+		}
+
+		const selectedFeature = event.selected[0];
+		if (selectedFeature.get('selectclusterlink')) return;
+
+		const clusterFeatures = selectedFeature.get('features');
+		if (clusterFeatures?.length) {
+			showProjectPopup(
+				popup,
+				clusterFeatures,
+				selectedFeature.getGeometry().getCoordinates(),
+				popupText
+			);
+		}
+	});
 }

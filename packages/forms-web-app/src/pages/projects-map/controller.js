@@ -48,8 +48,9 @@ const getProjectsMapController = async (req, res, next) => {
 
 		const mapGeoJSON = new GeoJSONBuilder().addApplications(applications).build();
 		const baseGeoJsonUrl = getGeoJsonURL();
-		const langQuery = req.query && req.query.lang ? `?lang=${req.query.lang}` : '';
+		const langQuery = queryParams && queryParams.lang ? `?lang=${queryParams.lang}` : '';
 		const geoJsonMapDisplayURL = `${baseGeoJsonUrl}${langQuery}`;
+		const markersMapView = 'markers';
 
 		res.render(projectsMapViewPath, {
 			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
@@ -61,7 +62,8 @@ const getProjectsMapController = async (req, res, next) => {
 			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
 			query,
 			queryString,
-			showFilters: !!req.session.projectsMapShowFilters
+			showFilters: !!req.session.projectsMapShowFilters,
+			activeMapView: req.session?.projectsMapActiveMapView || markersMapView
 		});
 	} catch (error) {
 		logger.error(error);
@@ -79,6 +81,14 @@ const postProjectsMapController = (req, res, next) => {
 	try {
 		// Flip the boolean: 'true' → false, anything else → true
 		req.session.projectsMapShowFilters = req.body.filterToggleValue !== 'true';
+
+		const boundariesMapView = 'boundaries';
+		const markersMapView = 'markers';
+
+		if (req.body.mapView) {
+			req.session.projectsMapActiveMapView =
+				req.body.mapView === boundariesMapView ? boundariesMapView : markersMapView;
+		}
 
 		// Extract referrer URL from request
 		const referrer = req.get('Referrer');
