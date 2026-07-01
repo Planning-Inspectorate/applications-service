@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"engines": {
-		"node": ">=22.0.0 <23.0.0"
+		"node": ">=22.21.0 <23.0.0"
 	},
 	"name": "applications-service",
 	"description": "Application - these are utility scripts for the whole repo",
@@ -95,7 +95,6 @@
 		"cookie-parser": "~1.4.4",
 		"csv-stringify": "^6.4.2",
 		"dayjs": "^1.11.7",
-		"dotenv": "^16.3.1",
 		"express": "^4.20.0",
 		"express-async-errors": "^3.1.1",
 		"express-fileupload": "^1.4.0",
