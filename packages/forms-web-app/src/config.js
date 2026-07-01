@@ -1,4 +1,5 @@
-require('dotenv').config();
+// prettier-ignore
+try { require('node:process').loadEnvFile(); } catch {/* ignore errors*/}
 
 const { parseRedisConnectionString } = require('@pins/common/src/utils/redis');
 
