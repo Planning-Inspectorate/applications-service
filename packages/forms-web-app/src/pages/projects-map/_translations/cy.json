@@ -15,7 +15,7 @@
 	"filteredResults": "Canlyniadau wedi'u hidlo",
 	"projectSelected": "prosiect wedi'i ddewis",
 	"projectsSelected": "prosiect wedi'u dewis",
-	"warningText": "Mae ffiniau a marcwyr prosiectau yn rhai bras. Efallai na fydd ffiniau ar gael ar gyfer rhai prosiectau. I gael lleoliadau union, gwiriwch gynlluniau a lluniadau diweddaraf y prosiect.",
+	"insetText": "Mae ffiniau a marcwyr prosiectau yn rhai bras. Efallai na fydd ffiniau ar gael ar gyfer rhai prosiectau. I gael lleoliadau union, gwiriwch gynlluniau a lluniadau diweddaraf y prosiect.",
 	"filterLabels": {
 		"region": "Lleoliad",
 		"sector": "Sector",

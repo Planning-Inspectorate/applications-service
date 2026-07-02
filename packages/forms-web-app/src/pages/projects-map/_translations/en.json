@@ -15,7 +15,7 @@
 	"filteredResults": "Filtered results",
 	"projectSelected": "project selected",
 	"projectsSelected": "projects selected",
-	"warningText": "Project boundaries and markers are approximate. Some projects may not have boundaries available. For exact locations, check a project's latest plans and drawings.",
+	"insetText": "Project boundaries and markers are approximate. Some projects may not have boundaries available. For exact locations, check a project's latest plans and drawings.",
 	"filterLabels": {
 		"region": "Location",
 		"sector": "Sector",
