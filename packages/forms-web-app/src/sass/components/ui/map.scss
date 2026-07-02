@@ -42,20 +42,18 @@
 	}
 }
 
-.projects-map__view-toggle-container {
-	display: flex;
-	align-items: center;
-}
-
 .projects-map__view-toggle {
 	display: flex;
-	padding: 5px 10px;
-	margin: 0;
+	align-items: center;
+	gap: 5px;
+	padding: 0;
 	list-style: none;
-}
 
-.projects-map__view-toggle__separator {
-	margin: 0 10px;
+	&__item {
+		display: flex;
+		align-items: center;
+		margin: 0;
+	}
 }
 
 .projects-map__view-toggle__button {
