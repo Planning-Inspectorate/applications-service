@@ -69,23 +69,22 @@ async function loadFilteredBoundaries(map, pointSource) {
 	const caseRefs = pointSource.getFeatures().map((f) => f.get(PROP_CASE_REFERENCE));
 
 	const boundarySource = new VectorSource();
-
 	const boundaryLayer = buildBoundaryLayer([], boundarySource);
 
 	map.addLayer(boundaryLayer);
 
-	caseRefs.forEach(async (caseRef) => {
+	for (const caseRef of caseRefs) {
 		try {
 			const response = await fetch(`/projects/${caseRef}/boundary-geojson`);
 
 			// some cases do not have boundaries
 			if (response.status === 204) {
 				logger.debug(`[projects-map] no boundary found for ${caseRef}`);
-				return;
+				continue;
 			}
 
 			if (!response.ok) {
-				return;
+				continue;
 			}
 
 			const geoJson = await response.json();
@@ -99,7 +98,7 @@ async function loadFilteredBoundaries(map, pointSource) {
 		} catch (error) {
 			logger.error(`[projects-map] failed loading boundary ${caseRef}`, error);
 		}
-	});
+	}
 }
 
 function projectsMap() {
