@@ -32,12 +32,18 @@ export function mapFeaturePropertiesToPopupProject(properties = {}) {
 
 /** Creates an ol-ext Popup overlay. */
 export function createPopup() {
-	return new Popup({
+	const popup = new Popup({
 		popupClass: 'default',
 		closeBox: true,
 		positioning: 'auto',
 		autoPan: { animation: { duration: 250 } }
 	});
+
+	const closeButton = popup.getElement()?.querySelector('.closeBox');
+
+	closeButton?.setAttribute('aria-label', 'Close popup');
+
+	return popup;
 }
 
 function formatPopupText(count, popupText) {
