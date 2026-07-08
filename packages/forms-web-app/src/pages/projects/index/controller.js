@@ -134,7 +134,31 @@ const downloadProjectBoundaryController = async (req, res, next) => {
 	}
 };
 
+const getProjectBoundaryGeoJsonController = async (req, res, next) => {
+	try {
+		const { case_ref } = req.params;
+
+		const boundaryDocument = await getProjectBoundaryDocument(case_ref);
+
+		if (!boundaryDocument) {
+			return res.status(204).send();
+		}
+
+		const geoJson = await getProjectBoundaryGeoJSON(boundaryDocument, case_ref);
+
+		if (!geoJson) {
+			return res.status(204).send();
+		}
+
+		return res.json(JSON.parse(geoJson));
+	} catch (error) {
+		logger.error(error);
+		next(error);
+	}
+};
+
 module.exports = {
 	getProjectsIndexController,
-	downloadProjectBoundaryController
+	downloadProjectBoundaryController,
+	getProjectBoundaryGeoJsonController
 };

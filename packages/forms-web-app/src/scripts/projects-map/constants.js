@@ -34,11 +34,26 @@ export const SOURCE_PROJECTION = 'EPSG:4326';
 export const TARGET_PROJECTION = 'EPSG:27700';
 
 // Feature property keys (as stored in GeoJSON from the server)
-export const PROP_CASE_REF = 'caseRef';
 export const PROP_CASE_REFERENCE = 'caseReference';
-export const PROP_PROJECT_NAME = 'projName';
-export const PROP_STAGE = 'geomStage';
+export const PROP_PROJECT_NAME = 'projectName';
+export const PROP_STAGE = 'stage';
 
 // Interaction
 export const CIRCLE_MAX_OBJECTS = 10;
 export const FIT_PADDING = [50, 50, 50, 50];
+export const FIT_EXTENT = 'fitExtent';
+
+// Map view toggle
+export const ALL_PROJECTS_MAP = 'projects-map';
+export const PROJECT_MAP = 'map';
+export const BOUNDARIES_MAP_VIEW = 'boundaries';
+export const MARKERS_MAP_VIEW = 'markers';
+
+// Mode
+export const MULTI_POINT = 'multiPoint';
+export const SINGLE_POINT = 'singlePoint';
+export const GEOJSON = 'geojson';
+
+// Geometry
+export const POLYGON = 'Polygon';
+export const MULTI_POLYGON = 'MultiPolygon';
