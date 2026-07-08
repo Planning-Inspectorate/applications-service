@@ -23,8 +23,8 @@
 				src: "https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"
 			},
 			{
-				callback: "var map = new appScripts.map.default(); map.initiate('" + mapAccessToken + "', 'map', [" + applicationData.longLat + "], " + applicationData.mapZoomLevel + ");",
-				src: "/public/scripts/map.script.js"
+				callback: "var el = document.getElementById('map'); if (el) { var projectsMap = new appScripts['projects-map'].default(); projectsMap.initiate(el.dataset.token, 'map', JSON.parse(el.dataset.geojson), { zoom: " + applicationData.mapZoomLevel + ", enableClustering: false, enablePopup: false, loadBoundaries: false }); }",
+				src: "/public/scripts/projects-map.script.js"
 			}
 	), initiateScriptsConfig) %}
 	{% endblock %}

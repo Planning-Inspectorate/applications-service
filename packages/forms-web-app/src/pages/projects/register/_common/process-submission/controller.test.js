@@ -70,13 +70,16 @@ describe('pages/projects/register/_common/process-submission/controller', () => 
 					mySelfRegdata: { text: 'mock data' }
 				}
 			};
+			const indexURL = '/projects/mock-case-ref/register/register-have-your-say';
 			beforeEach(async () => {
 				postRegistration.mockRejectedValue(new Error('API error'));
 				await postProcessSubmission(req, res);
 			});
 			it('should render the error page', () => {
 				expect(res.status).toHaveBeenCalledWith(500);
-				expect(res.render).toHaveBeenCalledWith('error/have-your-say-journey-error');
+				expect(res.render).toHaveBeenCalledWith('error/have-your-say-submission-failed', {
+					indexURL
+				});
 			});
 		});
 	});

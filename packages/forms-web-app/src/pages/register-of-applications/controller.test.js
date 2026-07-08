@@ -84,24 +84,7 @@ describe('pages/register-of-applications/controller', () => {
 							stage: 'Acceptance'
 						}
 					],
-					pagination: {
-						pageOptions: [1, 2, 3, '...', 7, 'next'],
-						paginationData: {
-							currentPage: 1,
-							fromRange: 1,
-							itemsPerPage: 3,
-							toRange: 3,
-							totalItems: 21,
-							totalPages: 7
-						}
-					},
-					paginationQueryString: '?page=:page',
 					query: {},
-					resultsPerPage: {
-						fifty: { active: false, link: '?itemsPerPage=50', size: 50 },
-						oneHundred: { active: false, link: '?itemsPerPage=100', size: 100 },
-						twentyFive: { active: true, link: '?itemsPerPage=25', size: 25 }
-					},
 					sortByLinks: [
 						{ link: '?sortBy=%2BProjectName&page=1', name: 'Project name', sort: 'none' },
 						{ name: 'Location' },

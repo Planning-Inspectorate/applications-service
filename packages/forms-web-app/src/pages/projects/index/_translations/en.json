@@ -11,7 +11,10 @@
 		"linkText1": "View the developer's website"
 	},
 	"projectLocation": {
-		"heading1": "Project location"
+		"heading1": "Project location",
+		"boundaryDownloadText": "Download the geospatial map boundary file (JSON)",
+		"insetText1": "Project boundaries shown are for illustrative purposes only. To view the exact boundaries, refer to latest relevant plans and drawings.",
+		"insetText2": "Map view boundaries are currently unavailable for this project. Refer to the latest plans and drawings to view the project's boundaries."
 	},
 	"getUpdates": {
 		"heading1": "Get updates",

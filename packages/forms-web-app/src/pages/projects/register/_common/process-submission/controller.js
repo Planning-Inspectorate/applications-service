@@ -6,6 +6,7 @@ const {
 	setSession
 } = require('../../../../../controllers/register/common/session');
 const { getRedirectUrl } = require('./_utils/get-redirect-url');
+const { getRegisterIndexURL } = require('../../index/_utils/get-register-index-url');
 
 const view = 'projects/register/_common/process-submission/view.njk';
 const hasSubmittedKey = 'hasSubmitted';
@@ -21,9 +22,10 @@ const getProcessSubmission = (req, res) => {
 };
 
 const postProcessSubmission = async (req, res) => {
+	const { session, params } = req;
+	const { case_ref } = params;
+
 	try {
-		const { session, params } = req;
-		const { case_ref } = params;
 		const key = getKeyFromUrl(req.originalUrl);
 
 		const sessionForKey = getSessionBase(session, key);
@@ -40,8 +42,10 @@ const postProcessSubmission = async (req, res) => {
 		setSession(session, key, hasSubmittedKey, true);
 		return res.redirect(`${res.locals.baseUrl}${getRedirectUrl(key)}`);
 	} catch (e) {
+		const indexURL = getRegisterIndexURL(case_ref);
+
 		logger.error(`Could not process registration submission, internal error occurred ${e}`);
-		return res.status(500).render('error/have-your-say-journey-error');
+		return res.status(500).render('error/have-your-say-submission-failed', { indexURL });
 	}
 };
 module.exports = {

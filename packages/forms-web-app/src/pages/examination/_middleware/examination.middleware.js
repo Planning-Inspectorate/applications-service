@@ -14,13 +14,19 @@ const examinationMiddleware = (req, res, next) => {
 	const { params, path, query, session } = req;
 	const { case_ref } = params;
 
-	if (path.replace('/', '') === haveYourSay.route) return next();
-	else if (!hasExaminationSession(session)) {
-		const projectsURL = getProjectsURL(case_ref);
-		const url = `${projectsURL}/${baseDirectory}/${haveYourSay.route}`;
-		const queryString = Object.keys(query).length ? buildQueryString(query) : '';
+	const projectsURL = getProjectsURL(case_ref);
+	const indexURL = `${projectsURL}/${baseDirectory}/${haveYourSay.route}`;
 
-		return res.redirect(`${url}${queryString}`);
+	const referrerURL = req.get('Referrer');
+	const examinationBaseURL = `/${baseDirectory}/`;
+	const withinExaminationJourney = referrerURL ? referrerURL.includes(examinationBaseURL) : false;
+
+	if (path.replace('/', '') === haveYourSay.route) return next();
+	else if (withinExaminationJourney && !hasExaminationSession(session)) {
+		return res.status(440).render('error/have-your-say-session-expired', { indexURL });
+	} else if (!hasExaminationSession(session)) {
+		const queryString = Object.keys(query).length ? buildQueryString(query) : '';
+		return res.redirect(`${indexURL}${queryString}`);
 	}
 
 	next();

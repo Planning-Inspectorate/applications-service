@@ -6,6 +6,8 @@ const getGovUkUrls = (locale = 'en') => {
 		developmentConsentWelsh,
 		developmentConsentAndAdvice,
 		developmentConsentAndAdviceWelsh,
+		commonTerms,
+		commonTermsWelsh,
 		nationalPolicyStatements,
 		nationalPolicyStatementsWelsh,
 		planningGuidance,
@@ -20,6 +22,7 @@ const getGovUkUrls = (locale = 'en') => {
 			developmentConsentAndAdvice,
 			developmentConsentAndAdviceWelsh
 		),
+		commonTermsUrl: getGovUkUrl(locale, commonTerms, commonTermsWelsh),
 		planningGuidanceUrl: planningGuidance,
 		advicePagesUrl: getGovUkUrl(locale, advicePages, advicePagesWelsh),
 		nationalPolicyStatementsUrl: getGovUkUrl(

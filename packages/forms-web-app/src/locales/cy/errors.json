@@ -13,5 +13,13 @@
 	"haveYourSayJourney.title": "Mae'n ddrwg gennym, mae problem gyda'r gwasanaeth",
 	"haveYourSayJourney.paragraph1": "Ceisiwch eto yn nes ymlaen.",
 	"haveYourSayJourney.paragraph2": "Nid ydym wedi arbed eich atebion.",
-	"haveYourSayJourney.paragraph3": "Pan fydd y gwasanaeth ar gael, bydd yn rhaid i chi ddechrau eto."
+	"haveYourSayJourney.paragraph3": "Pan fydd y gwasanaeth ar gael, bydd yn rhaid i chi ddechrau eto.",
+	"haveYourSaySessionExpired.heading": "Daeth eich sesiwn i ben",
+	"haveYourSaySessionExpired.paragraph1": "Roedd eich sesiwn ar agor am fwy na 4 awr.",
+	"haveYourSaySessionExpired.paragraph2": "Nid yw eich atebion na’ch cynnydd wedi’u cadw. Mae hyn er mwyn diogelu eich gwybodaeth.",
+	"haveYourSaySessionExpired.linkText": "Dechreuwch eich cyflwyniad eto",
+	"haveYourSaySubmissionFailed.heading": "Bu problem gyda’ch cyflwyniad",
+	"haveYourSaySubmissionFailed.paragraph1": "Aeth rhywbeth o’i le ac nid ydym wedi derbyn eich cyflwyniad.",
+	"haveYourSaySubmissionFailed.paragraph2": "Nid yw eich atebion na’ch cynnydd wedi’u cadw. Mae hyn er mwyn diogelu eich gwybodaeth.",
+	"haveYourSaySubmissionFailed.linkText": "Dechreuwch eich cyflwyniad eto"
 }

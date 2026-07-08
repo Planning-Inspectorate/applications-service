@@ -7,11 +7,13 @@ jest.mock('../../../src/config', () => {
 			developmentConsentWelsh: 'Welsh URL 1',
 			developmentConsentAndAdvice: 'URL 2',
 			developmentConsentAndAdviceWelsh: 'Welsh URL 2',
-			planningGuidance: 'URL 3',
-			advicePages: 'URL 4',
-			advicePagesWelsh: 'Welsh URL 4',
-			nationalPolicyStatements: 'URL 5',
-			nationalPolicyStatementsWelsh: 'Welsh URL 5'
+			commonTerms: 'URL 3',
+			commonTermsWelsh: 'Welsh URL 3',
+			planningGuidance: 'URL 4',
+			advicePages: 'URL 5',
+			advicePagesWelsh: 'Welsh URL 5',
+			nationalPolicyStatements: 'URL 6',
+			nationalPolicyStatementsWelsh: 'Welsh URL 6'
 		}
 	};
 });
@@ -21,18 +23,20 @@ describe('pages/_utils/get-govuk-urls', () => {
 		expect(getGovUkUrls()).toEqual({
 			developmentConsentUrl: 'URL 1',
 			developmentConsentAndAdviceUrl: 'URL 2',
-			planningGuidanceUrl: 'URL 3',
-			advicePagesUrl: 'URL 4',
-			nationalPolicyStatementsUrl: 'URL 5'
+			commonTermsUrl: 'URL 3',
+			planningGuidanceUrl: 'URL 4',
+			advicePagesUrl: 'URL 5',
+			nationalPolicyStatementsUrl: 'URL 6'
 		});
 	}),
 		it('returns correct URLs - cy', () => {
 			expect(getGovUkUrls('cy')).toEqual({
 				developmentConsentUrl: 'Welsh URL 1',
 				developmentConsentAndAdviceUrl: 'Welsh URL 2',
-				planningGuidanceUrl: 'URL 3',
-				advicePagesUrl: 'Welsh URL 4',
-				nationalPolicyStatementsUrl: 'Welsh URL 5'
+				commonTermsUrl: 'Welsh URL 3',
+				planningGuidanceUrl: 'URL 4',
+				advicePagesUrl: 'Welsh URL 5',
+				nationalPolicyStatementsUrl: 'Welsh URL 6'
 			});
 		});
 });
