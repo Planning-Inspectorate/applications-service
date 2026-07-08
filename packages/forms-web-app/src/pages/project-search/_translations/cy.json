@@ -4,7 +4,7 @@
 	},
 	"pageTitle": "Chwilio prosiect",
 	"heading1": "Prosiectau",
-	"paragraph1": "Dyma restr o'r holl brosiectau. I ddod o hyd i brosiect penodol, defnyddiwch yr opsiynau hidlo neu chwiliwch yn ôl enw'r prosiect neu'r ymgeisydd.",
+	"paragraph1": "I ddod o hyd i brosiect seilwaith cenedlaethol penodol yng Nghymru neu Loegr, defnyddiwch y hidlwyr neu chwiliwch yn ôl enw’r prosiect neu’r ymgeisydd.",
 	"linkText1": "Lawrlwythwch dabl sy'n cynnwys rhestr lawn o bob un o'r {{-totalApplications}} o brosiectau (CSV)",
 	"accessibilityText1": "Chwilio am brosiect",
 	"heading2": "Canlyniadau wedi'u hidlo",
@@ -28,5 +28,5 @@
 		"relatedContent": "Cynnwys cysylltiedig",
 		"registerOfApplications": "Cofrestr geisiadau"
 	},
-	"switchToMapView": "Newid i olwg map"
+	"switchToMapView": "Newid i'r golwg map"
 }

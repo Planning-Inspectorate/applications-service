@@ -1,3 +1,5 @@
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
 <h2 class="govuk-heading-m">
   {{ t('projectsIndex.projectLocation.heading1') }}
 </h2>
@@ -8,10 +10,34 @@
   </p>
 {% endif %}
 
+{% if boundaryDocument %}
+	<p class="govuk-body">
+		<a
+			class="govuk-link"
+			href="{{ boundaryDownloadURL }}"
+		>
+			{{ t('projectsIndex.projectLocation.boundaryDownloadText') }}
+		</a>
+	</p>
+{% endif %}
+
 {% if mapAccessToken %}
   <div class="pins-map">
     <div class="pins-map__container">
-      <div id="map" class="pins-map__content" role="region" aria-roledescription="map" aria-labelledby="project-location"></div>
+      <div id="map" class="pins-map__content" role="region" aria-roledescription="map" aria-labelledby="project-location" data-token="{{ mapAccessToken }}" data-geojson="{{ mapGeoJSON | escape }}"></div>
     </div>
   </div>
 {% endif %}
+
+{% if boundaryDocument %}
+	{% set insetText = t('projectsIndex.projectLocation.insetText1') %}
+{% else %}
+	{% set insetText = t('projectsIndex.projectLocation.insetText2') %}
+{% endif %}
+
+<div class="govuk-!-margin-top-4">
+	{{ govukInsetText({
+		text: insetText
+	}) }}
+</div>
+

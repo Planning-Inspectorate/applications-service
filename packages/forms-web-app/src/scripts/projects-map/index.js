@@ -1,157 +1,104 @@
-import proj4 from 'proj4/dist/proj4';
-import { register } from 'ol/proj/proj4.js';
-import { get as getProjection } from 'ol/proj.js';
-import WMTS, { optionsFromCapabilities } from 'ol/source/WMTS.js';
-import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
-import TileLayer from 'ol/layer/Tile.js';
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
-import Cluster from 'ol/source/Cluster.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
-import Style from 'ol/style/Style.js';
-import Circle from 'ol/style/Circle.js';
-import Fill from 'ol/style/Fill.js';
-import Stroke from 'ol/style/Stroke.js';
-import Text from 'ol/style/Text.js';
-import AnimatedCluster from 'ol-ext/src/layer/AnimatedCluster.js';
-import SelectCluster from 'ol-ext/src/interaction/SelectCluster.js';
-import Popup from 'ol-ext/src/overlay/Popup.js';
-import { getMapWMTS } from '../map/get-map-wmts.js';
-import { getControls } from '../map/get-controls.js';
+import {
+	UK_CENTRE_EPSG27700,
+	DEFAULT_ZOOM,
+	MIN_ZOOM,
+	MAX_ZOOM,
+	SOURCE_PROJECTION,
+	TARGET_PROJECTION,
+	PROP_CASE_REFERENCE,
+	FIT_PADDING,
+	FIT_EXTENT,
+	ALL_PROJECTS_MAP,
+	PROJECT_MAP,
+	BOUNDARIES_MAP_VIEW,
+	MARKERS_MAP_VIEW,
+	MULTI_POINT,
+	SINGLE_POINT,
+	GEOJSON
+} from './constants.js';
+import { buildTileLayer } from './tile-layer.js';
+import { registerProjection, buildControls, bindZoomButtonState } from './map-setup.js';
+import { buildClusterLayer, buildBoundaryLayer, buildMarkerLayer } from './layers.js';
+import { createPopup, getBoundariesPopup, getMarkersPopup } from './popup.js';
+import { normalizeMapInput } from './normalize-map-input.js';
 
-const UK_CENTRE_EPSG27700 = [366154, 289239];
-const DEFAULT_ZOOM = 0;
 const logger = window.appLogger || { debug: () => {}, error: console.error };
 
-/** @param {string} name @param {string} fallback @returns {string} */
-const cssVar = (name, fallback) =>
-	getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+export const getCaseReference = (feature) => feature.get(PROP_CASE_REFERENCE) || undefined;
 
 /**
- * Returns an OL Style array for a cluster feature.
- * Returns null for count=0 (expanded individual features — SelectCluster handles those).
- * @param {import('ol').Feature} feature
- * @param {string} MARKER_FILL
- * @param {string} MARKER_STROKE
- * @returns {import('ol/style').Style[]|null}
+ * Fetches boundary polygons from the server, removes duplicate point markers
+ * for projects that have polygon boundaries on the individual project map, and adds the boundary layer to the map.
  */
-function clusterStyle(feature, MARKER_FILL, MARKER_STROKE) {
-	const features = feature.get('features') || [];
-	const count = features.length;
-	if (count === 0) return null;
-	const isSingle = count === 1;
-	const radius = isSingle ? 8 : 12 + Math.min(count, 20);
+async function loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl, target) {
+	try {
+		const response = await fetch(boundaryGeoJsonUrl);
 
-	const shadow = new Style({
-		image: new Circle({
-			radius: radius + 1,
-			fill: new Fill({ color: 'rgba(0,0,0,0.25)' }),
-			displacement: [2, -2]
-		})
-	});
+		if (!response.ok) {
+			throw new Error(`Boundary fetch failed: ${response.status}`);
+		}
 
-	const marker = new Style({
-		image: new Circle({
-			radius,
-			fill: new Fill({ color: MARKER_FILL }),
-			stroke: new Stroke({ color: MARKER_STROKE, width: 2 })
-		}),
-		text: isSingle
-			? null
-			: new Text({
-					text: String(count),
-					fill: new Fill({ color: MARKER_STROKE }),
-					font: 'bold 12px sans-serif'
-			  })
-	});
+		const boundaryFeatures = new GeoJSON().readFeatures(await response.json(), {
+			dataProjection: SOURCE_PROJECTION,
+			featureProjection: TARGET_PROJECTION
+		});
 
-	return [shadow, marker];
+		if (target === PROJECT_MAP) {
+			const polygonProjects = new Set(
+				boundaryFeatures.map((feature) => getCaseReference(feature)).filter(Boolean)
+			);
+
+			pointSource.getFeatures().forEach((feature) => {
+				if (polygonProjects.has(getCaseReference(feature))) {
+					pointSource.removeFeature(feature);
+				}
+			});
+		}
+
+		map.addLayer(buildBoundaryLayer(boundaryFeatures));
+	} catch (error) {
+		logger.error('[projects-map] failed loading boundaries:', error);
+	}
 }
 
-/** Registers EPSG:27700 projection with proj4 and returns the OL projection object. */
-function setupEpsg27700() {
-	proj4.defs(
-		'EPSG:27700',
-		'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs'
-	);
-	register(proj4);
-	const epsg27700 = getProjection('EPSG:27700');
-	epsg27700.setExtent([-238375.0, 0.0, 900000.0, 1376256.0]);
-	return epsg27700;
-}
+async function loadFilteredBoundaries(map, pointSource) {
+	const caseRefs = pointSource.getFeatures().map((f) => f.get(PROP_CASE_REFERENCE));
 
-/**
- * Builds the OS Maps WMTS tile layer.
- * @param {string} accessToken
- * @param {string} wmtsXml
- */
-function buildTileLayer(accessToken, wmtsXml) {
-	const parser = new WMTSCapabilities();
-	const result = parser.read(wmtsXml);
-	const wmtsOptions = optionsFromCapabilities(result, {
-		layer: 'Outdoor_27700',
-		matrixSet: 'EPSG:27700'
-	});
+	const boundarySource = new VectorSource();
+	const boundaryLayer = buildBoundaryLayer([], boundarySource);
 
-	const tileSource = new WMTS({
-		attributions: [`&copy; Crown copyright and database rights ${new Date().getFullYear()}`],
-		tileLoadFunction: async (tile, src) => {
-			try {
-				const res = await fetch(src, { headers: { Authorization: 'Bearer ' + accessToken } });
-				if (!res.ok) throw new Error(`Tile fetch failed: ${res.status}`);
-				const arrayBuffer = await res.arrayBuffer();
-				const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
-				tile.getImage().src = `data:image/png;base64,${base64}`;
-			} catch (err) {
-				logger.error('[projects-map] tile load error:', err);
+	map.addLayer(boundaryLayer);
+
+	for (const caseRef of caseRefs) {
+		try {
+			const response = await fetch(`/projects/${caseRef}/boundary-geojson`);
+
+			// some cases do not have boundaries
+			if (response.status === 204) {
+				logger.debug(`[projects-map] no boundary found for ${caseRef}`);
+				continue;
 			}
-		},
-		...wmtsOptions
-	});
 
-	return { tileLayer: new TileLayer({ source: tileSource }), wmtsOptions };
-}
+			if (!response.ok) {
+				continue;
+			}
 
-/** @returns {import('ol-ext/src/overlay/Popup').default} */
-function buildPopup() {
-	return new Popup({
-		popupClass: 'default',
-		closeBox: true,
-		positioning: 'auto',
-		autoPan: { animation: { duration: 250 } }
-	});
-}
+			const geoJson = await response.json();
 
-/**
- * Renders the cluster popup with a list of projects.
- * @param {import('ol-ext/src/overlay/Popup').default} popup
- * @param {import('ol').Feature[]} features
- * @param {number[]} coordinate EPSG:27700 coordinate
- */
-function renderPopup(popup, features, coordinate) {
-	const count = features.length;
-	const rows = features
-		.map((f) => {
-			const { caseReference, projectName, stage } = f.getProperties();
-			return `<tr class="cluster-popup-row">
-				<td class="cluster-popup-cell-name">
-					<a href="/projects/${caseReference}" class="govuk-link cluster-popup-link">${
-				projectName || caseReference
-			}</a>
-				</td>
-				<td class="cluster-popup-cell-stage">${stage || ''}</td>
-			</tr>`;
-		})
-		.join('');
+			const features = new GeoJSON().readFeatures(geoJson, {
+				dataProjection: SOURCE_PROJECTION,
+				featureProjection: TARGET_PROJECTION
+			});
 
-	popup.show(
-		coordinate,
-		`<div class="cluster-popup-container">
-			<h2 class="cluster-popup-header">${count} ${count === 1 ? 'project' : 'projects'} selected</h2>
-			<table class="cluster-popup-table">${rows}</table>
-		</div>`
-	);
+			boundarySource.addFeatures(features);
+		} catch (error) {
+			logger.error(`[projects-map] failed loading boundary ${caseRef}`, error);
+		}
+	}
 }
 
 function projectsMap() {
@@ -159,106 +106,128 @@ function projectsMap() {
 	 * Initialises the projects map.
 	 * @param {string} accessToken OS Maps Bearer token
 	 * @param {string} target DOM element id for the map
-	 * @param {Object} geojsonData GeoJSON FeatureCollection
+	 * @param {Object|number[]} mapData GeoJSON FeatureCollection or [lng, lat] coordinate
+	 * @param {Object} [options] Configuration options
 	 */
-	this.initiate = async (accessToken, target, geojsonData) => {
+	this.initiate = async (accessToken, target, mapData, options = {}) => {
+		const mapElement = document.getElementById(target);
+
+		let popupText = { projectSelected: '', projectsSelected: '' };
+		let activeMapView = '';
+
+		if (target === ALL_PROJECTS_MAP) {
+			if (mapElement) {
+				popupText = {
+					projectSelected: mapElement.dataset?.projectSelected || '',
+					projectsSelected: mapElement.dataset?.projectsSelected || ''
+				};
+			}
+
+			activeMapView =
+				mapElement.dataset?.activeMapView === BOUNDARIES_MAP_VIEW
+					? BOUNDARIES_MAP_VIEW
+					: MARKERS_MAP_VIEW;
+		}
+
+		const {
+			zoom,
+			fitStrategy = 'center',
+			enableClustering = true,
+			enablePopup = true,
+			loadBoundaries: shouldLoadBoundaries = true,
+			boundaryGeoJsonUrl
+		} = options;
+
 		try {
-			const wmtsXml = await getMapWMTS(accessToken);
-			const epsg27700 = setupEpsg27700();
-			const { tileLayer, wmtsOptions } = buildTileLayer(accessToken, wmtsXml);
+			const epsg27700 = registerProjection();
+			const { tileLayer, wmtsOptions } = await buildTileLayer(accessToken);
+			const { features, mode } = normalizeMapInput(mapData);
+			const layers = [tileLayer];
+			const pointSource = new VectorSource({ features });
 
-			const geojsonFeatures = geojsonData
-				? new GeoJSON().readFeatures(geojsonData, {
-						dataProjection: 'EPSG:4326',
-						featureProjection: 'EPSG:27700'
-				  })
-				: [];
+			if (target === PROJECT_MAP) {
+				if (mode === MULTI_POINT && enableClustering) {
+					layers.push(buildClusterLayer(pointSource).clusterLayer);
+				} else if (mode === SINGLE_POINT) {
+					const coordinate = features[0]?.getGeometry().getCoordinates();
+					if (coordinate) layers.push(buildMarkerLayer(coordinate));
+				} else if (mode === GEOJSON) {
+					layers.push(buildBoundaryLayer(features));
+				}
+			} else if (target === ALL_PROJECTS_MAP) {
+				if (activeMapView === BOUNDARIES_MAP_VIEW) {
+					if (mode === GEOJSON) {
+						layers.push(buildBoundaryLayer(features));
+					}
+				} else {
+					if (mode === MULTI_POINT && enableClustering) {
+						layers.push(buildClusterLayer(pointSource).clusterLayer);
+					} else if (mode === SINGLE_POINT) {
+						const coordinate = features[0]?.getGeometry().getCoordinates();
+						if (coordinate) layers.push(buildMarkerLayer(coordinate));
+					}
+				}
+			}
 
-			const vectorSource = new VectorSource({ features: geojsonFeatures });
-
-			const clusterSource = new Cluster({
-				distance: 40,
-				source: vectorSource
-			});
-
-			const MARKER_FILL = cssVar('--cluster-bg', '#d4351c');
-			const MARKER_STROKE = cssVar('--cluster-text', 'white');
-			const styleWithColours = (feature) => clusterStyle(feature, MARKER_FILL, MARKER_STROKE);
-
-			// AnimatedCluster (ol-ext) — wraps cluster source with expand animation on click
-			const clusterLayer = new AnimatedCluster({
-				source: clusterSource,
-				animationDuration: 300,
-				style: styleWithColours
-			});
+			const center =
+				mode === SINGLE_POINT && features[0]
+					? features[0].getGeometry().getCoordinates()
+					: UK_CENTRE_EPSG27700;
 
 			const map = new Map({
-				controls: getControls(),
+				controls: buildControls(),
 				target,
-				layers: [tileLayer, clusterLayer],
-				overlays: [],
+				layers,
 				view: new View({
-					projection: 'EPSG:27700',
+					projection: TARGET_PROJECTION,
 					extent: epsg27700.getExtent(),
 					smoothResolutionConstraint: false,
 					resolutions: wmtsOptions.tileGrid.getResolutions(),
-					center: UK_CENTRE_EPSG27700,
-					minZoom: 0,
-					maxZoom: 9,
-					zoom: DEFAULT_ZOOM
+					center,
+					minZoom: MIN_ZOOM,
+					maxZoom: MAX_ZOOM,
+					zoom: zoom ?? DEFAULT_ZOOM
 				})
 			});
-			const popup = buildPopup();
-			map.addOverlay(popup);
 
-			// SelectCluster (ol-ext) — handles cluster click, fires 'select' with cluster feature
-			const selectCluster = new SelectCluster({
-				animate: true,
-				animationDuration: 300,
-				spiral: true,
-				circleMaxObjects: 10,
-				style: styleWithColours,
-				featureStyle: styleWithColours
-			});
+			if (mode === GEOJSON || fitStrategy === FIT_EXTENT) {
+				map.getView().fit(pointSource.getExtent(), { padding: FIT_PADDING });
+			}
 
-			map.on('pointermove', (e) => {
-				map.getTargetElement().style.cursor = map.hasFeatureAtPixel(e.pixel) ? 'pointer' : '';
-			});
+			const popup = enablePopup ? createPopup() : null;
+			if (popup) map.addOverlay(popup);
 
-			map.addInteraction(selectCluster);
+			const searchParams = new URLSearchParams(window.location.search);
+			searchParams.delete('lang');
 
-			selectCluster.on('select', (e) => {
-				if (!e.selected.length) {
-					popup.hide();
-					return;
+			const hasActiveFilters = searchParams.toString().length > 0;
+
+			if (target === PROJECT_MAP) {
+				if (shouldLoadBoundaries && boundaryGeoJsonUrl) {
+					await loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl, target);
 				}
+			} else if (target === ALL_PROJECTS_MAP) {
+				if (activeMapView === BOUNDARIES_MAP_VIEW) {
+					if (shouldLoadBoundaries) {
+						if (hasActiveFilters) {
+							await loadFilteredBoundaries(map, pointSource);
+						} else if (boundaryGeoJsonUrl) {
+							await loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl, target);
+						}
+						getBoundariesPopup(map, popup, popupText);
+					}
+				} else {
+					if (mode === MULTI_POINT && enableClustering && popup) {
+						getMarkersPopup(map, layers, popup, popupText);
+					}
+				}
+			}
 
-				const feature = e.selected[0];
-				if (feature.get('selectclusterlink')) return;
-
-				const clusterFeatures = feature.get('features');
-				if (!clusterFeatures || clusterFeatures.length === 0) return;
-
-				const coordinate = feature.getGeometry().getCoordinates();
-				renderPopup(popup, clusterFeatures, coordinate);
+			map.on('pointermove', (event) => {
+				map.getTargetElement().style.cursor = map.hasFeatureAtPixel(event.pixel) ? 'pointer' : '';
 			});
 
-			// Close popup on map click outside a cluster
-			map.on('click', (e) => {
-				if (!map.hasFeatureAtPixel(e.pixel)) popup.hide();
-			});
-
-			map.getView().on('change:resolution', () => popup.hide());
-
-			const updateZoomButtons = () => {
-				const view = map.getView();
-				const zoom = view.getZoom();
-				const el = map.getTargetElement();
-				el.querySelector('.ol-zoom-in')?.classList.toggle('no-zoom', zoom >= view.getMaxZoom());
-				el.querySelector('.ol-zoom-out')?.classList.toggle('no-zoom', zoom <= view.getMinZoom());
-			};
-			map.getView().on('change:resolution', updateZoomButtons);
-			map.once('rendercomplete', updateZoomButtons);
+			bindZoomButtonState(map);
 		} catch (error) {
 			logger.error('[projects-map] initiate failed:', error);
 		}

@@ -28,7 +28,6 @@
 		"@azure/storage-blob": "*",
 		"@pins/common": "0.0.0",
 		"@planning-inspectorate/data-model": "*",
-		"@planning-inspectorate/pins-notify": "*",
 		"@prisma/adapter-mssql": "*",
 		"@prisma/client": "*",
 		"applicationinsights": "*",
@@ -37,7 +36,6 @@
 		"body-parser": "*",
 		"compression": "*",
 		"csv-stringify": "*",
-		"dotenv": "*",
 		"express": "*",
 		"express-async-errors": "*",
 		"express-fileupload": "*",
@@ -50,6 +48,7 @@
 		"lodash": "*",
 		"moment": "*",
 		"mysql2": "*",
+		"notifications-node-client": "*",
 		"openapi-request-validator": "*",
 		"ospoint": "*",
 		"pino": "*",
@@ -73,5 +72,8 @@
 		"pino-pretty": "*",
 		"supertest": "*",
 		"typescript": "*"
+	},
+	"imports": {
+		"#pins-notify": "./src/lib/pins-notify/index.js"
 	}
 }

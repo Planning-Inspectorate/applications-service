@@ -1,4 +1,4 @@
-const { notifyBuilder } = require('@planning-inspectorate/pins-notify');
+const { notifyBuilder } = require('#pins-notify');
 const { decrypt, encrypt } = require('../../src/lib/crypto');
 const { request } = require('../__data__/supertest');
 const { APPLICATION_DB, APPLICATION_FO } = require('../__data__/application');
@@ -26,7 +26,7 @@ const dateSpy = jest.spyOn(Date, 'now');
 
 jest.mock('../../src/utils/is-backoffice-case-reference');
 
-jest.mock('@planning-inspectorate/pins-notify', () => ({
+jest.mock('#pins-notify', () => ({
 	createNotifyClient: {
 		createNotifyClient: jest.fn().mockReturnThis()
 	},

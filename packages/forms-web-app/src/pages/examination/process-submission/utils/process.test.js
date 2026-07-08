@@ -26,6 +26,11 @@ jest.mock('../../_session/examination-session', () => ({
 jest.mock('./fromDataMappers', () => ({
 	getListOfFormData: jest.fn()
 }));
+
+jest.useFakeTimers();
+
+afterEach(() => jest.clearAllMocks());
+
 describe('#process', () => {
 	describe('When processing a submission', () => {
 		const session = {
@@ -53,7 +58,10 @@ describe('#process', () => {
 				postSubmissionComplete.mockReturnValue({ resp_code: '204' });
 				setExaminationSubmissionComplete.mockReturnValue('ok');
 				setExaminationSubmissionId();
-				await handleProcessSubmission(session);
+				const promise = handleProcessSubmission(session);
+				//run all timers to avoid waiting for the 3s stagger in submission processing
+				await jest.runAllTimersAsync();
+				await promise;
 			});
 
 			it('should submit the first submission item without a submission id', () => {
@@ -111,7 +119,11 @@ describe('#process', () => {
 			});
 
 			it('should throw an error', async () => {
-				await expect(handleProcessSubmission(session)).rejects.toThrow('Process Submission failed');
+				const promise = handleProcessSubmission(session);
+				const assertion = expect(promise).rejects.toThrow('Process Submission failed');
+				//run all timers to avoid waiting for the 3s stagger in submission processing
+				await jest.runAllTimersAsync();
+				await assertion;
 			});
 		});
 	});

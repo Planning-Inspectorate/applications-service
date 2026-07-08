@@ -13,5 +13,13 @@
 	"haveYourSayJourney.title": "Sorry, there's a problem with the service",
 	"haveYourSayJourney.paragraph1": "Try again later.",
 	"haveYourSayJourney.paragraph2": "We have not saved your answers.",
-	"haveYourSayJourney.paragraph3": "When the service is available, you'll have to start again."
+	"haveYourSayJourney.paragraph3": "When the service is available, you'll have to start again.",
+	"haveYourSaySessionExpired.heading": "Your session timed out",
+	"haveYourSaySessionExpired.paragraph1": "Your session was open for more than 4 hours.",
+	"haveYourSaySessionExpired.paragraph2": "Your answers and progress have not been saved. This is to protect your information.",
+	"haveYourSaySessionExpired.linkText": "Start your submission again",
+	"haveYourSaySubmissionFailed.heading": "There was a problem with your submission",
+	"haveYourSaySubmissionFailed.paragraph1": "Something went wrong and we have not received your submission.",
+	"haveYourSaySubmissionFailed.paragraph2": "Your answers and progress have not been saved. This is to protect your information.",
+	"haveYourSaySubmissionFailed.linkText": "Start your submission again"
 }

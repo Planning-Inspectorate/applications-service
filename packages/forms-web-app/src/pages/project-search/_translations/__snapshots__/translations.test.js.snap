@@ -20,7 +20,7 @@ exports[`pages/project-search/_translations should return the correct English tr
     "paragraph2": "Would you like to clear your search and filters to view all projects instead?",
   },
   "pageTitle": "Project search",
-  "paragraph1": "This is a list of all projects. To find a specific project, use the filters or search by project name or applicant.",
+  "paragraph1": "To find a specific national infrastructure project in England or Wales, use the filters or search by project name or applicant.",
   "paragraph2": "Showing {{-from}} to {{-to}} of {{-total}} projects.",
   "sidebar": {
     "registerOfApplications": "Register of applications",
@@ -55,7 +55,7 @@ exports[`pages/project-search/_translations should return the correct Welsh tran
     "paragraph2": "A hoffech chi glirio'ch chwiliad a'ch dewisiadau hidlo i weld yr holl brosiectau yn lle hynny?",
   },
   "pageTitle": "Chwilio prosiect",
-  "paragraph1": "Dyma restr o'r holl brosiectau. I ddod o hyd i brosiect penodol, defnyddiwch yr opsiynau hidlo neu chwiliwch yn ôl enw'r prosiect neu'r ymgeisydd.",
+  "paragraph1": "I ddod o hyd i brosiect seilwaith cenedlaethol penodol yng Nghymru neu Loegr, defnyddiwch y hidlwyr neu chwiliwch yn ôl enw’r prosiect neu’r ymgeisydd.",
   "paragraph2": "Yn dangos {{-from}} i {{-to}} o {{-total}} brosiectau.",
   "sidebar": {
     "registerOfApplications": "Cofrestr geisiadau",
@@ -66,6 +66,6 @@ exports[`pages/project-search/_translations should return the correct Welsh tran
     "promoterName": "Ymgeisydd",
     "stage": "Cam",
   },
-  "switchToMapView": "Newid i olwg map",
+  "switchToMapView": "Newid i'r golwg map",
 }
 `;

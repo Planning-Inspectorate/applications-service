@@ -10,11 +10,6 @@ const {
 	getProjectSearchController,
 	postProjectSearchController
 } = require('./project-search/controller');
-const {
-	getProjectsMapController,
-	postProjectsMapController,
-	downloadMasterGeoJsonController
-} = require('./projects-map/controller');
 
 const { getIndexURL } = require('./index/utils/get-index-url');
 const {
@@ -23,8 +18,6 @@ const {
 const { getContactURL } = require('./contact/_utils/get-contact-url');
 const { getCookiesURL } = require('./cookies/_utils/get-cookies-url');
 const { getProjectSearchURL } = require('./project-search/utils/get-project-search-url');
-const { getProjectsMapURL } = require('./projects-map/utils/get-projects-map-url');
-const { getGeoJsonDownloadURL } = require('./projects-map/utils/get-master-geo-json-download-url');
 const {
 	getDetailedInformationURL
 } = require('./detailed-information/_utils/get-detailed-information-url');
@@ -59,23 +52,19 @@ const {
 const {
 	addProjectSearchTranslationsMiddleware
 } = require('./project-search/_middleware/add-project-search-translations-middleware');
-const {
-	addProjectsMapTranslationsMiddleware
-} = require('./projects-map/_middleware/add-projects-map-translations-middleware');
 
 const { cookiesValidationRules } = require('./cookies/_validators/validate-cookies');
 const { validationErrorHandler } = require('../validators/validation-error-handler');
 
 const { projectsRouter } = require('./projects/router');
 const { registerOfAdviceRouter } = require('./register-of-advice/router');
+const { projectsMapRouter } = require('./projects-map/router');
 
 const indexURL = getIndexURL();
 const termsAndConditionsURL = getTermsAndConditionsURL();
 const contactURL = getContactURL();
 const cookiesURL = getCookiesURL();
 const projectSearchURL = getProjectSearchURL();
-const projectsMapURL = getProjectsMapURL();
-const masterGeoJsonDownloadURL = getGeoJsonDownloadURL();
 const detailedInformationURL = getDetailedInformationURL();
 const registerOfApplicationsURL = getRegisterOfApplicationsURL();
 
@@ -109,23 +98,7 @@ pagesRouter.get(
 pagesRouter.post(projectSearchURL, postProjectSearchController);
 
 if (featureFlag.enableProjectsMap) {
-	pagesRouter.post(
-		projectsMapURL,
-		addCheckboxAccordionTranslationsMiddleware,
-		addCommonTranslationsMiddleware,
-		addProjectsMapTranslationsMiddleware,
-		postProjectsMapController
-	);
-
-	pagesRouter.get(
-		projectsMapURL,
-		addCheckboxAccordionTranslationsMiddleware,
-		addCommonTranslationsMiddleware,
-		addProjectsMapTranslationsMiddleware,
-		getProjectsMapController
-	);
-
-	pagesRouter.get(masterGeoJsonDownloadURL, downloadMasterGeoJsonController);
+	pagesRouter.use(projectsMapRouter);
 }
 
 pagesRouter.get(

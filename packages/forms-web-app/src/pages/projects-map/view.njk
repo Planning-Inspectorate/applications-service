@@ -1,5 +1,7 @@
 {% extends "layouts/default.njk" %}
 
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
 {% set pageTitle = t('projectsMap.pageTitle') %}
 
 {% if mapAccessToken %}
@@ -15,7 +17,7 @@
 				src: "https://cdn.jsdelivr.net/gh/OrdnanceSurvey/os-api-branding@0.3.1/os-api-branding.js"
 			},
 			{
-				callback: "var el = document.getElementById('projects-map'); var projectsMap = new appScripts['projects-map'].default(); projectsMap.initiate(el.dataset.token, 'projects-map', JSON.parse(el.dataset.geojson));",
+				callback: "var el = document.getElementById('projects-map'); if (el) { var projectsMap = new appScripts['projects-map'].default(); projectsMap.initiate(el.dataset.token, 'projects-map', JSON.parse(el.dataset.geojson), { boundaryGeoJsonUrl: el.dataset.geojsonUrl }); }",
 				src: "/public/scripts/projects-map.script.js"
 			},
 			{ src: "/public/scripts/checkbox-accordion.script.js" },
@@ -60,19 +62,15 @@
 
 			{% include "./includes/active-filters.njk" %}
 
+			{% include "./includes/map-view-selector.njk" %}
+
 			<div class="pins-map">
 				<div class="pins-map__container">
 					{% include "./includes/map.njk" %}
 				</div>
 			</div>
 
-			<div class="govuk-warning-text govuk-!-margin-top-4">
-				<span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-				<strong class="govuk-warning-text__text">
-					<span class="govuk-visually-hidden">Warning</span>
-					{{ t('projectsMap.warningText') }}
-				</strong>
-			</div>
+			{{ govukInsetText({ text: t('projectsMap.insetText') }) }}
 		</div>
 	</div>
 {% endblock %}

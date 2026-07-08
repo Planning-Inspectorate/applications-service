@@ -4,7 +4,12 @@ const { maps } = require('../../config');
 const { getApplications } = require('../../services/applications.service');
 const { getMapAccessToken } = require('../_services');
 const { getFilters } = require('../_utils/filters/get-filters');
-const { projectsMapI18nNamespace } = require('./config');
+const {
+	projectsMapI18nNamespace,
+	projectsMapRoute,
+	projectsMapViewPath,
+	geoJsonMimeType
+} = require('./config');
 const {
 	getProjectSearchQueryString
 } = require('../project-search/utils/get-project-search-query-string');
@@ -12,55 +17,9 @@ const { getProjectSearchURL } = require('../project-search/utils/get-project-sea
 const { getRelatedContentLinks } = require('../project-search/utils/get-related-content-links');
 const { getProjectsMapURL } = require('./utils/get-projects-map-url');
 const { getGeoJsonDownloadURL } = require('./utils/get-master-geo-json-download-url');
+const { getGeoJsonURL } = require('./utils/get-master-geo-json-url');
 const { queryStringBuilder } = require('../../utils/query-string-builder');
-
-const view = 'projects-map/view.njk';
-
-/**
- * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
- * Applications without valid LongLat coordinates are silently excluded.
- */
-/** Maps numeric DB Stage value to display label. Mirrors NI_MAPPING.stage in application.mapper.js. */
-const STAGE_LABELS = {
-	0: 'Draft',
-	1: 'Pre-application',
-	2: 'Acceptance',
-	3: 'Pre-examination',
-	4: 'Examination',
-	5: 'Recommendation',
-	6: 'Decision',
-	7: 'Post-decision',
-	8: 'Withdrawn'
-};
-
-/**
- * Converts raw application records to a GeoJSON FeatureCollection for map rendering.
- * Applications without valid LongLat coordinates are silently excluded.
- * @param {Object[]} applications
- * @returns {Object} GeoJSON FeatureCollection
- */
-const toGeoJSON = (applications) => ({
-	type: 'FeatureCollection',
-	features: applications
-		.map((app) => {
-			const coords = app.LongLat;
-			if (!coords || coords.length < 2 || !coords[0] || !coords[1]) return null;
-			const lng = parseFloat(coords[0]);
-			const lat = parseFloat(coords[1]);
-			if (isNaN(lng) || isNaN(lat)) return null;
-			return {
-				type: 'Feature',
-				geometry: { type: 'Point', coordinates: [lng, lat] },
-				properties: {
-					caseReference: app.CaseReference,
-					projectName: app.ProjectName,
-					stage: STAGE_LABELS[app.Stage] || app.Stage,
-					projectURL: `/projects/${app.CaseReference}`
-				}
-			};
-		})
-		.filter(Boolean)
-});
+const { GeoJSONBuilder } = require('../../lib/geojson-builder');
 
 /**
  * GET /projects-map
@@ -74,7 +33,7 @@ const getProjectsMapController = async (req, res, next) => {
 		// Redirect to clean URL if only searchTerm with no value exists
 		const { searchTerm, ...filters } = query;
 		if (Object.keys(filters).length === 0 && !searchTerm && req.url.includes('?')) {
-			return res.redirect('/projects-map');
+			return res.redirect(`/${projectsMapRoute}`);
 		}
 
 		// Fetch applications and OS Maps token concurrently
@@ -87,16 +46,24 @@ const getProjectsMapController = async (req, res, next) => {
 		const queryParams = searchTerm ? { ...filters, searchTerm } : filters;
 		const queryString = queryStringBuilder(queryParams, Object.keys(queryParams), true);
 
-		res.render(view, {
+		const mapGeoJSON = new GeoJSONBuilder().addApplications(applications).build();
+		const baseGeoJsonUrl = getGeoJsonURL();
+		const langQuery = queryParams && queryParams.lang ? `?lang=${queryParams.lang}` : '';
+		const geoJsonMapDisplayURL = `${baseGeoJsonUrl}${langQuery}`;
+		const markersMapView = 'markers';
+
+		res.render(projectsMapViewPath, {
 			...getFilters(i18n, query, availableFilters, projectsMapI18nNamespace, getProjectsMapURL()),
 			mapAccessToken,
-			mapGeoJSON: JSON.stringify(toGeoJSON(applications)),
+			mapGeoJSON: JSON.stringify(mapGeoJSON),
+			geoJsonMapDisplayURL: geoJsonMapDisplayURL,
 			projectSearchURL: getProjectSearchURL(),
 			downloadBoundariesURL: getGeoJsonDownloadURL(),
 			relatedContentLinks: getRelatedContentLinks(i18n, 'projectsMap'),
 			query,
 			queryString,
-			showFilters: !!req.session.projectsMapShowFilters
+			showFilters: !!req.session.projectsMapShowFilters,
+			activeMapView: req.session?.projectsMapActiveMapView || markersMapView
 		});
 	} catch (error) {
 		logger.error(error);
@@ -112,17 +79,33 @@ const getProjectsMapController = async (req, res, next) => {
  */
 const postProjectsMapController = (req, res, next) => {
 	try {
-		// Flip the boolean: 'true' → false, anything else → true
-		req.session.projectsMapShowFilters = req.body.filterToggleValue !== 'true';
+		// Flip the boolean: 'true' → false, 'false' → true
+		req.session.projectsMapShowFilters = req.body.filterToggleValue === 'false';
 
-		// Extract referrer  URL from request
+		const boundariesMapView = 'boundaries';
+		const markersMapView = 'markers';
+
+		if (req.body.mapView) {
+			req.session.projectsMapActiveMapView =
+				req.body.mapView === boundariesMapView ? boundariesMapView : markersMapView;
+		}
+
+		// Extract referrer URL from request
 		const referrer = req.get('Referrer');
+		let queryString = '';
 
-		// Extract query string from referrer URL
-		// e.g., '?region=wales&sector=energy' → 'region=wales&sector=energy'
-		const queryString = referrer ? new URL(referrer).search.slice(1) : '';
+		if (referrer) {
+			try {
+				const referrerUrl = new URL(referrer, 'http://localhost');
+				if (referrerUrl.pathname === `/${projectsMapRoute}`) {
+					queryString = referrerUrl.search.slice(1);
+				}
+			} catch {
+				// Invalid referrer URL — fall through with empty queryString
+			}
+		}
 
-		res.redirect(`/projects-map${queryString ? `?${queryString}` : ''}`);
+		res.redirect(`/${projectsMapRoute}${queryString ? `?${queryString}` : ''}`);
 	} catch (error) {
 		logger.error(error);
 		next(error);
@@ -143,7 +126,7 @@ const downloadMasterGeoJsonController = async (req, res, next) => {
 
 		res.setHeader('Content-Disposition', 'attachment; filename="all-project-boundaries.geojson"');
 
-		res.setHeader('Content-Type', 'application/geo+json');
+		res.setHeader('Content-Type', geoJsonMimeType);
 
 		if (!response.body) {
 			throw new Error('geoJson response body missing');
@@ -156,8 +139,64 @@ const downloadMasterGeoJsonController = async (req, res, next) => {
 	}
 };
 
+const getMasterGeoJsonController = async (req, res, next) => {
+	try {
+		// Retrieve blob metadata without downloading the full GeoJSON file.
+		// This allows us to compare ETags and avoid unnecessarily transferring
+		// a potentially large master boundary file if the browser already has
+		// the latest version cached
+		const headResponse = await fetch(maps.masterGeoJsonUrl, {
+			method: 'HEAD'
+		});
+
+		if (!headResponse.ok) {
+			throw new Error(`Failed to fetch GeoJSON headers: ${headResponse.status}`);
+		}
+
+		const etag = headResponse.headers.get('etag');
+		const lastModified = headResponse.headers.get('last-modified');
+
+		// Instruct browsers to cache the response but revalidate before use.
+		// If the GeoJSON has not changed, we can return 304 Not Modified and
+		// the browser will reuse its cached copy rather than downloading the
+		// entire file again
+		res.set('Cache-Control', 'public, max-age=0, must-revalidate');
+
+		if (etag && req.headers['if-none-match'] === etag) {
+			logger.info('Returning 304 for cached master geojson');
+
+			return res.status(304).send();
+		}
+
+		if (etag) {
+			res.setHeader('ETag', etag);
+		}
+
+		if (lastModified) {
+			res.setHeader('Last-Modified', lastModified);
+		}
+
+		// GeoJSON has changed (or browser has no cached copy), so download
+		// the latest version from blob storage and return it to the client.
+		const response = await fetch(maps.masterGeoJsonUrl);
+
+		if (!response.ok) {
+			throw new Error(`Failed to fetch GeoJSON: ${response.status}`);
+		}
+
+		const geoJson = await response.json();
+
+		return res.json(geoJson);
+	} catch (error) {
+		logger.error(error);
+
+		next(error);
+	}
+};
+
 module.exports = {
 	getProjectsMapController,
 	postProjectsMapController,
-	downloadMasterGeoJsonController
+	downloadMasterGeoJsonController,
+	getMasterGeoJsonController
 };

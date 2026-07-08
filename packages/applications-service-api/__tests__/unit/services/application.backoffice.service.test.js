@@ -105,8 +105,6 @@ describe('application.backoffice.service', () => {
 							await getAllApplications({ page: mockPageNum, size: mockPageSize });
 
 							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-								size: mockPageSize,
-								offset: mockPageSize * (mockPageNum - 1),
 								orderBy: {
 									projectName: 'asc'
 								}
@@ -121,8 +119,6 @@ describe('application.backoffice.service', () => {
 							await getAllApplications({ size: mockPageSize });
 
 							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-								offset: 0,
-								size: mockPageSize,
 								orderBy: {
 									projectName: 'asc'
 								}
@@ -139,8 +135,6 @@ describe('application.backoffice.service', () => {
 							await getAllApplications({ size: mockPageSize });
 
 							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-								offset: 0,
-								size: mockPageSize,
 								orderBy: {
 									projectName: 'asc'
 								}
@@ -153,8 +147,6 @@ describe('application.backoffice.service', () => {
 							await getAllApplications({ size: 101 });
 
 							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-								offset: 0,
-								size: 100,
 								orderBy: {
 									projectName: 'asc'
 								}
@@ -167,8 +159,6 @@ describe('application.backoffice.service', () => {
 							await getAllApplications({});
 
 							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-								offset: 0,
-								size: 25,
 								orderBy: {
 									projectName: 'asc'
 								}
@@ -190,8 +180,6 @@ describe('application.backoffice.service', () => {
 							await getAllApplications({ sort });
 
 							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-								offset: 0,
-								size: 25,
 								orderBy
 							});
 						});
@@ -213,8 +201,6 @@ describe('application.backoffice.service', () => {
 							await getAllApplications({ sort });
 
 							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-								offset: 0,
-								size: 25,
 								orderBy
 							});
 						});
@@ -225,8 +211,6 @@ describe('application.backoffice.service', () => {
 							await getAllApplications({ sort: 'foo' });
 
 							expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-								offset: 0,
-								size: 25,
 								orderBy: {
 									projectName: 'asc'
 								}
@@ -240,8 +224,6 @@ describe('application.backoffice.service', () => {
 						await getAllApplications({});
 
 						expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-							offset: 0,
-							size: 25,
 							orderBy: {
 								projectName: 'asc'
 							}
@@ -259,8 +241,6 @@ describe('application.backoffice.service', () => {
 					});
 
 					expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-						offset: 0,
-						size: 25,
 						orderBy: {
 							projectName: 'asc'
 						},
@@ -278,8 +258,6 @@ describe('application.backoffice.service', () => {
 					await getAllApplications({ searchTerm: 'foo bar' });
 
 					expect(getAllApplicationsRepository).toHaveBeenCalledWith({
-						offset: 0,
-						size: 25,
 						orderBy: {
 							projectName: 'asc'
 						},
@@ -304,10 +282,6 @@ describe('application.backoffice.service', () => {
 				expect(result).toEqual({
 					applications: [APPLICATION_API],
 					totalItems: 1,
-					itemsPerPage: 25,
-					totalPages: 1,
-					currentPage: 1,
-					totalItemsWithoutFilters: 1,
 					filters: APPLICATIONS_FO_FILTERS
 				});
 			});
