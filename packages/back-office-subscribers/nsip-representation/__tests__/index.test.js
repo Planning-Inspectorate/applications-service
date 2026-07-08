@@ -189,6 +189,27 @@ describe('nsip-representation', () => {
 			const representationComment = mergeParams[6];
 			expect(representationComment).toBe('REDACTED');
 		});
+		it('uses edited when redacted but redacted representation is empty', async () => {
+			const message = {
+				...baseMessage,
+				redacted: true,
+				editedRepresentation: 'EDITED'
+			};
+			await sendMessage(mockContext, message);
+			const mergeParams = getLastMergeParams();
+			const representationComment = mergeParams[6];
+			expect(representationComment).toBe('EDITED');
+		});
+		it('uses original when redacted but no redacted or edited representation exists', async () => {
+			const message = {
+				...baseMessage,
+				redacted: true
+			};
+			await sendMessage(mockContext, message);
+			const mergeParams = getLastMergeParams();
+			const representationComment = mergeParams[6];
+			expect(representationComment).toBe('ORIGINAL');
+		});
 	});
 	it('calls buildMergeQuery with correct parameters', async () => {
 		await sendMessage(mockContext, mockMessage);

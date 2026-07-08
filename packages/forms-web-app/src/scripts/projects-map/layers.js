@@ -81,8 +81,8 @@ export function buildClusterLayer(source) {
 }
 
 /** Builds a boundary polygon layer styled with red stroke/fill. */
-export function buildBoundaryLayer(features) {
-	const boundarySource = new VectorSource({ features });
+export function buildBoundaryLayer(features = [], source = null) {
+	const boundarySource = source || new VectorSource({ features });
 
 	return new VectorLayer({
 		source: boundarySource,

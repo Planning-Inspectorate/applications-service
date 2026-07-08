@@ -2,36 +2,39 @@ import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
-import Feature from 'ol/Feature.js';
-import SelectCluster from 'ol-ext/src/interaction/SelectCluster.js';
 import {
 	UK_CENTRE_EPSG27700,
 	DEFAULT_ZOOM,
 	MIN_ZOOM,
 	MAX_ZOOM,
-	ANIMATION_DURATION,
 	SOURCE_PROJECTION,
 	TARGET_PROJECTION,
-	PROP_CASE_REF,
 	PROP_CASE_REFERENCE,
-	PROP_PROJECT_NAME,
-	PROP_STAGE,
-	CIRCLE_MAX_OBJECTS,
-	FIT_PADDING
+	FIT_PADDING,
+	FIT_EXTENT,
+	ALL_PROJECTS_MAP,
+	PROJECT_MAP,
+	BOUNDARIES_MAP_VIEW,
+	MARKERS_MAP_VIEW,
+	MULTI_POINT,
+	SINGLE_POINT,
+	GEOJSON
 } from './constants.js';
 import { buildTileLayer } from './tile-layer.js';
 import { registerProjection, buildControls, bindZoomButtonState } from './map-setup.js';
 import { buildClusterLayer, buildBoundaryLayer, buildMarkerLayer } from './layers.js';
-import { createPopup, showProjectPopup } from './popup.js';
+import { createPopup, getBoundariesPopup, getMarkersPopup } from './popup.js';
 import { normalizeMapInput } from './normalize-map-input.js';
 
 const logger = window.appLogger || { debug: () => {}, error: console.error };
 
+export const getCaseReference = (feature) => feature.get(PROP_CASE_REFERENCE) || undefined;
+
 /**
  * Fetches boundary polygons from the server, removes duplicate point markers
- * for projects that have polygon boundaries, and adds the boundary layer to the map.
+ * for projects that have polygon boundaries on the individual project map, and adds the boundary layer to the map.
  */
-async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
+async function loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl, target) {
 	try {
 		const response = await fetch(boundaryGeoJsonUrl);
 
@@ -44,17 +47,57 @@ async function loadBoundaries(map, pointSource, boundaryGeoJsonUrl) {
 			featureProjection: TARGET_PROJECTION
 		});
 
-		const polygonProjects = new Set(boundaryFeatures.map((feature) => feature.get(PROP_CASE_REF)));
+		if (target === PROJECT_MAP) {
+			const polygonProjects = new Set(
+				boundaryFeatures.map((feature) => getCaseReference(feature)).filter(Boolean)
+			);
 
-		pointSource.getFeatures().forEach((feature) => {
-			if (polygonProjects.has(feature.get(PROP_CASE_REFERENCE))) {
-				pointSource.removeFeature(feature);
-			}
-		});
+			pointSource.getFeatures().forEach((feature) => {
+				if (polygonProjects.has(getCaseReference(feature))) {
+					pointSource.removeFeature(feature);
+				}
+			});
+		}
 
 		map.addLayer(buildBoundaryLayer(boundaryFeatures));
 	} catch (error) {
 		logger.error('[projects-map] failed loading boundaries:', error);
+	}
+}
+
+async function loadFilteredBoundaries(map, pointSource) {
+	const caseRefs = pointSource.getFeatures().map((f) => f.get(PROP_CASE_REFERENCE));
+
+	const boundarySource = new VectorSource();
+	const boundaryLayer = buildBoundaryLayer([], boundarySource);
+
+	map.addLayer(boundaryLayer);
+
+	for (const caseRef of caseRefs) {
+		try {
+			const response = await fetch(`/projects/${caseRef}/boundary-geojson`);
+
+			// some cases do not have boundaries
+			if (response.status === 204) {
+				logger.debug(`[projects-map] no boundary found for ${caseRef}`);
+				continue;
+			}
+
+			if (!response.ok) {
+				continue;
+			}
+
+			const geoJson = await response.json();
+
+			const features = new GeoJSON().readFeatures(geoJson, {
+				dataProjection: SOURCE_PROJECTION,
+				featureProjection: TARGET_PROJECTION
+			});
+
+			boundarySource.addFeatures(features);
+		} catch (error) {
+			logger.error(`[projects-map] failed loading boundary ${caseRef}`, error);
+		}
 	}
 }
 
@@ -67,6 +110,25 @@ function projectsMap() {
 	 * @param {Object} [options] Configuration options
 	 */
 	this.initiate = async (accessToken, target, mapData, options = {}) => {
+		const mapElement = document.getElementById(target);
+
+		let popupText = { projectSelected: '', projectsSelected: '' };
+		let activeMapView = '';
+
+		if (target === ALL_PROJECTS_MAP) {
+			if (mapElement) {
+				popupText = {
+					projectSelected: mapElement.dataset?.projectSelected || '',
+					projectsSelected: mapElement.dataset?.projectsSelected || ''
+				};
+			}
+
+			activeMapView =
+				mapElement.dataset?.activeMapView === BOUNDARIES_MAP_VIEW
+					? BOUNDARIES_MAP_VIEW
+					: MARKERS_MAP_VIEW;
+		}
+
 		const {
 			zoom,
 			fitStrategy = 'center',
@@ -83,17 +145,32 @@ function projectsMap() {
 			const layers = [tileLayer];
 			const pointSource = new VectorSource({ features });
 
-			if (mode === 'multiPoint' && enableClustering) {
-				layers.push(buildClusterLayer(pointSource).clusterLayer);
-			} else if (mode === 'singlePoint') {
-				const coordinate = features[0]?.getGeometry().getCoordinates();
-				if (coordinate) layers.push(buildMarkerLayer(coordinate));
-			} else if (mode === 'geojson') {
-				layers.push(buildBoundaryLayer(features));
+			if (target === PROJECT_MAP) {
+				if (mode === MULTI_POINT && enableClustering) {
+					layers.push(buildClusterLayer(pointSource).clusterLayer);
+				} else if (mode === SINGLE_POINT) {
+					const coordinate = features[0]?.getGeometry().getCoordinates();
+					if (coordinate) layers.push(buildMarkerLayer(coordinate));
+				} else if (mode === GEOJSON) {
+					layers.push(buildBoundaryLayer(features));
+				}
+			} else if (target === ALL_PROJECTS_MAP) {
+				if (activeMapView === BOUNDARIES_MAP_VIEW) {
+					if (mode === GEOJSON) {
+						layers.push(buildBoundaryLayer(features));
+					}
+				} else {
+					if (mode === MULTI_POINT && enableClustering) {
+						layers.push(buildClusterLayer(pointSource).clusterLayer);
+					} else if (mode === SINGLE_POINT) {
+						const coordinate = features[0]?.getGeometry().getCoordinates();
+						if (coordinate) layers.push(buildMarkerLayer(coordinate));
+					}
+				}
 			}
 
 			const center =
-				mode === 'singlePoint' && features[0]
+				mode === SINGLE_POINT && features[0]
 					? features[0].getGeometry().getCoordinates()
 					: UK_CENTRE_EPSG27700;
 
@@ -113,70 +190,37 @@ function projectsMap() {
 				})
 			});
 
-			if (mode === 'geojson' || fitStrategy === 'fitExtent') {
+			if (mode === GEOJSON || fitStrategy === FIT_EXTENT) {
 				map.getView().fit(pointSource.getExtent(), { padding: FIT_PADDING });
 			}
 
 			const popup = enablePopup ? createPopup() : null;
 			if (popup) map.addOverlay(popup);
 
-			if (mode === 'multiPoint' && enableClustering && popup) {
-				const selectCluster = new SelectCluster({
-					layers: [layers[1]],
-					animate: true,
-					animationDuration: ANIMATION_DURATION,
-					spiral: true,
-					circleMaxObjects: CIRCLE_MAX_OBJECTS
-				});
+			const searchParams = new URLSearchParams(window.location.search);
+			searchParams.delete('lang');
 
-				map.addInteraction(selectCluster);
+			const hasActiveFilters = searchParams.toString().length > 0;
 
-				selectCluster.on('select', (event) => {
-					if (!event.selected.length) {
-						popup.hide();
-						return;
-					}
-
-					const selectedFeature = event.selected[0];
-					if (selectedFeature.get('selectclusterlink')) return;
-
-					const clusterFeatures = selectedFeature.get('features');
-					if (clusterFeatures?.length) {
-						showProjectPopup(
-							popup,
-							clusterFeatures,
-							selectedFeature.getGeometry().getCoordinates()
-						);
-					}
-				});
-
+			if (target === PROJECT_MAP) {
 				if (shouldLoadBoundaries && boundaryGeoJsonUrl) {
-					loadBoundaries(map, pointSource, boundaryGeoJsonUrl);
+					await loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl, target);
 				}
-			}
-
-			if (popup) {
-				map.on('singleclick', (event) => {
-					let featureClicked = false;
-
-					map.forEachFeatureAtPixel(event.pixel, (feature) => {
-						const geometryType = feature.getGeometry()?.getType();
-
-						if (geometryType === 'Polygon' || geometryType === 'MultiPolygon') {
-							featureClicked = true;
-							const popupFeature = new Feature({
-								caseReference: feature.get(PROP_CASE_REF),
-								projectName: feature.get(PROP_PROJECT_NAME),
-								stage: feature.get(PROP_STAGE)
-							});
-							showProjectPopup(popup, [popupFeature], event.coordinate);
+			} else if (target === ALL_PROJECTS_MAP) {
+				if (activeMapView === BOUNDARIES_MAP_VIEW) {
+					if (shouldLoadBoundaries) {
+						if (hasActiveFilters) {
+							await loadFilteredBoundaries(map, pointSource);
+						} else if (boundaryGeoJsonUrl) {
+							await loadMasterBoundaries(map, pointSource, boundaryGeoJsonUrl, target);
 						}
-					});
-
-					if (!featureClicked) popup.hide();
-				});
-
-				map.getView().on('change:resolution', () => popup.hide());
+						getBoundariesPopup(map, popup, popupText);
+					}
+				} else {
+					if (mode === MULTI_POINT && enableClustering && popup) {
+						getMarkersPopup(map, layers, popup, popupText);
+					}
+				}
 			}
 
 			map.on('pointermove', (event) => {

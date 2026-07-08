@@ -16,14 +16,8 @@ const getApplications = async (queryString) => {
 
 	return {
 		applications: data.applications,
-		filters: data.filters,
-		pagination: {
-			totalItems: data.totalItems,
-			totalItemsWithoutFilters: data.totalItemsWithoutFilters,
-			itemsPerPage: data.itemsPerPage,
-			totalPages: data.totalPages,
-			currentPage: data.currentPage
-		}
+		totalItems: data.totalItems,
+		filters: data.filters
 	};
 };
 

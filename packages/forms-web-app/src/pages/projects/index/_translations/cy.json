@@ -12,7 +12,9 @@
 	},
 	"projectLocation": {
 		"heading1": "Lleoliad y prosiect",
-		"boundaryDownloadText": "Lawrlwythwch y ffeil ffiniau map geo-ofodol (JSON)"
+		"boundaryDownloadText": "Lawrlwythwch y ffeil ffiniau map geo-ofodol (JSON)",
+		"insetText1": "Mae'r ffiniau prosiect a ddangosir er diben darluniadol yn unig. I weld y ffiniau union, cyfeiriwch at y cynlluniau a'r lluniadau perthnasol diweddaraf.",
+		"insetText2": "Nid yw ffiniau'r golwg map ar gael ar hyn o bryd ar gyfer y prosiect. Cyfeiriwch at y cynlluniau a'r lluniadau diweddaraf i weld ffiniau'r prosiect."
 	},
 	"getUpdates": {
 		"heading1": "Cael diweddariadau",
