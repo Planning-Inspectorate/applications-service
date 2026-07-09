@@ -1,7 +1,13 @@
+const mockSetAttribute = jest.fn();
 jest.mock('ol-ext/src/overlay/Popup.js', () => {
 	return jest.fn().mockImplementation(() => ({
 		show: jest.fn(),
-		hide: jest.fn()
+		hide: jest.fn(),
+		getElement: jest.fn(() => ({
+			querySelector: jest.fn(() => ({
+				setAttribute: mockSetAttribute
+			}))
+		}))
 	}));
 });
 
@@ -28,6 +34,7 @@ const SelectCluster = require('ol-ext/src/interaction/SelectCluster.js');
 const { getCaseReference } = require('../index');
 
 const {
+	createPopup,
 	renderPopupHTML,
 	mapFeaturePropertiesToPopupProject,
 	showProjectPopup,
@@ -45,6 +52,13 @@ const popupText = {
 };
 
 describe('scripts/projects-map/popup', () => {
+	describe('#createPopup', () => {
+		it('adds an aria-label to the popup close button', () => {
+			createPopup();
+
+			expect(mockSetAttribute).toHaveBeenCalledWith('aria-label', 'Close popup');
+		});
+	});
 	describe('#mapFeaturePropertiesToPopupProject', () => {
 		it('should use new schema keys', () => {
 			const result = mapFeaturePropertiesToPopupProject({

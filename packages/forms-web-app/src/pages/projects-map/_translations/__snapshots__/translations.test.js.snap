@@ -13,6 +13,7 @@ exports[`pages/projects-map/_translations should return the correct English tran
   "filteredResults": "Filtered results",
   "heading1": "Projects map",
   "hideFilters": "Hide filters",
+  "insetText": "Project boundaries and markers are approximate. Some projects may not have boundaries available. For exact locations, check a project's latest plans and drawings.",
   "markers": "Markers",
   "pageTitle": "Projects map",
   "paragraph1": "Explore our map to find a national infrastructure project in England and Wales. You can filter by application stage, location or sector.",
@@ -27,7 +28,6 @@ exports[`pages/projects-map/_translations should return the correct English tran
   },
   "switchToListView": "Switch to list view",
   "switchToMapView": "Switch to map view",
-  "warningText": "Project boundaries and markers are approximate. Some projects may not have boundaries available. For exact locations, check a project's latest plans and drawings.",
 }
 `;
 
@@ -44,6 +44,7 @@ exports[`pages/projects-map/_translations should return the correct Welsh transl
   "filteredResults": "Canlyniadau wedi'u hidlo",
   "heading1": "Map prosiectau",
   "hideFilters": "Cuddio hidlwyr",
+  "insetText": "Mae ffiniau a marcwyr prosiectau yn rhai bras. Efallai na fydd ffiniau ar gael ar gyfer rhai prosiectau. I gael lleoliadau union, gwiriwch gynlluniau a lluniadau diweddaraf y prosiect.",
   "markers": "Marcwyr",
   "pageTitle": "Map prosiectau",
   "paragraph1": "Archwiliwch ein map i ddod o hyd i brosiect seilwaith cenedlaethol yng Nghymru a Lloegr. Gallwch hidlo yn ôl cam y cais, lleoliad neu sector.",
@@ -58,6 +59,5 @@ exports[`pages/projects-map/_translations should return the correct Welsh transl
   },
   "switchToListView": "Newid i'r golwg rhestr",
   "switchToMapView": "Newid i'r golwg map",
-  "warningText": "Mae ffiniau a marcwyr prosiectau yn rhai bras. Efallai na fydd ffiniau ar gael ar gyfer rhai prosiectau. I gael lleoliadau union, gwiriwch gynlluniau a lluniadau diweddaraf y prosiect.",
 }
 `;

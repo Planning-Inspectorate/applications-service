@@ -41,9 +41,10 @@ module.exports = async (context, message) => {
 		referenceId: message.referenceId,
 		status: message.status,
 		dateReceived: message.dateReceived,
-		representationComment: message.redacted
-			? message.redactedRepresentation
-			: message.editedRepresentation || message.originalRepresentation,
+		representationComment:
+			message.redacted && message.redactedRepresentation
+				? message.redactedRepresentation
+				: message.editedRepresentation || message.originalRepresentation,
 		representationFrom: message.representationFrom,
 		representationType: message.representationType,
 		registerFor: message.registerFor,

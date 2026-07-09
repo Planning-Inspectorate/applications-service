@@ -20,20 +20,17 @@
 	{% endif %}
 {% endset %}
 
-<div class="projects-map__view-toggle-container">
-	<p class="govuk-body">
-		<strong>{{ t('projectsMap.showProjectsAs') }}</strong>
-	</p>
-
-	<ul class="projects-map__view-toggle">
-		<li class="govuk-body">
-			{{ markersViewLink | safe }}
-		</li>
-		<li>
-			<span class="projects-map__view-toggle__separator" aria-hidden="true">|</span>
-		</li>
-		<li class="govuk-body">
-			{{ boundariesViewLink | safe }}
-		</li>
-	</ul>
-</div>
+<ul class="projects-map__view-toggle">
+	<li class="govuk-body projects-map__view-toggle__item">
+			<strong>{{ t('projectsMap.showProjectsAs') }}</strong>
+	</li>
+	<li class="govuk-body projects-map__view-toggle__item">
+		{{ markersViewLink | safe }}
+	</li>
+	<li  class="govuk-body projects-map__view-toggle__item">
+		<span class="projects-map__view-toggle__separator" aria-hidden="true">|</span>
+	</li>
+	<li class="govuk-body projects-map__view-toggle__item">
+		{{ boundariesViewLink | safe }}
+	</li>
+</ul>
