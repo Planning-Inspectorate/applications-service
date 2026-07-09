@@ -25,6 +25,12 @@ const getApplication = async (caseReference) =>
 		: mapNIApplicationToApi(await getNIApplication(caseReference));
 
 const createQueryFilters = (query) => {
+	// Pagination
+	const pageNo = parseInt(query?.page) || 1;
+	const defaultSize = 25;
+	const maxSize = 100;
+	const size = Math.min(parseInt(query?.size) || defaultSize, maxSize);
+
 	// Sorting
 	const allowedSortFieldsWithDirection = [
 		'ProjectName',
@@ -57,6 +63,9 @@ const createQueryFilters = (query) => {
 	};
 
 	return {
+		pageNo,
+		size,
+		offset: size * (pageNo - 1),
 		orderBy,
 		...(query.searchTerm ? { searchTerm: query.searchTerm } : {}),
 		...(isEmpty(filters) ? {} : { filters })
@@ -76,12 +85,18 @@ const getAllApplications = async (query) => {
 };
 
 const getAllBOApplications = async (query) => {
-	const { ...queryOptions } = createQueryFilters(query);
+	const { pageNo, ...queryOptions } = createQueryFilters(query);
 	const { applications, count } = await getAllBOApplicationsRepository(queryOptions);
-	const filters = buildApplicationsFiltersFromBOApplications(applications);
+	const { applications: allApplications, count: totalItemsWithoutFilters } =
+		await getAllBOApplicationsRepository();
+	const filters = buildApplicationsFiltersFromBOApplications(allApplications);
 	return {
 		applications: mapBackOfficeApplicationsToApi(applications),
 		totalItems: count,
+		totalItemsWithoutFilters,
+		itemsPerPage: queryOptions.size,
+		totalPages: Math.ceil(Math.max(1, count) / queryOptions.size),
+		currentPage: pageNo,
 		filters
 	};
 };
