@@ -25,14 +25,13 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 			let result;
 
 			beforeEach(() => {
-				featureFlag.allowProjectInformation = false;
 				result = getVerticalTabs(i18n, 'mock-case-ref', mockApplicationData, true, true);
 			});
 
 			it('should return the vertical tabs', () => {
 				expect(result).toEqual([
 					{
-						hidden: true,
+						hidden: false,
 						id: 'project-information',
 						name: 'Project information',
 						url: '/projects/mock-case-ref'
@@ -90,10 +89,6 @@ describe('pages/projects/_middleware/_utils/get-vertical-tabs', () => {
 		});
 
 		describe('and feature flags are set', () => {
-			beforeEach(() => {
-				featureFlag.allowProjectInformation = true;
-			});
-
 			it('should return the vertical tabs', () => {
 				const result = getVerticalTabs(i18n, 'mock-case-ref', mockApplicationData, false, false);
 				expect(result).toEqual([

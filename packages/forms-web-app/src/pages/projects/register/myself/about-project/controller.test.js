@@ -4,9 +4,6 @@ const {
 } = require('./controller');
 
 const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
-const config = require('../../../../../config');
-
-const { postRegistration, putComments } = require('../../../../../lib/application-api-wrapper');
 
 jest.mock('../../../../../lib/application-api-wrapper');
 jest.mock('../../../../../config');
@@ -22,14 +19,6 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 		};
 		res = mockRes();
 		jest.resetAllMocks();
-
-		postRegistration.mockImplementation(() =>
-			Promise.resolve({ resp_code: 200, data: '30020010' })
-		);
-
-		putComments.mockImplementation(() => Promise.resolve({ resp_code: 200, data: {} }));
-
-		config.featureFlag.allowSaveAndExitOption = true;
 	});
 
 	describe('#getRegisterMyselfAboutProjectController', () => {
@@ -49,16 +38,12 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 					index: 0
 				},
 				session: {
-					comment: {
-						comment: 'test'
-					}
+					comment: 'test'
 				}
 			};
 			getRegisterMyselfAboutProjectController(req, res);
 			expect(res.render).toHaveBeenCalledWith('projects/register/_common/about-project/view.njk', {
-				comment: {
-					comment: 'test'
-				},
+				comment: 'test',
 				key: 'myself'
 			});
 		});
@@ -86,40 +71,19 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 			const mockRequest = {
 				...req,
 				body: {
-					comments: 'test'
+					comments: 'updated comment'
 				},
 				query: {
 					mode: 'edit'
 				},
 				session: {
-					comment: 'comment'
+					comment: 'test'
 				}
 			};
 			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
 				'/mock-base-url/mock-case-ref/register/myself/check-answers'
-			);
-		});
-
-		it(`'should post data and redirect to the registration complete page if comments is provided and mode is draft`, async () => {
-			const mockRequest = {
-				...req,
-				body: {
-					comments: 'test'
-				},
-				query: {
-					mode: 'draft'
-				},
-				session: {
-					comment: 'comment',
-					mySelfRegdata: {}
-				}
-			};
-			await postRegisterMyselfAboutProjectController(mockRequest, res);
-
-			expect(res.redirect).toHaveBeenCalledWith(
-				'/mock-base-url/mock-case-ref/register/myself/registration-complete'
 			);
 		});
 
