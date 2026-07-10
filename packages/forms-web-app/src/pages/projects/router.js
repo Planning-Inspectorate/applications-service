@@ -57,8 +57,6 @@ const { representationsRouter } = require('./representations/router');
 const { getUpdatesRouter } = require('./get-updates/router');
 const { registerRouter } = require('./register/router');
 
-const { featureFlag } = require('../../config');
-
 const projectsIndexURL = getProjectsIndexURL();
 const projectsAllUpdatesURL = getProjectsAllUpdatesURL();
 const projectsDocumentsURL = getProjectsDocumentsURL();
@@ -70,30 +68,28 @@ const projectsRouter = express.Router();
 
 projectsRouter.use(addProjectsTranslationsMiddleware);
 
-if (featureFlag.allowProjectInformation) {
-	projectsRouter.get(
-		projectBoundaryDownloadURL,
-		projectsMiddleware,
-		downloadProjectBoundaryController
-	);
+projectsRouter.get(
+	projectBoundaryDownloadURL,
+	projectsMiddleware,
+	downloadProjectBoundaryController
+);
 
-	projectsRouter.get(projectsBoundaryURL, projectsMiddleware, getProjectBoundaryGeoJsonController);
+projectsRouter.get(projectsBoundaryURL, projectsMiddleware, getProjectBoundaryGeoJsonController);
 
-	projectsRouter.get(
-		projectsIndexURL,
-		projectsMiddleware,
-		addCommonTranslationsMiddleware,
-		addProcessGuideTranslationsMiddleware,
-		addProjectsIndexTranslationsMiddleware,
-		getProjectsIndexController
-	);
-	projectsRouter.get(
-		projectsAllUpdatesURL,
-		projectsMiddleware,
-		addProjectsAllUpdatesTranslationsMiddleware,
-		getProjectsAllUpdatesController
-	);
-}
+projectsRouter.get(
+	projectsIndexURL,
+	projectsMiddleware,
+	addCommonTranslationsMiddleware,
+	addProcessGuideTranslationsMiddleware,
+	addProjectsIndexTranslationsMiddleware,
+	getProjectsIndexController
+);
+projectsRouter.get(
+	projectsAllUpdatesURL,
+	projectsMiddleware,
+	addProjectsAllUpdatesTranslationsMiddleware,
+	getProjectsAllUpdatesController
+);
 
 projectsRouter.get(
 	projectsDocumentsURL,
