@@ -1,6 +1,24 @@
 const fs = require('fs');
 const path = require('path');
-const report = require('multiple-cucumber-html-reporter');
+
+let report;
+try {
+	report = require('multiple-cucumber-html-reporter');
+} catch (error) {
+	if (
+		error &&
+		error.code === 'MODULE_NOT_FOUND' &&
+		typeof error.message === 'string' &&
+		error.message.includes('multiple-cucumber-html-reporter')
+	) {
+		console.warn(
+			'Skipping Cypress HTML report generation: multiple-cucumber-html-reporter is not installed'
+		);
+		process.exit(0);
+	}
+
+	throw error;
+}
 
 const jsonDir = path.resolve(__dirname, 'cypress/cucumber-json');
 const reportPath = path.resolve(__dirname, 'cypress/cucumber-report');
