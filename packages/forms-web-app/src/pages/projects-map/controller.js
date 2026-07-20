@@ -79,8 +79,9 @@ const getProjectsMapController = async (req, res, next) => {
  */
 const postProjectsMapController = (req, res, next) => {
 	try {
-		// Flip the boolean: 'true' → false, 'false' → true
-		req.session.projectsMapShowFilters = req.body.filterToggleValue === 'false';
+		if (req.body.filterToggleValue !== undefined) {
+			req.session.projectsMapShowFilters = req.body.filterToggleValue === 'false';
+		}
 
 		const boundariesMapView = 'boundaries';
 		const markersMapView = 'markers';
