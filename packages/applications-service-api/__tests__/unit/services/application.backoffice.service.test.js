@@ -282,6 +282,7 @@ describe('application.backoffice.service', () => {
 				expect(result).toEqual({
 					applications: [APPLICATION_API],
 					totalItems: 1,
+					totalItemsWithoutFilters: 1,
 					filters: APPLICATIONS_FO_FILTERS
 				});
 			});
