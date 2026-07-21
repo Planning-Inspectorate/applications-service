@@ -16,13 +16,12 @@
 			{{ t('registerOfApplications.paragraph2') }}
 		</p>
 
-		{% if applications | length %}
-			<p class="govuk-body">
-				<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>
-					{{ t('registerOfApplications.linkText1', { totalApplications: totalApplicationsWithoutFilters }) }}
-				</a>
-			</p>
-		{% endif %}
+        <p class="govuk-body">
+            <a class="govuk-link" href="{{ applicationsDownloadURL }}" download>
+                {{ t('registerOfApplications.linkText1') }}
+            </a>
+        </p>
+
 
 		{% include "./includes/search.njk" %}
 
