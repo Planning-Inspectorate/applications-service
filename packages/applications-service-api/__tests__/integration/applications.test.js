@@ -303,29 +303,8 @@ describe('/api/v1/applications', () => {
 						}
 					],
 					totalItems: 1,
-					filters: [
-						{
-							name: 'stage',
-							value: 'pre_application',
-							label: 'Pre-application',
-							count: 1,
-							label_cy: 'Cyn-ymgeisio'
-						},
-						{
-							name: 'region',
-							value: 'yorkshire_and_the_humber',
-							label: 'Yorkshire and the Humber',
-							count: 1,
-							label_cy: 'Swydd Efrog a’r Humber'
-						},
-						{
-							name: 'sector',
-							value: 'energy',
-							label: 'Energy',
-							count: 1,
-							label_cy: 'Ynni'
-						}
-					]
+					totalItemsWithoutFilters: 1,
+					filters: APPLICATIONS_FO_FILTERS
 				});
 			});
 			it('with filters applied', async () => {
@@ -364,7 +343,7 @@ describe('/api/v1/applications', () => {
 			it('with search term applied', async () => {
 				const response = await request.get('/api/v1/applications?searchTerm=London%20Resort');
 
-				expect(mockProjectFindMany).toBeCalledWith({
+				expect(mockProjectFindMany).toHaveBeenNthCalledWith(1, {
 					include: { applicant: true },
 					orderBy: { projectName: 'asc' },
 					where: {
@@ -413,7 +392,7 @@ describe('/api/v1/applications', () => {
 
 				const response = await request.get(`/api/v1/applications?${queryString}`);
 
-				expect(mockProjectFindMany).toBeCalledWith({
+				expect(mockProjectFindMany).toHaveBeenNthCalledWith(1, {
 					include: { applicant: true },
 					orderBy: { projectName: 'asc' },
 					where: {

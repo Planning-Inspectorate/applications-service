@@ -78,10 +78,13 @@ const getAllApplications = async (query) => {
 const getAllBOApplications = async (query) => {
 	const { ...queryOptions } = createQueryFilters(query);
 	const { applications, count } = await getAllBOApplicationsRepository(queryOptions);
-	const filters = buildApplicationsFiltersFromBOApplications(applications);
+	const { applications: allApplications, count: totalItemsWithoutFilters } =
+		await getAllBOApplicationsRepository();
+	const filters = buildApplicationsFiltersFromBOApplications(allApplications);
 	return {
 		applications: mapBackOfficeApplicationsToApi(applications),
 		totalItems: count,
+		totalItemsWithoutFilters,
 		filters
 	};
 };
