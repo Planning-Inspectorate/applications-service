@@ -62,6 +62,7 @@
 		"ol-ext": "*",
 		"pino": "*",
 		"proj4": "*",
+		"qs": "*",
 		"redis": "*",
 		"slugify": "*",
 		"string-collapse-white-space": "*",
