@@ -74,7 +74,7 @@ exports[`pages/process-guide/_translations should return the correct English tra
   "preApplication": {
     "heading1": "Pre-application",
     "linkText": "Find out what you can do at this stage and check our detailed guides.",
-    "paragraph1": "This is where the applicant starts to create their application. The applicant is required to consult with people and organisations in the area. They must also create detailed documents about the impact the project could have on the environment.",
+    "paragraph1": "This is where the applicant starts to create their application. Government guidance encourages the applicant to engage or consult (or both) with people and organisations in the area. They must also create detailed documents about the impact the project could have on the environment.",
     "paragraph2": "It is important to get involved at this stage to influence the application before the applicant sends it to the Planning Inspectorate.",
   },
   "preExamination": {
@@ -166,7 +166,7 @@ exports[`pages/process-guide/_translations should return the correct Welsh trans
   "preApplication": {
     "heading1": "Cyn-ymgeisio",
     "linkText": "Dysgwch beth allwch chi ei wneud yn ystod y cam hwn a gwiriwch ein canllawiau manwl.",
-    "paragraph1": "Dyma'r adeg pan fydd yr ymgeisydd yn dechrau creu ei gais. Mae'n ofynnol i'r ymgeisydd ymgynghori â phobl a sefydliadau yn yr ardal. Mae'n rhaid iddo hefyd greu dogfennau manwl ynglŷn â'r effaith y gallai'r prosiect ei chael ar yr amgylchedd.",
+    "paragraph1": "Dyma'r adeg pan fydd yr ymgeisydd yn dechrau creu ei gais. Mae canllawiau'r llywodraeth yn annog yr ymgeisydd i ymgysylltu neu ymgynghori (neu'r ddau) â phobl a sefydliadau yn yr ardal. Mae'n rhaid iddo hefyd greu dogfennau manwl ynglŷn â'r effaith y gallai'r prosiect ei chael ar yr amgylchedd.",
     "paragraph2": "Mae'n bwysig cymryd rhan yn ystod y cam hwn er mwyn dylanwadu ar y cais cyn i'r ymgeisydd ei anfon at yr Arolygiaeth Gynllunio.",
   },
   "preExamination": {
