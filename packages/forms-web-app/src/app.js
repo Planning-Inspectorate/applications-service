@@ -1,4 +1,5 @@
 const express = require('express');
+const qs = require('qs');
 const compression = require('compression');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -37,6 +38,13 @@ const { configureI18n, i18nRedirect } = require('./i18n');
 const { attachCorrelationId } = require('./middleware/attach-correlation-id');
 
 const app = express();
+
+app.set('query parser', function (str) {
+	return qs.parse(str, {
+		allowPrototypes: true,
+		arrayLimit: 50
+	});
+});
 
 app.use(
 	pinoExpress({
