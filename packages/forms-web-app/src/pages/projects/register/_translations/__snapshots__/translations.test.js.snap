@@ -41,6 +41,15 @@ exports[`pages/cookies/_translations should return the correct English translati
     "pageHeading": "What is your address?",
     "postcode": "Postcode",
   },
+  "aiUsageDeclaration": {
+    "option1": "Yes",
+    "option2": "No",
+    "pageHeading": "AI usage declaration",
+    "paragraph1": "Let us know if you've used AI to draft or substantially change your registration comments. This is so our Inspectors can understand the context of the information they are reviewing.",
+    "paragraph2": "You do not need to tell us if you've used AI for checking spelling or grammar.",
+    "paragraph3": "If you select yes, then you confirm you've checked your comments for accuracy and that they are a fair representation of your views and experiences.",
+    "paragraph4": "Did you use AI to help produce your registration comments?",
+  },
   "areThey18": {
     "hint": "You can still register for them if they are under 18, but we will process their personal details in a different way.",
     "noHiddenText": "they're under 18",
@@ -327,6 +336,15 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "line3": "Tref neu ddinas<span class='govuk-visually-hidden'> o 3</span> (Dewisol)",
     "pageHeading": "Beth yw'ch cyfeiriad?",
     "postcode": "Cod post",
+  },
+  "aiUsageDeclaration": {
+    "option1": "Ie",
+    "option2": "Na",
+    "pageHeading": "Datganiad defnydd AI",
+    "paragraph1": "Rhowch wybod i ni os ydych wedi defnyddio AI i ddrafftio neu i newid eich sylwadau cofrestru yn sylweddol. Mae hyn er mwyn i'n Arolygwyr allu deall cyd-destun y wybodaeth maent yn ei hadolygu.",
+    "paragraph2": "Nid oes angen i chi ddweud wrthym os ydych wedi defnyddio AI i wirio sillafu neu ramadeg.",
+    "paragraph3": "Os dewiswch 'ie', rydych yn cadarnhau eich bod wedi gwirio eich sylwadau am gywirdeb a'u bod yn adlewyrchiad teg o'ch safbwyntiau a'ch profiadau.",
+    "paragraph4": "A wnaethoch ddefnyddio AI i helpu i gynhyrchu eich sylwadau cofrestru?",
   },
   "areThey18": {
     "hint": "Gallwch gofrestru ar ei ran o hyd os yw'n iau na 18 oed, ond byddwn yn prosesu ei fanylion personol mewn ffordd wahanol.",

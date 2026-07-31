@@ -83,6 +83,7 @@ model Representation {
 	attachmentIds         String? @db.VarChar(2000)
 	createdAt             DateTime?    @default(now())
 	modifiedAt            DateTime?    @default(now())
+	useOfAI               String?
 	representative        ServiceUser? @relation("Representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
 	represented           ServiceUser? @relation("Represented", fields: [representedId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
 

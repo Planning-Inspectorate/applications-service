@@ -2,11 +2,15 @@ const {
 	getRegisterMyselfAboutProjectController,
 	postRegisterMyselfAboutProjectController
 } = require('./controller');
+const { getRedirectURL } = require('../../_common/about-project/_utils/get-redirect-url');
 
 const { mockReq, mockRes } = require('../../../../../../__tests__/unit/mocks');
 
 jest.mock('../../../../../lib/application-api-wrapper');
 jest.mock('../../../../../config');
+jest.mock('../../_common/about-project/_utils/get-redirect-url', () => ({
+	getRedirectURL: jest.fn()
+}));
 
 describe('pages/projects/register/myself/about-project/controller', () => {
 	let req;
@@ -50,7 +54,8 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 	});
 
 	describe('#postRegisterMyselfAboutProjectController', () => {
-		it('should post data and redirect to the check your answers page if comments is provided', async () => {
+		it('should post data and redirect to the AI declaration page if comments provided', async () => {
+			getRedirectURL.mockReturnValue('/mock-base-url/mock-case-ref/register/myself/ai-declaration');
 			const mockRequest = {
 				...req,
 				body: {
@@ -60,14 +65,16 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 					mode: ''
 				}
 			};
+
 			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
-				'/mock-base-url/mock-case-ref/register/myself/check-answers'
+				'/mock-base-url/mock-case-ref/register/myself/ai-declaration'
 			);
 		});
 
-		it('should post data and redirect to the check your answers page if comments is provided and mode is edit', async () => {
+		it('should post data and redirect to the check your answers page if comments provided and mode is edit', async () => {
+			getRedirectURL.mockReturnValue('/mock-base-url/mock-case-ref/register/myself/check-answers');
 			const mockRequest = {
 				...req,
 				body: {
@@ -80,6 +87,7 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 					comment: 'test'
 				}
 			};
+
 			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toHaveBeenCalledWith(
@@ -111,6 +119,7 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 
 	describe('postComments api response', () => {
 		test('on success', async () => {
+			getRedirectURL.mockReturnValue('/mock-base-url/mock-case-ref/register/myself/ai-declaration');
 			const mockRequest = {
 				...req,
 				body: {
@@ -121,11 +130,12 @@ describe('pages/projects/register/myself/about-project/controller', () => {
 			await postRegisterMyselfAboutProjectController(mockRequest, res);
 
 			expect(res.redirect).toBeCalledWith(
-				'/mock-base-url/mock-case-ref/register/myself/check-answers'
+				'/mock-base-url/mock-case-ref/register/myself/ai-declaration'
 			);
 		});
 
 		test('on success edit mode', async () => {
+			getRedirectURL.mockReturnValue('/mock-base-url/mock-case-ref/register/myself/check-answers');
 			const mockRequest = {
 				...req,
 				body: {

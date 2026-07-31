@@ -56,6 +56,10 @@ const {
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
+const {
+	getRegisterAiDeclarationController,
+	postRegisterAiDeclarationController
+} = require('../_common/ai-declaration/controller');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
@@ -89,6 +93,9 @@ const {
 const {
 	rules: theirTelephoneValidationRules
 } = require('../../../../validators/register/agent/their-telephone-number');
+const {
+	rules: aiDeclarationValidationRules
+} = require('../../../../validators/register/ai-declaration');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -149,6 +156,11 @@ jest.mock('../../../../validators/register/tell-us-about-project', () => {
 	};
 });
 jest.mock('../../../../validators/register/agent/their-telephone-number', () => {
+	return {
+		rules: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/ai-declaration', () => {
 	return {
 		rules: jest.fn()
 	};
@@ -374,6 +386,21 @@ describe('pages/projects/register/agent/router', () => {
 			expect(decodeUri).toHaveBeenCalledWith('body', ['comment']);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/ai-declaration',
+				registerStartRedirectMiddleware,
+				registerMiddleware,
+				getRegisterAiDeclarationController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/agent/ai-declaration',
+				registerStartRedirectMiddleware,
+				registerMiddleware,
+				aiDeclarationValidationRules(),
+				validationErrorHandler,
+				postRegisterAiDeclarationController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/agent/their-telephone-number',
 				registerStartRedirectMiddleware,
 				registerMiddleware,
@@ -431,8 +458,8 @@ describe('pages/projects/register/agent/router', () => {
 				getRegisterAlreadyRegisteredController
 			);
 
-			expect(get).toBeCalledTimes(19);
-			expect(post).toBeCalledTimes(15);
+			expect(get).toBeCalledTimes(20);
+			expect(post).toBeCalledTimes(16);
 			expect(use).toBeCalledTimes(0);
 		});
 	});
