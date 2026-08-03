@@ -214,7 +214,10 @@
 		"theirNumber": "Their telephone number",
 		"changeTheirNumberHiddenText": "their telephone number",
 		"comments": "Registration comments",
-		"changeCommentsHiddenText": "registration comments"
+		"changeCommentsHiddenText": "registration comments",
+		"aiDeclaration": "AI declaration",
+		"aiUsed": "AI used",
+		"aiNotUsed": "AI not used"
 	},
 	"processSubmission": {
 		"title": "Processing registration",

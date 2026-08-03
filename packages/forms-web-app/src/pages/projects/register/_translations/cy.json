@@ -214,7 +214,10 @@
 		"theirNumber": "Ei rif ffôn",
 		"changeTheirNumberHiddenText": "eu rhif ffôn",
 		"comments": "Sylwadau cofrestru",
-		"changeCommentsHiddenText": "sylwadau cofrestru"
+		"changeCommentsHiddenText": "sylwadau cofrestru",
+		"aiDeclaration": "Datganiad AI",
+		"aiUsed": "Defnyddiwyd AI",
+		"aiNotUsed": "Ni ddefnyddiwyd AI"
 	},
 	"processSubmission": {
 		"title": "Wrthi’n prosesu’r cofrestriad",

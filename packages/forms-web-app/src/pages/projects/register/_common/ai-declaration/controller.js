@@ -1,5 +1,4 @@
 const { getKeyFromUrl } = require('../../../../../controllers/register/common/get-key-from-url');
-const { getSession, setSession } = require('../../../../../controllers/register/common/session');
 const logger = require('../../../../../lib/logger');
 const { getRedirectURL } = require('./_utils/get-redirect-url');
 
@@ -10,7 +9,7 @@ const getRegisterAiDeclarationController = (req, res) => {
 	try {
 		const { session, originalUrl } = req;
 		const key = getKeyFromUrl(originalUrl);
-		const aiDeclaration = getSession(session, key)[aiDeclarationKey];
+		const aiDeclaration = session[aiDeclarationKey];
 		return res.render(view, {
 			key,
 			aiDeclaration
@@ -37,7 +36,7 @@ const postRegisterAiDeclarationController = (req, res) => {
 			});
 		}
 
-		setSession(session, key, aiDeclarationKey, body[aiDeclarationKey]);
+		session[aiDeclarationKey] = body[aiDeclarationKey];
 
 		const redirectURL = getRedirectURL(session, case_ref);
 

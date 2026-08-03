@@ -65,6 +65,9 @@ exports[`pages/cookies/_translations should return the correct English translati
   "checkYourAnswers": {
     "address": "Address",
     "agent": "On behalf of another person, a household or an organisation I do not work for",
+    "aiDeclaration": "AI declaration",
+    "aiNotUsed": "AI not used",
+    "aiUsed": "AI used",
     "areThey18": "Are they 18 or over?",
     "areYou18": "Are you 18 or over?",
     "changeAddressHiddenText": "your address",
@@ -361,6 +364,9 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
   "checkYourAnswers": {
     "address": "Cyfeiriad",
     "agent": "Ar ran unigolyn arall, aelwyd neu sefydliad nad wyf yn gweithio iddo",
+    "aiDeclaration": "Datganiad AI",
+    "aiNotUsed": "Ni ddefnyddiwyd AI",
+    "aiUsed": "Defnyddiwyd AI",
     "areThey18": "A yw'n 18 oed neu'n hŷn?",
     "areYou18": "A ydych chi'n 18 oed neu'n hŷn?",
     "changeAddressHiddenText": "eich cyfeiriad",
