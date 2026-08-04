@@ -34,7 +34,7 @@ const postProcessSubmission = async (req, res) => {
 		const registrationData = {
 			...sessionForKey,
 			comment: session.comment,
-			aiDeclaration: session['ai-declaration']
+			'ai-declaration': session['ai-declaration']
 		};
 
 		const response = await postRegistration(JSON.stringify(registrationData));
