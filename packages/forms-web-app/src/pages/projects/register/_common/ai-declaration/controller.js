@@ -8,8 +8,10 @@ const aiDeclarationKey = 'ai-declaration';
 const getRegisterAiDeclarationController = (req, res) => {
 	try {
 		const { session, originalUrl } = req;
+
 		const key = getKeyFromUrl(originalUrl);
 		const aiDeclaration = session[aiDeclarationKey];
+
 		return res.render(view, {
 			key,
 			aiDeclaration
