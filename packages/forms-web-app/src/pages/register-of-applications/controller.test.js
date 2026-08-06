@@ -54,7 +54,6 @@ describe('pages/register-of-applications/controller', () => {
 			it('should call the correct template', async () => {
 				expect(res.render).toHaveBeenCalledWith('register-of-applications/view.njk', {
 					applicationsDownloadURL: '/api/applications-download',
-					totalApplicationsWithoutFilters: 21,
 					applications: [
 						{
 							applicant: 'EDF',

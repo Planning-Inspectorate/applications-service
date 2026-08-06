@@ -7,8 +7,7 @@ describe('pages/register-of-applications/_translations/en', () => {
 			paragraph1:
 				'Below is a list of all applications submitted since 2008. This complies with Section 39 of the Planning Act 2008.',
 			paragraph2: 'Search by project name or applicant.',
-			linkText1:
-				'Download a table containing a complete list of all {{-totalApplications}} projects (CSV)',
+			linkText1: 'Download a table containing a complete list of all projects (CSV)',
 			paragraph3: 'Showing {{-from}} to {{-to}} of {{-total}} projects.',
 			sortByLinks: {
 				projectName: 'Project name',

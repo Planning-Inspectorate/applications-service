@@ -180,6 +180,31 @@ describe('pages/projects-map/controller', () => {
 			expect(req.session.projectsMapShowFilters).toBe(true);
 			expect(res.redirect).toHaveBeenCalledWith('/projects-map');
 		});
+
+		it('preserves filter visibility when switching map views', async () => {
+			req.session.projectsMapShowFilters = true;
+			req.body = { mapView: 'boundaries' };
+			req.get = jest.fn().mockReturnValue('');
+			res.redirect = jest.fn();
+
+			await postProjectsMapController(req, res, next);
+
+			expect(req.session.projectsMapShowFilters).toBe(true);
+			expect(req.session.projectsMapActiveMapView).toBe('boundaries');
+			expect(res.redirect).toHaveBeenCalledWith('/projects-map');
+		});
+
+		it('keeps filters hidden when switching map views if they were already hidden', async () => {
+			req.session.projectsMapShowFilters = false;
+			req.body = { mapView: 'boundaries' };
+			req.get = jest.fn().mockReturnValue('');
+			res.redirect = jest.fn();
+
+			await postProjectsMapController(req, res, next);
+
+			expect(req.session.projectsMapShowFilters).toBe(false);
+			expect(req.session.projectsMapActiveMapView).toBe('boundaries');
+		});
 	});
 
 	describe('downloadMasterGeoJsonController', () => {

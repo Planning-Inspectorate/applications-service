@@ -28,13 +28,11 @@
 					{{ t('projectSearch.paragraph1') }}
 				</p>
 
-				{% if applications | length %}
-					<p class="govuk-body">
-						<a class="govuk-link" href="{{ applicationsDownloadURL }}" download>
-							{{ t('projectSearch.linkText1', { totalApplications: totalApplicationsWithoutFilters  }) }}
-						</a>
-					</p>
-				{% endif %}
+                <p class="govuk-body">
+                    <a class="govuk-link" href="{{ applicationsDownloadURL }}" download>
+                        {{ t('projectSearch.linkText1', { totalApplications: totalApplicationsWithoutFilters  }) }}
+                    </a>
+                </p>
 
 				{% include "./includes/search.njk" %}
 

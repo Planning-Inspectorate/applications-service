@@ -11,11 +11,9 @@ const getRegisterOfApplicationsController = async (req, res, next) => {
 	try {
 		const { i18n, query } = req;
 
-		const { applications, totalItems } = await getApplications(
-			getRegisterOfApplicationsQueryString(query)
-		);
+		const { applications } = await getApplications(getRegisterOfApplicationsQueryString(query));
 
-		res.render(view, getPageData(i18n, applications, query, totalItems));
+		res.render(view, getPageData(i18n, applications, query));
 	} catch (error) {
 		logger.error(error);
 		next(error);

@@ -17,6 +17,7 @@ const getApplications = async (queryString) => {
 	return {
 		applications: data.applications,
 		totalItems: data.totalItems,
+		totalItemsWithoutFilters: data.totalItemsWithoutFilters,
 		filters: data.filters
 	};
 };
