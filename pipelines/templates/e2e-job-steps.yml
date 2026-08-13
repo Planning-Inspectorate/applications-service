@@ -127,10 +127,16 @@ steps:
     env:
       COMPOSE_PROJECT_NAME: $(ComposeProjectName)
 
-  - template: steps/node_script.yml@templates
-    parameters:
-      nodeVersion: 22
-      script: npm ci
+  - task: NodeTool@0
+    displayName: Use Node 22
+    inputs:
+      versionSpec: '22.x'
+
+  - script: |
+      npm ci --cache "$(NpmCacheDir)"
+    displayName: Install root dependencies (ensure npm packages)
+    env:
+      NPM_CONFIG_CACHE: $(NpmCacheDir)
   - script: |
       if [ ! -f packages/applications-service-api/.env ]; then
         cp packages/applications-service-api/.env.development packages/applications-service-api/.env
