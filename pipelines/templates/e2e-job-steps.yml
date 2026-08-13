@@ -14,11 +14,6 @@ steps:
   - checkout: self
     clean: true
 
-  - template: steps/node_script.yml@templates
-    parameters:
-      nodeVersion: 22
-      script: npm ci
-
   - task: Cache@2
     displayName: Cache npm
     inputs:
