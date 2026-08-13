@@ -10,14 +10,22 @@ parameters:
   - name: logsArtifact
     type: string
 
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: refs/tags/release/3.29.0
+
 steps:
   - checkout: self
     clean: true
 
-  - task: NodeTool@0
-    displayName: Install Node.js
-    inputs:
-      versionSpec: $(NodeVersion)
+  - template: steps/node_script.yml@templates
+    parameters:
+      nodeVersion: 22
+      script: npm ci
 
   - task: Cache@2
     displayName: Cache npm
