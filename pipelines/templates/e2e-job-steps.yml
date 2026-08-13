@@ -10,14 +10,6 @@ parameters:
   - name: logsArtifact
     type: string
 
-resources:
-  repositories:
-    - repository: templates
-      type: github
-      endpoint: Planning-Inspectorate
-      name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.29.0
-
 steps:
   - checkout: self
     clean: true
