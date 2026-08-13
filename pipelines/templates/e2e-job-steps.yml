@@ -127,6 +127,10 @@ steps:
     env:
       COMPOSE_PROJECT_NAME: $(ComposeProjectName)
 
+  - template: steps/node_script.yml@templates
+    parameters:
+      nodeVersion: 22
+      script: npm ci
   - script: |
       if [ ! -f packages/applications-service-api/.env ]; then
         cp packages/applications-service-api/.env.development packages/applications-service-api/.env
