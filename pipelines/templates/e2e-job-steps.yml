@@ -18,6 +18,8 @@ steps:
     parameters:
       nodeVersion: 22
       script: npm ci
+      environmentVariables:
+        npm_config_cache: $(NpmCacheDir)
 
   # - task: NodeTool@0
   #   displayName: Use Node 22
