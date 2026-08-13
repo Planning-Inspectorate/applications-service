@@ -57,13 +57,13 @@ variables:
   - name: RootCiEnvFile
     value: '$(Build.SourcesDirectory)/.env'
 
-# resources:
-#   repositories:
-#     - repository: templates
-#       type: github
-#       endpoint: Planning-Inspectorate
-#       name: Planning-Inspectorate/common-pipeline-templates
-#       ref: refs/tags/release/3.29.0
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      endpoint: Planning-Inspectorate
+      name: Planning-Inspectorate/common-pipeline-templates
+      ref: refs/tags/release/3.29.0
 
 jobs:
   - job: Smoke_E2E

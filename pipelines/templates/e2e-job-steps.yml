@@ -14,21 +14,21 @@ steps:
   - checkout: self
     clean: true
 
-  # - template: steps/node_script.yml@templates
-  #   parameters:
-  #     nodeVersion: 22
-  #     script: npm ci
+  - template: steps/node_script.yml@templates
+    parameters:
+      nodeVersion: 22
+      script: npm ci
 
-  - task: NodeTool@0
-    displayName: Use Node 22
-    inputs:
-      versionSpec: '22.x'
+  # - task: NodeTool@0
+  #   displayName: Use Node 22
+  #   inputs:
+  #     versionSpec: '22.x'
 
-  - script: |
-      npm ci --cache "$(NpmCacheDir)"
-    displayName: Install root dependencies (ensure npm packages)
-    env:
-      NPM_CONFIG_CACHE: $(NpmCacheDir)
+  # - script: |
+  #     npm ci --cache "$(NpmCacheDir)"
+  #   displayName: Install root dependencies (ensure npm packages)
+  #   env:
+  #     NPM_CONFIG_CACHE: $(NpmCacheDir)
 
   - task: Cache@2
     displayName: Cache npm
