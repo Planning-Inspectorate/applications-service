@@ -1,5 +1,6 @@
 const { prismaClient } = require('../lib/prisma');
 const buildPrismaUpdateQuery = require('../lib/build-prisma-update-query');
+const axios = require('axios');
 
 module.exports = async (context, message) => {
 	const { representationId, status, caseRef, correlationId } = message;
@@ -41,5 +42,19 @@ module.exports = async (context, message) => {
 				caseReference: caseRef
 			}
 		);
+	}
+
+	if (!caseRef) {
+		context.log('skipping cache clear as caseRef is required');
+	} else {
+		context.log(`clearing representations cache for caseRef ${caseRef}`);
+		//we clear whole reps cache for the case, rather that just a single entry, to ensure the change is reflected in the general reps cache where search results are stored
+		const cacheKeyPattern = `cache:${caseRef}:reps*`;
+		const url = `${process.env.APPLICATIONS_SERVICE_API_URL}/api/v1/cache/clear?pattern=${cacheKeyPattern}`;
+
+		const { data: cacheClearResponse } = await axios.delete(url);
+
+		context.log(JSON.stringify(cacheClearResponse, null, 2));
+		context.log(`representations cache cleared for caseRef ${caseRef}`);
 	}
 };

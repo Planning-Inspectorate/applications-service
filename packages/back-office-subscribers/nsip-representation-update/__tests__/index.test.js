@@ -5,6 +5,9 @@ jest.mock('../../lib/prisma', () => ({
 }));
 
 jest.mock('../../lib/build-prisma-update-query', () => jest.fn().mockResolvedValue({ count: 1 }));
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
 
 const sendMessage = require('../index');
 const mockPrismaUpdate = require('../../lib/build-prisma-update-query');

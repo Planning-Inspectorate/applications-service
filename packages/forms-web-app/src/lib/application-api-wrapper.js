@@ -133,8 +133,55 @@ exports.getDocumentByType = async (case_ref, type) => {
 	return response;
 };
 
-exports.searchRepresentations = async (query = '') =>
-	handler('searchRepresentations', `/api/v1/representations${query}`);
+exports.searchRepresentations = async (caseRef, query = '') => {
+	const hashedQueryString = hasher().hash(query);
+	const cacheKey = `${caseRef}:reps:${hashedQueryString}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('searchRepresentations', `/api/v1/representations${query}`);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
+
+exports.getRepresentationById = async (id, caseReference) => {
+	const cacheKey = `${caseReference}:reps:${id}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler(
+		'getRepresentationById',
+		`/api/v1/representations/${id}?caseReference=${caseReference}`
+	);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({}, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
 
 exports.searchDocumentListV2 = async (params) => {
 	const queryString = queryStringBuilder(params, [
@@ -173,13 +220,6 @@ exports.authenticateToken = async (token, email) => {
 	return handler('authenticateToken', authTokenServiceApiUrl, method, {
 		body: email
 	});
-};
-
-exports.getRepresentationById = async (id, caseReference) => {
-	return handler(
-		'getRepresentationById',
-		`/api/v1/representations/${id}?caseReference=${caseReference}`
-	);
 };
 
 exports.getTimetables = async (caseRef) =>
