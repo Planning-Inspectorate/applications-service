@@ -1,4 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
+const axios = require('axios');
 
 module.exports = async (context, message) => {
 	const caseReference = message.caseRef;
@@ -29,4 +30,18 @@ module.exports = async (context, message) => {
 			caseReference
 		}
 	);
+
+	if (!caseReference) {
+		context.log('skipping cache clear as caseRef is required');
+	} else {
+		context.log(`clearing representations cache for caseRef ${caseReference}`);
+
+		const cacheKeyPattern = `cache:${caseReference}:reps*`;
+		const url = `${process.env.APPLICATIONS_SERVICE_API_URL}/api/v1/cache/clear?pattern=${cacheKeyPattern}`;
+
+		const { data: cacheClearResponse } = await axios.delete(url);
+
+		context.log(JSON.stringify(cacheClearResponse, null, 2));
+		context.log(`representations cache cleared for caseRef ${caseReference}`);
+	}
 };
