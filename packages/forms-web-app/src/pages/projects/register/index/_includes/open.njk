@@ -1,14 +1,6 @@
-<h2 class="govuk-body-l">
-  {{ t('register.index.open.heading1', {project: '<strong>' + projectName + '</strong>' }) | safe }}
-</h2>
-
 <p class="govuk-body">
   {{ t('register.index.open.paragraph1', {project: projectName}) }}
 </p>
-
-<h3 class="govuk-heading-m">
-  {{ t('register.index.open.heading2')}}
-</h3>
 
 <p class="govuk-body">
   {{ t('register.index.open.paragraph2') }}
@@ -18,25 +10,54 @@
   {{ t('register.index.open.paragraph3') }}
 </p>
 
-<ul class="govuk-list govuk-list--bullet">
-  <li>{{ t('register.index.open.listItem1') }}</li>
-  <li>{{ t('register.index.open.listItem2') }}</li>
-</ul>
-
 <p class="govuk-body">
   {{ t('register.index.open.paragraph4') }}
 </p>
 
+<ul class="govuk-list govuk-list--bullet">
+  <li>{{ t('register.index.open.listItem1') }}</li>
+  <li>{{ t('register.index.open.listItem2') }}</li>
+  <li>{{ t('register.index.open.listItem3') }}</li>
+</ul>
+
+<h2 class="govuk-heading-m">
+  {{ t('register.index.open.heading1') }}
+</h2>
+
+<p class="govuk-body">
+  {{ t('register.index.open.paragraph5') }}
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>{{ t('register.index.open.listItem4') }}</li>
+  <li>{{ t('register.index.open.listItem5') }}</li>
+  <li>{{ t('register.index.open.listItem6') }}</li>
+</ul>
+
+<p class="govuk-body">
+  {{ t('register.index.open.paragraph6') | safe }}
+</p>
+
+<p class="govuk-body">
+  {{ t('register.index.open.paragraph7') }}
+</p>
+
+<p class="govuk-body">
+  {{ t('register.index.open.paragraph8') }}
+</p>
+
+<h2 class="govuk-heading-m">
+  {{ t('register.index.open.heading2') }}
+</h2>
+
 {% if closeDate %}
   <p class="govuk-body">
-    	{{ t('register.index.open.paragraph5',
-			{ date: closeDate | date('locale', language) | date })
-		}}
+    {{ t('register.index.open.paragraph9', { date: closeDate | date('locale', language) | date }) }}
   </p>
 {% endif %}
 
 <p class="govuk-body">
-  {{ t('register.index.open.paragraph9') }}
+  {{ t('register.index.open.paragraph10') }}
 </p>
 
 <a href="{{ registeringForURL }}" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
@@ -46,53 +67,6 @@
   </svg>
 </a>
 
-<h3 class="govuk-heading-m">
-    {{ t('register.index.open.heading3')}}
-</h3>
-
-<h4 class="govuk-heading-s">
-  {{ t('register.index.open.heading4')}}
-</h4>
-
-<p class="govuk-body">
-  {{ t('register.index.open.paragraph6')}}
-</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>{{ t('register.index.open.listItem3') }}</li>
-  <li>{{ t('register.index.open.listItem4') }}</li>
-  <li>{{ t('register.index.open.listItem5') }}</li>
-  <li>{{ t('register.index.open.listItem6') }}</li>
-</ul>
-
-<h4 class="govuk-heading-s">
-  {{ t('register.index.open.heading5')}}
-</h4>
-
-<p class="govuk-body">
-  {{ t('register.index.open.paragraph7')}}
-</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>{{ t('register.index.open.listItem7') }}</li>
-  <li>{{ t('register.index.open.listItem8') }}</li>
-  <li>{{ t('register.index.open.listItem9') }}</li>
-  <li>{{ t('register.index.open.listItem10') }}</li>
-  <li>{{ t('register.index.open.listItem11') }}</li>
-</ul>
-
-<h4 class="govuk-heading-s">
-  {{ t('register.index.open.heading6')}}
-</h4>
-
-<p class="govuk-body">
-  {{ t('register.index.open.paragraph8')}}
-</p>
-
-<ul class="govuk-list govuk-list--bullet">
-  <li>{{ t('register.index.open.listItem12') }}</li>
-  <li>{{ t('register.index.open.listItem13') }}</li>
-  <li>{{ t('register.index.open.listItem14') }}</li>
-  <li>{{ t('register.index.open.listItem15') }}</li>
-  <li>{{ t('register.index.open.listItem16') }}</li>
-</ul>
+<div class="govuk-inset-text">
+  {{ t('register.index.open.paragraph11') }}
+</div>
