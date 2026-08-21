@@ -91,14 +91,20 @@ steps:
       COMPOSE_PROJECT_NAME: $(ComposeProjectName)
 
 # This one i believe we should have.
-  - script: |
-      if [ ! -f packages/applications-service-api/.env ]; then
-        cp packages/applications-service-api/.env.development packages/applications-service-api/.env
-      fi
-      npm run db:generate
-      npm run db:migrate:dev
-      npm run db:seed
-    displayName: 'Generate, migrate and seed database'
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Generate, migrate and seed database'
+      nodeVersion: 22
+      script: |
+        if [ ! -f packages/applications-service-api/.env ]; then
+          cp packages/applications-service-api/.env.development packages/applications-service-api/.env
+        fi
+        npm run db:generate
+        npm run db:migrate:dev
+        npm run db:seed
+      # workingDirectory: '$(System.DefaultWorkingDirectory)/e2e-tests' # This line could be wrong.
+      # environmentVariables:
+      #   npm_config_cache: $(NpmCacheDir)
 
 # This is spinning up the service api and web app, which is needed for the e2e tests?
   - script: $(ComposeCommand) up -d applications-service-api applications-web-app
