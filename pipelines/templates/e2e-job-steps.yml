@@ -190,6 +190,8 @@ steps:
       displayName: 'Wait for app health checks'
       nodeVersion: 22
       workingDirectory: '$(System.DefaultWorkingDirectory)'
+      environmentVariables:
+        npm_config_cache: $(NpmCacheDir)
       script: |
         set -e
 
