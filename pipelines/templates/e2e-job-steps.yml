@@ -193,7 +193,7 @@ steps:
       script: |
         set -e
 
-        for url in http://localhost:3000/health http://127.0.0.1:3000/health http://localhost:9004/health http://127.0.0.1:9004/health; do
+        for url in http://localhost:3000/health http://127.0.0.1:3000/health http://127.0.0.1:9004/health http://localhost:9004/health; do
           echo "Waiting for $url"
 
             for attempt in $(seq 1 60); do
