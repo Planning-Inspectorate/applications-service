@@ -124,7 +124,16 @@ steps:
         echo "Using compose project: ${compose_project_name}"
         echo "##vso[task.setvariable variable=ComposeProjectName]${compose_project_name}"
 
-# Not sure on this script.
+# Install root workspace dependencies (includes forms-web-app and applications-service-api)
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Install root workspace dependencies'
+      nodeVersion: 22
+      script: npm ci
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      environmentVariables:
+        npm_config_cache: $(NpmCacheDir)
+
   - template: steps/node_script.yml@templates
     parameters:
       displayName: 'Start infrastructure services'
@@ -133,16 +142,6 @@ steps:
       script: $(ComposeCommand) up -d mssql db redis api-mock-server
       environmentVariables:
         COMPOSE_PROJECT_NAME: $(ComposeProjectName)
-
-# Ensure API workspace dependencies are installed for tsc and other tools. # Not sure this is needed.
-  - template: steps/node_script.yml@templates
-    parameters:
-      displayName: 'Install API workspace deps'
-      nodeVersion: 22
-      script: npm --workspace @pins/applications-service-api ci
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-      environmentVariables:
-        npm_config_cache: $(NpmCacheDir)
 
 # Generate, migrate and seed database
   - template: steps/node_script.yml@templates
