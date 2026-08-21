@@ -99,6 +99,23 @@ steps:
 
   - template: steps/node_script.yml@templates
     parameters:
+      displayName: 'Detect Cypress browser'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        if command -v google-chrome > /dev/null 2>&1 || command -v google-chrome-stable > /dev/null 2>&1; then
+          echo "Using Chrome for Cypress"
+          echo "##vso[task.setvariable variable=CypressBrowser]chrome"
+        elif command -v chromium > /dev/null 2>&1 || command -v chromium-browser > /dev/null 2>&1; then
+          echo "Using Chromium for Cypress"
+          echo "##vso[task.setvariable variable=CypressBrowser]chromium"
+        else
+          echo "Neither Chrome nor Chromium is available on this agent"
+          exit 1
+        fi
+
+  - template: steps/node_script.yml@templates
+    parameters:
       displayName: 'Set unique Docker Compose project name'
       nodeVersion: 22
       workingDirectory: '$(System.DefaultWorkingDirectory)'
