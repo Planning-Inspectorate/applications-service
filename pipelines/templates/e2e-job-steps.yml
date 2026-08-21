@@ -102,7 +102,7 @@ steps:
         npm run db:generate
         npm run db:migrate:dev
         npm run db:seed
-      # workingDirectory: '$(System.DefaultWorkingDirectory)/e2e-tests' # This line could be wrong.
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
       environmentVariables:
         npm_config_cache: $(NpmCacheDir)
 
