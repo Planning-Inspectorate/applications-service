@@ -102,7 +102,7 @@ steps:
         npm run db:generate
         npm run db:migrate:dev
         npm run db:seed
-      workingDirectory: '$(System.DefaultWorkingDirectory)/packages/applications-service-api'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/packages/applications-service-api/prisma'
       environmentVariables:
         npm_config_cache: $(NpmCacheDir)
 
