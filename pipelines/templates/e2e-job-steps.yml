@@ -299,3 +299,22 @@ steps:
       condition: always()
       environmentVariables:
         COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Collect docker logs and inspect'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        mkdir -p e2e-tests/artifacts || true
+        echo "Collecting compose logs and container state"
+        $(ComposeCommand) logs --no-color --tail=1000 applications-web-app applications-service-api > e2e-tests/artifacts/compose.logs.txt || true
+        docker logs --tail 1000 applications-web-app > e2e-tests/artifacts/applications-web-app.log || true
+        docker logs --tail 1000 applications-service-api > e2e-tests/artifacts/applications-service-api.log || true
+        docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/docker-ps.txt || true
+        docker inspect applications-web-app --format '{{json .State}}' > e2e-tests/artifacts/applications-web-app.inspect.json || true
+        docker inspect applications-service-api --format '{{json .State}}' > e2e-tests/artifacts/applications-service-api.inspect.json || true
+        ls -la e2e-tests/artifacts || true
+      condition: always()
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
