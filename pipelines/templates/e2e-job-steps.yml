@@ -176,6 +176,8 @@ steps:
       nodeVersion: 22
       workingDirectory: '$(System.DefaultWorkingDirectory)'
       script: |
+        # give containers a moment to start and settle
+        sleep 10
         mkdir -p e2e-tests/artifacts || true
         echo "Capturing initial docker-compose logs (last 200 lines)"
         $(ComposeCommand) logs --no-color --tail=200 applications-web-app applications-service-api > e2e-tests/artifacts/initial-compose.log || true
@@ -191,7 +193,7 @@ steps:
       nodeVersion: 22
       workingDirectory: '$(System.DefaultWorkingDirectory)'
       environmentVariables:
-        npm_config_cache: $(NpmCacheDir)
+        npm_config_cache: $(ComposeProjectName)
       script: |
         set -e
 
