@@ -24,73 +24,100 @@ steps:
         npm_config_cache: $(NpmCacheDir)
 
 # This script won't work as is?
-  - script: |
-      mkdir -p e2e-tests/cypress/cucumber-report
-      mkdir -p e2e-tests/cypress/screenshots
-      mkdir -p e2e-tests/artifacts
-    displayName: 'Prepare artifact directories'
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Prepare artifact directories'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        mkdir -p e2e-tests/cypress/cucumber-report
+        mkdir -p e2e-tests/cypress/screenshots
+        mkdir -p e2e-tests/artifacts
+      
 
 # Unsure on this, is it putting the secret into this var?
-  - script: |
-      cat <<EOF > "$(RootCiEnvFile)"
-      ENCRYPTION_SECRET_KEY=azure-pipelines-test-encryption-secret
-      EOF
-    displayName: 'Create root CI env'
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Create root CI env'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        cat <<EOF > "$(RootCiEnvFile)"
+        ENCRYPTION_SECRET_KEY=azure-pipelines-test-encryption-secret
+        EOF
 
 # Not sure on this script at the moment...
 # Looks like it is installing the dependencies and caching them in a var called CypressCacheDir?
-  - script: |
-      for attempt in 1 2 3; do
-        echo "Running npm ci for E2E dependencies (attempt ${attempt}/3)"
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Install E2E dependencies'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        for attempt in 1 2 3; do
+          echo "Running npm ci for E2E dependencies (attempt ${attempt}/3)"
 
-        if npm --prefix e2e-tests ci \
-          --cache "$(NpmCacheDir)" \
-          --fetch-retries=5 \
-          --fetch-retry-mintimeout=20000 \
-          --fetch-retry-maxtimeout=120000; then
-          exit 0
-        fi
+          if npm --prefix e2e-tests ci \
+            --cache "$(NpmCacheDir)" \
+            --fetch-retries=5 \
+            --fetch-retry-mintimeout=20000 \
+            --fetch-retry-maxtimeout=120000; then
+            exit 0
+          fi
 
-        status=$?
+          status=$?
 
-        if [ "$attempt" -eq 3 ]; then
-          exit "$status"
-        fi
+          if [ "$attempt" -eq 3 ]; then
+            exit "$status"
+          fi
 
-        npm cache verify --cache "$(NpmCacheDir)" || true
-        sleep $((attempt * 10))
-      done
-    displayName: Install E2E dependencies
-    env:
-      CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
+          npm cache verify --cache "$(NpmCacheDir)" || true
+          sleep $((attempt * 10))
+        done
+      environmentVariables:
+        CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
+
 
 # We currently install docker compose 1.29, let's understand if this block is therefore needed?
-  - script: |
-      if docker compose version > /dev/null 2>&1; then
-        echo "Using docker compose"
-        echo "##vso[task.setvariable variable=ComposeCommand]docker compose"
-      elif command -v docker-compose > /dev/null 2>&1; then
-        echo "Using docker-compose"
-        echo "##vso[task.setvariable variable=ComposeCommand]docker-compose"
-      else
-        echo "Neither 'docker compose' nor 'docker-compose' is available on this agent"
-        exit 1
-      fi
-    displayName: 'Detect Docker Compose command'
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Detect Docker Compose command'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        if docker compose version > /dev/null 2>&1; then
+          echo "Using docker compose"
+          echo "##vso[task.setvariable variable=ComposeCommand]docker compose"
+        elif command -v docker-compose > /dev/null 2>&1; then
+          echo "Using docker-compose"
+          echo "##vso[task.setvariable variable=ComposeCommand]docker-compose"
+        else
+          echo "Neither 'docker compose' nor 'docker-compose' is available on this agent"
+          exit 1
+        fi
 
-  - script: |
-      compose_project_name="appsvc${BUILD_BUILDID}_${SYSTEM_JOBPOSITIONINPHASE:-1}_${SYSTEM_JOBATTEMPT:-1}"
-      echo "Using compose project: ${compose_project_name}"
-      echo "##vso[task.setvariable variable=ComposeProjectName]${compose_project_name}"
-    displayName: 'Set unique Docker Compose project name'
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Set unique Docker Compose project name'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        compose_project_name="appsvc${BUILD_BUILDID}_${SYSTEM_JOBPOSITIONINPHASE:-1}_${SYSTEM_JOBATTEMPT:-1}"
+        echo "Using compose project: ${compose_project_name}"
+        echo "##vso[task.setvariable variable=ComposeProjectName]${compose_project_name}"
 
 # Not sure on this script.
-  - script: $(ComposeCommand) up -d mssql db redis api-mock-server
-    displayName: 'Start infrastructure services'
-    env:
-      COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Start infrastructure services'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: $(ComposeCommand) up -d mssql db redis api-mock-server
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
 
-# Ensure API workspace dependencies are installed for tsc and other tools.
+# Ensure API workspace dependencies are installed for tsc and other tools. # Not sure this is needed.
   - template: steps/node_script.yml@templates
     parameters:
       displayName: 'Install API workspace deps'
