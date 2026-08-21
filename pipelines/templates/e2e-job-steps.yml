@@ -195,7 +195,7 @@ steps:
       script: |
         set -e
 
-        for url in http://localhost:3000/health http://127.0.0.1:3000/health http://127.0.0.1:9004/health http://localhost:9004/health; do
+        for url in http://localhost:3000/health http://127.0.0.1:9004/health http://localhost:9004/health; do
           echo "Waiting for $url"
 
             for attempt in $(seq 1 60); do
@@ -271,6 +271,24 @@ steps:
     inputs:
       targetPath: '$(Build.SourcesDirectory)/e2e-tests/artifacts'
       artifact: ${{ parameters.logsArtifact }}
+
+# Always capture final logs and inspect output for easier debugging (uploaded by Publish docker logs)
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Collect final service logs'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        mkdir -p e2e-tests/artifacts || true
+        echo "Collecting final compose logs and container state"
+        $(ComposeCommand) logs --no-color --tail=200 applications-web-app applications-service-api > e2e-tests/artifacts/final-compose.log || true
+        docker logs --tail 200 applications-web-app > e2e-tests/artifacts/applications-web-app.final.log || true
+        docker logs --tail 200 applications-service-api > e2e-tests/artifacts/applications-service-api.final.log || true
+        docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/final-docker-ps.log || true
+        docker inspect --format '{{json .State}}' applications-web-app > e2e-tests/artifacts/final-applications-web-app.inspect.json || true
+        docker inspect --format '{{json .State}}' applications-service-api > e2e-tests/artifacts/final-applications-service-api.inspect.json || true
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
 
   - template: steps/node_script.yml@templates
     parameters:
