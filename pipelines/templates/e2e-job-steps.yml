@@ -172,22 +172,37 @@ steps:
 
   - template: steps/node_script.yml@templates
     parameters:
+      displayName: 'Capture initial service logs'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        mkdir -p e2e-tests/artifacts || true
+        echo "Capturing initial docker-compose logs (last 200 lines)"
+        $(ComposeCommand) logs --no-color --tail=200 applications-web-app applications-service-api > e2e-tests/artifacts/initial-compose.log || true
+        docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/initial-docker-ps.log || true
+        docker inspect --format '{{json .State}}' applications-web-app > e2e-tests/artifacts/initial-applications-web-app.inspect.json || true
+        docker inspect --format '{{json .State}}' applications-service-api > e2e-tests/artifacts/initial-applications-service-api.inspect.json || true
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - template: steps/node_script.yml@templates
+    parameters:
       displayName: 'Wait for app health checks'
       nodeVersion: 22
       workingDirectory: '$(System.DefaultWorkingDirectory)'
       script: |
         set -e
 
-        for url in http://localhost:3000/health http://localhost:9004/health; do
+        for url in http://localhost:3000/health http://127.0.0.1:3000/health http://localhost:9004/health http://127.0.0.1:9004/health; do
           echo "Waiting for $url"
 
-          for attempt in $(seq 1 30); do
+            for attempt in $(seq 1 60); do
             if curl --fail --silent --show-error "$url" > /dev/null; then
               echo "$url is healthy"
               break
             fi
 
-            if [ "$attempt" -eq 30 ]; then
+              if [ "$attempt" -eq 60 ]; then
               echo "Timed out waiting for $url"
               echo "Dumping docker-compose logs and container state to e2e-tests/artifacts for debugging"
               mkdir -p e2e-tests/artifacts || true
