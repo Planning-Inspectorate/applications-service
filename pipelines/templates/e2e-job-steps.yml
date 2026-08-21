@@ -90,7 +90,17 @@ steps:
     env:
       COMPOSE_PROJECT_NAME: $(ComposeProjectName)
 
-# This one i believe we should have.
+# Ensure API workspace dependencies are installed for tsc and other tools.
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Install API workspace deps'
+      nodeVersion: 22
+      script: npm --workspace @pins/applications-service-api ci
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      environmentVariables:
+        npm_config_cache: $(NpmCacheDir)
+
+# Generate, migrate and seed database
   - template: steps/node_script.yml@templates
     parameters:
       displayName: 'Generate, migrate and seed database'
