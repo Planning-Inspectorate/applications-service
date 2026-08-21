@@ -14,200 +14,308 @@ steps:
   - checkout: self
     clean: true
 
-  - task: NodeTool@0
-    displayName: Install Node.js
-    inputs:
-      versionSpec: $(NodeVersion)
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Install npm'
+      nodeVersion: 22
+      script: npm ci
+      workingDirectory: '$(System.DefaultWorkingDirectory)' # This line could be wrong.
+      environmentVariables:
+        npm_config_cache: $(NpmCacheDir)
 
-  - task: Cache@2
-    displayName: Cache npm
-    inputs:
-      key: 'npm | "$(Agent.OS)" | package-lock.json | e2e-tests/package-lock.json'
-      restoreKeys: |
-        npm | "$(Agent.OS)" | package-lock.json
-      path: $(NpmCacheDir)
+# This script won't work as is?
 
-  - task: Cache@2
-    displayName: Cache Cypress binary
-    inputs:
-      key: 'cypress | "$(Agent.OS)" | e2e-tests/package-lock.json'
-      restoreKeys: |
-        cypress | "$(Agent.OS)"
-      path: $(CypressCacheDir)
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Prepare artifact directories'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        mkdir -p e2e-tests/cypress/cucumber-report
+        mkdir -p e2e-tests/cypress/screenshots
+        mkdir -p e2e-tests/artifacts
+      
 
-  - script: |
-      mkdir -p e2e-tests/cypress/cucumber-report
-      mkdir -p e2e-tests/cypress/screenshots
-      mkdir -p e2e-tests/artifacts
-    displayName: Prepare artifact directories
+# Unsure on this, is it putting the secret into this var?
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Create root CI env'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        cat <<EOF > "$(RootCiEnvFile)"
+        ENCRYPTION_SECRET_KEY=azure-pipelines-test-encryption-secret
+        EOF
 
-  - script: |
-      cat <<EOF > "$(RootCiEnvFile)"
-      ENCRYPTION_SECRET_KEY=azure-pipelines-test-encryption-secret
-      EOF
-    displayName: Create root CI env
+# Not sure on this script at the moment...
+# Looks like it is installing the dependencies and caching them in a var called CypressCacheDir?
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Install E2E dependencies'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        for attempt in 1 2 3; do
+          echo "Running npm ci for E2E dependencies (attempt ${attempt}/3)"
 
-  - script: |
-      for attempt in 1 2 3; do
-        echo "Running npm ci for root dependencies (attempt ${attempt}/3)"
-
-        if npm ci \
-          --cache "$(NpmCacheDir)" \
-          --fetch-retries=5 \
-          --fetch-retry-mintimeout=20000 \
-          --fetch-retry-maxtimeout=120000; then
-          exit 0
-        fi
-
-        status=$?
-
-        if [ "$attempt" -eq 3 ]; then
-          exit "$status"
-        fi
-
-        npm cache verify --cache "$(NpmCacheDir)" || true
-        sleep $((attempt * 10))
-      done
-    displayName: Install root dependencies
-
-  - script: |
-      for attempt in 1 2 3; do
-        echo "Running npm ci for E2E dependencies (attempt ${attempt}/3)"
-
-        if npm --prefix e2e-tests ci \
-          --cache "$(NpmCacheDir)" \
-          --fetch-retries=5 \
-          --fetch-retry-mintimeout=20000 \
-          --fetch-retry-maxtimeout=120000; then
-          exit 0
-        fi
-
-        status=$?
-
-        if [ "$attempt" -eq 3 ]; then
-          exit "$status"
-        fi
-
-        npm cache verify --cache "$(NpmCacheDir)" || true
-        sleep $((attempt * 10))
-      done
-    displayName: Install E2E dependencies
-    env:
-      CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
-
-  - script: |
-      if docker compose version > /dev/null 2>&1; then
-        echo "Using docker compose"
-        echo "##vso[task.setvariable variable=ComposeCommand]docker compose"
-      elif command -v docker-compose > /dev/null 2>&1; then
-        echo "Using docker-compose"
-        echo "##vso[task.setvariable variable=ComposeCommand]docker-compose"
-      else
-        echo "Neither 'docker compose' nor 'docker-compose' is available on this agent"
-        exit 1
-      fi
-    displayName: Detect Docker Compose command
-
-  - script: |
-      compose_project_name="appsvc${BUILD_BUILDID}_${SYSTEM_JOBPOSITIONINPHASE:-1}_${SYSTEM_JOBATTEMPT:-1}"
-      echo "Using compose project: ${compose_project_name}"
-      echo "##vso[task.setvariable variable=ComposeProjectName]${compose_project_name}"
-    displayName: Set unique Docker Compose project name
-
-  - script: |
-      if command -v google-chrome > /dev/null 2>&1 || command -v google-chrome-stable > /dev/null 2>&1; then
-        echo "Using Chrome for Cypress"
-        echo "##vso[task.setvariable variable=CypressBrowser]chrome"
-      elif command -v chromium > /dev/null 2>&1 || command -v chromium-browser > /dev/null 2>&1; then
-        echo "Using Chromium for Cypress"
-        echo "##vso[task.setvariable variable=CypressBrowser]chromium"
-      else
-        echo "Neither Chrome nor Chromium is available on this agent"
-        exit 1
-      fi
-    displayName: Detect Cypress browser
-
-  - script: $(ComposeCommand) up -d mssql db redis api-mock-server
-    displayName: Start infrastructure services
-    env:
-      COMPOSE_PROJECT_NAME: $(ComposeProjectName)
-
-  - script: |
-      if [ ! -f packages/applications-service-api/.env ]; then
-        cp packages/applications-service-api/.env.development packages/applications-service-api/.env
-      fi
-
-      npm run db:generate
-      npm run db:migrate:dev
-      npm run db:seed
-    displayName: Generate, migrate and seed database
-
-  - script: $(ComposeCommand) up -d applications-service-api applications-web-app
-    displayName: Start application services
-    env:
-      COMPOSE_PROJECT_NAME: $(ComposeProjectName)
-
-  - script: |
-      set -e
-
-      for url in http://localhost:3000/health http://localhost:9004/health; do
-        echo "Waiting for $url"
-
-        for attempt in $(seq 1 30); do
-          if curl --fail --silent --show-error "$url" > /dev/null; then
-            echo "$url is healthy"
-            break
+          if npm --prefix e2e-tests ci \
+            --cache "$(NpmCacheDir)" \
+            --fetch-retries=5 \
+            --fetch-retry-mintimeout=20000 \
+            --fetch-retry-maxtimeout=120000; then
+            exit 0
           fi
 
-          if [ "$attempt" -eq 30 ]; then
-            echo "Timed out waiting for $url"
-            exit 1
+          status=$?
+
+          if [ "$attempt" -eq 3 ]; then
+            exit "$status"
           fi
 
-          sleep 10
+          npm cache verify --cache "$(NpmCacheDir)" || true
+          sleep $((attempt * 10))
         done
-      done
-    displayName: Wait for app health checks
+      environmentVariables:
+        CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
 
-  - script: |
-      ${{ parameters.runScript }}
-    displayName: ${{ parameters.runDisplayName }}
-    env:
-      CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
 
-  - script: npm --prefix e2e-tests run test:e2e:postprocess
-    displayName: Generate Cypress HTML report
-    condition: always()
+# We currently install docker compose 1.29, let's understand if this block is therefore needed?
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Detect Docker Compose command'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        if docker compose version > /dev/null 2>&1; then
+          echo "Using docker compose"
+          echo "##vso[task.setvariable variable=ComposeCommand]docker compose"
+        elif command -v docker-compose > /dev/null 2>&1; then
+          echo "Using docker-compose"
+          echo "##vso[task.setvariable variable=ComposeCommand]docker-compose"
+        else
+          echo "Neither 'docker compose' nor 'docker-compose' is available on this agent"
+          exit 1
+        fi
 
-  - script: $(ComposeCommand) logs --no-color > e2e-tests/artifacts/docker-compose.log
-    displayName: Capture docker compose logs
-    condition: always()
-    env:
-      COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Detect Cypress browser'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        if command -v google-chrome > /dev/null 2>&1 || command -v google-chrome-stable > /dev/null 2>&1; then
+          echo "Using Chrome for Cypress"
+          echo "##vso[task.setvariable variable=CypressBrowser]chrome"
+        elif command -v chromium > /dev/null 2>&1 || command -v chromium-browser > /dev/null 2>&1; then
+          echo "Using Chromium for Cypress"
+          echo "##vso[task.setvariable variable=CypressBrowser]chromium"
+        else
+          echo "Neither Chrome nor Chromium is available on this agent"
+          exit 1
+        fi
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Set unique Docker Compose project name'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        compose_project_name="appsvc${BUILD_BUILDID}_${SYSTEM_JOBPOSITIONINPHASE:-1}_${SYSTEM_JOBATTEMPT:-1}"
+        echo "Using compose project: ${compose_project_name}"
+        echo "##vso[task.setvariable variable=ComposeProjectName]${compose_project_name}"
+
+# Install root workspace dependencies (includes forms-web-app and applications-service-api)
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Install root workspace dependencies'
+      nodeVersion: 22
+      script: npm ci
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      environmentVariables:
+        npm_config_cache: $(NpmCacheDir)
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Start infrastructure services'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: $(ComposeCommand) up -d mssql db redis api-mock-server
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+# Generate, migrate and seed database
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Generate, migrate and seed database'
+      nodeVersion: 22
+      script: |
+        if [ ! -f packages/applications-service-api/.env ]; then
+          cp packages/applications-service-api/.env.development packages/applications-service-api/.env
+        fi
+        npm run db:generate
+        npm run db:migrate:dev
+        npm run db:seed
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      environmentVariables:
+        npm_config_cache: $(NpmCacheDir)
+
+# This is spinning up the service api and web app, which is needed for the e2e tests?
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Start application services'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: $(ComposeCommand) up -d applications-service-api applications-web-app
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Capture initial service logs'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        # give containers a moment to start and settle
+        sleep 10
+        mkdir -p e2e-tests/artifacts || true
+        echo "Capturing initial docker-compose logs (last 200 lines)"
+        $(ComposeCommand) logs --no-color --tail=200 applications-web-app applications-service-api > e2e-tests/artifacts/initial-compose.log || true
+        docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/initial-docker-ps.log || true
+        docker inspect --format '{{json .State}}' applications-web-app > e2e-tests/artifacts/initial-applications-web-app.inspect.json || true
+        docker inspect --format '{{json .State}}' applications-service-api > e2e-tests/artifacts/initial-applications-service-api.inspect.json || true
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Wait for app health checks'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      environmentVariables:
+        npm_config_cache: $(ComposeProjectName)
+      script: |
+        set -e
+
+        for url in http://localhost:3000/health http://127.0.0.1:9004/health http://localhost:9004/health; do
+          echo "Waiting for $url"
+
+            for attempt in $(seq 1 60); do
+            if curl --fail --silent --show-error "$url" > /dev/null; then
+              echo "$url is healthy"
+              break
+            fi
+
+              if [ "$attempt" -eq 60 ]; then
+              echo "Timed out waiting for $url"
+              echo "Dumping docker-compose logs and container state to e2e-tests/artifacts for debugging"
+              mkdir -p e2e-tests/artifacts || true
+              # Capture compose logs for the two services we care about
+              $(ComposeCommand) logs --no-color applications-web-app > e2e-tests/artifacts/applications-web-app.log || true
+              $(ComposeCommand) logs --no-color applications-service-api > e2e-tests/artifacts/applications-service-api.log || true
+              # Capture docker ps and inspect output
+              docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/docker-ps.log || true
+              docker inspect --format '{{json .State}}' applications-web-app > e2e-tests/artifacts/applications-web-app.inspect.json || true
+              docker inspect --format '{{json .State}}' applications-service-api > e2e-tests/artifacts/applications-service-api.inspect.json || true
+
+              exit 1
+            fi
+
+            sleep 10
+          done
+        done
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: ${{ parameters.runDisplayName }}
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        ${{ parameters.runScript }}
+      environmentVariables:
+        CYPRESS_CACHE_FOLDER: $(CypressCacheDir)
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Generate Cypress HTML report'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: npm --prefix e2e-tests run test:e2e:postprocess
+      condition: always()
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Capture docker compose logs'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: $(ComposeCommand) logs --no-color > e2e-tests/artifacts/docker-compose.log
+      condition: always()
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
 
   - task: PublishPipelineArtifact@1
-    displayName: Publish Cypress screenshots
+    displayName: 'Publish Cypress screenshots'
     condition: failed()
     inputs:
       targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/screenshots'
       artifact: ${{ parameters.screenshotsArtifact }}
 
   - task: PublishPipelineArtifact@1
-    displayName: Publish Cypress HTML report
+    displayName: 'Publish Cypress HTML report'
     condition: always()
     inputs:
       targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/cucumber-report'
       artifact: ${{ parameters.reportArtifact }}
 
   - task: PublishPipelineArtifact@1
-    displayName: Publish docker logs
+    displayName: 'Publish docker logs'
     condition: always()
     inputs:
       targetPath: '$(Build.SourcesDirectory)/e2e-tests/artifacts'
       artifact: ${{ parameters.logsArtifact }}
 
-  - script: $(ComposeCommand) down -v
-    displayName: Stop docker compose services
-    condition: always()
-    env:
-      COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+# Always capture final logs and inspect output for easier debugging (uploaded by Publish docker logs)
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Collect final service logs'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        mkdir -p e2e-tests/artifacts || true
+        echo "Collecting final compose logs and container state"
+        $(ComposeCommand) logs --no-color --tail=200 applications-web-app applications-service-api > e2e-tests/artifacts/final-compose.log || true
+        docker logs --tail 200 applications-web-app > e2e-tests/artifacts/applications-web-app.final.log || true
+        docker logs --tail 200 applications-service-api > e2e-tests/artifacts/applications-service-api.final.log || true
+        docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/final-docker-ps.log || true
+        docker inspect --format '{{json .State}}' applications-web-app > e2e-tests/artifacts/final-applications-web-app.inspect.json || true
+        docker inspect --format '{{json .State}}' applications-service-api > e2e-tests/artifacts/final-applications-service-api.inspect.json || true
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Stop docker compose services'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: $(ComposeCommand) down -v
+      condition: always()
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Collect docker logs and inspect'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        mkdir -p e2e-tests/artifacts || true
+        echo "Collecting compose logs and container state"
+        $(ComposeCommand) logs --no-color --tail=1000 applications-web-app applications-service-api > e2e-tests/artifacts/compose.logs.txt || true
+        docker logs --tail 1000 applications-web-app > e2e-tests/artifacts/applications-web-app.log || true
+        docker logs --tail 1000 applications-service-api > e2e-tests/artifacts/applications-service-api.log || true
+        docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/docker-ps.txt || true
+        docker inspect applications-web-app --format '{{json .State}}' > e2e-tests/artifacts/applications-web-app.inspect.json || true
+        docker inspect applications-service-api --format '{{json .State}}' > e2e-tests/artifacts/applications-service-api.inspect.json || true
+        ls -la e2e-tests/artifacts || true
+      condition: always()
+      environmentVariables:
+        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
