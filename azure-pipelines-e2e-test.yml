@@ -63,7 +63,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.29.0
+      ref: refs/tags/release/3.30.0
 
 jobs:
   - job: Smoke_E2E
