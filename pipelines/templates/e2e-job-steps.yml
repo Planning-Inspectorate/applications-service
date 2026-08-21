@@ -103,8 +103,8 @@ steps:
         npm run db:migrate:dev
         npm run db:seed
       # workingDirectory: '$(System.DefaultWorkingDirectory)/e2e-tests' # This line could be wrong.
-      # environmentVariables:
-      #   npm_config_cache: $(NpmCacheDir)
+      environmentVariables:
+        npm_config_cache: $(NpmCacheDir)
 
 # This is spinning up the service api and web app, which is needed for the e2e tests?
   - script: $(ComposeCommand) up -d applications-service-api applications-web-app
