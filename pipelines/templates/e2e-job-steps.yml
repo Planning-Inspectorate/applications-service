@@ -163,6 +163,16 @@ steps:
 
           if [ "$attempt" -eq 30 ]; then
             echo "Timed out waiting for $url"
+            echo "Dumping docker-compose logs and container state to e2e-tests/artifacts for debugging"
+            mkdir -p e2e-tests/artifacts || true
+            # Capture compose logs for the two services we care about
+            $(ComposeCommand) logs --no-color applications-web-app > e2e-tests/artifacts/applications-web-app.log || true
+            $(ComposeCommand) logs --no-color applications-service-api > e2e-tests/artifacts/applications-service-api.log || true
+            # Capture docker ps and inspect output
+            docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/docker-ps.log || true
+            docker inspect --format '{{json .State}}' applications-web-app > e2e-tests/artifacts/applications-web-app.inspect.json || true
+            docker inspect --format '{{json .State}}' applications-service-api > e2e-tests/artifacts/applications-service-api.inspect.json || true
+
             exit 1
           fi
 
