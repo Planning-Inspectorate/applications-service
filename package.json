@@ -151,7 +151,7 @@
 		"azure-functions-core-tools": "^4.0.5390",
 		"azurite": "^3.26.0",
 		"babel-loader": "^8.2.5",
-		"commitizen": "^4.2.4",
+		"commitizen": "^4.3.2",
 		"cross-env": "^7.0.3",
 		"cypress": "^13.6.4",
 		"cypress-cucumber-preprocessor": "^4.3.1",
