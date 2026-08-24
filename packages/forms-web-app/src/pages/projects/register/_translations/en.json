@@ -219,13 +219,27 @@
 	},
 	"declaration": {
 		"pageHeading": "Declaration",
-		"paragraph1": "By submitting this form, you are registering to have your say and telling us your registration comments.",
-		"paragraph2": "The Examining Authority must consider your views when they recommend if the project should go ahead. We will contact you if we need more information about the comments you provided in the registration form.",
-		"paragraph3": "You are agreeing that we will use your details to:",
-		"listItem1": "contact you about the project or if we need more information",
-		"listItem2": "let you know when you can submit more information",
-		"paragraph4": "You are also agreeing that all comments you submit, along with your name, will be published on this website. No contact details will be made public.",
-		"paragraph5": "Once we publish your comments, they cannot be removed from the website. You can withdraw your registration comments from the examination of the project and they will no longer be taken into account."
+		"paragraph1": "By submitting this form, you are agreeing that:",
+		"myself": {
+			"listItem1": "your name and comments will be published on our website",
+			"listItem2": "we may contact you about the project or if we need more information from you",
+			"listItem3": "you have read and understood our <a class=\"govuk-link\" href=\"https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice\" target=\"_blank\" rel=\"noopener noreferrer\">customer privacy notice (opens in a new tab)</a>"
+		},
+		"organisation": {
+			"listItem1": "your organisation name and comments will be published on our website",
+			"listItem2": "we may contact you about the project or if we need more information from you",
+			"listItem3": "you have read and understood our <a class=\"govuk-link\" href=\"https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice\" target=\"_blank\" rel=\"noopener noreferrer\">customer privacy notice (opens in a new tab)</a>"
+		},
+		"agent": {
+			"listItem1": "your name, your organisation name, your client's name and their comments will be published on our website",
+			"listItem2": "we may contact you about the project or if we need more information from you",
+			"listItem3": "you have read and understood our <a class=\"govuk-link\" href=\"https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice\" target=\"_blank\" rel=\"noopener noreferrer\">customer privacy notice (opens in a new tab)</a>",
+			"paragraph1": "You are also confirming that:",
+			"listItem4": "you are authorised to act on behalf of the person or group you are representing",
+			"listItem5": "the person or group you are representing is aware of our customer privacy notice and that their names will be published with their comments"
+		},
+		"insetText": "We'll send you a confirmation email containing a registration reference number. Contact us if you do not receive this email within 30 minutes of submitting your comments. You may need to check your spam or junk folder.",
+		"acceptAndSubmit": "Accept and submit"
 	},
 	"complete": {
 		"pageHeading": "Registration complete",
