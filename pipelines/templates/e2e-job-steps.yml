@@ -84,6 +84,17 @@ steps:
           echo "Neither 'docker compose' nor 'docker-compose' is available on this agent"
           exit 1
         fi
+
+  - template: steps/node_script.yml@templates
+    parameters:
+      displayName: 'Set unique Docker Compose project name'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        compose_project_name="appsvc${BUILD_BUILDID}_${SYSTEM_JOBPOSITIONINPHASE:-1}_${SYSTEM_JOBATTEMPT:-1}"
+        echo "Using compose project: ${compose_project_name}"
+        echo "##vso[task.setvariable variable=ComposeProjectName]${compose_project_name}"
+
   - template: steps/node_script.yml@templates
     parameters:
       displayName: 'Detect Cypress browser'
@@ -100,16 +111,6 @@ steps:
           echo "Neither Chrome nor Chromium is available on this agent"
           exit 1
         fi
-
-  - template: steps/node_script.yml@templates
-    parameters:
-      displayName: 'Set unique Docker Compose project name'
-      nodeVersion: 22
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-      script: |
-        compose_project_name="appsvc${BUILD_BUILDID}_${SYSTEM_JOBPOSITIONINPHASE:-1}_${SYSTEM_JOBATTEMPT:-1}"
-        echo "Using compose project: ${compose_project_name}"
-        echo "##vso[task.setvariable variable=ComposeProjectName]${compose_project_name}"
 
   - template: steps/node_script.yml@templates
     parameters:
@@ -237,21 +238,21 @@ steps:
         COMPOSE_PROJECT_NAME: $(ComposeProjectName)
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Cypress screenshots'
+    displayName: Publish Cypress screenshots
     condition: failed()
     inputs:
       targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/screenshots'
       artifact: ${{ parameters.screenshotsArtifact }}
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish Cypress HTML report'
+    displayName: Publish Cypress HTML report
     condition: always()
     inputs:
       targetPath: '$(Build.SourcesDirectory)/e2e-tests/cypress/cucumber-report'
       artifact: ${{ parameters.reportArtifact }}
 
   - task: PublishPipelineArtifact@1
-    displayName: 'Publish docker logs'
+    displayName: Publish docker logs
     condition: always()
     inputs:
       targetPath: '$(Build.SourcesDirectory)/e2e-tests/artifacts'
