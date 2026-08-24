@@ -178,23 +178,6 @@ steps:
 
   - template: steps/node_script.yml@templates
     parameters:
-      displayName: 'Capture initial service logs'
-      nodeVersion: 22
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-      script: |
-        # give containers a moment to start and settle
-        sleep 10
-        mkdir -p e2e-tests/artifacts || true
-        echo "Capturing initial docker-compose logs (last 200 lines)"
-        $(ComposeCommand) logs --no-color --tail=200 applications-web-app applications-service-api > e2e-tests/artifacts/initial-compose.log || true
-        docker ps -a --filter "name=applications-web-app" --filter "name=applications-service-api" > e2e-tests/artifacts/initial-docker-ps.log || true
-        docker inspect --format '{{json .State}}' applications-web-app > e2e-tests/artifacts/initial-applications-web-app.inspect.json || true
-        docker inspect --format '{{json .State}}' applications-service-api > e2e-tests/artifacts/initial-applications-service-api.inspect.json || true
-      environmentVariables:
-        COMPOSE_PROJECT_NAME: $(ComposeProjectName)
-
-  - template: steps/node_script.yml@templates
-    parameters:
       displayName: 'Wait for app health checks'
       nodeVersion: 22
       workingDirectory: '$(System.DefaultWorkingDirectory)'
