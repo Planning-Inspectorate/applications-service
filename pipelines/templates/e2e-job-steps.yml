@@ -145,15 +145,6 @@ steps:
 
   - template: steps/node_script.yml@templates
     parameters:
-      displayName: 'Install root workspace dependencies'
-      nodeVersion: 22
-      script: npm ci
-      workingDirectory: '$(System.DefaultWorkingDirectory)'
-      environmentVariables:
-        npm_config_cache: $(NpmCacheDir)
-
-  - template: steps/node_script.yml@templates
-    parameters:
       displayName: 'Start infrastructure services'
       nodeVersion: 22
       workingDirectory: '$(System.DefaultWorkingDirectory)'
