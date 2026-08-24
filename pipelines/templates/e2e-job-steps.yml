@@ -160,6 +160,7 @@ steps:
         if [ ! -f packages/applications-service-api/.env ]; then
           cp packages/applications-service-api/.env.development packages/applications-service-api/.env
         fi
+        
         npm run db:generate
         npm run db:migrate:dev
         npm run db:seed
