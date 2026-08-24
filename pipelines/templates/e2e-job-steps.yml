@@ -45,6 +45,33 @@ steps:
 
   - template: steps/node_script.yml@templates
     parameters:
+      displayName: 'Install root dependencies'
+      nodeVersion: 22
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      script: |
+        for attempt in 1 2 3; do
+          echo "Running npm ci for root dependencies (attempt ${attempt}/3)"
+
+          if npm ci \
+            --cache "$(NpmCacheDir)" \
+            --fetch-retries=5 \
+            --fetch-retry-mintimeout=20000 \
+            --fetch-retry-maxtimeout=120000; then
+            exit 0
+          fi
+
+          status=$?
+
+          if [ "$attempt" -eq 3 ]; then
+            exit "$status"
+          fi
+
+          npm cache verify --cache "$(NpmCacheDir)" || true
+          sleep $((attempt * 10))
+        done
+
+  - template: steps/node_script.yml@templates
+    parameters:
       displayName: 'Install E2E dependencies'
       nodeVersion: 22
       workingDirectory: '$(System.DefaultWorkingDirectory)'
