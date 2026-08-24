@@ -51,6 +51,7 @@ steps:
       script: |
         for attempt in 1 2 3; do
           echo "Running npm ci for E2E dependencies (attempt ${attempt}/3)"
+
           if npm --prefix e2e-tests ci \
             --cache "$(NpmCacheDir)" \
             --fetch-retries=5 \
@@ -58,10 +59,13 @@ steps:
             --fetch-retry-maxtimeout=120000; then
             exit 0
           fi
+
           status=$?
+
           if [ "$attempt" -eq 3 ]; then
             exit "$status"
           fi
+          
           npm cache verify --cache "$(NpmCacheDir)" || true
           sleep $((attempt * 10))
         done
@@ -184,13 +188,13 @@ steps:
         for url in http://localhost:3000/health http://127.0.0.1:9004/health http://localhost:9004/health; do
           echo "Waiting for $url"
 
-            for attempt in $(seq 1 60); do
+          for attempt in $(seq 1 30); do
             if curl --fail --silent --show-error "$url" > /dev/null; then
               echo "$url is healthy"
               break
             fi
 
-              if [ "$attempt" -eq 60 ]; then
+            if [ "$attempt" -eq 30 ]; then
               echo "Timed out waiting for $url"
               echo "Dumping docker-compose logs and container state to e2e-tests/artifacts for debugging"
               mkdir -p e2e-tests/artifacts || true
