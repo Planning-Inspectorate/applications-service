@@ -426,7 +426,7 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
       "paragraph6": "Byddwn yn cadw unrhyw fanylion cyswllt yn breifat. <a class="govuk-link" href="https://www.gov.uk/government/publications/planning-inspectorate-privacy-notices/customer-privacy-notice">Gweler ein hysbysiad preifatrwydd</a> i gael rhagor o wybodaeth.",
       "paragraph7": "Pan fyddwn yn cyhoeddi eich sylwadau, ni ellir eu dileu o'n gwefan tan ar ôl i benderfyniad gael ei wneud am y prosiect.",
       "paragraph8": "Gallwch gysylltu â ni os nad ydych eisiau i'ch sylwadau gael eu hystyried gan yr Awdurdod Archwilio, mwyach. Bydd eich sylwadau'n aros ar ein gwefan ond byddwn yn nodi eu bod wedi'u tynnu'n ôl.",
-      "paragraph9": "Mae'n rhaid i chi gyflwyno'ch cofrestriad cyn 23:59 ar {{-date}}.",
+      "paragraph9": "Mae'n rhaid i chi gofrestru cyn 23:59 ar {{-date}}.",
     },
     "pageHeading": "Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol",
     "pageTitle": "Cofrestru i leisio'ch barn am brosiect seilwaith cenedlaethol - Cynllunio Seilwaith Cenedlaethol",
