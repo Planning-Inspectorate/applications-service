@@ -1,11 +1,80 @@
 const REGISTER_SERVICE =
 	'Register to have your say about a national infrastructure project - National Infrastructure Planning';
 
-const registrationJourneys = {
-	myself: 'Registering for myself',
-	organisation: 'Registering for an organisation',
-	agent: 'Registering on behalf of someone else'
-};
+const AUDIENCE = Object.freeze({
+	myself: 'myself',
+	organisation: 'organisation',
+	agent: 'agent'
+});
+
+const AUDIENCES = Object.keys(AUDIENCE);
+
+const AUDIENCE_CONFIG = Object.freeze({
+	[AUDIENCE.myself]: {
+		journey: 'Registering for myself',
+		keySuffix: ''
+	},
+	[AUDIENCE.organisation]: {
+		journey: 'Registering for an organisation',
+		keySuffix: ' organisation'
+	},
+	[AUDIENCE.agent]: {
+		journey: 'Registering on behalf of someone else',
+		keySuffix: ' agent'
+	}
+});
+
+class AudiencePageExpectationBuilder {
+	static getAudienceConfig(audience) {
+		return AUDIENCE_CONFIG[audience] ?? {};
+	}
+
+	static getAudienceKey(baseKey, audience) {
+		return `${baseKey}${this.getAudienceConfig(audience).keySuffix}`;
+	}
+
+	static resolveAudienceValue(map, audience, defaultValue) {
+		if (typeof map === 'object' && map !== null) {
+			return map[audience] ?? map.default ?? defaultValue;
+		}
+
+		return map ?? defaultValue;
+	}
+
+	static registrationPage({ pageTitle, heading = pageTitle, url, audience, titleMatch = 'eq' }) {
+		return staticPage({
+			title: `${pageTitle} - ${this.getAudienceConfig(audience).journey} - ${REGISTER_SERVICE}`,
+			heading,
+			url,
+			titleMatch
+		});
+	}
+
+	static buildAudienceVariants(baseKey, pageTitle, urls, options = {}) {
+		const { heading = pageTitle, titleMatch = 'eq' } = options;
+
+		return AUDIENCES.reduce((result, audience) => {
+			const url = urls[audience];
+			if (url === undefined) {
+				return result;
+			}
+
+			const audienceHeading = this.resolveAudienceValue(heading, audience, pageTitle);
+			const resolvedTitleMatch = this.resolveAudienceValue(titleMatch, audience, 'eq');
+			const key = this.getAudienceKey(baseKey, audience);
+
+			result[key] = this.registrationPage({
+				pageTitle,
+				heading: audienceHeading,
+				url,
+				audience,
+				titleMatch: resolvedTitleMatch
+			});
+
+			return result;
+		}, {});
+	}
+}
 
 const staticPage = ({ title, heading, url, titleMatch = 'eq' }) => ({
 	title: title ? { value: title, match: titleMatch } : undefined,
@@ -14,12 +83,16 @@ const staticPage = ({ title, heading, url, titleMatch = 'eq' }) => ({
 });
 
 const registrationPage = ({ pageTitle, heading = pageTitle, url, audience, titleMatch = 'eq' }) =>
-	staticPage({
-		title: `${pageTitle} - ${registrationJourneys[audience]} - ${REGISTER_SERVICE}`,
+	AudiencePageExpectationBuilder.registrationPage({
+		pageTitle,
 		heading,
 		url,
+		audience,
 		titleMatch
 	});
+
+const buildAudienceVariants = (...args) =>
+	AudiencePageExpectationBuilder.buildAudienceVariants(...args);
 
 const haveYourSayGuidePage = ({ pageTitle, heading = pageTitle, url, titleMatch = 'eq' }) =>
 	staticPage({
@@ -44,20 +117,10 @@ module.exports = {
 		heading: 'Who are you registering for?',
 		url: 'who-registering-for'
 	}),
-	'what is your full name? organisation': registrationPage({
-		pageTitle: 'What is your full name?',
-		url: '/full-name',
-		audience: 'organisation'
-	}),
-	'what is your full name? agent': registrationPage({
-		pageTitle: 'What is your full name?',
-		url: '/full-name',
-		audience: 'agent'
-	}),
-	'what is your full name?': registrationPage({
-		pageTitle: 'What is your full name?',
-		url: '/full-name',
-		audience: 'myself'
+	...buildAudienceVariants('what is your full name?', 'What is your full name?', {
+		myself: '/full-name',
+		organisation: '/full-name',
+		agent: '/full-name'
 	}),
 	'register to have your say': staticPage({
 		title: REGISTER_SERVICE,
@@ -120,98 +183,72 @@ module.exports = {
 		heading: 'A404 Dewsbury',
 		url: '/document-library/EN010116/1'
 	}),
-	'are you 18 or over?': registrationPage({
-		pageTitle: 'Are you 18 or over?',
-		url: '/are-you-18-over',
-		audience: 'myself'
-	}),
-	'are you 18 or over? organisation': registrationPage({
-		pageTitle: 'Are you 18 or over?',
-		url: '/are-you-18-over',
-		audience: 'organisation'
+	...buildAudienceVariants('are you 18 or over?', 'Are you 18 or over?', {
+		myself: '/are-you-18-over',
+		organisation: '/are-you-18-over',
+		agent: '/are-you-18-over'
 	}),
 	'uk address details': staticPage({
 		title: 'UK address details - Register to have your say',
 		heading: 'UK address details',
 		url: '/address'
 	}),
-	'what is your address? organisation': registrationPage({
-		pageTitle: 'What is your address?',
-		url: '/address',
-		audience: 'organisation'
+	...buildAudienceVariants(
+		'what is your address?',
+		'What is your address?',
+		{
+			myself: '/address',
+			organisation: '/address',
+			agent: '/address'
+		},
+		{
+			heading: {
+				default: 'What is your address?',
+				myself: 'What is your address?',
+				organisation: 'What is your address?',
+				agent: 'What is your address'
+			}
+		}
+	),
+	...buildAudienceVariants('what is your email address?', 'What is your email address?', {
+		myself: '/email-address',
+		organisation: '/email',
+		agent: '/email'
 	}),
-	'what is your address? agent': registrationPage({
-		pageTitle: 'What is your address?',
-		heading: 'What is your address',
-		url: '/address',
-		audience: 'agent'
+	...buildAudienceVariants('what is your telephone number?', 'What is your telephone number?', {
+		myself: '/telephone',
+		organisation: '/telephone',
+		agent: '/telephone'
 	}),
-	'what is your address?': registrationPage({
-		pageTitle: 'What is your address?',
-		url: '/address',
-		audience: 'myself'
-	}),
-	'what is your email address?': registrationPage({
-		pageTitle: 'What is your email address?',
-		url: '/email-address',
-		audience: 'myself'
-	}),
-	'what is your email address? organisation': registrationPage({
-		pageTitle: 'What is your email address?',
-		url: '/email',
-		audience: 'organisation'
-	}),
-	'what is your email address? agent': registrationPage({
-		pageTitle: 'What is your email address?',
-		url: '/email',
-		audience: 'agent'
-	}),
-	'what is your telephone number? organisation': registrationPage({
-		pageTitle: 'What is your telephone number?',
-		url: '/telephone',
-		audience: 'organisation'
-	}),
-	'what is your telephone number? agent': registrationPage({
-		pageTitle: 'What is your telephone number?',
-		url: '/telephone',
-		audience: 'agent'
-	}),
-	'what is your telephone number?': registrationPage({
-		pageTitle: 'What is your telephone number?',
-		url: '/telephone',
-		audience: 'myself'
-	}),
-	'what do you want to tell us about this proposed project? organisation': registrationPage({
-		pageTitle: 'What do you want to tell us about this proposed project?',
-		url: '/tell-us-about-project',
-		audience: 'organisation'
-	}),
-	'what do you want to tell us about this proposed project? agent': registrationPage({
-		pageTitle: 'What do you want to tell us about this proposed project?',
-		url: '/tell-us-about-project',
-		audience: 'agent'
-	}),
-	'what do you want to tell us about this proposed project?': registrationPage({
-		pageTitle: 'What do you want to tell us about this proposed project?',
-		url: '/tell-us-about-project',
-		audience: 'myself',
-		titleMatch: 'include'
-	}),
-	'check your answers before registering organisation': registrationPage({
-		pageTitle: 'Check your answers before registering',
-		url: '/check-answers',
-		audience: 'organisation',
-		titleMatch: 'include'
-	}),
+	...buildAudienceVariants(
+		'what do you want to tell us about this proposed project?',
+		'What do you want to tell us about this proposed project?',
+		{
+			myself: '/tell-us-about-project',
+			organisation: '/tell-us-about-project',
+			agent: '/tell-us-about-project'
+		},
+		{ titleMatch: { default: 'include', myself: 'include', organisation: 'eq', agent: 'eq' } }
+	),
+	...buildAudienceVariants(
+		'check your answers before registering',
+		'Check your answers before registering',
+		{
+			myself: '/check-answers',
+			organisation: '/check-answers',
+			agent: '/check-answers'
+		},
+		{ titleMatch: { default: 'include', myself: 'eq', organisation: 'include', agent: 'eq' } }
+	),
 	'check your answers before registering on behalf of someone else': registrationPage({
 		pageTitle: 'Check your answers before registering',
 		url: '/check-answers',
 		audience: 'agent'
 	}),
-	'check your answers before registering': registrationPage({
-		pageTitle: 'Check your answers before registering',
-		url: '/check-answers',
-		audience: 'myself'
+	...buildAudienceVariants('ai usage declaration', 'AI usage declaration', {
+		myself: '/ai-declaration',
+		organisation: '/ai-declaration',
+		agent: '/ai-declaration'
 	}),
 	'declaration organisation': registrationPage({
 		pageTitle: 'Declaration',
@@ -235,7 +272,7 @@ module.exports = {
 	}),
 	'registration complete registering on behalf of someone else': registrationPage({
 		pageTitle: 'Registration complete',
-		url: '/registration-complete',
+		url: '/agent/registration-complete',
 		audience: 'agent'
 	}),
 	'registration complete': registrationPage({

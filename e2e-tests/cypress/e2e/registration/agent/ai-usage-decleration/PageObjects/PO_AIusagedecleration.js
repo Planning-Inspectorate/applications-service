@@ -7,9 +7,9 @@ class PO_AIusagedecleration extends PageObject {
 		radioNo: () => cy.get('input[name="ai-declaration"][value="no"]')
 	};
 
-	assertOnPage(pageName) {
-		cy.title().should('include', pageName);
-		cy.get('h1').should('contain.text', pageName);
+	assertOnPage() {
+		cy.title().should('include', 'AI usage declaration');
+		cy.get('h1').should('contain.text', 'AI usage declaration');
 		cy.url().should('include', '/ai-declaration');
 	}
 

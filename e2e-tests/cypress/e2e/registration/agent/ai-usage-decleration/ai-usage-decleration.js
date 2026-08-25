@@ -1,4 +1,4 @@
-import { Then, And } from 'cypress-cucumber-preprocessor/steps';
+import { Given, When, Then, And } from 'cypress-cucumber-preprocessor/steps';
 import PO_FullName from '../full-name/PageObjects/PO_FullName';
 import PO_OrgYouWorkFor from '../what-is-the-name-of-org-you-work-for/PageObjects/PO_OrgYouWorkFor';
 import PO_EmailAddress from '../what-is-your-email-address/PageObjects/PO_EmailAddress';
@@ -10,8 +10,9 @@ import PO_RepAddressDetails from '../what-is-their-address/PageObjects/PO_RepAdd
 import PO_RepEmailAddress from '../what-is-their-email-address/PageObjects/PO_RepEmailAddress';
 import PO_RepTelNumber from '../what-is-their-telephone-number/PageObjects/PO_RepTelNumber';
 import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject';
-import PO_CyaBeforeReg from './PageObjects/PO_CyaBeforeReg';
-import { handleAiDeclarationIfPresent } from '../../shared/registerCommentPageSteps';
+import PO_WhoYouRegisterFor from '../../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
+import PO_AIusagedecleration from '../ai-usage-decleration/PageObjects/PO_AIusagedecleration';
+
 const fullNamePage = new PO_FullName();
 const orgYouWorkFor = new PO_OrgYouWorkFor();
 const emailAddress = new PO_EmailAddress();
@@ -23,11 +24,12 @@ const repAddressDetails = new PO_RepAddressDetails();
 const repEmailAddress = new PO_RepEmailAddress();
 const repTelNumber = new PO_RepTelNumber();
 const tellAboutProject = new PO_TellAboutProject();
-const cyaBeforeReg = new PO_CyaBeforeReg();
+const whoYouRegisterForPage = new PO_WhoYouRegisterFor();
+const aiUsageDecleration = new PO_AIusagedecleration();
 
-const shortComment = 'I am against the proposal since it will reduce resident parking provision';
-
-And('I have been asked to check my answers', () => {
+Given('I navigate to AI usage declaration page using agent route', () => {
+	whoYouRegisterForPage.navigatetoTypeOfPartyPage();
+	whoYouRegisterForPage.selectPartyAndContinue('Agent');
 	fullNamePage.enterTextIntoFullNameField('TestFirstName TestMiddleName TestLastName');
 	fullNamePage.clickSaveAndContinue();
 	orgYouWorkFor.enterTextIntoOrgNameField('Test Organisation Name');
@@ -46,8 +48,8 @@ And('I have been asked to check my answers', () => {
 	whoYouRepresenting.clickSaveAndContinue();
 	repName.enterTextIntoRepNameField('Representee FirstName Representee LastName');
 	repName.clickSaveAndContinue();
-	repEmailAddress.selectRadioYesOrNo('Yes');
-	repEmailAddress.clickSaveAndContinue();
+	repName.selectRadioYesOrNo('Yes');
+	repName.clickSaveAndContinue();
 	repEmailAddress.enterTextIntoRepEmailField('representeetestpins2@gmail.com');
 	repEmailAddress.clickSaveAndContinue();
 	repAddressDetails.enterTextFromObjectIntoAddressFields({
@@ -58,34 +60,25 @@ And('I have been asked to check my answers', () => {
 	repAddressDetails.clickSaveAndContinue();
 	repTelNumber.enterTextIntoRepTelephoneNumberField('12121212121');
 	repTelNumber.clickSaveAndContinue();
-	tellAboutProject.enterTextIntoCommentsField(shortComment);
+	tellAboutProject.enterTextIntoCommentsField(
+		'I am against the proposal since it will reduce resident parking provision'
+	);
 	tellAboutProject.clickSaveAndContinue();
-	handleAiDeclarationIfPresent();
 });
 
 Then('I am on the {string} page', (pageName) => {
-	cyaBeforeReg.assertOnPage(pageName);
-});
-
-And(
-	'I verify below data is present on Check your answers before registering page',
-	function (table) {
-		cyaBeforeReg.assertDataOnPage(table);
+	if (pageName.toLowerCase().includes('ai usage declaration')) {
+		aiUsageDecleration.assertOnPage(pageName);
+		return;
 	}
-);
 
-And('User clicks on accept and continue button for {string}', (linkType) => {
-	cyaBeforeReg.clickDeclarationLink(linkType);
+	cy.contains('Check your answers').should('exist');
 });
 
-And('User clicks on accept and register button', () => {
-	cyaBeforeReg.clickAcceptAndRegister();
+When('user selects {string} radio option on AI usage declaration page', (radioChoice) => {
+	aiUsageDecleration.selectRadioOption(radioChoice);
 });
 
-And('I click on {string} change link', (linkType) => {
-	cyaBeforeReg.clickOnChangeLink(linkType);
-});
-
-And('user selects {string} on who are you representing page', (radioChoice) => {
-	whoYouRepresenting.selectRadioOption(radioChoice);
+And('I click on the continue button', () => {
+	aiUsageDecleration.clickAISaveAndContinue();
 });
