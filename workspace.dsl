@@ -262,9 +262,8 @@ workspace "Applications service" {
 		}
 
 
-		# Azure icons only
-		theme default
-		theme https://static.structurizr.com/themes/microsoft-azure-2023.01.24/icons.json
+		# Theme source is injected by CI into a temporary DSL file:
+		# Microsoft Azure icons from GitHub first, local vendored fallback if unreachable.
 
 		styles {
 
