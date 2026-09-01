@@ -52,7 +52,8 @@ module.exports = async (context, message) => {
 		attachmentIds: message.attachmentIds?.join(','),
 		representedId: message.representedId,
 		representativeId: message.representativeId,
-		modifiedAt: new Date()
+		modifiedAt: new Date(),
+		useOfAI: message.useOfAI
 	};
 
 	const { statement, parameters } = buildMergeQuery(

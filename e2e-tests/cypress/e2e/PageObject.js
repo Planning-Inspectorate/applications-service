@@ -73,7 +73,13 @@ class PageObject {
 	}
 
 	clickSaveAndReturn() {
-		this.identifiers.saveAndReturnButton().click();
+		cy.get('body').then(($body) => {
+			if ($body.find('[data-cy="button-save-and-return"]').length) {
+				this.identifiers.saveAndReturnButton().click();
+			} else {
+				this.identifiers.saveAndContinueButton().click();
+			}
+		});
 		cy.waitForDemoDelay();
 	}
 

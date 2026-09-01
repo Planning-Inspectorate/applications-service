@@ -9,6 +9,7 @@ import OrganisationNamePage from '../organisation-name/PageObjects/OrganisationN
 import PO_WhatIsJobTitle from '../what-is-your-job-title-or-volunteer-role/PageObjects/PO_WhatIsJobTitle';
 import PO_WhoYouRegisterFor from '../../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
 import {
+	handleAiDeclarationIfPresent,
 	registerAddAnotherCommentRadioStep,
 	registerTopicFieldStep
 } from '../../shared/registerCommentPageSteps';
@@ -42,7 +43,13 @@ And('I enter below data into address details page', function (table) {
 });
 
 And('User clicks on continue button', () => {
+	if (cy.state('url').includes('/telephone')) {
+		teleNumberPage.clickSaveAndContinue();
+		handleAiDeclarationIfPresent();
+		return;
+	}
 	addressDetails.clickSaveAndContinue();
+	handleAiDeclarationIfPresent();
 });
 
 Then('I am on the {string} page', (pageName) => {

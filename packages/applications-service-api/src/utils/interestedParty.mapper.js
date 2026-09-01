@@ -25,6 +25,7 @@ const mapInterestedParty = (data) => {
 		referenceId: generateId('F'),
 		caseReference: data.case_ref,
 		originalRepresentation: data.comment,
+		useOfAI: data['ai-declaration']?.toUpperCase() || null,
 		representationType: REPRESENTATION_TYPE,
 		dateReceived: getDate()
 	};
