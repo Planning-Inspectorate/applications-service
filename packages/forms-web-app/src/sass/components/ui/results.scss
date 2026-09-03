@@ -24,6 +24,10 @@
 		@extend .govuk-body-s;
 
 		margin: 0;
+
+		&--representations {
+			overflow-wrap: break-word;
+		}
 	}
 
 	&__result-enquiry {
