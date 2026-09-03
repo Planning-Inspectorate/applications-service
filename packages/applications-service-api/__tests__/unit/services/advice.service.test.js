@@ -54,7 +54,7 @@ describe('Advice Service', () => {
 					0,
 					25,
 					undefined,
-					[{ adviceDate: 'asc' }, { adviceId: 'asc' }]
+					[{ adviceDate: 'desc' }, { adviceId: 'asc' }]
 				);
 			});
 			it('should map advice to api', async () => {
