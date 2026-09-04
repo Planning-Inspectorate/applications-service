@@ -1,7 +1,7 @@
 const { VIEW } = require('../../../../../../lib/views');
 const { keys } = require('../../../../../../controllers/register/common/keys');
 const getRedirectUrl = (query, key) => {
-	let redirectURl = '';
+	let redirectURl;
 	if (query.mode === 'edit') {
 		redirectURl = `/${VIEW.REGISTER[key.toUpperCase()].CHECK_YOUR_ANSWERS}`;
 	} else if (key === keys.organisation) {

@@ -27,14 +27,14 @@ const mapCommonRepresentationBOFieldsToApi = (representation) => {
 	const represented = representation?.represented;
 	const representative = representation?.representative;
 
-	let PersonalName = '';
+	let PersonalName;
 	if (represented.organisationName) {
 		PersonalName = represented.organisationName;
 	} else {
 		PersonalName = `${represented.firstName || ''} ${represented.lastName || ''}`.trim();
 	}
 
-	let Representative = '';
+	let Representative;
 	if (representative?.organisationName) {
 		Representative = representative.organisationName;
 	} else {

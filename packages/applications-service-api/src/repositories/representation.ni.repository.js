@@ -13,9 +13,8 @@ const getRepresentationsWithCount = async (options = {}) => {
 	findOptions.raw = true;
 	findOptions.where = { [Op.and]: [{ CaseReference: options.caseReference }] };
 
-	let types = [];
 	if (options.type) {
-		types = options.type instanceof Array ? [...options.type] : options.type.split(',');
+		const types = options.type instanceof Array ? [...options.type] : options.type.split(',');
 
 		if (types.length > 0) {
 			findOptions.where[Op.and].push({
