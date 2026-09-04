@@ -11,11 +11,11 @@ const addErrorsToEmptyValuesFormGroup = (i18n, formGroup, allDatesFilterFormGrou
 				? i18n.t('projectsDocuments.errors.emptyValues', {
 						errorMessage: localFormGroup.errorMessageText,
 						emptyValue: inputLabel
-				  })
+					})
 				: i18n.t('projectsDocuments.errors.emptyValue', {
 						formGroup: localFormGroup.errorMessageTitle,
 						emptyValue: inputLabel
-				  });
+					});
 		}
 	});
 

@@ -12,6 +12,6 @@ const getBreadcrumbsItems = (path, caseRef, id, i18n) =>
 					text: i18n.t('section51.heading')
 				},
 				{ text: i18n.t('section51.details.adviceInDetail') }
-		  ];
+			];
 
 module.exports = { getBreadcrumbsItems };

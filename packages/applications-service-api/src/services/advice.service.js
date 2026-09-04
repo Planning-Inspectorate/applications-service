@@ -52,7 +52,7 @@ const getAllAdvice = async (query) => {
 	const { advice, count } = isBackOfficeCaseReference(caseReference)
 		? mapBackOfficeAdviceToApiWrapper(
 				await getAllBackOfficeAdvice(caseReference, offset, size, searchTerm, orderBy)
-		  )
+			)
 		: await getAllNIAdvice(caseReference, offset, size, searchTerm);
 
 	return {

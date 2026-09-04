@@ -1,4 +1,3 @@
-
 const initialiseCookiePreferencePage = (document) => {
 	document
 		.querySelectorAll('.cookie-settings__no-js')

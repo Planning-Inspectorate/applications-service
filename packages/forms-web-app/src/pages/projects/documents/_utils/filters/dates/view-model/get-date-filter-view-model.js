@@ -7,7 +7,7 @@ const getDateFilterViewModel = (query, dateFilter) => [
 				? {
 						list: dateFilter.errorSummaryList,
 						title: 'There is a problem'
-				  }
+					}
 				: null,
 		formGroups: getDateFilterFormGroupsViewModel(query, dateFilter.formGroups),
 		isOpen: dateFilter.errorSummaryList.length > 0,

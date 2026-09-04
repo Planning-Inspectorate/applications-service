@@ -7,7 +7,7 @@ const getExaminationLibraryDocumentHtml = (i18n, document) =>
 				link: `<a class="govuk-link" href="${document.path}">${i18n.t(
 					'projectsDocuments.paragraph1LinkText'
 				)} (${fileTypeDisplayHelper(document.mime)}, ${fileSizeDisplayHelper(document.size)})</a>`
-		  })
+			})
 		: null;
 
 module.exports = { getExaminationLibraryDocumentHtml };
