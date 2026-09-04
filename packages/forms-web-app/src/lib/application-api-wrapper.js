@@ -66,7 +66,7 @@ async function handler(
 				/* istanbul ignore next */
 				throw new Error(apiResponse.statusText);
 			} catch (e) {
-				throw new Error(e.message);
+				throw new Error(e.message, {cause: e});
 			}
 		}
 
@@ -175,7 +175,7 @@ exports.getRepresentationById = async (id, caseReference) => {
 
 	try {
 		await setCache(cacheKey, response);
-	} catch (error) {
+	} catch {
 		parentLogger.warn({}, `Cache set failed for ${cacheKey}`);
 	}
 
