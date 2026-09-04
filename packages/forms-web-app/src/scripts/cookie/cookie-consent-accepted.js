@@ -1,4 +1,3 @@
-
 const cookieConfig = require('./cookie-config');
 const {
 	hideSingleDomElementBySelector,

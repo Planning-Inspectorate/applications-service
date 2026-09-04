@@ -8,7 +8,6 @@ const initialiseOptionalJavaScripts = (document) => {
 	const cookie = readCookie(document, cookieConfig.COOKIE_POLICY_KEY);
 
 	if (cookie === null) {
-		 
 		console.log('Consent not yet given for optional JavaScripts.');
 		return;
 	}
@@ -21,7 +20,6 @@ const initialiseOptionalJavaScripts = (document) => {
 			return initialiseGoogleAnalytics(document);
 		} else console.log('Declined consent. Third party cookies are not enabled.');
 	} catch (e) {
-		 
 		console.error('Unable to decode the value of cookie', e);
 	}
 };

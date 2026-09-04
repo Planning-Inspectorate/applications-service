@@ -1,4 +1,3 @@
-
 const cookieConfig = require('./cookie-config');
 const { createCookie, eraseCookie, readCookie } = require('./cookie-jar');
 const { hideSingleDomElementBySelector } = require('./cookie-dom-helpers');

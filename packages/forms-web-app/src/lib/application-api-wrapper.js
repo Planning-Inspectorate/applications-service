@@ -66,7 +66,7 @@ async function handler(
 				/* istanbul ignore next */
 				throw new Error(apiResponse.statusText);
 			} catch (e) {
-				throw new Error(e.message, {cause: e});
+				throw new Error(e.message, { cause: e });
 			}
 		}
 
