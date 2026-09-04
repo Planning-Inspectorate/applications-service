@@ -1,10 +1,8 @@
-/* eslint-env browser */
-
 function applyConsent(consent) {
 	window.dataLayer = window.dataLayer || [];
 
 	function gtag() {
-		// eslint-disable-next-line no-undef, prefer-rest-params
+		// eslint-disable-next-line no-undef
 		dataLayer.push(arguments);
 	}
 

@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 const InterestedParty = require('./interested-party');
 const consts = require('./const');
 

@@ -1,7 +1,7 @@
 const encodeString = (stringToEncode) => {
 	if (!stringToEncode || typeof stringToEncode !== 'string') return '';
 
-	let encodedString = '';
+	let encodedString;
 
 	try {
 		encodedString = encodeURIComponent(stringToEncode);

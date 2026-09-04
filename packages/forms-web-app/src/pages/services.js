@@ -40,7 +40,7 @@ const getProjectDecisionDocument = async (caseRef) => {
 	);
 
 	if (getApprovalDocument.resp_code === 200 || getApprovalDocument.resp_code === 404) {
-		if (getApprovalDocument.data?.id) return (response = getApprovalDocument.data);
+		if (getApprovalDocument.data?.id) return getApprovalDocument.data;
 	} else {
 		throw new Error(`${getApprovalDocument.resp_code}: Error fetching project document`);
 	}
@@ -48,7 +48,7 @@ const getProjectDecisionDocument = async (caseRef) => {
 	const getRefusalDocument = await getDocumentByType(caseRef, documentTypes.DECISION_LETTER_REFUSE);
 
 	if (getRefusalDocument.resp_code === 200 || getRefusalDocument.resp_code === 404) {
-		if (getRefusalDocument.data?.id) return (response = getRefusalDocument.data);
+		if (getRefusalDocument.data?.id) return getRefusalDocument.data;
 	} else {
 		throw new Error(`${getRefusalDocument.resp_code}: Error fetching project document`);
 	}

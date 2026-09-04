@@ -1,5 +1,3 @@
-/* eslint-env browser */
-
 // https://www.quirksmode.org/js/cookies.html
 
 const createCookie = (document, name, value, days = 365) => {
@@ -17,7 +15,7 @@ const createCookie = (document, name, value, days = 365) => {
 	}
 
 	const encodedValue = encodeURIComponent(value);
-	// eslint-disable-next-line no-param-reassign
+
 	document.cookie = `${name}=${encodedValue}${expires}${secure}; path=/`;
 };
 
