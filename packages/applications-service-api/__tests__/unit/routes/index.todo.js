@@ -4,7 +4,6 @@ const applicationsRouter = require('../../../src/routes/applications');
 
 describe('routes/index', () => {
 	beforeEach(() => {
-		// eslint-disable-next-line global-require
 		require('../../../src/routes');
 	});
 

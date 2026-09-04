@@ -1,4 +1,3 @@
-/* eslint-env browser */
 
 const cookieConfig = require('./cookie-config');
 const { createCookie, eraseCookie, readCookie } = require('./cookie-jar');

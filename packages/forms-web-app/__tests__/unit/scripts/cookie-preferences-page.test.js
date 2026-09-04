@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-/* eslint-env browser */
 
 const { initialiseCookiePreferencePage } = require('../../../src/scripts/cookie-preferences');
 

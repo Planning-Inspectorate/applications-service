@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const fetch = require('node-fetch');
 const uuid = require('uuid');
 const { hasher } = require('node-object-hash');

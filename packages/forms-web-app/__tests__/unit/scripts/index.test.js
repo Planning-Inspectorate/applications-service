@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-/* eslint-env browser */
 
 const { cookieConsentHandler } = require('../../../src/scripts/cookie/cookie-consent');
 
