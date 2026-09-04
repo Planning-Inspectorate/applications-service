@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+ 
 const { handler } = require('../lib/application-api-wrapper');
 
 const mapResponse = (data) => ({

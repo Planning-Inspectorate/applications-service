@@ -500,7 +500,7 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
 
 		// returns index of the clicked step in the overall number of steps
 		this.stepIndex = function () {
-			// eslint-disable-line no-unused-vars
+			 
 			return this.$module.steps.index(stepView.element) + 1;
 		};
 
