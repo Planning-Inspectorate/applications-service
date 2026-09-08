@@ -1,11 +1,8 @@
 jest.mock('../../src/lib/logger');
 
 const logger = require('../../src/lib/logger');
-const { APPLICATION_DOCUMENT } = require('../../src/lib/empty-application');
 
-const { empty: emptyApplication } = APPLICATION_DOCUMENT;
-
-const mockReq = (application = emptyApplication) => ({
+const mockReq = (application = {}) => ({
 	cookies: {},
 	log: logger,
 	params: {},
