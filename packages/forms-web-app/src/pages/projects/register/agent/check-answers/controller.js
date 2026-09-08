@@ -9,7 +9,8 @@ const getRegisterAgentCheckAnswersController = (req, res) => {
 	return res.render('projects/register/agent/check-answers/view.njk', {
 		data: {
 			...session.behalfRegdata,
-			comment: session.comment
+			comment: session.comment,
+			aiDeclaration: session['ai-declaration']
 		},
 		registerAgentDeclarationURL: getRegisterAgentDeclarationURL(case_ref)
 	});

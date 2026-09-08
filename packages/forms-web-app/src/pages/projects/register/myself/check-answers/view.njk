@@ -24,6 +24,18 @@
 {{ data.address.country }}
 {% endset %}
 
+{% if data['over-18'] === 'yes'%}
+	{% set over18 = t('common.yes1') %}
+{% elif data['over-18'] === 'no'%}
+	{% set over18 = t('common.no1') %}
+{% endif %}
+
+{% if data.aiDeclaration === 'yes' %}
+	{% set aiDeclaration = t('register.checkYourAnswers.aiUsed') %}
+{% elif data.aiDeclaration === 'no' %}
+	{% set aiDeclaration = t('register.checkYourAnswers.aiNotUsed') %}
+{% endif %}
+
 {% block content %}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds-from-desktop">
@@ -47,15 +59,15 @@
 						text: summaryField( t('register.checkYourAnswers.myself'), { 'data-cy': "type-of-party" })
 					},
 						actions: {
-						items: [
-							{
-								href: baseUrl + "/register/who-registering-for?mode=edit",
-								text: t('common.change'),
-								visuallyHiddenText: t('register.checkYourAnswers.changeRegisteringForHiddenText'),
-								attributes: { "data-cy": "who-are-you" }
-							}
-						]
-					}
+							items: [
+								{
+									href: baseUrl + "/register/who-registering-for?mode=edit",
+									text: t('common.change'),
+									visuallyHiddenText: t('register.checkYourAnswers.changeRegisteringForHiddenText'),
+									attributes: { "data-cy": "who-are-you" }
+								}
+							]
+						}
 					},
 					{
 						key: {
@@ -65,34 +77,33 @@
 						text: summaryField( data['full-name'], { 'data-cy': "full-name" })
 					},
 						actions: {
-						items: [
-							{
-								href: baseUrl + "/register/myself/full-name?mode=edit",
-								text: t('common.change'),
-								visuallyHiddenText: t('register.checkYourAnswers.changeNameHiddenText'),
-								attributes: { "data-cy": "full-name" }
-							}
-						]
-					}
+							items: [
+								{
+									href: baseUrl + "/register/myself/full-name?mode=edit",
+									text: t('common.change'),
+									visuallyHiddenText: t('register.checkYourAnswers.changeNameHiddenText'),
+									attributes: { "data-cy": "full-name" }
+								}
+							]
+						}
 					},
 					{
 						key: {
 						text: t('register.checkYourAnswers.areYou18')
 					},
 						value: {
-						text: summaryField( data['over-18'] | title, { 'data-cy': "are-you-18-over" })
+						text: summaryField( over18 | title, { 'data-cy': "are-you-18-over" })
 					},
 						actions: {
-						items: [
-							{
-								href: baseUrl + "/register/myself/are-you-18-over?mode=edit",
-								text: t('common.change'),
-								visuallyHiddenText: t('register.checkYourAnswers.changeAreYou18HiddenText')
-								,
-								attributes: { "data-cy": "over-18" }
-							}
-						]
-					}
+							items: [
+								{
+									href: baseUrl + "/register/myself/are-you-18-over?mode=edit",
+									text: t('common.change'),
+									visuallyHiddenText: t('register.checkYourAnswers.changeAreYou18HiddenText'),
+									attributes: { "data-cy": "over-18" }
+								}
+							]
+						}
 					},
 					{
 						key: {
@@ -102,15 +113,15 @@
 						text: summaryField( data['email'], { 'data-cy': "email" })
 					},
 						actions: {
-						items: [
-							{
-								href: baseUrl + "/register/myself/email-address?mode=edit",
-								text: t('common.change'),
-								visuallyHiddenText: t('register.checkYourAnswers.changeEmailHiddenText'),
-								attributes: { "data-cy": "email" }
-							}
-						]
-					}
+							items: [
+								{
+									href: baseUrl + "/register/myself/email-address?mode=edit",
+									text: t('common.change'),
+									visuallyHiddenText: t('register.checkYourAnswers.changeEmailHiddenText'),
+									attributes: { "data-cy": "email" }
+								}
+							]
+						}
 					},
 					{
 						key: {
@@ -120,15 +131,15 @@
 						html: address
 					},
 						actions: {
-						items: [
-							{
-								href: baseUrl + "/register/myself/address?mode=edit",
-								text: t('common.change'),
-								visuallyHiddenText: t('register.checkYourAnswers.changeAddressHiddenText'),
-								attributes: { "data-cy": "address" }
-							}
-						]
-					}
+							items: [
+								{
+									href: baseUrl + "/register/myself/address?mode=edit",
+									text: t('common.change'),
+									visuallyHiddenText: t('register.checkYourAnswers.changeAddressHiddenText'),
+									attributes: { "data-cy": "address" }
+								}
+							]
+						}
 					},
 					{
 						key: {
@@ -138,15 +149,15 @@
 						text: summaryField( data['telephone'], { 'data-cy': "telephone" })
 					},
 						actions: {
-						items: [
-							{
-								href: baseUrl + "/register/myself/telephone-number?mode=edit",
-								text: t('common.change'),
-								visuallyHiddenText: "your telephone number",
-								attributes: { "data-cy": "telephone" }
-							}
-						]
-					}
+							items: [
+								{
+									href: baseUrl + "/register/myself/telephone-number?mode=edit",
+									text: t('common.change'),
+									visuallyHiddenText: "your telephone number",
+									attributes: { "data-cy": "telephone" }
+								}
+							]
+						}
 					},
 					{
 						key: {
@@ -156,12 +167,29 @@
 						text: summaryField( data['comment'], { "class": "-white-space--pre-line", 'data-cy': "comment" })
 					},
 						actions: {
+							items: [
+								{
+									href: baseUrl + "/register/myself/tell-us-about-project?mode=edit",
+									text: t('common.change'),
+									visuallyHiddenText: t('register.checkYourAnswers.changeCommentsHiddenText'),
+									attributes: { "data-cy": "comment" }
+								}
+							]
+						}
+					},
+					{
+						key: {
+						text: t('register.checkYourAnswers.aiDeclaration')
+					},
+						value: {
+						text: summaryField( aiDeclaration, { "class": "-white-space--pre-line"})
+					},
+						actions: {
 						items: [
 							{
-								href: baseUrl + "/register/myself/tell-us-about-project?mode=edit",
+								href: baseUrl + "/register/myself/ai-declaration?mode=edit",
 								text: t('common.change'),
-								visuallyHiddenText: t('register.checkYourAnswers.changeCommentsHiddenText'),
-								attributes: { "data-cy": "comment" }
+								visuallyHiddenText: t('register.checkYourAnswers.aiDeclaration')
 							}
 						]
 					}

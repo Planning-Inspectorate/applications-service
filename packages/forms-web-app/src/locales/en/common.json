@@ -102,7 +102,8 @@
 		"aboutProject": {
 			"empty": "Enter what you want to tell us about this proposed project",
 			"length": "What you want to tell us must be {{-maxCharacters}} characters or less"
-		}
+		},
+		"aiUsageDeclaration": "Select yes if you used AI to help produce your registration comments"
 	},
 	"warning": "Warning",
 	"year": "Year",

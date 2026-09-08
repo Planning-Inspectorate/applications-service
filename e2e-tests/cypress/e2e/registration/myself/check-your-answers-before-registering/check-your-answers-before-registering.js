@@ -7,6 +7,7 @@ import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageO
 import PO_CyaBeforeReg from '../check-your-answers-before-registering/PageObjects/PO_CyaBeforeReg';
 import PO_WhoYouRegisterFor from '../../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
 import {
+	handleAiDeclarationIfPresent,
 	registerAddAnotherCommentRadioStep,
 	registerTopicFieldStep
 } from '../../shared/registerCommentPageSteps';
@@ -35,6 +36,7 @@ And('I enter below data into address details page', function (table) {
 
 And('User clicks on continue button', () => {
 	addressDetails.clickSaveAndContinue();
+	handleAiDeclarationIfPresent();
 });
 
 Then('I am on the {string} page', (pageName) => {

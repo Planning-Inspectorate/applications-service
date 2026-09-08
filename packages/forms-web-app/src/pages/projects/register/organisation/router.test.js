@@ -40,6 +40,10 @@ const {
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
+const {
+	getRegisterAiDeclarationController,
+	postRegisterAiDeclarationController
+} = require('../_common/ai-declaration/controller');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
@@ -62,6 +66,9 @@ const {
 const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
+const {
+	rules: aiDeclarationValidationRules
+} = require('../../../../validators/register/ai-declaration');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -109,6 +116,11 @@ jest.mock('../../../../validators/shared/telephone-number', () => {
 jest.mock('../../../../validators/register/tell-us-about-project', () => {
 	return {
 		validate: jest.fn()
+	};
+});
+jest.mock('../../../../validators/register/ai-declaration', () => {
+	return {
+		rules: jest.fn()
 	};
 });
 
@@ -258,6 +270,21 @@ describe('pages/projects/register/organisation/router', () => {
 			expect(decodeUri).toHaveBeenCalledWith('body', ['comment']);
 
 			expect(get).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/ai-declaration',
+				registerStartRedirectMiddleware,
+				registerMiddleware,
+				getRegisterAiDeclarationController
+			);
+			expect(post).toHaveBeenCalledWith(
+				'/projects/:case_ref/register/organisation/ai-declaration',
+				registerStartRedirectMiddleware,
+				registerMiddleware,
+				aiDeclarationValidationRules(),
+				validationErrorHandler,
+				postRegisterAiDeclarationController
+			);
+
+			expect(get).toHaveBeenCalledWith(
 				'/projects/:case_ref/register/organisation/check-answers',
 				registerStartRedirectMiddleware,
 				registerMiddleware,
@@ -300,8 +327,8 @@ describe('pages/projects/register/organisation/router', () => {
 				getRegisterAlreadyRegisteredController
 			);
 
-			expect(get).toBeCalledTimes(13);
-			expect(post).toBeCalledTimes(9);
+			expect(get).toBeCalledTimes(14);
+			expect(post).toBeCalledTimes(10);
 			expect(use).toBeCalledTimes(0);
 		});
 	});

@@ -102,7 +102,8 @@
 		"aboutProject": {
 			"empty": "Nodwch yr hyn rydych eisiau ei ddweud wrthym am y prosiect arfaethedig hwn",
 			"length": "Mae'n rhaid i'r hyn rydych eisiau ei ddweud wrthym gynnwys {{-maxCharacters}} o nodau neu lai"
-		}
+		},
+		"aiUsageDeclaration": "Dewiswch 'ie' os ydych wedi defnyddio AI i helpu i gynhyrchu eich sylwadau cofrestru"
 	},
 	"warning": "Rhybudd",
 	"year": "Blwyddyn",
