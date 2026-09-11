@@ -1,4 +1,6 @@
 .pins-rte {
+	overflow-wrap: break-word;
+
 	p {
 		@extend .govuk-body;
 	}
@@ -22,9 +24,5 @@
 
 	ol {
 		@extend .govuk-list--number;
-	}
-
-	&--representations {
-		overflow-wrap: break-word;
 	}
 }
