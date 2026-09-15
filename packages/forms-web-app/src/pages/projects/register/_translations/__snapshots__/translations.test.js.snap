@@ -174,7 +174,7 @@ exports[`pages/cookies/_translations should return the correct English translati
     "pageHeading": "What is your job title or volunteer role?",
   },
   "name": {
-    "hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>",
+    "hint": "We will publish your name on our website along with your comments about the project",
     "pageHeading": "What is your full name?",
   },
   "nameHouseholdRepresenting": {
@@ -210,6 +210,7 @@ exports[`pages/cookies/_translations should return the correct English translati
     "warningTextNoScript": "Do not refresh or navigate away from this page.",
   },
   "registerFor": {
+    "hint": "You must register as an individual, if your partner wants to register they will have to fill in a separate form",
     "option1": "Myself",
     "option2": "An organisation I work or volunteer for",
     "option3": "On behalf of another person, a household or an organisation I do not work for",
@@ -463,7 +464,7 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "pageHeading": "Beth yw teitl eich swydd neu'ch rôl wirfoddoli?",
   },
   "name": {
-    "hint": "<p>Byddwn yn cyhoeddi hwn ar y wefan ynghyd â'ch sylwadau ar y prosiect.</p><p>Mae'n rhaid i chi gofrestru fel unigolyn. Os yw'ch partner eisiau cofrestru, bydd rhaid iddo lenwi ffurflen ar wahân gyda'i fanylion.</p>",
+    "hint": "Byddwn yn cyhoeddi eich enw ar ein gwefan ynghyd â'ch sylwadau ar y prosiect",
     "pageHeading": "Beth yw'ch enw llawn?",
   },
   "nameHouseholdRepresenting": {
@@ -499,6 +500,7 @@ exports[`pages/cookies/_translations should return the correct Welsh translation
     "warningTextNoScript": "Peidiwch â diweddaru na symud i ffwrdd o’r dudalen hon.",
   },
   "registerFor": {
+    "hint": "Mae’n rhaid i chi gofrestru fel unigolyn. Os yw’ch partner eisiau cofrestru, bydd rhaid iddo/iddi lenwi ffurflen ar wahân",
     "option1": "Fi fy hun",
     "option2": "Sefydliad rwyf yn gweithio neu'n gwirfoddoli iddo",
     "option3": "Ar ran unigolyn arall, aelwyd neu sefydliad nad wyf yn gweithio iddo",
