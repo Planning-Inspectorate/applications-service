@@ -32,6 +32,7 @@
 		"pageTitle": "Who are you registering for - Register to have your say about a national infrastructure project -  National Infrastructure Planning",
 		"pageHeading": "Who are you registering for?",
 		"option1": "Myself",
+		"hint": "You must register as an individual, if your partner wants to register they will have to fill in a separate form",
 		"option2": "An organisation I work or volunteer for",
 		"option3": "On behalf of another person, a household or an organisation I do not work for"
 	},
@@ -48,7 +49,7 @@
 	},
 	"name": {
 		"pageHeading": "What is your full name?",
-		"hint": "<p>We will publish this on the website along with your comments about the project.</p><p>You must register as an individual. If your partner wants to register, they will have to fill in a separate form with their details.</p>"
+		"hint": "We will publish your name on our website along with your comments about the project"
 	},
 	"namePersonRepresenting": {
 		"pageHeading": "What is the full name of the person you are representing?"
