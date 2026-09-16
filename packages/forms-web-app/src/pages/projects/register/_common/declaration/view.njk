@@ -1,6 +1,7 @@
 {% extends "layouts/default.njk" %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% set pageHeading = t('register.declaration.pageHeading')%}
 {% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
@@ -22,29 +23,27 @@
 				{{ t('register.declaration.paragraph1') }}
 			</p>
 
-			<p class="govuk-body">
-				{{ t('register.declaration.paragraph2') }}
-			</p>
-
-			<p class="govuk-body">
-				{{ t('register.declaration.paragraph3') }}
-			</p>
-
 			<ul class="govuk-list govuk-list--bullet">
-				<li>{{ t('register.declaration.listItem1') }}</li>
-				<li>{{ t('register.declaration.listItem2') }}</li>
+				<li>{{ t('register.declaration.' + key + '.listItem1') | safe }}</li>
+				<li>{{ t('register.declaration.' + key + '.listItem2') }}</li>
+				<li>{{ t('register.declaration.' + key + '.listItem3') | safe }}</li>
 			</ul>
 
-			<p class="govuk-body">
-				{{ t('register.declaration.paragraph4') }}
-			</p>
+			{% if key === 'agent' %}
+				<p class="govuk-body">
+					{{ t('register.declaration.agent.paragraph1') }}
+				</p>
 
-			<p class="govuk-body">
-				{{ t('register.declaration.paragraph5') }}
-			</p>
+				<ul class="govuk-list govuk-list--bullet">
+					<li>{{ t('register.declaration.agent.listItem4') }}</li>
+					<li>{{ t('register.declaration.agent.listItem5') }}</li>
+				</ul>
+			{% endif %}
+
+			{{ govukInsetText({ text: t('register.declaration.insetText') }) }}
 
 			<a class="govuk-button" data-cy="button-accept-and-register" href="{{ nextPageUrl }}">
-				{{ t('common.acceptAndContinue') }}
+				{{ t('register.declaration.acceptAndSubmit') }}
 			</a>
 		</div>
 	</div>

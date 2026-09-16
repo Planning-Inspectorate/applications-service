@@ -169,14 +169,16 @@
 	},
 	"contact": {
 		"heading1": "Cysylltu â ni",
-		"heading2": "Ffoniwch",
-		"paragraph1": "Os oes gennych rif parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
-		"paragraph2": "Rhif ffôn:",
-		"heading3": "Anfonwch neges e-bost",
-		"paragraph3": "Pan fyddwch yn ysgrifennu neges e-bost, rhowch enw'r prosiect yn y llinell bwnc.",
-		"paragraph4": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
+		"heading2": "Ffôn",
+		"paragraph1": "Os oes gennych rif cyfeirnod parti â buddiant, cadwch ef wrth law pan fyddwch yn ffonio.",
+		"paragraph2": "Ffôn:",
+		"paragraph3": "Dydd Llun i ddydd Gwener, 9yb tan 4yp (ac eithrio gwyliau cyhoeddus)",
+		"callChargesLinkText": "Costau ffôn a rhifau ffôn",
+		"heading3": "E-bost",
+		"paragraph4": "Pan fyddwch yn ysgrifennu neges e-bost, rhowch enw'r prosiect yn y llinell bwnc.",
+		"paragraph5": "Ceisiwn ymateb o fewn 10 niwrnod gwaith.",
 		"heading4": "Fformatau amgen",
-		"paragraph5": "Ffoniwch neu anfonwch neges e-bost i ofyn am ddogfennau'r prosiect mewn fformat amgen fel PDF, print bras, fersiwn hawdd ei darllen, recordiad sain neu braille."
+		"paragraph6": "Ffoniwch neu e-bostiwch ni os na allwch ddefnyddio dogfen yn y fformat rydyn ni wedi'i gyhoeddi."
 	},
 	"subsectors": {
 		"BC01": "At Ddefnydd Swyddfa",
