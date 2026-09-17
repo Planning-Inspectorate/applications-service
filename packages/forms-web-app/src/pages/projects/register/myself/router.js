@@ -34,6 +34,10 @@ const {
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
+const {
+	getRegisterAiDeclarationController,
+	postRegisterAiDeclarationController
+} = require('../_common/ai-declaration/controller');
 
 const { getRegisterMyselfNameURL } = require('./name/_utils/get-register-myself-name-url');
 const {
@@ -60,6 +64,9 @@ const {
 const {
 	getRegisterMyselfAlreadyRegisteredURL
 } = require('./already-registered/_utils/get-register-myself-already-registered-url');
+const {
+	getRegisterMyselfAiDeclarationURL
+} = require('./ai-declaration/_utils/get-register-myself-ai-declaration-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
@@ -76,6 +83,9 @@ const {
 const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
+const {
+	rules: aiDeclarationValidationRules
+} = require('../../../../validators/register/ai-declaration');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -90,6 +100,7 @@ const registerMyselfCompleteURL = getRegisterMyselfCompleteURL();
 const registerMyselfAboutProjectURL = getRegisterMyselfAboutProjectURL();
 const registerMyselfCheckAnswersURL = getRegisterMyselfCheckAnswersURL();
 const registerMyselfAlreadyRegisteredURL = getRegisterMyselfAlreadyRegisteredURL();
+const registerMyselfAiDeclarationURL = getRegisterMyselfAiDeclarationURL();
 
 const registerMyselfRouter = express.Router({ mergeParams: true });
 
@@ -183,6 +194,21 @@ registerMyselfRouter.post(
 	aboutProjectValidationRules(),
 	validationErrorHandler,
 	postRegisterMyselfAboutProjectController
+);
+
+registerMyselfRouter.get(
+	registerMyselfAiDeclarationURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterAiDeclarationController
+);
+registerMyselfRouter.post(
+	registerMyselfAiDeclarationURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	aiDeclarationValidationRules(),
+	validationErrorHandler,
+	postRegisterAiDeclarationController
 );
 
 registerMyselfRouter.get(

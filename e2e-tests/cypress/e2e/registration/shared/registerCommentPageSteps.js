@@ -1,9 +1,20 @@
 const shortComment = 'I am against the proposal since it will reduce resident parking provision';
 
+export const handleAiDeclarationIfPresent = () => {
+	cy.get('body').then(($body) => {
+		if ($body.find('input[name="ai-declaration"]').length) {
+			cy.get('input[name="ai-declaration"][value="no"]').check({ force: true });
+			cy.contains('button', 'Continue').click();
+			cy.waitForDemoDelay();
+		}
+	});
+};
+
 const continueWithFixtureComment = (tellAboutProject, fixtureName) => {
 	cy.fixture(fixtureName).then((comment) => {
 		tellAboutProject.enterTextIntoCommentsFieldDirectly(comment.trim());
 		tellAboutProject.clickSaveAndContinue();
+		handleAiDeclarationIfPresent();
 	});
 };
 
@@ -11,6 +22,7 @@ const saveAndReturnWithFixtureComment = (tellAboutProject, fixtureName) => {
 	cy.fixture(fixtureName).then((comment) => {
 		tellAboutProject.enterTextIntoCommentsFieldDirectly(comment.trim());
 		tellAboutProject.clickSaveAndReturn();
+		handleAiDeclarationIfPresent();
 	});
 };
 
@@ -57,11 +69,13 @@ export const registerCommentPageSteps = ({ And, Then, When }, tellAboutProject, 
 	And('I continue with a short comment', () => {
 		tellAboutProject.enterTextIntoCommentsField(shortComment);
 		tellAboutProject.clickSaveAndContinue();
+		handleAiDeclarationIfPresent();
 	});
 
 	And('I save and exit with a short comment', () => {
 		tellAboutProject.enterTextIntoCommentsField(shortComment);
 		tellAboutProject.clickSaveAndReturn();
+		handleAiDeclarationIfPresent();
 	});
 
 	registerTopicFieldStep(And, tellAboutProject);

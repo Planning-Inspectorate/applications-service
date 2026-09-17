@@ -9,7 +9,8 @@ const getRegisterOrganisationCheckAnswersController = (req, res) => {
 	return res.render('projects/register/organisation/check-answers/view.njk', {
 		data: {
 			...session.orgRegdata,
-			comment: session.comment
+			comment: session.comment,
+			aiDeclaration: session['ai-declaration']
 		},
 		registerOrganisationDeclarationURL: getRegisterOrganisationDeclarationURL(case_ref)
 	});

@@ -24,6 +24,18 @@
 	{% set representingHiddenText = t('register.checkYourAnswers.changeHouseholdNameHiddenText') %}
 {% endif %}
 
+{% if data.representee['over-18'] === 'yes'%}
+	{% set over18 = t('common.yes1') %}
+{% elif data.representee['over-18'] === 'no'%}
+	{% set over18 = t('common.no1') %}
+{% endif %}
+
+{% if data.aiDeclaration === 'yes' %}
+	{% set aiDeclaration = t('register.checkYourAnswers.aiUsed') %}
+{% elif data.aiDeclaration === 'no' %}
+	{% set aiDeclaration = t('register.checkYourAnswers.aiNotUsed') %}
+{% endif %}
+
 {% set rows = [{
 	key: {
 		text: t('register.checkYourAnswers.whoRepresenting')
@@ -67,7 +79,7 @@
 			text: t('register.checkYourAnswers.areThey18')
 		},
 		value: {
-			text: summaryField( data.representee['over-18'] | title, { 'data-cy': "over-18" })
+			text: summaryField( over18 | title, { 'data-cy': "over-18" })
 		},
 		actions: {
 			items: [
@@ -145,15 +157,32 @@
 		text: summaryField( data['comment'], { "class": "-white-space--pre-line", 'data-cy': "comment" })
 	},
 		actions: {
-		items: [
-			{
-				href: baseUrl + "/register/agent/tell-us-about-project?mode=edit",
-				text: t('common.change'),
-				visuallyHiddenText: t('register.checkYourAnswers.changeCommentsHiddenText'),
-				attributes: { "data-cy": "comment" }
-			}
-		]
-	}
+			items: [
+				{
+					href: baseUrl + "/register/agent/tell-us-about-project?mode=edit",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.changeCommentsHiddenText'),
+					attributes: { "data-cy": "comment" }
+				}
+			]
+		}
+	},
+	{
+		key: {
+		text: t('register.checkYourAnswers.aiDeclaration')
+	},
+		value: {
+		text: summaryField( aiDeclaration, { "class": "-white-space--pre-line" })
+	},
+		actions: {
+			items: [
+				{
+					href: baseUrl + "/register/agent/ai-declaration?mode=edit",
+					text: t('common.change'),
+					visuallyHiddenText: t('register.checkYourAnswers.aiDeclaration')
+				}
+			]
+		}
 	}), rows) %}
 
 <h2 class="govuk-heading-m">{{ t('register.checkYourAnswers.heading3') }}</h2>

@@ -1,4 +1,4 @@
-const { VIEW } = require('../../../../../lib/views');
+const { getRedirectURL } = require('../../_common/about-project/_utils/get-redirect-url');
 
 const view = 'projects/register/_common/about-project/view.njk';
 const key = 'organisation';
@@ -9,12 +9,11 @@ const getRegisterOrganisationAboutProjectController = (req, res) => {
 };
 
 const postRegisterOrganisationAboutProjectController = async (req, res) => {
-	const { body } = req;
+	const { body, params, query, session } = req;
 	const { comment, errors = {}, errorSummary = [] } = body;
+	const { case_ref } = params;
 
 	const hasErrors = !!errors.comment || Object.keys(errors).length > 0;
-
-	const checkYourAnswers = `/${VIEW.REGISTER.ORGANISATION.CHECK_YOUR_ANSWERS}`;
 
 	if (hasErrors) {
 		return res.render(view, {
@@ -33,7 +32,9 @@ const postRegisterOrganisationAboutProjectController = async (req, res) => {
 		req.session.mode = 'final';
 	}
 
-	return res.redirect(`${res.locals.baseUrl}${checkYourAnswers}`);
+	const redirectUrl = getRedirectURL(session, case_ref, query);
+
+	return res.redirect(redirectUrl);
 };
 
 module.exports = {
