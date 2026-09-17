@@ -4,27 +4,55 @@ const { BlobServiceClient } = require('@azure/storage-blob');
 const config = require('./config');
 const logger = require('./logger');
 
-const upload = async (buffer, mimeType, path) => {
-	let client;
-	try {
-		client = new BlobServiceClient(
-			config.backOfficeIntegration.blobStorage.deadlineSubmissions.url,
-			new DefaultAzureCredential()
-		);
-	} catch (e) {
-		logger.error('Error creating BlobServiceClient');
-		throw e;
+class BlobStorage {
+	static instance = null;
+	client = null;
+
+	constructor() {
+		if (BlobStorage.instance) {
+			return BlobStorage.instance;
+		}
 	}
 
-	try {
-		await client
-			.getContainerClient(config.backOfficeIntegration.blobStorage.deadlineSubmissions.container)
-			.getBlockBlobClient(path)
-			.uploadData(buffer, { blobHTTPHeaders: { blobContentType: mimeType } });
-	} catch (e) {
-		logger.error('Error uploading file to Blob Storage');
-		throw e;
+	static getInstance() {
+		if (!BlobStorage.instance) {
+			BlobStorage.instance = new BlobStorage();
+		}
+		return BlobStorage.instance;
 	}
-};
 
-module.exports = { upload };
+	getClient() {
+		if (!this.client) {
+			throw new Error('Blob storage not initialised');
+		}
+		return this.client;
+	}
+
+	async initBlobStorageClient() {
+		if (this.client) return this.getClient();
+		try {
+			this.client = new BlobServiceClient(
+				config.backOfficeIntegration.blobStorage.deadlineSubmissions.url,
+				new DefaultAzureCredential()
+			);
+			return this.getClient();
+		} catch (e) {
+			logger.error('Error creating BlobServiceClient');
+			throw e;
+		}
+	}
+
+	async upload(buffer, mimeType, path) {
+		try {
+			await this.getClient()
+				.getContainerClient(config.backOfficeIntegration.blobStorage.deadlineSubmissions.container)
+				.getBlockBlobClient(path)
+				.uploadData(buffer, { blobHTTPHeaders: { blobContentType: mimeType } });
+		} catch (e) {
+			logger.error('Error uploading file to Blob Storage');
+			throw e;
+		}
+	}
+}
+
+module.exports = { BlobStorage };
