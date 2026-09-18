@@ -183,16 +183,19 @@ module.exports = {
 	}),
 	'what do you want to tell us about this proposed project? organisation': registrationPage({
 		pageTitle: 'What do you want to tell us about this proposed project?',
+		heading: 'Registration comments',
 		url: '/tell-us-about-project',
 		audience: 'organisation'
 	}),
 	'what do you want to tell us about this proposed project? agent': registrationPage({
 		pageTitle: 'What do you want to tell us about this proposed project?',
+		heading: 'Registration comments',
 		url: '/tell-us-about-project',
 		audience: 'agent'
 	}),
 	'what do you want to tell us about this proposed project?': registrationPage({
 		pageTitle: 'What do you want to tell us about this proposed project?',
+		heading: 'Registration comments',
 		url: '/tell-us-about-project',
 		audience: 'myself',
 		titleMatch: 'include'
