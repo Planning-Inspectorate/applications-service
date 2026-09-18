@@ -30,7 +30,7 @@ const createQueryFilters = (query) => {
 		`-${field}`
 	]);
 
-	const defaultSort = '+adviceDate';
+	const defaultSort = '-adviceDate';
 	const sort = allowedSortFieldsWithDirection.includes(query?.sort) ? query?.sort : defaultSort;
 	const sortDirection = sort?.startsWith('-') ? 'desc' : 'asc';
 	const sortFieldName = sort?.replace(/^[+-]/, '');
@@ -52,7 +52,7 @@ const getAllAdvice = async (query) => {
 	const { advice, count } = isBackOfficeCaseReference(caseReference)
 		? mapBackOfficeAdviceToApiWrapper(
 				await getAllBackOfficeAdvice(caseReference, offset, size, searchTerm, orderBy)
-		  )
+			)
 		: await getAllNIAdvice(caseReference, offset, size, searchTerm);
 
 	return {

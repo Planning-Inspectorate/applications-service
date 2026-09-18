@@ -39,7 +39,8 @@ describe('pages/index/controller', () => {
 			expect(res.render).toHaveBeenCalledWith('index/view.njk', {
 				...defaultPageData,
 				allowWelshCases: true,
-				enableProjectsMap: true
+				enableProjectsMap: true,
+				isHomePage: true
 			});
 		});
 	});
