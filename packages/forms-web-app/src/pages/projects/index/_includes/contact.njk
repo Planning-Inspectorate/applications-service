@@ -12,21 +12,7 @@
 	</p>
 
 	<p class="govuk-body">
-		{{ t('projectsIndex.contact.paragraph2') }}
-		{{ pinsContactDetails.supportTeamPhoneNumber }}
-		<p>
-			{{ t('common.pinsContactDetails.csOpeningHoursLine1') }}
-			<br>
-			{{t('common.pinsContactDetails.csOpeningHoursLine2') }}
-		</p>
-	</p>
-
-	<h3 class="govuk-heading-s">
-		{{ t('projectsIndex.contact.heading3') }}
-	</h3>
-
-	<p class="govuk-body">
-		<a class="govuk-link" href="mailto:{{ contactEmailAddress }}">{{ contactEmailAddress }}</a>.
+		{{ t('projectsIndex.contact.paragraph2') }} {{ pinsContactDetails.supportTeamPhoneNumber }}
 	</p>
 
 	<p class="govuk-body">
@@ -34,7 +20,23 @@
 	</p>
 
 	<p class="govuk-body">
+		<a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('projectsIndex.contact.callChargesLinkText') }}</a>
+	</p>
+
+	<h3 class="govuk-heading-s">
+		{{ t('projectsIndex.contact.heading3') }}
+	</h3>
+
+	<p class="govuk-body">
 		{{ t('projectsIndex.contact.paragraph4') }}
+	</p>
+
+	<p class="govuk-body">
+		<a class="govuk-link" href="mailto:{{ contactEmailAddress }}">{{ contactEmailAddress }}</a>
+	</p>
+
+	<p class="govuk-body">
+		{{ t('projectsIndex.contact.paragraph5') }}
 	</p>
 
 	<h3 class="govuk-heading-s">
@@ -42,6 +44,6 @@
 	</h3>
 
 	<p class="govuk-body">
-		{{ t('projectsIndex.contact.paragraph5') }}
+		{{ t('projectsIndex.contact.paragraph6') }}
 	</p>
 </section>

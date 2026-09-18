@@ -7,8 +7,7 @@ describe('pages/register-of-applications/_translations/cy', () => {
 			paragraph1:
 				"Rhoddir isod restr o'r holl geisiadau a gyflwynwyd ers 2008. Mae hyn yn cydymffurfio ag Adran 39 Deddf Cynllunio 2008.",
 			paragraph2: "Chwiliwch yn ôl enw'r prosiect neu'r ymgeisydd.",
-			linkText1:
-				"Lawrlwythwch dabl sy'n cynnwys rhestr lawn o bob un o'r {{-totalApplications}} o brosiectau (CSV)",
+			linkText1: "Lawrlwythwch dabl sy'n cynnwys rhestr lawn o bob un o'r o brosiectau (CSV)",
 			paragraph3: 'Yn dangos {{-from}} i {{-to}} o {{-total}} brosiectau.',
 			sortByLinks: {
 				projectName: "Enw'r prosiect",

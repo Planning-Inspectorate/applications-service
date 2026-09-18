@@ -48,7 +48,7 @@ describe('pages/have-your-say-guide/_utils/get-have-your-say-guide-steps', () =>
 					},
 					takingPart: {
 						content:
-							'Pre-application is the first stage of the process. This is where the applicant must consult with people and organisations. The applicant must provide information about how you can submit your comments to them. It is important to get involved at this stage as you can influence the application before the applicant sends it to the Planning Inspectorate.',
+							'Pre-application is the first stage of the process. This is where the applicant can engage or consult (or both) with people and organisations. The applicant will provide information about how you can get involved with any of their engagement or consultation (or both) activities. Getting involved at this stage means you can influence the application before the applicant sends it to the Planning Inspectorate.',
 						linkText:
 							'Taking part before the application is submitted to the Planning Inspectorate.',
 						title: 'Taking part at the pre-application stage',

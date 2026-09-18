@@ -9,7 +9,7 @@ describe('pages/process-guide/acceptance/_translations/cy', () => {
 			listItem2: 'nid ydym yn derbyn y cais',
 			listItem3: "mae'r ymgeisydd yn tynnu ei gais yn ôl",
 			paragraph1:
-				"Mae'r ymgeisydd yn anfon ei gais atom yn ystod y cam hwn. Mae'n rhaid i'r cais gynnwys yr holl ddogfennau sy'n ofynnol, fel yr amlinellir mewn deddfwriaeth, yn ogystal â manylion yr ymgynghoriad y mae'r ymgeisydd wedi'i gynnal yn ystod y cam cyn-ymgeisio. Rydym yn edrych ar y dogfennau i wirio a allwn dderbyn y cais i'w archwilio. Mae gennym 28 niwrnod i wneud y penderfyniad hwn.",
+				"Mae'r ymgeisydd yn anfon ei gais atom yn ystod y cam hwn. Mae'n rhaid i'r cais gynnwys yr holl ddogfennau sy'n ofynnol, fel yr amlinellir mewn deddfwriaeth. Rydym yn edrych ar y dogfennau i wirio a allwn dderbyn y cais i'w archwilio. Mae gennym 28 niwrnod i wneud y penderfyniad hwn.",
 			paragraph2: 'Mae un o 3 chanlyniad yn bosibl yn ystod y cam hwn:',
 			paragraph3: "Os derbynnir y cais, bydd yn symud ymlaen i'r cam cyn-archwilio.",
 			paragraph4:

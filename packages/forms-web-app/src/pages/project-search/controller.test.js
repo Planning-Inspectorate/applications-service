@@ -56,6 +56,7 @@ describe('pages/project-search/controller', () => {
 						activeFilters: [],
 						applicationsDownloadURL: '/api/applications-download',
 						totalApplicationsWithoutFilters: 21,
+						totalItems: 21,
 						applications: [
 							{
 								applicant: 'EDF',

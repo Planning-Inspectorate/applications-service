@@ -1,7 +1,7 @@
 const { formatProjectUpdate } = require('./format-project-update');
 
 describe('pages/projects/_utils/format-project-update', () => {
-	it('returns English update content and date if language is English (default)', () => {
+	(it('returns English update content and date if language is English (default)', () => {
 		const projectUpdate = {
 			updateContentEnglish: 'some content in English',
 			updateContentWelsh: 'some content in Welsh',
@@ -41,5 +41,5 @@ describe('pages/projects/_utils/format-project-update', () => {
 			};
 
 			expect(formatProjectUpdate(projectUpdate, 'cy')).toEqual(expectedOutput);
-		});
+		}));
 });

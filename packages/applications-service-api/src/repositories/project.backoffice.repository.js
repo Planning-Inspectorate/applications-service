@@ -30,10 +30,10 @@ const getAllApplications = async (options = {}) => {
 			? {
 					publishStatus: 'published',
 					AND: []
-			  }
+				}
 			: {
 					publishStatus: 'published'
-			  };
+				};
 
 	if (excludeNullDateOfSubmission) {
 		where['AND'].push({

@@ -19,7 +19,7 @@ jest.mock('../../../src/config', () => {
 });
 
 describe('pages/_utils/get-govuk-urls', () => {
-	it('returns correct URLs - en (default)', () => {
+	(it('returns correct URLs - en (default)', () => {
 		expect(getGovUkUrls()).toEqual({
 			developmentConsentUrl: 'URL 1',
 			developmentConsentAndAdviceUrl: 'URL 2',
@@ -38,5 +38,5 @@ describe('pages/_utils/get-govuk-urls', () => {
 				advicePagesUrl: 'Welsh URL 5',
 				nationalPolicyStatementsUrl: 'Welsh URL 6'
 			});
-		});
+		}));
 });

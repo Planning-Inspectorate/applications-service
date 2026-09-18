@@ -6,13 +6,15 @@ const { getRelatedContentLinks } = require('./get-related-content-links');
 const { getProjectsMapURL } = require('../../projects-map/utils/get-projects-map-url');
 const { queryStringBuilder } = require('../../../utils/query-string-builder');
 
-const getPageData = (i18n, query, applications, filters, totalItems) => {
+const getPageData = (i18n, query, applications, filters, totalItems, totalItemsWithoutFilters) => {
 	const queryString = queryStringBuilder(query, Object.keys(query), true);
+
 	return {
 		...getFilters(i18n, query, filters),
 		applications: mapApplications(i18n, applications),
 		applicationsDownloadURL,
-		totalApplicationsWithoutFilters: totalItems,
+		totalItems,
+		totalApplicationsWithoutFilters: totalItemsWithoutFilters,
 		query,
 		queryString,
 		sortByLinks: getProjectSearchSortByLinks(i18n, query),

@@ -17,3 +17,15 @@
 		{{ googleAnalyticsId }}
 	</script>
 {% endif %}
+
+
+{% if isHomePage %}
+<script type="application/ld+json" {% if cspNonce %}nonce="{{ cspNonce }}"{% endif %}>
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Find a National Infrastructure Project",
+  "url": "https://national-infrastructure-consenting.planninginspectorate.gov.uk"
+}
+</script>
+{% endif %}

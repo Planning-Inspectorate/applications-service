@@ -44,7 +44,7 @@ describe('pages/process-guide/_utils/get-process-guide-steps', () => {
 					},
 					preApplication: {
 						content: [
-							'This is where the applicant starts to create their application. The applicant is required to consult with people and organisations in the area. They must also create detailed documents about the impact the project could have on the environment.',
+							'This is where the applicant starts to create their application. Government guidance encourages the applicant to engage or consult (or both) with people and organisations in the area. They must also create detailed documents about the impact the project could have on the environment.',
 							'It is important to get involved at this stage to influence the application before the applicant sends it to the Planning Inspectorate.'
 						],
 						linkText: 'Find out what you can do at this stage and check our detailed guides.',

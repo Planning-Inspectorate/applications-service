@@ -22,7 +22,7 @@ const addHrefToErrorSummary = (errorSummary, href) =>
 		? errorSummary.map((error) => ({
 				...error,
 				href
-		  }))
+			}))
 		: errorSummary;
 
 const makeIntoArray = (item) => (Array.isArray(item) ? item : [item]);

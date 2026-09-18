@@ -19,13 +19,13 @@ describe('pages/process-guide/index/_translations/en', () => {
 			listItem9: 'railways',
 			listItem10: 'gas pipelines',
 			paragraph4:
-				'We appoint independent inspectors to examine application and make recommendations to the relevant Secretary of State about whether permission for development should be given.',
+				'We appoint independent inspectors to examine the application and make recommendations to the relevant Secretary of State about whether permission for development should be given.',
 			paragraph5: 'The relevant Secretary of State makes the final decision.',
 			paragraph6:
 				'There are several stages in the process for considering whether a national infrastructure project should be given consent. The whole process can take around 18 months.',
 			heading2: 'Guide for people or organisations who want to have their say',
 			paragraph7:
-				'Members of the public can get involved in early consultations before an application has been submitted by contacting the applicant directly.',
+				'Members of the public can get involved in early engagement or consultation (or both) before an application has been submitted by contacting the applicant directly.',
 			paragraph8:
 				'Alternatively you can register to have your say on this website during the pre-examination stage.',
 			paragraph9:

@@ -4,10 +4,9 @@ const {
 	getRegisterOfApplicationsSortByLinks
 } = require('./get-register-of-applications-sort-by-links');
 
-const getPageData = (i18n, applications, query, totalItems) => ({
+const getPageData = (i18n, applications, query) => ({
 	applications: mapApplications(i18n, applications),
 	applicationsDownloadURL,
-	totalApplicationsWithoutFilters: totalItems,
 	sortByLinks: getRegisterOfApplicationsSortByLinks(i18n, query),
 	query
 });

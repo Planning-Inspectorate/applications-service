@@ -66,7 +66,7 @@ module.exports = {
 		displaySpecificAndGeneralAdvice: process.env.FEATURE_REGISTER_OF_ADVICE === 'true'
 	},
 	serviceFeedbackUrl:
-		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjVqzqAxXAi1LghAWTH6Y3OJUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQS4u',
+		'https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjdcJNm7Sd5hBrDlXlOtp9WFUMTNIVDdHTTdWRFU5MlRQRFczNzdPNDRHQSQlQCN0PWcu',
 	pinsContactDetails: {
 		enquiriesEmailAddress: 'nienquiries@planninginspectorate.gov.uk',
 		supportTeamPhoneNumber: '0303 444 5000',
