@@ -23,7 +23,7 @@ class PO_TellAboutProject extends PageObject {
 	assertDoNotIncludePersonalDetailsPresent() {
 		this.identifiers
 			.personalDetailsSummary()
-			.should('contain.text', 'Do not include these details.');
+			.should('contain.text', 'Examples of sensitive information');
 	}
 }
 export default PO_TellAboutProject;
