@@ -53,6 +53,7 @@ const projectPropertiesFromMessage = [
 	'publishStatus',
 	'sector',
 	'projectType',
+	'subProjectType',
 	'sourceSystem',
 	'stage',
 	'projectLocation',
