@@ -16,6 +16,7 @@ module.exports = {
 			'email',
 			'telephone',
 			'comment',
+			'ai-declaration',
 			'organisation-name',
 			'role',
 			'representing',

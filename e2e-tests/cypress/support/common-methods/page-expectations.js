@@ -397,5 +397,20 @@ module.exports = {
 		title: 'Project search',
 		heading: 'All Projects',
 		url: '/project-search'
+	}),
+	'ai usage declaration': registrationPage({
+		pageTitle: 'AI usage declaration',
+		url: '/ai-declaration',
+		audience: 'myself'
+	}),
+	'ai usage declaration organisation': registrationPage({
+		pageTitle: 'AI usage declaration',
+		url: '/ai-declaration',
+		audience: 'organisation'
+	}),
+	'ai usage declaration agent': registrationPage({
+		pageTitle: 'AI usage declaration',
+		url: '/ai-declaration',
+		audience: 'agent'
 	})
 };

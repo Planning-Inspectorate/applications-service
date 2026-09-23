@@ -10,6 +10,7 @@ class PO_CyaBeforeReg extends PageObject {
 		fullNameChangeLink: () => cy.get('[data-cy="full-name"]').last(),
 		organisationNameChangeLink: () => cy.get('[data-cy="organisation-name"]').last(),
 		representingChangeLink: () => cy.get('[data-cy="representing"]').last(),
+		aiDeclarationChangeLink: () => cy.get('a[href*="/ai-declaration?mode=edit"]').last(),
 		acceptAndRegisterButton: () => cy.get('[data-cy="button-accept-and-register"]')
 	};
 
@@ -72,6 +73,9 @@ class PO_CyaBeforeReg extends PageObject {
 				break;
 			case 'Who are you representing':
 				this.identifiers.representingChangeLink().click();
+				break;
+			case 'AI declaration':
+				this.identifiers.aiDeclarationChangeLink().click();
 				break;
 		}
 	}
