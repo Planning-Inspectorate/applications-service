@@ -12,7 +12,8 @@ class PO_CyaBeforeReg extends PageObject {
 		addressChangeLink: () => cy.get('[data-cy="address"]').last(),
 		emailChangeLink: () => cy.get('[data-cy="email"]').last(),
 		telephoneChangeLink: () => cy.get('[data-cy="telephone"]').last(),
-		commentChangeLink: () => cy.get('[data-cy="comment"]').last()
+		commentChangeLink: () => cy.get('[data-cy="comment"]').last(),
+		aiDeclarationChangeLink: () => cy.get('a[href*="/ai-declaration?mode=edit"]').last()
 	};
 
 	get functions() {
@@ -77,6 +78,9 @@ class PO_CyaBeforeReg extends PageObject {
 				break;
 			case 'Your comments change':
 				this.identifiers.commentChangeLink().click();
+				break;
+			case 'AI declaration':
+				this.identifiers.aiDeclarationChangeLink().click();
 				break;
 		}
 	}
