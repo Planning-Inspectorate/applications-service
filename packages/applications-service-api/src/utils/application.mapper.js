@@ -243,6 +243,8 @@ const mapNIApplicationToApi = (application) => {
 		isMaterialChange: application.isMaterialChange,
 		deadlineForSubmissionOfRecommendation: null,
 		deadlineForDecision: null,
+		subProjectType: application.subProjectType,
+		additionalDetails: application.additionalDetails,
 		projectNameWelsh: application.ProjectNameWelsh,
 		projectDescriptionWelsh: application.SummaryWelsh,
 		projectLocationWelsh: application.ProjectLocationWelsh
@@ -311,6 +313,8 @@ const mapBackOfficeApplicationToApi = (application) => {
 		sector: mapColumnValueToApi('sector', application.sector?.substring(0, 2)),
 		longLat: mapNorthingEastingToLongLat(application.northing, application.easting),
 		mapZoomLevel: mapZoomLevel(application.mapZoomLevel),
+		subProjectType: application.subProjectType,
+		additionalDetails: application.additionalDetails,
 		regions: application.regions?.split(','), // TODO store in separate table not CSV
 		anticipatedCloseOfExamination: application.ExaminationTimetable?.[0]?.date ?? null
 	};
@@ -357,6 +361,8 @@ const mapResponseBackToNILegacyFormat = (application) => {
 		WebAddress: application.applicantWebsite,
 		ProjectEmailAddress: application.projectEmailAddress,
 		Region: application.regions?.map((region) => regionMap[region]).join(','),
+		subProjectType: application.subProjectType,
+		additionalDetails: application.additionalDetails,
 		ProjectLocation: application.projectLocation,
 		AnticipatedGridRefEasting: application.easting,
 		AnticipatedGridRefNorthing: application.northing,

@@ -120,6 +120,7 @@ model Project {
 	publishStatus                                     String?
 	sector                                            String?
 	projectType                                       String?
+	subProjectType                                    String?                @db.NVarChar(1000)
 	sourceSystem                                      String?
 	stage                                             String?
 	projectLocation                                   String?
