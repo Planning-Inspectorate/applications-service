@@ -2,7 +2,7 @@ const uuid = require('uuid');
 const logger = require('../lib/logger');
 const { textToPdf } = require('./pdf');
 const { md5 } = require('./md5');
-const { upload } = require('../lib/blobStorage');
+const { BlobStorage } = require('../lib/blobStorage');
 
 const generateRepresentationPDF = (submissionId, submissionRepresentation, fileName) => {
 	const file = textToPdf(`Submission ID: ${submissionId}\n\n${submissionRepresentation}`);
@@ -24,7 +24,9 @@ const uploadSubmissionFileToBlobStorage = async (file) => {
 	const path = `${blobGuid}/1`;
 
 	logger.info(`Uploading file to blob storage at path ${path}`);
-	await upload(file.buffer, file.mimeType, path);
+	const blobInstance = BlobStorage.getInstance();
+	const blobClient = await blobInstance.initBlobStorageClient();
+	await blobClient.upload(file.buffer, file.mimeType, path);
 
 	return blobGuid;
 };
