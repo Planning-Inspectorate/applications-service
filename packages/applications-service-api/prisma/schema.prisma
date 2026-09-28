@@ -62,7 +62,6 @@ model Document {
 	modifiedAt             DateTime? @default(now())
 
 	@@index([caseRef])
-	@@index([representationId])
 	@@index([documentType])
 }
 
@@ -197,7 +196,7 @@ model ProjectUpdate {
 }
 
 model ExaminationTimetable {
-	eventId                Int                             @unique
+	eventId                Int                             @id
 	caseReference          String
 	type                   String
 	eventTitle             String
@@ -215,7 +214,7 @@ model ExaminationTimetable {
 }
 
 model ExaminationTimetableEventItem {
-	id                            Int                   @unique @default(autoincrement())
+	id                            Int                   @id @default(autoincrement())
 	eventLineItemDescription      String                @db.NText
 	eventLineItemDescriptionWelsh String?               @db.NText
 	eventId                       Int
@@ -223,7 +222,7 @@ model ExaminationTimetableEventItem {
 }
 
 model Advice {
-	adviceId            Int       @unique
+	adviceId            Int       @id
 	adviceReference     String?
 	caseReference       String?
 	caseId              Int
