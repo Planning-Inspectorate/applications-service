@@ -9,6 +9,9 @@ export default defineConfig([
 		'packages/applications-service-api/prisma/client/**/*.js',
 		'packages/back-office-subscribers/lib/prisma-client/**/*.js',
 		'packages/e2e_tests/**/*.js',
+		'e2e-tests/**/*.js',
+		'**/dist/**/*.js',
+		'build/**/*.js',
 		'webpack.**',
 		'packages/forms-web-app/src/public/scripts/*'
 	]),

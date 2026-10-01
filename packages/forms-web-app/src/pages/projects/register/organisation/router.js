@@ -42,6 +42,10 @@ const {
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
+const {
+	getRegisterAiDeclarationController,
+	postRegisterAiDeclarationController
+} = require('../_common/ai-declaration/controller');
 
 const {
 	getRegisterOrganisationNameURL
@@ -82,6 +86,9 @@ const {
 const {
 	getRegisterOrganisationAlreadyRegisteredURL
 } = require('./already-registered/_utils/get-register-organisation-already-registered-url');
+const {
+	getRegisterOrganisationAiDeclarationURL
+} = require('./ai-declaration/_utils/get-register-organisation-ai-declaration-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
@@ -104,6 +111,9 @@ const {
 const {
 	validate: aboutProjectValidationRules
 } = require('../../../../validators/register/tell-us-about-project');
+const {
+	rules: aiDeclarationValidationRules
+} = require('../../../../validators/register/ai-declaration');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -120,6 +130,7 @@ const registerOrganisationDeclarationURL = getRegisterOrganisationDeclarationURL
 const registerOrganisationProcessSubmissionURL = getRegisterOrganisationProcessSubmissionURL();
 const registerOrganisationCompleteURL = getRegisterOrganisationCompleteURL();
 const registerOrganisationAlreadyRegisteredURL = getRegisterOrganisationAlreadyRegisteredURL();
+const registerOrganisationAiDeclarationURL = getRegisterOrganisationAiDeclarationURL();
 
 const registerOrganisationRouter = express.Router({ mergeParams: true });
 
@@ -251,6 +262,21 @@ registerOrganisationRouter.get(
 	registerStartRedirectMiddleware,
 	registerMiddleware,
 	getRegisterOrganisationCheckAnswersController
+);
+
+registerOrganisationRouter.get(
+	registerOrganisationAiDeclarationURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterAiDeclarationController
+);
+registerOrganisationRouter.post(
+	registerOrganisationAiDeclarationURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	aiDeclarationValidationRules(),
+	validationErrorHandler,
+	postRegisterAiDeclarationController
 );
 
 registerOrganisationRouter.get(

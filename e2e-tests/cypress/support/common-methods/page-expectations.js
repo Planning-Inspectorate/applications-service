@@ -183,16 +183,19 @@ module.exports = {
 	}),
 	'what do you want to tell us about this proposed project? organisation': registrationPage({
 		pageTitle: 'What do you want to tell us about this proposed project?',
+		heading: 'Registration comments',
 		url: '/tell-us-about-project',
 		audience: 'organisation'
 	}),
 	'what do you want to tell us about this proposed project? agent': registrationPage({
 		pageTitle: 'What do you want to tell us about this proposed project?',
+		heading: 'Registration comments',
 		url: '/tell-us-about-project',
 		audience: 'agent'
 	}),
 	'what do you want to tell us about this proposed project?': registrationPage({
 		pageTitle: 'What do you want to tell us about this proposed project?',
+		heading: 'Registration comments',
 		url: '/tell-us-about-project',
 		audience: 'myself',
 		titleMatch: 'include'
@@ -394,5 +397,20 @@ module.exports = {
 		title: 'Project search',
 		heading: 'All Projects',
 		url: '/project-search'
+	}),
+	'ai usage declaration': registrationPage({
+		pageTitle: 'AI usage declaration',
+		url: '/ai-declaration',
+		audience: 'myself'
+	}),
+	'ai usage declaration organisation': registrationPage({
+		pageTitle: 'AI usage declaration',
+		url: '/ai-declaration',
+		audience: 'organisation'
+	}),
+	'ai usage declaration agent': registrationPage({
+		pageTitle: 'AI usage declaration',
+		url: '/ai-declaration',
+		audience: 'agent'
 	})
 };

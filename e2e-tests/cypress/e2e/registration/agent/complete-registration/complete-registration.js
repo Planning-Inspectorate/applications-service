@@ -11,6 +11,7 @@ import PO_RepEmailAddress from '../what-is-their-email-address/PageObjects/PO_Re
 import PO_RepTelNumber from '../what-is-their-telephone-number/PageObjects/PO_RepTelNumber';
 import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageObjects/PO_TellAboutProject';
 import PO_CyaBeforeReg from './PageObjects/PO_CyaBeforeReg';
+import { handleAiDeclarationIfPresent } from '../../shared/registerCommentPageSteps';
 const fullNamePage = new PO_FullName();
 const orgYouWorkFor = new PO_OrgYouWorkFor();
 const emailAddress = new PO_EmailAddress();
@@ -59,6 +60,7 @@ And('I have been asked to check my answers', () => {
 	repTelNumber.clickSaveAndContinue();
 	tellAboutProject.enterTextIntoCommentsField(shortComment);
 	tellAboutProject.clickSaveAndContinue();
+	handleAiDeclarationIfPresent();
 });
 
 Then('I am on the {string} page', (pageName) => {

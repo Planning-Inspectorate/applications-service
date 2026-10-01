@@ -7,6 +7,7 @@ import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageO
 import PO_RegComplete from './PageObjects/PO_RegComplete';
 import PO_WhoYouRegisterFor from '../../who-are-you-registering-for/PageObjects/PO_WhoYouRegisterFor';
 import {
+	handleAiDeclarationIfPresent,
 	registerAddAnotherCommentRadioStep,
 	registerTopicFieldStep
 } from '../../shared/registerCommentPageSteps';
@@ -32,6 +33,7 @@ Given('I navigate to UK address details page', () => {
 
 And('User clicks on continue button', () => {
 	addressDetails.clickSaveAndContinue();
+	handleAiDeclarationIfPresent();
 });
 
 And('I enter below data into address details page', function (table) {

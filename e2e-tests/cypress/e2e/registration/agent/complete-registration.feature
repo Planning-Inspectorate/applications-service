@@ -25,6 +25,7 @@ Feature: Complete registration as Agent representing a person journey
 			| Their address                               | Representee Address Line 1 NE27 0BB United Kingdom                               | Change their address                               |
 			| Their telephone number                      | 12121212121                                                                      | Change their telephone number                      |
 			| Registration comments                       | I am against the proposal since it will reduce resident parking provision        | Change registration comments                       |
+			| AI declaration                              | AI not used                                                                      | Change                                             |
 		And User clicks on accept and continue button for "on behalf"
 		Then I am on the "declaration registering on behalf of someone else" page
 		And User clicks on accept and register button
@@ -44,3 +45,7 @@ Feature: Complete registration as Agent representing a person journey
 		And user selects "A household" on who are you representing page
 		And I click on the continue button
 		Then I am on the "what is the name of the household you are representing?" page
+
+	Scenario: Click on AI declaration change link
+		And I click on "AI declaration" change link
+		Then I am on the "AI usage declaration agent" page

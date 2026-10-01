@@ -11,13 +11,14 @@
 		{{ t('projectsIndex.contact.paragraph1') }}
 	</p>
 
-	<p class="govuk-body">
-		{{ t('projectsIndex.contact.paragraph2') }} {{ pinsContactDetails.supportTeamPhoneNumber }}
-	</p>
-
-	<p class="govuk-body">
-		{{ t('projectsIndex.contact.paragraph3') }}
-	</p>
+	<ul class="govuk-list">
+		<li>
+			{{ t('projectsIndex.contact.paragraph2') }} {{ pinsContactDetails.supportTeamPhoneNumber }}
+		</li>
+		<li>
+			{{ t('projectsIndex.contact.paragraph3') }}
+		</li>
+	</ul>
 
 	<p class="govuk-body">
 		<a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('projectsIndex.contact.callChargesLinkText') }}</a>
@@ -31,13 +32,14 @@
 		{{ t('projectsIndex.contact.paragraph4') }}
 	</p>
 
-	<p class="govuk-body">
-		<a class="govuk-link" href="mailto:{{ contactEmailAddress }}">{{ contactEmailAddress }}</a>
-	</p>
-
-	<p class="govuk-body">
-		{{ t('projectsIndex.contact.paragraph5') }}
-	</p>
+	<ul class="govuk-list">
+		<li>
+			<a class="govuk-link" href="mailto:{{ contactEmailAddress }}">{{ contactEmailAddress }}</a>
+		</li>
+		<li>
+			{{ t('projectsIndex.contact.paragraph5') }}
+		</li>
+	</ul>
 
 	<h3 class="govuk-heading-s">
 		{{ t('projectsIndex.contact.heading4') }}

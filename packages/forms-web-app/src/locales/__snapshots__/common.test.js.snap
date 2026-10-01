@@ -88,6 +88,7 @@ exports[`locales/common should return the correct English common translations 1`
       "postcodeEmpty": "Enter a postcode",
       "postcodeLength": "Postcode must be 16 characters or less",
     },
+    "aiUsageDeclaration": "Select yes if you used AI to help produce your registration comments",
     "areYou18": "Select yes if you are 18 or over",
     "emailAddress": {
       "empty": "Enter your email address",
@@ -203,6 +204,7 @@ exports[`locales/common should return the correct Welsh common translations 1`] 
       "postcodeEmpty": "Nodwch god post",
       "postcodeLength": "Mae'n rhaid i'r cod post gynnwys 16 o nodau neu lai",
     },
+    "aiUsageDeclaration": "Dewiswch 'ie' os ydych wedi defnyddio AI i helpu i gynhyrchu eich sylwadau cofrestru",
     "areYou18": "Dewiswch 'ydw' os ydych yn 18 oed neu'n hŷn",
     "emailAddress": {
       "empty": "Nodwch eich cyfeiriad e-bost",

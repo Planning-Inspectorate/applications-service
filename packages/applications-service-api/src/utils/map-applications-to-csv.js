@@ -6,6 +6,20 @@ const getUrlForBlobStoreDocs = require('./get-url-for-blob-store-docs');
 const formatIfDate = (potentialDate) =>
 	moment(potentialDate).isValid() ? moment(potentialDate).format('YYYY-MM-DD') : potentialDate;
 
+const formatProjectSubTypeForCSV = (application) => {
+	const projectSubType =
+		application.additionalDetails?.subProjectType || application.subProjectType;
+
+	if (!projectSubType) {
+		return '';
+	}
+
+	return projectSubType
+		.split('_')
+		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+		.join(' ');
+};
+
 const formatStageForCSV = (application) => {
 	const { isMaterialChange } = application;
 
@@ -43,6 +57,7 @@ const mapApplicationsToCSV = (applications) => {
 		'Project name': application.ProjectName,
 		'Applicant name': application.PromoterName,
 		'Application type': application.Proposal,
+		'Project type': formatProjectSubTypeForCSV(application),
 		Region: application.Region,
 		Location: application.ProjectLocation,
 		'Grid reference - Easting': application.AnticipatedGridRefEasting,
