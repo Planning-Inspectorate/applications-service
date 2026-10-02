@@ -17,13 +17,30 @@ module.exports = async (context, message) => {
 		`invoking nsip-document-unpublish function for documentId ${documentId} and caseRef ${caseRef}`
 	);
 
-	// we use deleteMany to avoid the need to check if the document exists
-	await prismaClient.document.deleteMany({
-		where: {
-			documentId
-		}
+	// retrieve thhe document
+	const document = await prismaClient.document.findUnique({
+		where: { documentId }
 	});
-	context.log(`unpublished document for caseRef ${caseRef} with documentId: ${documentId}`);
+
+	// check if the documemt has examination Ref number
+	// then update its status to unpublish else delete it
+	if (document && document.examinationRefNo) {
+		await prismaClient.document.update({
+			where: { documentId },
+			data: { publishedStatus: 'unpublished' }
+		});
+		context.log(
+			`updated document publishedStatus to 'unpublished' for caseRef ${caseRef} with documentId: ${documentId} (retained due to EL reference)`
+		);
+	} else {
+		// we use deleteMany to avoid the need to check if the document exists
+		await prismaClient.document.deleteMany({
+			where: { documentId }
+		});
+		context.log(
+			`unpublished and deleted document for caseRef ${caseRef} with documentId: ${documentId}`
+		);
+	}
 
 	if (!caseRef) {
 		context.log('skipping cache clear as caseRef is required');
