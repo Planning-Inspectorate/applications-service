@@ -1,10 +1,12 @@
 const sendMessage = require('../index');
 
+const mockUpdateMany = jest.fn();
 const mockDeleteMany = jest.fn();
 
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
 		document: {
+			updateMany: (query) => mockUpdateMany(query),
 			deleteMany: (query) => mockDeleteMany(query)
 		}
 	}
@@ -30,6 +32,13 @@ const mockMessage = {
 };
 
 describe('nsip-document-unpublish', () => {
+	beforeEach(() => {
+		mockUpdateMany.mockReset();
+		mockDeleteMany.mockReset();
+		mockContext.log.mockReset();
+		mockContext.warn.mockReset();
+	});
+
 	it('logs starting message', async () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockContext.log).toHaveBeenCalledWith(
@@ -56,15 +65,54 @@ describe('nsip-document-unpublish', () => {
 		expect(mockContext.log).toHaveBeenCalledWith('skipping cache clear as caseRef is required');
 	});
 
-	it('unpublishes document', async () => {
+	it('deletes document when examinationRefNo is missing', async () => {
 		await sendMessage(mockContext, mockMessage);
+
 		expect(mockDeleteMany).toHaveBeenCalledWith({
 			where: {
 				documentId: mockMessage.documentId
 			}
 		});
+		expect(mockUpdateMany).not.toHaveBeenCalled();
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`unpublished document for caseRef ${mockMessage.caseRef} with documentId: ${mockMessage.documentId}`
+			`deleted document for caseRef ${mockMessage.caseRef} with documentId: ${mockMessage.documentId} (no EL reference)`
+		);
+	});
+
+	it('deletes document when examinationRefNo is null', async () => {
+		await sendMessage(mockContext, {
+			...mockMessage,
+			examinationRefNo: null
+		});
+
+		expect(mockDeleteMany).toHaveBeenCalledWith({
+			where: {
+				documentId: mockMessage.documentId
+			}
+		});
+		expect(mockUpdateMany).not.toHaveBeenCalled();
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`deleted document for caseRef ${mockMessage.caseRef} with documentId: ${mockMessage.documentId} (no EL reference)`
+		);
+	});
+
+	it('updates publishedStatus to unpublished when document has examinationRefNo', async () => {
+		await sendMessage(mockContext, {
+			...mockMessage,
+			examinationRefNo: 'REP1-001'
+		});
+
+		expect(mockUpdateMany).toHaveBeenCalledWith({
+			where: {
+				documentId: mockMessage.documentId
+			},
+			data: {
+				publishedStatus: 'unpublished'
+			}
+		});
+		expect(mockDeleteMany).not.toHaveBeenCalled();
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`unpublished document for caseRef ${mockMessage.caseRef} with documentId: ${mockMessage.documentId} (retained due to EL reference)`
 		);
 	});
 });
