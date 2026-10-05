@@ -17,7 +17,11 @@ const getFilters = (caseReference) => {
 
 const getDocuments = async (query) => {
 	let whereClause = {
-		AND: [{ caseRef: query.caseReference }, { stage: { not: null, notIn: ['draft', '0'] } }]
+		AND: [
+			{ caseRef: query.caseReference },
+			{ stage: { not: null, notIn: ['draft', '0'] } },
+			{ publishedStatus: { not: 'unpublished' } }
+		]
 	};
 
 	if (query.datePublishedFrom || query.datePublishedTo) {
