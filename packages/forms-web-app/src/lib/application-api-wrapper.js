@@ -241,8 +241,28 @@ exports.authenticateToken = async (token, email) => {
 	});
 };
 
-exports.getTimetables = async (caseRef) =>
-	handler('getTimetables', `/api/v1/timetables/${caseRef}`);
+exports.getTimetables = async (caseRef) => {
+	const cacheKey = `${caseRef}:timetables`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getTimetables', `/api/v1/timetables/${caseRef}`);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
 
 exports.wrappedPostSubmission = async (caseRef, body) => {
 	const URL = `/api/v1/submissions/${caseRef}`;
@@ -342,6 +362,29 @@ exports.getAdviceOnProjectById = async (adviceId, caseReference) => {
 	return response;
 };
 
+exports.getProjectUpdates = async (caseReference) => {
+	const cacheKey = `${caseReference}:projectUpdates`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getProjectUpdates', `/api/v1/project-updates/${caseReference}`);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
+
 exports.getDocumentUriByDocRef = async (docRef) => {
 	return handler('getDocumentUriByDocRef', `/api/v3/documents/short-link/${docRef}`);
 };
@@ -374,6 +417,3 @@ exports.deleteGetUpdatesSubscription = async (caseReference, email) => {
 
 	return handler('deleteGetUpdatesSubscription', URL, method, {});
 };
-
-exports.getProjectUpdates = async (caseReference) =>
-	handler('getProjectUpdates', `/api/v1/project-updates/${caseReference}`);

@@ -1,5 +1,6 @@
 const { prismaClient } = require('../lib/prisma');
 const buildMergeQuery = require('../lib/build-merge-query');
+const axios = require('axios');
 
 module.exports = async (context, message) => {
 	const projectUpdateId = message.id;
@@ -33,4 +34,13 @@ module.exports = async (context, message) => {
 
 	await prismaClient.$executeRawUnsafe(statement, ...parameters);
 	context.log(`upserted projectUpdate with projectUpdateId ${projectUpdateId}`);
+	context.log(`clearing project updates cache for caseRef ${caseReference}...`);
+
+	const cacheKeyPattern = `cache:${caseReference}:projectUpdates`;
+	const url = `${process.env.APPLICATIONS_SERVICE_API_URL}/api/v1/cache/clear?pattern=${cacheKeyPattern}`;
+
+	const { data: cacheClearResponse } = await axios.delete(url);
+
+	context.log(JSON.stringify(cacheClearResponse, null, 2));
+	context.log(`project updates cache cleared for caseRef ${caseReference}`);
 };
