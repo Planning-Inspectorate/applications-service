@@ -93,8 +93,28 @@ async function handler(
 }
 
 exports.handler = handler;
+
 exports.getProjectData = async (case_ref) => {
-	return handler('getProjectData', `/api/v1/applications/${case_ref}`);
+	const cacheKey = `${case_ref}:projectData`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getProjectData', `/api/v1/applications/${case_ref}`);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
 };
 
 exports.getAllProjectList = async (queryString = '') =>
@@ -263,6 +283,60 @@ exports.wrappedSearchDocumentsV3 = async (body) => {
 		await setCache(cacheKey, response);
 	} catch (error) {
 		parentLogger.warn(error, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
+
+exports.searchAdvice = async (paramsObj) => {
+	const searchParams = new URLSearchParams(paramsObj);
+	const url = `/api/v1/advice?${searchParams.toString()}`;
+	const method = 'GET';
+	const hashedParams = hashObject(paramsObj);
+	const caseRef = paramsObj.caseReference ?? '';
+
+	const cacheKey = `${caseRef}:advice:${hashedParams}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('searchAdviceDocuments', url, method, {});
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
+
+exports.getAdviceOnProjectById = async (adviceId, caseReference) => {
+	const url = `/api/v1/advice/${adviceId}?caseReference=${caseReference}`;
+	const method = 'GET';
+	const cacheKey = `${caseReference}:advice:${adviceId}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getAdviceDetail', url, method);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
 	}
 
 	return response;

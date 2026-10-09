@@ -1,5 +1,6 @@
 const { prismaClient } = require('../lib/prisma');
 const buildMergeQuery = require('../lib/build-merge-query');
+const axios = require('axios');
 
 module.exports = async (context, message) => {
 	const caseReference = message.caseReference;
@@ -30,4 +31,13 @@ module.exports = async (context, message) => {
 	context.log(
 		`nsip-project-unpublish function unpublished project with caseReference: ${caseReference}`
 	);
+	context.log(`clearing project data cache for caseRef ${caseReference}...`);
+
+	const cacheKeyPattern = `cache:${caseReference}:projectData:*`;
+	const url = `${process.env.APPLICATIONS_SERVICE_API_URL}/api/v1/cache/clear?pattern=${cacheKeyPattern}`;
+
+	const { data: cacheClearResponse } = await axios.delete(url);
+
+	context.log(JSON.stringify(cacheClearResponse, null, 2));
+	context.log(`project data cache cleared for caseRef ${caseReference}`);
 };
