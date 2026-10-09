@@ -1,8 +1,9 @@
 const { listAdvice, getAdviceDetailData } = require('./advice.service');
-const { handler } = require('../lib/application-api-wrapper');
+const { searchAdvice, getAdviceOnProjectById } = require('../lib/application-api-wrapper');
 
 jest.mock('../lib/application-api-wrapper', () => ({
-	handler: jest.fn()
+	searchAdvice: jest.fn(),
+	getAdviceOnProjectById: jest.fn()
 }));
 
 describe('./advice.service', () => {
@@ -10,7 +11,7 @@ describe('./advice.service', () => {
 		describe('When getting the advice documents', () => {
 			let result;
 			beforeEach(async () => {
-				handler.mockReturnValue({
+				searchAdvice.mockReturnValue({
 					data: {
 						advice: 'mock advice',
 						totalItems: 20,
@@ -25,12 +26,13 @@ describe('./advice.service', () => {
 				});
 			});
 			it('should call the wrapped searchAdviceDocuments', () => {
-				expect(handler).toHaveBeenCalledWith(
-					'searchAdviceDocuments',
-					'/api/v1/advice?caseReference=mock+case+ref&searchTerm=mock+search+term&size=10&page=1&sort=',
-					'GET',
-					{}
-				);
+				expect(searchAdvice).toHaveBeenCalledWith({
+					caseReference: 'mock case ref',
+					searchTerm: 'mock search term',
+					size: 10,
+					page: 1,
+					sort: ''
+				});
 			});
 			it('should return the advice documents', () => {
 				expect(result).toEqual({
@@ -45,14 +47,13 @@ describe('./advice.service', () => {
 			describe('and the advice detail data is found', () => {
 				let result;
 				beforeEach(async () => {
-					handler.mockReturnValue({ data: { mock: 'handler value' } });
+					getAdviceOnProjectById.mockReturnValue({ data: { mock: 'handler value' } });
 					result = await getAdviceDetailData('mock-advice-detail-id', 'mock-case-reference');
 				});
 				it('should call the wrapped getRawAdviceDetail', () => {
-					expect(handler).toHaveBeenCalledWith(
-						'getAdviceDetail',
-						'/api/v1/advice/mock-advice-detail-id?caseReference=mock-case-reference',
-						'GET'
+					expect(getAdviceOnProjectById).toHaveBeenCalledWith(
+						'mock-advice-detail-id',
+						'mock-case-reference'
 					);
 				});
 				it('should return the advice detail data', () => {
@@ -61,7 +62,7 @@ describe('./advice.service', () => {
 			});
 			describe('and the handler responds with a 404', () => {
 				beforeEach(() => {
-					handler.mockReturnValue({ resp_code: 404 });
+					getAdviceOnProjectById.mockReturnValue({ resp_code: 404 });
 				});
 				it('should throw an error', () => {
 					expect(getAdviceDetailData('mock-advice-detail-id')).rejects.toThrowError('NOT_FOUND');

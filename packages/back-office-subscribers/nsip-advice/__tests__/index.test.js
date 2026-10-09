@@ -11,6 +11,10 @@ jest.mock('../../lib/build-merge-query', () =>
 	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
 );
 
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
+
 const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
 	log: jest.fn(),
@@ -109,6 +113,12 @@ describe('nsip-advice', () => {
 		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`nsip-advice function upserted advice with adviceId ${mockMessage.adviceId} for caseReference ${mockMessage.caseReference}`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`clearing advice cache for caseRef ${mockMessage.caseReference}...`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`advice cache cleared for caseRef ${mockMessage.caseReference}`
 		);
 	});
 });

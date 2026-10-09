@@ -12,6 +12,10 @@ jest.mock('../../lib/prisma', () => ({
 	}
 }));
 
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
+
 const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
 	log: jest.fn(),
@@ -153,6 +157,12 @@ describe('nsip-project', () => {
 		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`nsip-project function upserted project with caseReference ${mockMessage.caseReference}`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`clearing project data cache for caseRef ${mockMessage.caseReference}...`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`project data cache cleared for caseRef ${mockMessage.caseReference}`
 		);
 	});
 });
