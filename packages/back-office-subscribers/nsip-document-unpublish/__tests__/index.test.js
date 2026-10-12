@@ -114,5 +114,11 @@ describe('nsip-document-unpublish', () => {
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`unpublished document for caseRef ${mockMessage.caseRef} with documentId: ${mockMessage.documentId} (retained due to EL reference)`
 		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`clearing documents cache for caseRef ${mockMessage.caseRef}`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`documents cache cleared for caseRef ${mockMessage.caseRef}`
+		);
 	});
 });

@@ -254,5 +254,11 @@ describe('nsip-representation', () => {
 				caseReference: 'CASE-REF'
 			}
 		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`clearing representations cache for caseRef ${mockMessage.caseRef}`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`representations cache cleared for caseRef ${mockMessage.caseRef}`
+		);
 	});
 });
