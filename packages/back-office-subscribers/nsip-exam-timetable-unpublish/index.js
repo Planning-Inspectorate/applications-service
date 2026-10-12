@@ -1,4 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
+const axios = require('axios');
 
 module.exports = async (context, message) => {
 	const caseReference = message.caseReference;
@@ -19,4 +20,13 @@ module.exports = async (context, message) => {
 	});
 
 	context.log(`unpublished ExaminationTimetable with caseReference: ${caseReference}`);
+	context.log(`clearing ExaminationTimetable cache for caseRef ${caseReference}...`);
+
+	const cacheKeyPattern = `cache:${caseReference}:timetables`;
+	const url = `${process.env.APPLICATIONS_SERVICE_API_URL}/api/v1/cache/clear?pattern=${cacheKeyPattern}`;
+
+	const { data: cacheClearResponse } = await axios.delete(url);
+
+	context.log(JSON.stringify(cacheClearResponse, null, 2));
+	context.log(`examinationTimetable cache cleared for caseRef ${caseReference}`);
 };

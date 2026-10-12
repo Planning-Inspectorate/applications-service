@@ -39,7 +39,7 @@ module.exports = async (context, message) => {
 	if (!caseRef) {
 		context.log('skipping cache clear as caseRef is required');
 	} else {
-		context.log(`clearing documents cache for caseRef ${caseRef}...`);
+		context.log(`clearing documents cache for caseRef ${caseRef}`);
 
 		const cacheKeyPattern = `cache:${caseRef}:docs*`;
 		const url = `${process.env.APPLICATIONS_SERVICE_API_URL}/api/v1/cache/clear?pattern=${cacheKeyPattern}`;
