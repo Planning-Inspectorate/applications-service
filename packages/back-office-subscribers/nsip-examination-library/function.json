@@ -1,0 +1,11 @@
+{
+	"bindings": [
+		{
+			"type": "serviceBusTrigger",
+			"direction": "in",
+			"name": "message",
+			"queueName": "examination-library-publish",
+			"connection": "ServiceBusConnection"
+		}
+	]
+}
