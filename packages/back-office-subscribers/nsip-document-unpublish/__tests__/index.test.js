@@ -2,12 +2,18 @@ const sendMessage = require('../index');
 
 const mockUpdateMany = jest.fn();
 const mockDeleteMany = jest.fn();
+const mockFindFirst = jest.fn();
+const mockUpdate = jest.fn();
 
 jest.mock('../../lib/prisma', () => ({
 	prismaClient: {
 		document: {
 			updateMany: (query) => mockUpdateMany(query),
 			deleteMany: (query) => mockDeleteMany(query)
+		},
+		representation: {
+			findFirst: (query) => mockFindFirst(query),
+			update: (query) => mockUpdate(query)
 		}
 	}
 }));
@@ -35,6 +41,8 @@ describe('nsip-document-unpublish', () => {
 	beforeEach(() => {
 		mockUpdateMany.mockReset();
 		mockDeleteMany.mockReset();
+		mockFindFirst.mockReset();
+		mockUpdate.mockReset();
 		mockContext.log.mockReset();
 		mockContext.warn.mockReset();
 	});
@@ -62,7 +70,9 @@ describe('nsip-document-unpublish', () => {
 		delete messageWithoutCaseRef.caseRef;
 
 		await sendMessage(mockContext, messageWithoutCaseRef);
-		expect(mockContext.log).toHaveBeenCalledWith('skipping cache clear as caseRef is required');
+		expect(mockContext.log).toHaveBeenCalledWith(
+			'skipping document cache clear as caseRef is required'
+		);
 	});
 
 	it('deletes document when examinationRefNo is missing', async () => {
@@ -119,6 +129,125 @@ describe('nsip-document-unpublish', () => {
 		);
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`documents cache cleared for caseRef ${mockMessage.caseRef}`
+		);
+	});
+
+	it('logs starting message for deleting document from representation if document is a representation attachment', async () => {
+		mockFindFirst.mockResolvedValue({
+			representationId: 1,
+			attachmentIds: 'mock-document-id'
+		});
+
+		await sendMessage(mockContext, {
+			...mockMessage,
+			description: 'Relevant representation attachment'
+		});
+
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`deleting documentId: ${mockMessage.documentId} from representation attachmentIds`
+		);
+	});
+
+	it('throws an error if representation is missing', async () => {
+		mockFindFirst.mockResolvedValue(null);
+
+		await expect(
+			sendMessage(mockContext, {
+				...mockMessage,
+				description: 'Relevant representation attachment'
+			})
+		).rejects.toThrow(`no representation found for documentId: ${mockMessage.documentId}`);
+
+		expect(mockUpdate).not.toHaveBeenCalled();
+	});
+
+	it('throws an error if representation id is missing', async () => {
+		mockFindFirst.mockResolvedValue({ representationId: null });
+
+		await expect(
+			sendMessage(mockContext, {
+				...mockMessage,
+				description: 'Relevant representation attachment'
+			})
+		).rejects.toThrow('representationId is missing from representation');
+
+		expect(mockUpdate).not.toHaveBeenCalled();
+	});
+
+	it('deletes document id when document is the only representation attachment', async () => {
+		mockFindFirst.mockResolvedValue({
+			representationId: 1,
+			attachmentIds: 'mock-document-id'
+		});
+
+		await sendMessage(mockContext, {
+			...mockMessage,
+			description: 'Relevant representation attachment'
+		});
+
+		expect(mockUpdate).toHaveBeenCalledWith({
+			where: {
+				representationId: 1
+			},
+			data: {
+				attachmentIds: null,
+				modifiedAt: expect.any(Date)
+			}
+		});
+	});
+
+	it('deletes document id when document is one of many representation attachments', async () => {
+		mockFindFirst.mockResolvedValue({
+			representationId: 1,
+			attachmentIds: 'mock-document-id,second-document-id,third-document-id,fourth-document-id'
+		});
+
+		await sendMessage(mockContext, {
+			...mockMessage,
+			description: 'Relevant representation attachment'
+		});
+
+		expect(mockUpdate).toHaveBeenCalledWith({
+			where: {
+				representationId: 1
+			},
+			data: {
+				attachmentIds: 'second-document-id,third-document-id,fourth-document-id',
+				modifiedAt: expect.any(Date)
+			}
+		});
+	});
+
+	it('clears representations cache once representation has been updated', async () => {
+		mockFindFirst.mockResolvedValue({
+			representationId: 1,
+			attachmentIds: 'mock-document-id'
+		});
+
+		await sendMessage(mockContext, {
+			...mockMessage,
+			description: 'Relevant representation attachment'
+		});
+
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`representations cache cleared for caseRef ${mockMessage.caseRef}`
+		);
+	});
+
+	it('does not clear representations cache if case reference is missing', async () => {
+		mockFindFirst.mockResolvedValue({
+			representationId: 1,
+			attachmentIds: 'mock-document-id'
+		});
+
+		await sendMessage(mockContext, {
+			documentId: 'mock-document-id',
+			caseRef: null,
+			description: 'Relevant representation attachment'
+		});
+
+		expect(mockContext.log).toHaveBeenCalledWith(
+			'skipping representations cache clear as caseRef is required'
 		);
 	});
 });
