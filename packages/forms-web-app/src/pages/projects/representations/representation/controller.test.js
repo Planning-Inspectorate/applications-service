@@ -90,7 +90,7 @@ describe('pages/projects/representations/representation/controller', () => {
 								comment: 'Some comments',
 								formattedComment: '<p>Some comments</p>',
 								dateSubmitted: '19 February 2020',
-								hasAttachments: true,
+								hasAttachments: false,
 								name: 'Test (Test)',
 								representative: 'a representative',
 								submittedBy: 'Members of the public/businesses',
