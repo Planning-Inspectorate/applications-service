@@ -1,9 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const {
-	backOfficeIntegration: { getAllApplications }
-} = require('../lib/config');
 const basename = path.basename(__filename);
 const config = require(`../database/config/config`);
 const SequelizeMock = require('sequelize-mock');
@@ -19,17 +16,12 @@ const modelsToMock = [
 ];
 
 let db = {};
+const isLocalEnv = process.env.NODE_ENV.toLowerCase() === 'local';
 
-// Training env will only use BO and cannot connect to NI, so we use a mock DB to avoid connection errors
-if (getAllApplications === 'BO') {
-	console.log('Training environment - using mock DB for NI');
-	db = new SequelizeMock();
-
-	modelsToMock.forEach((name) => {
-		const modelMock = db.define(name, {});
-		db[name] = modelMock;
-	});
-} else {
+//local to use NI DB until we migrate the case data
+//non-local environments to use a mock database while we migrate the case data and the e2e tests that use it
+if (isLocalEnv) {
+	console.log('Initialising local NI DB connection...');
 	const sequelize = new Sequelize(config.database, config.username, config.password, config);
 	fs.readdirSync(__dirname)
 		.filter((file) => {
@@ -47,6 +39,13 @@ if (getAllApplications === 'BO') {
 	});
 
 	db.sequelize = sequelize;
+} else {
+	console.log('Using mock NI DB');
+	db = new SequelizeMock();
+
+	modelsToMock.forEach((name) => {
+		db[name] = db.define(name, {});
+	});
 }
 
 db.Sequelize = Sequelize;
