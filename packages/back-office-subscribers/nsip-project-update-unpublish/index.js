@@ -3,7 +3,7 @@ const axios = require('axios');
 
 module.exports = async (context, message) => {
 	context.log(`invoking nsip-project-update-unpublish function`);
-	const { projectUpdateId, caseReference } = message;
+	const { id: projectUpdateId, caseReference } = message;
 
 	if (!projectUpdateId || !caseReference) {
 		context.log(
