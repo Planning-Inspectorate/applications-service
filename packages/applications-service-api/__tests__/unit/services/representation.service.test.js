@@ -27,7 +27,7 @@ const {
 	REPRESENTATION_BACKOFFICE_RESPONSE,
 	REPRESENTATION_NI_DATA,
 	REPRESENTATIONS_BACKOFFICE_DATA,
-	REPRESENTATIONS_BACKOFFICE_RESPONSE
+	REPRESENTATIONS_BACKOFFICE_RESPONSE_WITH_ATTACHMENTS
 } = require('../../__data__/representation');
 const { SERVICE_USERS_BACKOFFICE_DATA } = require('../../__data__/serviceUser');
 const {
@@ -64,6 +64,9 @@ describe('representation.service', () => {
 				count: 1
 			});
 
+			getDocumentsByDataIdNIRepository.mockResolvedValue(NI_DB_DOCUMENTS);
+			getDocumentsByIdsBORepository.mockResolvedValue(BACK_OFFICE_DB_DOCUMENTS);
+
 			getNIFilters.mockResolvedValue(filtersMockData);
 			getBOFilters.mockResolvedValue(filtersMockData);
 		});
@@ -85,7 +88,7 @@ describe('representation.service', () => {
 			it('should return mapped representations', async () => {
 				const data = await getRepresentationsForApplication({ caseReference: 'BC010001' });
 				expect(data).toEqual({
-					representations: REPRESENTATIONS_BACKOFFICE_RESPONSE,
+					representations: REPRESENTATIONS_BACKOFFICE_RESPONSE_WITH_ATTACHMENTS,
 					currentPage: 1,
 					itemsPerPage: 25,
 					totalItems: 1,
@@ -113,8 +116,17 @@ describe('representation.service', () => {
 			});
 			it('should return mapped representations', async () => {
 				const data = await getRepresentationsForApplication({ caseReference: 'EN010009' });
+				const attachments = NI_DB_DOCUMENTS.map((document) => ({
+					...document,
+					path: document.path ? `${config.documentsHost}${document.path}` : null
+				}));
 				expect(data).toEqual({
-					representations: REPRESENTATION_NI_DATA,
+					representations: [
+						{
+							...REPRESENTATION_NI_DATA[0],
+							attachments
+						}
+					],
 					currentPage: 1,
 					itemsPerPage: 25,
 					totalItems: 1,
