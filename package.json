@@ -73,7 +73,7 @@
 		]
 	},
 	"dependencies": {
-		"@azure/identity": "^4.2.1",
+		"@azure/identity": "^4.14.1",
 		"@azure/service-bus": "^7.9.0",
 		"@azure/storage-blob": "^12.16.0",
 		"@godaddy/terminus": "^4.7.1",
