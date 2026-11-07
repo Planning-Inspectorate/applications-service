@@ -145,4 +145,15 @@ describe('nsip-document', () => {
 			`documents cache cleared for caseRef ${mockMessage.caseRef}`
 		);
 	});
+
+	it('clears the representations cache if the document is a representation attachment', async () => {
+		await sendMessage(mockContext, {
+			...mockMessage,
+			description: 'Relevant representation attachment'
+		});
+
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`representations cache cleared for caseRef ${mockMessage.caseRef}`
+		);
+	});
 });
