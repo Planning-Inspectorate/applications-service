@@ -70,25 +70,27 @@ model Document {
 }
 
 model Representation {
-	id                    Int          @unique @default(autoincrement())
-	representationId      Int          @id
-	caseReference         String
-	caseId                Int
-	referenceId           String?
-	status                String?
-	dateReceived          DateTime?
-	representationComment String?      @db.NText
-	representationFrom    String?
-	representationType    String?
-	registerFor           String?
-	representedId         String?
-	representativeId      String?
-	attachmentIds         String? @db.VarChar(2000)
-	createdAt             DateTime?    @default(now())
-	modifiedAt            DateTime?    @default(now())
-	useOfAI               String?      @default("unknown")
-	representative        ServiceUser? @relation("Representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
-	represented           ServiceUser? @relation("Represented", fields: [representedId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	id                                        Int          @unique @default(autoincrement())
+	representationId                          Int          @id
+	caseReference                             String
+	caseId                                    Int
+	referenceId                               String?
+	status                                    String?
+	dateReceived                              DateTime?
+	representationComment                     String?      @db.NText
+	representationFrom                        String?
+	representationType                        String?
+	registerFor                               String?
+	representedId                             String?
+	representativeId                          String?
+	attachmentIds                             String? @db.VarChar(2000)
+	createdAt                                 DateTime?    @default(now())
+	modifiedAt                                DateTime?    @default(now())
+	useOfAI                                   String?      @default("unknown")
+	representative                            ServiceUser? @relation("Representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	represented                               ServiceUser? @relation("Represented", fields: [representedId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	examinationRefNo                          String?
+	examinationLibraryCategoryPublishedStatus String?
 
 	@@index([caseReference])
 }
