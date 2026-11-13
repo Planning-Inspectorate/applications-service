@@ -125,8 +125,8 @@ Feature: Relevant Representations (Registration comments) page
         And I click on Apply button to apply filters
         Then I can verify that below comments were returned
             | Comments                                                                                                                                                                          |
-                | Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application Submitted by: Parish councils Date submitted: 20 April 2022 Contains attachment(s) |
-                | Frosty Flights (Frosty Flights) Some comments Submitted by: Parish councils Date submitted: 1 August 2021 Contains attachment(s)                                              |
+                | Stokes Croft Parish Council We wholeheartedly support Joe Stipliani's planning application Submitted by: Parish councils Date submitted: 20 April 2022                        |
+                | Frosty Flights (Frosty Flights) Some comments Submitted by: Parish councils Date submitted: 1 August 2021                                                                     |
                 | Frosty Fliers (Frosty Fliers ) Some comments Submitted by: Parish councils Date submitted: 14 March 2021 Contains attachment(s)                                               |
 
     Scenario: Search by text and then filter by registration type
@@ -137,7 +137,7 @@ Feature: Relevant Representations (Registration comments) page
         And I click on Apply button to apply filters
         Then I can verify that below comments were returned
             | Comments                                                                                                                                                                                                                                                                                                                    |
-                | Somerset County Council Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's... Read more Submitted by: Local authorities Date submitted: 15 May 2022 Contains attachment(s) |
+                | Somerset County Council Joe Stipliani has demonstrated his commitment to his home county of Somerset by proposing this construction project. We are happy that all areas of compliance, including the local authority's... Read more Submitted by: Local authorities Date submitted: 15 May 2022                    |
 
     Scenario: Filter by representative and then search by text
         Given I navigate to "St James Barton Giant Wind Turbine [e2e test case]" project Overview page

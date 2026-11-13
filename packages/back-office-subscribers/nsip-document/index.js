@@ -6,6 +6,7 @@ const buildMergeQuery = require('../lib/build-merge-query');
 module.exports = async (context, message) => {
 	const documentId = message.documentId;
 	const caseRef = message.caseRef;
+	const documentDescription = message.description;
 
 	if (!documentId) {
 		throw new Error(`documentId is required for nsip-document function`, {
@@ -43,6 +44,20 @@ module.exports = async (context, message) => {
 
 		context.log(JSON.stringify(cacheClearResponse, null, 2));
 		context.log(`documents cache cleared for caseRef ${caseRef}`);
+	}
+
+	if (documentDescription === 'Relevant representation attachment') {
+		context.log(
+			`clearing representations cache for caseRef ${caseRef} as document is an attachment`
+		);
+
+		const cacheKeyPattern = `cache:${caseRef}:reps*`;
+		const url = `${process.env.APPLICATIONS_SERVICE_API_URL}/api/v1/cache/clear?pattern=${cacheKeyPattern}`;
+
+		const { data: cacheClearResponse } = await axios.delete(url);
+
+		context.log(JSON.stringify(cacheClearResponse, null, 2));
+		context.log(`representations cache cleared for caseRef ${caseRef}`);
 	}
 };
 
