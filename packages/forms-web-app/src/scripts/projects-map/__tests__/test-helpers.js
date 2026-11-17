@@ -67,7 +67,7 @@ export function randomPolygonFeature() {
 								[lng, lat + dLat],
 								[lng, lat]
 							]
-					  ]
+						]
 					: [
 							[
 								[
@@ -78,7 +78,7 @@ export function randomPolygonFeature() {
 									[lng, lat]
 								]
 							]
-					  ]
+						]
 		},
 		properties: {}
 	};

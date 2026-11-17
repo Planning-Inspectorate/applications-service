@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 const { StatusCodes } = require('http-status-codes');
 
 const logger = require('../lib/logger');

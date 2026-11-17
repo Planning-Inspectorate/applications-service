@@ -11,14 +11,17 @@
 		{{ t('projectsIndex.contact.paragraph1') }}
 	</p>
 
+	<ul class="govuk-list">
+		<li>
+			{{ t('projectsIndex.contact.paragraph2') }} {{ pinsContactDetails.supportTeamPhoneNumber }}
+		</li>
+		<li>
+			{{ t('projectsIndex.contact.paragraph3') }}
+		</li>
+	</ul>
+
 	<p class="govuk-body">
-		{{ t('projectsIndex.contact.paragraph2') }}
-		{{ pinsContactDetails.supportTeamPhoneNumber }}
-		<p>
-			{{ t('common.pinsContactDetails.csOpeningHoursLine1') }}
-			<br>
-			{{t('common.pinsContactDetails.csOpeningHoursLine2') }}
-		</p>
+		<a class="govuk-link" href="{{ govUK.callCharges }}">{{ t('projectsIndex.contact.callChargesLinkText') }}</a>
 	</p>
 
 	<h3 class="govuk-heading-s">
@@ -26,22 +29,23 @@
 	</h3>
 
 	<p class="govuk-body">
-		<a class="govuk-link" href="mailto:{{ contactEmailAddress }}">{{ contactEmailAddress }}</a>.
-	</p>
-
-	<p class="govuk-body">
-		{{ t('projectsIndex.contact.paragraph3') }}
-	</p>
-
-	<p class="govuk-body">
 		{{ t('projectsIndex.contact.paragraph4') }}
 	</p>
+
+	<ul class="govuk-list">
+		<li>
+			<a class="govuk-link" href="mailto:{{ contactEmailAddress }}">{{ contactEmailAddress }}</a>
+		</li>
+		<li>
+			{{ t('projectsIndex.contact.paragraph5') }}
+		</li>
+	</ul>
 
 	<h3 class="govuk-heading-s">
 		{{ t('projectsIndex.contact.heading4') }}
 	</h3>
 
 	<p class="govuk-body">
-		{{ t('projectsIndex.contact.paragraph5') }}
+		{{ t('projectsIndex.contact.paragraph6') }}
 	</p>
 </section>

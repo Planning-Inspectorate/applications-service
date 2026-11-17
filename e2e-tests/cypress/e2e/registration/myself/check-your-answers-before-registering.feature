@@ -26,6 +26,7 @@ Feature: Check your answers before registering page
 			| Address                      | Address Line 1,NE27 0QQ,United Kingdom                                                                   | Change                       |
 			| Telephone number             | 1234567899                                                                                               | Change                       |
 			| Registration comments        | used by the examining panel to decide if they recommend the project goes ahead, published on our website | Change registration comments |
+			| AI declaration               | AI not used                                                                                              | Change                       |
 		And User clicks on accept and continue button for "myself"
 		Then I am on the "Declaration" page
 
@@ -56,3 +57,7 @@ Feature: Check your answers before registering page
 	Scenario: Click on Comments change link
 		And I click on "Your comments change" change link
 		Then I am on the "what do you want to tell us about this proposed project?" page
+
+	Scenario: Click on AI declaration change link
+		And I click on "AI declaration" change link
+		Then I am on the "AI usage declaration" page

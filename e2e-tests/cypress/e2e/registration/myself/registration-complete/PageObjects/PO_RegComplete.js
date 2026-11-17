@@ -24,6 +24,9 @@ class PO_RegComplete extends PageObject {
 			case 'organisation':
 				this.clickLinkByHref('/register/organisation/declaration');
 				break;
+			case 'agent':
+				this.clickLinkByHref('/register/agent/declaration');
+				break;
 			default:
 				throw new Error(`No declaration link found for ${linkType}`);
 		}

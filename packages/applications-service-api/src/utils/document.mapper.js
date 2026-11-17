@@ -55,7 +55,7 @@ const mapDocumentFilterLabel = (filterName, filterValue, isMaterialChange) => {
 		} else {
 			return LABEL_MAPPING[filterName][filterValue.toLowerCase()];
 		}
-	} catch (e) {
+	} catch {
 		return filterValue;
 	}
 };

@@ -1,0 +1,73 @@
+{% extends "layouts/default.njk" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %},
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% set pageHeading = t('register.aiUsageDeclaration.pageHeading')%}
+{% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
+{% set commonPageTitle = t('register.index.pageTitle') %}
+{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+
+{% if errors %}
+	{% set title = t('common.error') + ": " + title %}
+{% endif %}
+
+{% block pageTitle %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds">
+			{% if errorSummary %}
+				{{ govukErrorSummary({
+					titleText: t('common.thereIsAProblem'),
+					errorList: errorSummary
+				}) }}
+			{% endif %}
+
+			<h1 class="govuk-heading-l">{{ t('register.aiUsageDeclaration.pageHeading') }}</h1>
+
+			<p class="govuk-body">{{ t('register.aiUsageDeclaration.paragraph1') }}</p>
+
+			<p class="govuk-body">{{ t('register.aiUsageDeclaration.paragraph2') }}</p>
+
+			<p class="govuk-body">{{ t('register.aiUsageDeclaration.paragraph3') }}</p>
+
+			<form action="" method="POST" novalidate>
+				<div class="govuk-form-group {{ 'govuk-form-group--error' if errors }}">
+					{{ govukRadios({
+						name: "ai-declaration",
+						fieldset: {
+							legend: {
+              	text: t('register.aiUsageDeclaration.paragraph4'),
+              	classes: "govuk-fieldset__legend--m",
+              	isPageHeading: false
+             }
+						},
+						items: [
+							{
+								value: "yes",
+								text: t('register.aiUsageDeclaration.option1'),
+								checked: aiDeclaration === "yes"
+							},
+							{
+								value: "no",
+								text: t('register.aiUsageDeclaration.option2'),
+								checked: aiDeclaration === "no"
+							}
+						]
+					}) }}
+				</div>
+
+				{{ govukButton({
+					text: t('common.continue'),
+					type: "Submit"
+				}) }}
+
+			</form>
+		</div>
+	</div>
+
+{% endblock %}

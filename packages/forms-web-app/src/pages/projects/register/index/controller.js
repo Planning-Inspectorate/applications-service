@@ -31,6 +31,7 @@ const getRegisterIndexController = async (req, res) => {
 
 		delete req.session.comment;
 		delete req.session.typeOfParty;
+		delete req.session['ai-declaration'];
 
 		const registrationOpen = isRegistrationOpen(registrationDates);
 		const registrationReOpened = isRegistrationReOpened(case_ref, registrationDates);

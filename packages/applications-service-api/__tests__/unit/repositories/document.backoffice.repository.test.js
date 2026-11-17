@@ -39,16 +39,27 @@ describe('document repository', () => {
 			expect(mockCount.mock.calls[0][0].where.AND[0]).toEqual({ caseRef: caseReference });
 		});
 
+		it('filters out unpublished documents by default', async () => {
+			await getDocuments({ caseReference });
+
+			expect(mockFindMany.mock.calls[0][0].where.AND).toContainEqual({
+				publishedStatus: { not: 'unpublished' }
+			});
+			expect(mockCount.mock.calls[0][0].where.AND).toContainEqual({
+				publishedStatus: { not: 'unpublished' }
+			});
+		});
+
 		it('calls findMany and count with split and filtered searchTerm if provided', async () => {
 			await getDocuments({
 				caseReference: caseReference,
 				searchTerm: 'a search term'
 			});
 
-			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR[0].AND[0].description.contains).toEqual(
+			expect(mockFindMany.mock.calls[0][0].where.AND[3].OR[0].AND[0].description.contains).toEqual(
 				'search'
 			);
-			expect(mockCount.mock.calls[0][0].where.AND[2].OR[0].AND[0].description.contains).toEqual(
+			expect(mockCount.mock.calls[0][0].where.AND[3].OR[0].AND[0].description.contains).toEqual(
 				'search'
 			);
 		});
@@ -59,8 +70,8 @@ describe('document repository', () => {
 				filters: [{ name: 'stage', value: 'examination' }]
 			});
 
-			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR[0].AND[0].stage).toEqual('examination');
-			expect(mockCount.mock.calls[0][0].where.AND[2].OR[0].AND[0].stage).toEqual('examination');
+			expect(mockFindMany.mock.calls[0][0].where.AND[3].OR[0].AND[0].stage).toEqual('examination');
+			expect(mockCount.mock.calls[0][0].where.AND[3].OR[0].AND[0].stage).toEqual('examination');
 		});
 
 		it('calls findMany and count with filters including type if provided', async () => {
@@ -71,10 +82,10 @@ describe('document repository', () => {
 				]
 			});
 
-			expect(mockFindMany.mock.calls[0][0].where.AND[2].OR[0].AND[1].filter1['in'][0]).toEqual(
+			expect(mockFindMany.mock.calls[0][0].where.AND[3].OR[0].AND[1].filter1['in'][0]).toEqual(
 				'Additional Submissions'
 			);
-			expect(mockCount.mock.calls[0][0].where.AND[2].OR[0].AND[1].filter1['in'][0]).toEqual(
+			expect(mockCount.mock.calls[0][0].where.AND[3].OR[0].AND[1].filter1['in'][0]).toEqual(
 				'Additional Submissions'
 			);
 		});

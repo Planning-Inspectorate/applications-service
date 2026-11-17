@@ -58,6 +58,10 @@ const {
 const {
 	getRegisterAlreadyRegisteredController
 } = require('../_common/already-registered/controller');
+const {
+	getRegisterAiDeclarationController,
+	postRegisterAiDeclarationController
+} = require('../_common/ai-declaration/controller');
 
 const { getRegisterAgentNameURL } = require('./name/_utils/get-register-agent-name-url');
 const {
@@ -108,6 +112,9 @@ const {
 const {
 	getRegisterAgentAlreadyRegisteredURL
 } = require('./already-registered/_utils/get-register-agent-already-registered-url');
+const {
+	getRegisterAgentAiDeclarationURL
+} = require('./ai-declaration/_utils/get-register-agent-ai-declaration-url');
 
 const { registerMiddleware } = require('../_middleware/register-middleware');
 const { registerStartRedirectMiddleware } = require('../_middleware/start-redirect-middleware');
@@ -141,6 +148,9 @@ const {
 const {
 	rules: theirTelephoneValidationRules
 } = require('../../../../validators/register/agent/their-telephone-number');
+const {
+	rules: aiDeclarationValidationRules
+} = require('../../../../validators/register/ai-declaration');
 
 const { validationErrorHandler } = require('../../../../validators/validation-error-handler');
 
@@ -163,6 +173,7 @@ const registerAgentDeclarationURL = getRegisterAgentDeclarationURL();
 const registerAgentProcessSubmissionURL = getRegisterAgentProcessSubmissionURL();
 const registerAgentCompleteURL = getRegisterAgentCompleteURL();
 const registerAgentAlreadyRegisteredURL = getRegisterAgentAlreadyRegisteredURL();
+const registerAgentAiDeclarationURL = getRegisterAgentAiDeclarationURL();
 
 const registerAgentRouter = express.Router({ mergeParams: true });
 
@@ -361,6 +372,21 @@ registerAgentRouter.post(
 	aboutProjectValidationRules(),
 	validationErrorHandler,
 	postRegisterAgentAboutProjectController
+);
+
+registerAgentRouter.get(
+	registerAgentAiDeclarationURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	getRegisterAiDeclarationController
+);
+registerAgentRouter.post(
+	registerAgentAiDeclarationURL,
+	registerStartRedirectMiddleware,
+	registerMiddleware,
+	aiDeclarationValidationRules(),
+	validationErrorHandler,
+	postRegisterAiDeclarationController
 );
 
 registerAgentRouter.get(

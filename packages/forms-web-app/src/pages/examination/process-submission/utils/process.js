@@ -43,7 +43,7 @@ const handleProcessSubmission = async (session) => {
 		});
 	} catch (error) {
 		logger.error(error);
-		throw new Error('Process Submission failed');
+		throw new Error('Process Submission failed', { cause: error });
 	}
 };
 

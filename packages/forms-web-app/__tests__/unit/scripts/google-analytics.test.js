@@ -1,7 +1,6 @@
 /**
  * @jest-environment jsdom
  */
-/* eslint-env browser */
 
 const { initialiseGoogleAnalytics } = require('../../../src/scripts/google-analytics');
 

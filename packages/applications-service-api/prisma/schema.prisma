@@ -21,70 +21,76 @@ datasource db {
 }
 
 model Document {
-	id                     Int       @unique @default(autoincrement())
-	documentId             String    @id
-	caseId                 Int?
-	caseRef                String?
-	representationId       Int?
-	documentReference      String?
-	version                Int?
-	examinationRefNo       String?
-	filename               String?
-	originalFilename       String?
-	size                   Int?
-	mime                   String?
-	documentURI            String?
-	publishedDocumentURI   String?
-	virusCheckStatus       String?
-	fileMD5                String?
-	dateCreated            String?
-	lastModified           String?
-	caseType               String?
-	documentStatus         String?
-	redactedStatus         String?
-	publishedStatus        String?
-	datePublished          String?
-	documentType           String?
-	securityClassification String?
-	sourceSystem           String?
-	origin                 String?
-	owner                  String?
-	author                 String?
-	authorWelsh            String?
-	representative         String?
-	description            String?   @db.NText
-	descriptionWelsh       String?   @db.NText
-	stage                  String?
-	filter1                String?
-	filter1Welsh           String?
-	filter2                String?
-	createdAt              DateTime? @default(now())
-	modifiedAt             DateTime? @default(now())
+  id                                 Int       @unique @default(autoincrement())
+  documentId                         String    @id
+  caseId                             Int?
+  caseRef                            String?
+  representationId                   Int?
+  documentReference                  String?
+  version                            Int?
+  examinationRefNo                   String?
+  filename                           String?
+  originalFilename                   String?
+  size                               Int?
+  mime                               String?
+  documentURI                        String?
+  publishedDocumentURI               String?
+  virusCheckStatus                   String?
+  fileMD5                            String?
+  dateCreated                        String?
+  lastModified                       String?
+  caseType                           String?
+  documentStatus                     String?
+  redactedStatus                     String?
+  publishedStatus                    String?
+  datePublished                      String?
+  documentType                       String?
+  securityClassification             String?
+  sourceSystem                       String?
+  origin                             String?
+  owner                              String?
+  author                             String?
+  authorWelsh                        String?
+  representative                     String?
+  description                        String?   @db.NText
+  descriptionWelsh                   String?   @db.NText
+  stage                              String?
+  filter1                            String?
+  filter1Welsh                       String?
+  filter2                            String?
+  examinationCategoryCode            String?
+  examinationCategoryName            String?
+  examinationCategoryPublishedStatus String?
+  createdAt                          DateTime? @default(now())
+  modifiedAt                         DateTime? @default(now())
 
-	@@index([caseRef])
-	@@index([representationId])
-	@@index([documentType])
+  @@index([caseRef])
+  @@index([representationId])
+  @@index([documentType])
 }
 
 model Representation {
-	id                    Int          @unique @default(autoincrement())
-	representationId      Int          @id
-	caseReference         String
-	caseId                Int
-	referenceId           String?
-	status                String?
-	dateReceived          DateTime?
-	representationComment String?      @db.NText
-	representationFrom    String?
-	representationType    String?
-	registerFor           String?
-	representedId         String?
-	representativeId      String?
-	attachmentIds         String? @db.VarChar(2000)
-	createdAt             DateTime?    @default(now())
-	modifiedAt            DateTime?    @default(now())
-	representative        ServiceUser? @relation("Representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
-	represented           ServiceUser? @relation("Represented", fields: [representedId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	id                                        Int          @unique @default(autoincrement())
+	representationId                          Int          @id
+	caseReference                             String
+	caseId                                    Int
+	referenceId                               String?
+	status                                    String?
+	dateReceived                              DateTime?
+	representationComment                     String?      @db.NText
+	representationFrom                        String?
+	representationType                        String?
+	registerFor                               String?
+	representedId                             String?
+	representativeId                          String?
+	attachmentIds                             String? @db.VarChar(2000)
+	createdAt                                 DateTime?    @default(now())
+	modifiedAt                                DateTime?    @default(now())
+	useOfAI                                   String?      @default("unknown")
+	representative                            ServiceUser? @relation("Representative", fields: [representativeId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	represented                               ServiceUser? @relation("Represented", fields: [representedId], references: [serviceUserId], onDelete: NoAction, onUpdate: NoAction)
+	examinationRefNo                          String?
+	examinationLibraryCategoryPublishedStatus String?
 
 	@@index([caseReference])
 }
@@ -119,6 +125,7 @@ model Project {
 	publishStatus                                     String?
 	sector                                            String?
 	projectType                                       String?
+	subProjectType                                    String?                @db.NVarChar(1000)
 	sourceSystem                                      String?
 	stage                                             String?
 	projectLocation                                   String?

@@ -15,6 +15,7 @@ class PO_CyaOrg extends PageObject {
 		emailChangeLink: () => cy.get('[data-cy="email"]').last(),
 		telephoneChangeLink: () => cy.get('[data-cy="telephone"]').last(),
 		commentChangeLink: () => cy.get('[data-cy="comment"]').last(),
+		aiDeclarationChangeLink: () => cy.get('a[href*="/ai-declaration?mode=edit"]').last(),
 		acceptAndRegisterButton: () => cy.get('[data-cy="button-accept-and-register"]')
 	};
 
@@ -86,6 +87,9 @@ class PO_CyaOrg extends PageObject {
 				break;
 			case 'Your comments change':
 				this.identifiers.commentChangeLink().click();
+				break;
+			case 'AI declaration':
+				this.identifiers.aiDeclarationChangeLink().click();
 				break;
 			default:
 				throw new Error('Cannot find change link type');

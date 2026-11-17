@@ -1,7 +1,7 @@
 const decodeString = (stringToDecode) => {
 	if (!stringToDecode || typeof stringToDecode !== 'string') return '';
 
-	let decodedString = '';
+	let decodedString;
 
 	try {
 		decodedString = decodeURIComponent(stringToDecode);

@@ -2,14 +2,15 @@ const { getRegisterOfAdviceController } = require('./controller');
 
 const { adviceFixture } = require('../../_fixtures/advice');
 
-const { handler } = require('../../../lib/application-api-wrapper');
+const { searchAdvice } = require('../../../lib/application-api-wrapper');
 const { mockI18n } = require('../../_mocks/i18n');
 const commonTranslations_EN = require('../../../locales/en/common.json');
 const section51Translations_EN = require('../../projects/section-51/_translations/en.json');
 const registerOfAdviceTranslations_EN = require('./_translations/en.json');
 
 jest.mock('../../../lib/application-api-wrapper', () => ({
-	handler: jest.fn()
+	searchAdvice: jest.fn(),
+	getAdviceOnProjectById: jest.fn()
 }));
 
 describe('pages/register-of-advice/index/controller', () => {
@@ -28,7 +29,7 @@ describe('pages/register-of-advice/index/controller', () => {
 				const next = jest.fn();
 
 				beforeEach(async () => {
-					handler.mockImplementation(() => {
+					searchAdvice.mockImplementation(() => {
 						throw new Error('something went wrong');
 					});
 					await getRegisterOfAdviceController(req, res, next);
@@ -61,7 +62,7 @@ describe('pages/register-of-advice/index/controller', () => {
 					const next = jest.fn();
 
 					beforeEach(async () => {
-						handler.mockImplementation(() => adviceFixture.adviceNIFixture);
+						searchAdvice.mockImplementation(() => adviceFixture.adviceNIFixture);
 						await getRegisterOfAdviceController(req, res, next);
 					});
 
@@ -150,7 +151,7 @@ describe('pages/register-of-advice/index/controller', () => {
 					const next = jest.fn();
 
 					beforeEach(async () => {
-						handler.mockImplementation(() => adviceFixture.adviceBOFixture);
+						searchAdvice.mockImplementation(() => adviceFixture.adviceBOFixture);
 						await getRegisterOfAdviceController(req, res, next);
 					});
 

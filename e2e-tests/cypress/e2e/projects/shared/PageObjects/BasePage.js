@@ -38,6 +38,7 @@ export class BasePage {
 		projectInformationMenu: () => cy.get('nav[aria-label="Project navigation"]'),
 		govRadioBtn: () => cy.get('[type="radio"]'),
 		govBody: () => cy.get('.govuk-body'),
+		govListItem: () => cy.get('.govuk-list li'),
 		govBtn: () => cy.get('.govuk-button'),
 		govMap: () => cy.get('.pins-map'),
 		govInset: () => cy.get('.govuk-inset-text'),
@@ -170,7 +171,14 @@ export class BasePage {
 	}
 
 	visibleGovBody(string) {
-		this.identifiers.govBody().contains(string).should('be.visible');
+		this.identifiers.govBody().then(($body) => {
+			if ($body.text().includes(string)) {
+				this.identifiers.govBody().contains(string).should('be.visible');
+				return;
+			}
+
+			this.identifiers.govListItem().contains(string).should('be.visible');
+		});
 	}
 
 	clickGovBtn(string) {

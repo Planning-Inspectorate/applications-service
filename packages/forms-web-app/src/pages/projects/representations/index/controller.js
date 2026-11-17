@@ -17,12 +17,13 @@ const view = 'projects/representations/index/view.njk';
 const getRepresentationsIndexController = async (req, res, next) => {
 	try {
 		const { i18n, params, query } = req;
-		const { case_ref } = params;
+		const { case_ref: caseRef } = params;
 		const { searchTerm } = query;
 		const { locals } = res;
 		const { applicationData } = locals;
 
 		const representationsResponse = await searchRepresentations(
+			caseRef,
 			getRelevantRepresentationsQuery(params, query)
 		);
 
@@ -46,8 +47,8 @@ const getRepresentationsIndexController = async (req, res, next) => {
 		return res.render(view, {
 			...getFilters(query, typeFilters, langIsWelsh),
 			projectName: applicationData.projectName,
-			caseRef: case_ref,
-			representations: getRepresentationsViewModel(representations, i18n.language, case_ref),
+			caseRef,
+			representations: getRepresentationsViewModel(representations, i18n.language, caseRef),
 			paginationData,
 			pageOptions,
 			searchTerm,
@@ -57,7 +58,7 @@ const getRepresentationsIndexController = async (req, res, next) => {
 			resultsPerPage: documentsPerPage(query),
 			paginationQueryString: buildPaginationQueryString(query),
 			querySearchOrTypePresent: isQuerySearchOrTypePresent(query),
-			relevantRepresentationsURL: getRepresentationsURL(case_ref),
+			relevantRepresentationsURL: getRepresentationsURL(caseRef),
 			langIsWelsh
 		});
 	} catch (error) {
@@ -70,12 +71,12 @@ const postRepresentationsIndexController = async (req, res) => {
 	try {
 		const {
 			body,
-			params: { case_ref }
+			params: { case_ref: caseRef }
 		} = req;
 
 		const queryParamsToKeep = Object.keys(body);
 		const queryString = queryStringBuilder(body, queryParamsToKeep);
-		const representationsURL = getRepresentationsURL(case_ref);
+		const representationsURL = getRepresentationsURL(caseRef);
 
 		return res.redirect(`${representationsURL}${queryString}`);
 	} catch (e) {

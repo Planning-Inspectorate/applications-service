@@ -138,5 +138,11 @@ describe('nsip-document', () => {
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`upserted document with documentId ${mockMessage.documentId} for caseRef ${mockMessage.caseRef}`
 		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`clearing documents cache for caseRef ${mockMessage.caseRef}`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`documents cache cleared for caseRef ${mockMessage.caseRef}`
+		);
 	});
 });

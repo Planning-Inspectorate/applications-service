@@ -13,13 +13,12 @@ Feature: Registering to have your say about a national infrastructure project pa
         Then I am on the "registering to have your say about a national infrastructure project" page
         And the page does not include a link to a project
         And I verify below links present on Registering to have your say about a national infrastructure project
-            | Links                     |
-            | Who can register          |
-            | When to register          |
-            | What you need to register |
-            | After you have registered |
-            | Register to have your say |
-            | More detailed advice      |
+            | Links                        |
+            | Who can register             |
+            | When to register             |
+            | Registering to have your say |
+            | After you have registered    |
+            | More detailed advice         |
         When I click on "The Nationally Significant Infrastructure planning process step by step" link
         Then I am on the "Having your say about a national infrastructure project" page
 #

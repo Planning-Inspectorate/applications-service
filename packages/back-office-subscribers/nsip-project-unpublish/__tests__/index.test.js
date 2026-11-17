@@ -13,6 +13,10 @@ jest.mock('../../lib/build-merge-query', () =>
 	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
 );
 
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
+
 const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 
 const mockContext = {
@@ -99,6 +103,12 @@ describe('nsip-project-unpublish', () => {
 		expect(receivedParameters).toEqual(expect.arrayContaining(expectedParameters));
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`nsip-project-unpublish function unpublished project with caseReference: ${mockMessage.caseReference}`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`clearing project data cache for caseRef ${mockMessage.caseReference}...`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`project data cache cleared for caseRef ${mockMessage.caseReference}`
 		);
 	});
 });

@@ -133,9 +133,22 @@ extends:
               - bash: |
                   git clone --depth=1 --no-tags --revision="$(resources.pipeline.build.sourceCommit)" $(Build.Repository.Uri) .
                 displayName: Checkout Build-Commit
+              - ${{ if eq(parameters.schemaMigration, true) }}:
+                  # kv name is different in the training env (had to be shorter)
+                  - bash: |
+                      if [[ $ENVIRONMENT == "training" ]]; then
+                        echo "Name: pinskvcommon${ENVIRONMENT}${REGION_SHORT} (env: $ENVIRONMENT)"
+                        echo "##vso[task.setvariable variable=kvName;]pinskvcommon${ENVIRONMENT}${REGION_SHORT}"
+                      else
+                        echo "Name: pinskvcommon${ENVIRONMENT}${REGION_SHORT}001 (env: $ENVIRONMENT)"
+                        echo "##vso[task.setvariable variable=kvName;]pinskvcommon${ENVIRONMENT}${REGION_SHORT}001"
+                      fi
+                    displayName: Set KV name
+                    env:
+                      ENVIRONMENT: $(ENVIRONMENT)
               - template: ../steps/azure_get_secrets.yml
                 parameters:
-                  keyVaultName: pinskvcommon$(ENVIRONMENT)$(REGION_SHORT)001
+                  keyVaultName: $(kvName)
                   secrets:
                     - name: applications-service-sql-server-connection-string
                       variable: DATABASE_URL

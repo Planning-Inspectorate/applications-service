@@ -12,7 +12,8 @@ const getIndexController = async (req, res, next) => {
 		return res.render(view, {
 			...getPageData(i18n.language),
 			allowWelshCases,
-			enableProjectsMap
+			enableProjectsMap,
+			isHomePage: true
 		});
 	} catch (error) {
 		logger.error(error);

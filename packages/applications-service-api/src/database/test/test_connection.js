@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 const Sequelize = require('sequelize');
 const tcpp = require('tcp-ping');
 const config = require('../config/config');
@@ -8,21 +7,17 @@ const sequelize = new Sequelize(config);
 const errorPrefix = 'ERROR:';
 const warningPrefix = 'WARNING:';
 
-// eslint-disable-next-line no-unused-vars
 function logMessage(message) {
-	// eslint-disable-next-line no-console
 	console.log(message);
 	return message;
 }
 
 function errorMessage(error) {
-	// eslint-disable-next-line no-console
 	console.error(`${errorPrefix} ${error}`);
 	return `${errorPrefix} ${error}`;
 }
 
 function warningMessage(warning) {
-	// eslint-disable-next-line no-console
 	console.log(`${warningPrefix} ${warning}`);
 	return `${warningPrefix} ${warning}`;
 }

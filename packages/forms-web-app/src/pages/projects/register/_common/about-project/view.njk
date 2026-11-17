@@ -5,10 +5,10 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 
-{% set pageHeading = t('register.aboutProject.pageHeading')%}
+{% set pageTitle = t('register.aboutProject.pageTitle')%}
 {% set whoRegisteringFor = t('register.whoRegisteringFor.' + key) %}
 {% set commonPageTitle = t('register.index.pageTitle') %}
-{% set title = pageHeading + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
+{% set title = pageTitle + ' - ' + whoRegisteringFor + ' - ' + commonPageTitle %}
 
 {% if errors %}
 	{% set title = t('common.error') + ": " + title %}
@@ -47,11 +47,48 @@
 
         <p class="govuk-body">{{ t('register.aboutProject.paragraph3') }}</p>
 
+        <ul class="govuk-list govuk-list--bullet">
+          <li>
+            {{ t('register.aboutProject.listItem3') }}
+          </li>
+
+          <li>
+            {{ t('register.aboutProject.listItem4') }}
+          </li>
+
+          <li>
+            {{ t('register.aboutProject.listItem5') }}
+          </li>
+
+          <li>
+            {{ t('register.aboutProject.listItem6') }}
+          </li>
+        </ul>
+
+        {{ govukDetails({
+          summaryText: t('register.aboutProject.details.summaryText'),
+          html: '
+            <p class="govuk-body">' + t('register.aboutProject.details.paragraph1') + '</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>' + t('register.aboutProject.details.listItem1') + '</li>
+              <li>' + t('register.aboutProject.details.listItem2') + '</li>
+              <li>' + t('register.aboutProject.details.listItem3') + '</li>
+              <li>' + t('register.aboutProject.details.listItem4') + '</li>
+              <li>' + t('register.aboutProject.details.listItem5') + '</li>
+              <li>' + t('register.aboutProject.details.listItem6') + '</li>
+              <li>' + t('register.aboutProject.details.listItem7') + '</li>
+              <li>' + t('register.aboutProject.details.listItem8') + '</li>
+              <li>' + t('register.aboutProject.details.listItem9') + '</li>
+            </ul>'
+        }) }}
+
+        <p class="govuk-body">{{ t('register.aboutProject.paragraph4') }}</p>
+
         {{ govukTextarea({
           label: {
             text: t('register.aboutProject.textAreaLabel'),
             classes: "govuk-label--s",
-            isPageHeading: true
+            isPageHeading: false
           },
           id: "comment",
           name: "comment",
@@ -60,34 +97,6 @@
           errorMessage: errors['comment'] and {
               text: errors['comment'].msg
           }
-        }) }}
-
-        {{ govukDetails({
-          summaryText: t('register.aboutProject.details.summaryText'),
-          html: '
-            <h2 class="govuk-heading-m">' + t('register.aboutProject.details.heading1') + '</h2>
-            <p class="govuk-body">' + t('register.aboutProject.details.paragraph1') + '</p>
-            <p class="govuk-body">' + t('register.aboutProject.details.paragraph2') + '</p>
-            <h2 class="govuk-heading-m">' + t('register.aboutProject.details.heading2') + '</h2>
-            <p class="govuk-body">' + t('register.aboutProject.details.paragraph3') + '</p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>' + t('register.aboutProject.details.listItem1') + '</li>
-              <li>' + t('register.aboutProject.details.listItem2') + '</li>
-              <li>' + t('register.aboutProject.details.listItem3') + '</li>
-              <li>' + t('register.aboutProject.details.listItem4') + '</li>
-            </ul>
-            <p class="govuk-body">' + t('register.aboutProject.details.paragraph4') + '</p>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>' + t('register.aboutProject.details.listItem5') + '</li>
-              <li>' + t('register.aboutProject.details.listItem6') + '</li>
-              <li>' + t('register.aboutProject.details.listItem7') + '</li>
-              <li>' + t('register.aboutProject.details.listItem8') + '</li>
-              <li>' + t('register.aboutProject.details.listItem9') + '</li>
-              <li>' + t('register.aboutProject.details.listItem10') + '</li>
-              <li>' + t('register.aboutProject.details.listItem11') + '</li>
-              <li>' + t('register.aboutProject.details.listItem12') + '</li>
-              <li>' + t('register.aboutProject.details.listItem13') + '</li>
-            </ul>'
         }) }}
 
         {{ govukButton({

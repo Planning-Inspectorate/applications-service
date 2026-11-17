@@ -22,7 +22,7 @@ Feature: Project information page
             | Name of applicant                    |
             | This project is at                   |
             | Enter your email address to receive: |
-            | Telephone: 0303 444 5000             |
+            | Phone: 0303 444 5000                |
 
     Scenario: Register to have your say can be opened from the project information page
         When I open the register to have your say journey from the project information page

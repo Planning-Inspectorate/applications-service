@@ -7,6 +7,7 @@ import PO_TellAboutProject from '../what-do-you-want-to-tell-about-project/PageO
 import PO_WhatIsJobTitle from '../what-is-your-job-title-or-volunteer-role/PageObjects/PO_WhatIsJobTitle';
 import OrganisationNamePage from '../organisation-name/PageObjects/OrganisationNamePage';
 import PO_CyaOrg from '../check-your-answers-before-registering-organisation/PageObjects/PO_CyaOrg';
+import { handleAiDeclarationIfPresent } from '../../shared/registerCommentPageSteps';
 const fullNamePage = new PO_FullName();
 const addressDetails = new PO_AddressDetails();
 const emailAddressPage = new PO_EmailAddress();
@@ -38,6 +39,7 @@ Given('I have been asked to check my answers', () => {
 	telephoneNumberPage.clickSaveAndContinue();
 	commentsPage.enterTextIntoCommentsField('This is a test comment');
 	commentsPage.clickSaveAndContinue();
+	handleAiDeclarationIfPresent();
 	cyaOrg.assertOnPage('check your answers before registering organisation');
 });
 

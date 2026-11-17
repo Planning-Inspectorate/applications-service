@@ -1382,6 +1382,12 @@ components:
           type: string
         comment:
           type: string
+        ai-declaration:
+          type: string
+          enum:
+            - 'yes'
+            - 'no'
+          description: Whether AI was used to help produce the registration comments
 
     DocumentSearchCriteria:
       type: object
@@ -1821,6 +1827,10 @@ components:
         Attachments:
           type: string
           example: 'WS010006-000002'
+        useOfAI:
+          type: string
+          example: 'unknown'
+          description: Whether AI was used to help produce the registration comments
 
     RepresentationListWrapper:
       type: object

@@ -10,6 +10,10 @@ jest.mock('../../lib/prisma', () => ({
 	}
 }));
 
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
+
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
@@ -52,6 +56,12 @@ describe('nsip-advice-unpublish', () => {
 		});
 		expect(mockContext.log).toHaveBeenCalledWith(
 			'nsip-advice-unpublish function published advice for caseReference BC0110001 with adviceId: mock-advice-id'
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`clearing advice cache for caseRef ${mockMessage.caseReference}...`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`advice cache cleared for caseRef ${mockMessage.caseReference}`
 		);
 	});
 });

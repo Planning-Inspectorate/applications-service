@@ -9,7 +9,8 @@ const getRegisterMyselfCheckAnswersController = (req, res) => {
 	return res.render('projects/register/myself/check-answers/view.njk', {
 		data: {
 			...session.mySelfRegdata,
-			comment: session.comment
+			comment: session.comment,
+			aiDeclaration: session['ai-declaration']
 		},
 		registerMyselfDeclarationURL: getRegisterMyselfDeclarationURL(case_ref)
 	});

@@ -13,7 +13,8 @@ const INTERESTED_PARTY_SELF_API = {
 	},
 	email: 'joe@example.org',
 	telephone: '07700900000',
-	comment: 'this is the representation'
+	comment: 'this is the representation',
+	'ai-declaration': 'no'
 };
 
 const INTERESTED_PARTY_ORGANISATION_API = {
@@ -54,7 +55,8 @@ const INTERESTED_PARTY_AGENT_PERSON_API = {
 		telephone: '07700900001',
 		'organisation-name': 'Example Company'
 	},
-	comment: 'this is the representation'
+	comment: 'this is the representation',
+	'ai-declaration': 'no'
 };
 
 const INTERESTED_PARTY_AGENT_ORGANISATION_API = {
@@ -205,6 +207,7 @@ const INTERESTED_PARTY_SELF_BACK_OFFICE = {
 	referenceId: 'BC0110002-091222133021123',
 	caseReference: 'BC0110002',
 	originalRepresentation: 'this is the representation',
+	useOfAI: 'NO',
 	representationFrom: 'PERSON',
 	represented: {
 		firstName: 'Joe',

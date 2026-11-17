@@ -11,6 +11,9 @@ jest.mock('../../lib/prisma', () => ({
 jest.mock('../../lib/build-merge-query', () =>
 	jest.fn().mockImplementation(jest.requireActual('../../lib/build-merge-query'))
 );
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
 
 const mockEnqueueDateTime = new Date('2023-01-01T09:00:00.000Z').toUTCString();
 const mockContext = {
@@ -38,7 +41,8 @@ const mockMessage = {
 	registerFor: 'ORGANISATION',
 	representedId: 'represented-id',
 	representativeId: 'representative-id',
-	attachmentIds: ['123', '456']
+	attachmentIds: ['123', '456'],
+	useOfAI: 'no'
 };
 
 const mockRepresentation = {
@@ -55,7 +59,8 @@ const mockRepresentation = {
 	attachmentIds: mockMessage.attachmentIds.join(','),
 	representedId: mockMessage.representedId,
 	representativeId: mockMessage.representativeId,
-	modifiedAt: new Date()
+	modifiedAt: new Date(),
+	useOfAI: mockMessage.useOfAI
 };
 
 describe('nsip-representation', () => {
@@ -226,7 +231,7 @@ describe('nsip-representation', () => {
 		const statements = receivedStatement.split('\n');
 		expect(statements[0].trim()).toBe('MERGE INTO [representation] AS Target');
 		expect(statements[1].trim()).toBe(
-			'USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14) AS Source ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt])'
+			'USING (SELECT @P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15) AS Source ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt], [useOfAI])'
 		);
 		expect(statements[2].trim()).toBe('ON Target.[representationId] = Source.[representationId]');
 		expect(statements[3].trim()).toBe('WHEN MATCHED');
@@ -234,10 +239,10 @@ describe('nsip-representation', () => {
 			`AND '2023-01-01 09:00:00' >= DATEADD(MINUTE, -1, Target.[modifiedAt])`
 		);
 		expect(statements[5].trim()).toBe(
-			'THEN UPDATE SET Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[referenceId] = Source.[referenceId], Target.[status] = Source.[status], Target.[dateReceived] = Source.[dateReceived], Target.[representationComment] = Source.[representationComment], Target.[representationFrom] = Source.[representationFrom], Target.[representationType] = Source.[representationType], Target.[registerFor] = Source.[registerFor], Target.[attachmentIds] = Source.[attachmentIds], Target.[representedId] = Source.[representedId], Target.[representativeId] = Source.[representativeId], Target.[modifiedAt] = Source.[modifiedAt]'
+			'THEN UPDATE SET Target.[caseReference] = Source.[caseReference], Target.[caseId] = Source.[caseId], Target.[referenceId] = Source.[referenceId], Target.[status] = Source.[status], Target.[dateReceived] = Source.[dateReceived], Target.[representationComment] = Source.[representationComment], Target.[representationFrom] = Source.[representationFrom], Target.[representationType] = Source.[representationType], Target.[registerFor] = Source.[registerFor], Target.[attachmentIds] = Source.[attachmentIds], Target.[representedId] = Source.[representedId], Target.[representativeId] = Source.[representativeId], Target.[modifiedAt] = Source.[modifiedAt], Target.[useOfAI] = Source.[useOfAI]'
 		);
 		expect(statements[6].trim()).toBe(
-			'WHEN NOT MATCHED THEN INSERT ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14);'
+			'WHEN NOT MATCHED THEN INSERT ([representationId], [caseReference], [caseId], [referenceId], [status], [dateReceived], [representationComment], [representationFrom], [representationType], [registerFor], [attachmentIds], [representedId], [representativeId], [modifiedAt], [useOfAI]) VALUES (@P1, @P2, @P3, @P4, @P5, @P6, @P7, @P8, @P9, @P10, @P11, @P12, @P13, @P14, @P15);'
 		);
 		const expectedParameters = Object.values(mockRepresentation);
 		expect(receivedParameters.length).toBe(expectedParameters.length);
@@ -248,6 +253,12 @@ describe('nsip-representation', () => {
 				correlationId: 'id-1',
 				caseReference: 'CASE-REF'
 			}
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`clearing representations cache for caseRef ${mockMessage.caseRef}`
+		);
+		expect(mockContext.log).toHaveBeenCalledWith(
+			`representations cache cleared for caseRef ${mockMessage.caseRef}`
 		);
 	});
 });

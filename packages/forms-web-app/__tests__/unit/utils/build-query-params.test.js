@@ -23,8 +23,8 @@ describe('All test cases', () => {
 						i === 0
 							? buildQueryParams(falsyOrEmptyValue, queryNames[0], someValue)
 							: i === 1
-							? buildQueryParams(paramCategory, falsyOrEmptyValue, someValue)
-							: buildQueryParams(paramTypes, queryNames[2], falsyOrEmptyValue);
+								? buildQueryParams(paramCategory, falsyOrEmptyValue, someValue)
+								: buildQueryParams(paramTypes, queryNames[2], falsyOrEmptyValue);
 					expect(result).toBe('');
 				});
 				j++;
@@ -44,8 +44,8 @@ describe('All test cases', () => {
 				i === 0
 					? buildQueryParams(paramStages, queryNames[0], emptyValue)
 					: i === 1
-					? buildQueryParams(paramCategory, queryNames[1], emptyValue)
-					: buildQueryParams(paramTypes, queryNames[2], emptyValue);
+						? buildQueryParams(paramCategory, queryNames[1], emptyValue)
+						: buildQueryParams(paramTypes, queryNames[2], emptyValue);
 			expect(result).toBe(expectedResult[i]);
 		});
 	}
@@ -61,8 +61,8 @@ describe('All test cases', () => {
 				i === 0
 					? buildQueryParams(paramStages, queryNames[0], someValue)
 					: i === 1
-					? buildQueryParams(paramCategory, queryNames[1], someValue)
-					: buildQueryParams(paramTypes, queryNames[2], someValue);
+						? buildQueryParams(paramCategory, queryNames[1], someValue)
+						: buildQueryParams(paramTypes, queryNames[2], someValue);
 			expect(result).toBe(expectedResult[i]);
 		});
 	}

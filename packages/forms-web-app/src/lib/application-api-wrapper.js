@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const fetch = require('node-fetch');
 const uuid = require('uuid');
 const { hasher } = require('node-object-hash');
@@ -67,7 +66,7 @@ async function handler(
 				/* istanbul ignore next */
 				throw new Error(apiResponse.statusText);
 			} catch (e) {
-				throw new Error(e.message);
+				throw new Error(e.message, { cause: e });
 			}
 		}
 
@@ -94,8 +93,28 @@ async function handler(
 }
 
 exports.handler = handler;
+
 exports.getProjectData = async (case_ref) => {
-	return handler('getProjectData', `/api/v1/applications/${case_ref}`);
+	const cacheKey = `${case_ref}:projectData`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getProjectData', `/api/v1/applications/${case_ref}`);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
 };
 
 exports.getAllProjectList = async (queryString = '') =>
@@ -133,8 +152,55 @@ exports.getDocumentByType = async (case_ref, type) => {
 	return response;
 };
 
-exports.searchRepresentations = async (query = '') =>
-	handler('searchRepresentations', `/api/v1/representations${query}`);
+exports.searchRepresentations = async (caseRef, query = '') => {
+	const hashedQueryString = hasher().hash(query);
+	const cacheKey = `${caseRef}:reps:${hashedQueryString}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('searchRepresentations', `/api/v1/representations${query}`);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
+
+exports.getRepresentationById = async (id, caseReference) => {
+	const cacheKey = `${caseReference}:reps:${id}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler(
+		'getRepresentationById',
+		`/api/v1/representations/${id}?caseReference=${caseReference}`
+	);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch {
+		parentLogger.warn({}, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
 
 exports.searchDocumentListV2 = async (params) => {
 	const queryString = queryStringBuilder(params, [
@@ -175,15 +241,28 @@ exports.authenticateToken = async (token, email) => {
 	});
 };
 
-exports.getRepresentationById = async (id, caseReference) => {
-	return handler(
-		'getRepresentationById',
-		`/api/v1/representations/${id}?caseReference=${caseReference}`
-	);
-};
+exports.getTimetables = async (caseRef) => {
+	const cacheKey = `${caseRef}:timetables`;
 
-exports.getTimetables = async (caseRef) =>
-	handler('getTimetables', `/api/v1/timetables/${caseRef}`);
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getTimetables', `/api/v1/timetables/${caseRef}`);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
 
 exports.wrappedPostSubmission = async (caseRef, body) => {
 	const URL = `/api/v1/submissions/${caseRef}`;
@@ -229,6 +308,83 @@ exports.wrappedSearchDocumentsV3 = async (body) => {
 	return response;
 };
 
+exports.searchAdvice = async (paramsObj) => {
+	const searchParams = new URLSearchParams(paramsObj);
+	const url = `/api/v1/advice?${searchParams.toString()}`;
+	const method = 'GET';
+	const hashedParams = hashObject(paramsObj);
+	const caseRef = paramsObj.caseReference ?? '';
+
+	const cacheKey = `${caseRef}:advice:${hashedParams}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('searchAdviceDocuments', url, method, {});
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
+
+exports.getAdviceOnProjectById = async (adviceId, caseReference) => {
+	const url = `/api/v1/advice/${adviceId}?caseReference=${caseReference}`;
+	const method = 'GET';
+	const cacheKey = `${caseReference}:advice:${adviceId}`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getAdviceDetail', url, method);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
+
+exports.getProjectUpdates = async (caseReference) => {
+	const cacheKey = `${caseReference}:projectUpdates`;
+
+	try {
+		const cached = await getCache(cacheKey);
+		if (cached) {
+			return cached;
+		}
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache get failed for ${cacheKey}`);
+	}
+
+	const response = await handler('getProjectUpdates', `/api/v1/project-updates/${caseReference}`);
+
+	try {
+		await setCache(cacheKey, response);
+	} catch (error) {
+		parentLogger.warn({ error }, `Cache set failed for ${cacheKey}`);
+	}
+
+	return response;
+};
+
 exports.getDocumentUriByDocRef = async (docRef) => {
 	return handler('getDocumentUriByDocRef', `/api/v3/documents/short-link/${docRef}`);
 };
@@ -261,6 +417,3 @@ exports.deleteGetUpdatesSubscription = async (caseReference, email) => {
 
 	return handler('deleteGetUpdatesSubscription', URL, method, {});
 };
-
-exports.getProjectUpdates = async (caseReference) =>
-	handler('getProjectUpdates', `/api/v1/project-updates/${caseReference}`);

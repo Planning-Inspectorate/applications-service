@@ -10,6 +10,10 @@ jest.mock('../../lib/prisma', () => ({
 	}
 }));
 
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
+
 const mockContext = {
 	log: jest.fn(),
 	bindingData: {
@@ -44,6 +48,12 @@ describe('nsip-exam-timetable-unpublish', () => {
 		});
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`unpublished ExaminationTimetable with caseReference: ${mockMessage.caseReference}`
+		);
+		expect(mockContext.log).toBeCalledWith(
+			`clearing ExaminationTimetable cache for caseRef ${mockMessage.caseReference}...`
+		);
+		expect(mockContext.log).toBeCalledWith(
+			`examinationTimetable cache cleared for caseRef ${mockMessage.caseReference}`
 		);
 	});
 });

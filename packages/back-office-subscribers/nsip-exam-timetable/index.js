@@ -1,4 +1,5 @@
 const { prismaClient } = require('../lib/prisma');
+const axios = require('axios');
 
 module.exports = async (context, message) => {
 	const events = message.events || [];
@@ -13,7 +14,7 @@ module.exports = async (context, message) => {
 
 	context.log(`invoking nsip-exam-timetable function for caseReference: ${caseReference}`);
 
-	return await prismaClient.$transaction(async (tx) => {
+	await prismaClient.$transaction(async (tx) => {
 		// note: because of the nesting, it's much faster easier to remove and then add any events because back office will send all events
 
 		const event = await tx.examinationTimetable.findMany({
@@ -73,4 +74,14 @@ module.exports = async (context, message) => {
 			);
 		}
 	});
+
+	context.log(`clearing timetables cache for caseRef ${caseReference}...`);
+
+	const cacheKeyPattern = `cache:${caseReference}:timetables`;
+	const url = `${process.env.APPLICATIONS_SERVICE_API_URL}/api/v1/cache/clear?pattern=${cacheKeyPattern}`;
+
+	const { data: cacheClearResponse } = await axios.delete(url);
+
+	context.log(JSON.stringify(cacheClearResponse, null, 2));
+	context.log(`timetables cache cleared for caseRef ${caseReference}`);
 };

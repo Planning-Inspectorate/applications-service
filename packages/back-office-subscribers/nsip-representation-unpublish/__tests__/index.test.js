@@ -9,6 +9,9 @@ jest.mock('../../lib/prisma', () => ({
 		}
 	}
 }));
+jest.mock('axios', () => ({
+	delete: jest.fn().mockResolvedValue({ status: 200 })
+}));
 
 const mockContext = {
 	log: jest.fn(),

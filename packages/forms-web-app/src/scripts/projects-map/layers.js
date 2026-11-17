@@ -58,7 +58,7 @@ function clusterStyle(feature) {
 					text: String(count),
 					fill: new Fill({ color: MARKER_STROKE }),
 					font: 'bold 12px sans-serif'
-			  })
+				})
 	});
 
 	return [shadow, marker];
