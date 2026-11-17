@@ -1,8 +1,15 @@
 @startuml
-set separator none
-title Applications Back-Office Context
+title <size:24>Applications Back-Office Context</size>
 
+set separator none
 left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
 
 !include <C4/C4>
 !include <C4/C4_Context>
@@ -22,4 +29,5 @@ Rel(ApplicationsBackOffice, OperationalDataWarehouseODW, "Broadcasts message whe
 Rel(ApplicationsBackOffice, ApplicationsFrontOffice, "Broadcasts message when entities change", $techn="Azure Service Bus via topic subscriptions", $tags="", $link="")
 
 SHOW_LEGEND(true)
+hide stereotypes
 @enduml

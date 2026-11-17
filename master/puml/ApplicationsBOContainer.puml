@@ -1,8 +1,15 @@
 @startuml
-set separator none
-title Applications Back-Office Container
+title <size:24>Applications Back-Office Container</size>
 
+set separator none
 left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
 
 !include <C4/C4>
 !include <C4/C4_Context>
@@ -24,4 +31,5 @@ Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsBackOffice.Database, "Reads and
 Rel(ApplicationsBackOffice.WebBOAPI, ApplicationsFrontOffice, "Broadcasts message on Advice changes", $techn="Azure Service via topic s51-advice", $tags="", $link="")
 
 SHOW_LEGEND(true)
+hide stereotypes
 @enduml

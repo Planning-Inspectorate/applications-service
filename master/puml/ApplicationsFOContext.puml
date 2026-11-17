@@ -1,8 +1,15 @@
 @startuml
-set separator none
-title Applications Front-Office Context
+title <size:24>Applications Front-Office Context</size>
 
+set separator none
 left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
 
 !include <C4/C4>
 !include <C4/C4_Context>
@@ -32,4 +39,5 @@ Rel(ApplicationsFrontOffice, GOVUK, "Sends notification emails through", $techn=
 Rel(ApplicationsFrontOffice, NIDatabase, "Reads and writes legacy case data from", $techn=",", $tags="", $link="")
 
 SHOW_LEGEND(true)
+hide stereotypes
 @enduml

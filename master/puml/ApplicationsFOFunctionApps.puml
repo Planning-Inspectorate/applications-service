@@ -1,8 +1,15 @@
 @startuml
-set separator none
-title Applications Front-Office Function Apps
+title <size:24>Applications Front-Office Function Apps</size>\n<size:24>Shows the function apps within the Applications Front-Office system - these are responsible for consuming messages from the Service Bus and updating the Azure SQL database.</size>
 
+set separator none
 top to bottom direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
 
 !include <C4/C4>
 !include <C4/C4_Context>
@@ -64,4 +71,5 @@ Rel(ApplicationsFrontOffice.ServiceUsers, ApplicationsFrontOffice.Database, "Con
 Rel(ApplicationsFrontOffice.ServiceUsersUnpublish, ApplicationsFrontOffice.Database, "Deletes from Service User table", $techn="", $tags="", $link="")
 
 SHOW_LEGEND(true)
+hide stereotypes
 @enduml

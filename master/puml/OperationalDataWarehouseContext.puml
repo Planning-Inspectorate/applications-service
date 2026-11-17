@@ -1,8 +1,15 @@
 @startuml
-set separator none
-title Operational Data Warehouse Context
+title <size:24>Operational Data Warehouse Context</size>
 
+set separator none
 left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
 
 !include <C4/C4>
 !include <C4/C4_Context>
@@ -17,4 +24,5 @@ Boundary(group_1, "Planning Inspectorate", $tags="Planning Inspectorate") {
 Rel(ApplicationsBackOffice, OperationalDataWarehouseODW, "Broadcasts message when entities change", $techn="Azure Service Bus via topic subscriptions", $tags="", $link="")
 
 SHOW_LEGEND(true)
+hide stereotypes
 @enduml

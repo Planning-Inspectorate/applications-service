@@ -1,8 +1,15 @@
 @startuml
-set separator none
-title Applications Front-Office Container
+title <size:24>Applications Front-Office Container</size>\n<size:24>Shows the containers within the Applications Front-Office system. Go to the next view to see the rest.</size>
 
+set separator none
 left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
 
 !include <C4/C4>
 !include <C4/C4_Context>
@@ -37,4 +44,5 @@ Rel(ApplicationsFrontOffice.WebFOAPI, NIDatabase, "Reads and writes legacy case 
 Rel(ApplicationsFrontOffice.WebFOAPI, ApplicationsFrontOffice.KeyVault, "Retrieves secrets from", $techn="", $tags="", $link="")
 
 SHOW_LEGEND(true)
+hide stereotypes
 @enduml
