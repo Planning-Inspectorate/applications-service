@@ -62,7 +62,8 @@ describe('pages/projects/representations/representation/controller', () => {
 			DateRRepAppearOnWebsite: '2020-01-01',
 			DoNotPublish: null,
 			Attachments: 'WS010006-000002',
-			attachments: []
+			attachments: [],
+			hasPublishedAttachments: false
 		}
 	];
 
@@ -90,7 +91,7 @@ describe('pages/projects/representations/representation/controller', () => {
 								comment: 'Some comments',
 								formattedComment: '<p>Some comments</p>',
 								dateSubmitted: '19 February 2020',
-								hasAttachments: true,
+								hasAttachments: false,
 								name: 'Test (Test)',
 								representative: 'a representative',
 								submittedBy: 'Members of the public/businesses',

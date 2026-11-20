@@ -20,6 +20,10 @@ const {
 	mapNIRepresentationToApi
 } = require('../utils/representation.mapper');
 const { isBackOfficeCaseReference } = require('../utils/is-backoffice-case-reference');
+const {
+	getRepresentationsWithPublishedAttachments
+} = require('../utils/get-representations-with-published-attachments');
+
 const createQueryFilters = (query) => {
 	const pageNo = parseInt(query?.page) || 1;
 	const defaultSize = 25;
@@ -42,6 +46,7 @@ const backOfficeMapWrapper = ({ representations, count }) => {
 		count
 	};
 };
+
 const getRepresentationsForApplication = async (query) => {
 	const { pageNo, size, caseReference, searchTerm, type, offset } = createQueryFilters(query);
 	const options = {
@@ -51,17 +56,23 @@ const getRepresentationsForApplication = async (query) => {
 		type,
 		searchTerm
 	};
+
 	const isBOApplication = isBackOfficeCaseReference(caseReference);
 	const { representations, count } = isBOApplication
 		? backOfficeMapWrapper(await getRepresentationsBORepository(options))
 		: await getRepresentationsWithCountNIRepository(options);
+
+	const representationsWithPublishedAttachments = await getRepresentationsWithPublishedAttachments(
+		representations,
+		isBOApplication
+	);
 
 	const typeFilters = isBOApplication
 		? await getBOFilters(caseReference)
 		: await getNIFilters('RepFrom', caseReference);
 
 	return {
-		representations,
+		representations: representationsWithPublishedAttachments,
 		totalItems: count,
 		itemsPerPage: size,
 		totalPages: Math.ceil(Math.max(1, count) / size),

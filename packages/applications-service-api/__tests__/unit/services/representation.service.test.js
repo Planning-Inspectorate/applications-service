@@ -26,8 +26,9 @@ const {
 	REPRESENTATION_BACKOFFICE_DATA,
 	REPRESENTATION_BACKOFFICE_RESPONSE,
 	REPRESENTATION_NI_DATA,
+	REPRESENTATIONS_NI_DATA,
 	REPRESENTATIONS_BACKOFFICE_DATA,
-	REPRESENTATIONS_BACKOFFICE_RESPONSE
+	REPRESENTATIONS_BACKOFFICE_RESPONSE_WITH_PUBLISHED_ATTACHMENTS
 } = require('../../__data__/representation');
 const { SERVICE_USERS_BACKOFFICE_DATA } = require('../../__data__/serviceUser');
 const {
@@ -52,7 +53,7 @@ describe('representation.service', () => {
 	describe('getRepresentationsForApplication', () => {
 		beforeEach(() => {
 			getRepresentationsNIRepository.mockResolvedValue({
-				representations: REPRESENTATION_NI_DATA,
+				representations: REPRESENTATIONS_NI_DATA,
 				count: 1
 			});
 			getRepresentationsBORepository.mockResolvedValue({
@@ -85,7 +86,7 @@ describe('representation.service', () => {
 			it('should return mapped representations', async () => {
 				const data = await getRepresentationsForApplication({ caseReference: 'BC010001' });
 				expect(data).toEqual({
-					representations: REPRESENTATIONS_BACKOFFICE_RESPONSE,
+					representations: REPRESENTATIONS_BACKOFFICE_RESPONSE_WITH_PUBLISHED_ATTACHMENTS,
 					currentPage: 1,
 					itemsPerPage: 25,
 					totalItems: 1,
@@ -114,7 +115,7 @@ describe('representation.service', () => {
 			it('should return mapped representations', async () => {
 				const data = await getRepresentationsForApplication({ caseReference: 'EN010009' });
 				expect(data).toEqual({
-					representations: REPRESENTATION_NI_DATA,
+					representations: REPRESENTATIONS_NI_DATA,
 					currentPage: 1,
 					itemsPerPage: 25,
 					totalItems: 1,
@@ -128,7 +129,7 @@ describe('representation.service', () => {
 	});
 	describe('getRepresentationById', () => {
 		beforeEach(() => {
-			getRepresentationByIdNIRepository.mockResolvedValue(REPRESENTATION_NI_DATA[0]);
+			getRepresentationByIdNIRepository.mockResolvedValue(REPRESENTATION_NI_DATA);
 			getDocumentsByDataIdNIRepository.mockResolvedValue(NI_DB_DOCUMENTS);
 			getDocumentsByIdsBORepository.mockResolvedValue(BACK_OFFICE_DB_DOCUMENTS);
 			getRepresentationByBORepository.mockResolvedValue({
@@ -172,13 +173,13 @@ describe('representation.service', () => {
 			it('should call getDocumentsByDataIdNIRepository with correct params', async () => {
 				await getRepresentationByIdAndCaseRef('1', 'EN010009');
 				expect(getDocumentsByDataIdNIRepository).toBeCalledWith(
-					REPRESENTATION_NI_DATA[0]?.Attachments.split(',')
+					REPRESENTATION_NI_DATA?.Attachments.split(',')
 				);
 			});
 			it('should return mapped representation', async () => {
 				const data = await getRepresentationByIdAndCaseRef('1', 'EN010009');
 				expect(data).toEqual({
-					...REPRESENTATION_NI_DATA[0],
+					...REPRESENTATION_NI_DATA,
 					attachments: NI_DB_DOCUMENTS.map((doc) => ({
 						...doc,
 						path: doc.path ? `${config.documentsHost}${doc.path}` : null
