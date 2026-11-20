@@ -149,6 +149,29 @@ const getDocumentsByIds = async (documentIds) => {
 	});
 };
 
+const getPublishedDocumentIds = async (documentIds) => {
+	if (!documentIds || documentIds.length === 0) return [];
+
+	const batchSize = 1000;
+	const publishedDocumentIds = [];
+
+	for (let skip = 0; skip < documentIds.length; skip += batchSize) {
+		const batch = await prismaClient.$transaction(async (tx) => {
+			return tx.document.findMany({
+				where: {
+					documentId: { in: documentIds.slice(skip, skip + batchSize) },
+					publishedStatus: { not: 'unpublished' }
+				},
+				select: { documentId: true }
+			});
+		});
+
+		publishedDocumentIds.push(...batch);
+	}
+
+	return publishedDocumentIds.map(({ documentId }) => documentId);
+};
+
 const getDocumentByDocRef = async (docRef) => {
 	return prismaClient.document.findFirst({
 		where: { documentReference: docRef }
@@ -160,5 +183,6 @@ module.exports = {
 	getFilters,
 	getDocumentsByType,
 	getDocumentsByIds,
+	getPublishedDocumentIds,
 	getDocumentByDocRef
 };

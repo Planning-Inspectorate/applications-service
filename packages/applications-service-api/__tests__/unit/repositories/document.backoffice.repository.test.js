@@ -2,7 +2,8 @@ const {
 	getDocuments,
 	getFilters,
 	getDocumentsByType,
-	getDocumentByDocRef
+	getDocumentByDocRef,
+	getPublishedDocumentIds
 } = require('../../../src/repositories/document.backoffice.repository');
 
 const mockFindMany = jest.fn();
@@ -17,7 +18,11 @@ jest.mock('../../../src/lib/prisma', () => ({
 			count: (query) => mockCount(query),
 			findFirst: (query) => mockFindFirst(query)
 		},
-		$queryRaw: (sql) => mockQueryRaw(sql)
+		$queryRaw: (sql) => mockQueryRaw(sql),
+		$transaction: (callback) =>
+			callback({
+				document: { findMany: (query) => mockFindMany(query) }
+			})
 	}
 }));
 
@@ -187,6 +192,61 @@ describe('document repository', () => {
 				where: { caseRef: 'mock case ref', documentType: 'mock type' }
 			});
 			expect(response).toEqual({ data: 'mock data' });
+		});
+	});
+
+	describe('getPublishedDocumentIds', () => {
+		it('returns an empty array if no document ids are passed in', async () => {
+			const response = await getPublishedDocumentIds([]);
+
+			expect(mockFindMany).not.toHaveBeenCalled();
+			expect(response).toEqual([]);
+		});
+
+		it('calls findMany with document id and published status', async () => {
+			mockFindMany.mockReturnValue([{ documentId: 'mock-id-1' }, { documentId: 'mock-id-2' }]);
+
+			const response = await getPublishedDocumentIds(['mock-id-1', 'mock-id-2', 'mock-id-3']);
+
+			expect(mockFindMany).toHaveBeenCalledWith({
+				where: {
+					documentId: { in: ['mock-id-1', 'mock-id-2', 'mock-id-3'] },
+					publishedStatus: { not: 'unpublished' }
+				},
+				select: { documentId: true }
+			});
+
+			expect(response).toEqual(['mock-id-1', 'mock-id-2']);
+		});
+
+		it('processes document ids in batches of 1000', async () => {
+			mockFindMany.mockResolvedValue([]);
+
+			const documentIds = Array.from({ length: 3000 }, (_, i) => String(i + 1));
+
+			await getPublishedDocumentIds(documentIds);
+
+			expect(mockFindMany).toHaveBeenCalledTimes(3);
+		});
+
+		it('handles a batch when number of document ids is less than batch size', async () => {
+			mockFindMany.mockResolvedValue([]);
+
+			const documentIds = Array.from({ length: 500 }, (_, i) => String(i + 1));
+
+			await getPublishedDocumentIds(documentIds);
+
+			expect(mockFindMany).toHaveBeenCalledTimes(1);
+		});
+
+		it('handles exactly one batch size', async () => {
+			mockFindMany.mockResolvedValue([]);
+
+			const documentIds = Array.from({ length: 1000 }, (_, i) => String(i + 1));
+
+			await getPublishedDocumentIds(documentIds);
+
+			expect(mockFindMany).toHaveBeenCalledTimes(1);
 		});
 	});
 
