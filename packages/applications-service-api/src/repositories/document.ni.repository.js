@@ -131,20 +131,6 @@ const getDocumentsByDataId = (dataIds) => {
 	});
 };
 
-const getPublishedDocumentIds = async (dataIds) => {
-	if (!dataIds || dataIds.length === 0) return [];
-
-	const publishedDocumentIds = await db.Document.findAll({
-		attributes: ['dataID'],
-		where: {
-			dataID: { [Op.in]: dataIds }
-		},
-		raw: true
-	});
-
-	return publishedDocumentIds.map(({ dataID }) => dataID);
-};
-
 const fetchDocumentsByDocumentType = async (requestQuery) => {
 	const where = {
 		case_reference: requestQuery.caseReference,
@@ -163,6 +149,5 @@ module.exports = {
 	fetchDocuments,
 	getAvailableFilters,
 	getDocumentsByDataId,
-	getPublishedDocumentIds,
 	fetchDocumentsByDocumentType
 };

@@ -1,36 +1,31 @@
 const { SERVICE_USERS_BACKOFFICE_DATA } = require('./serviceUser');
-const REPRESENTATION_NI_DATA = {
-	ID: 2,
-	ProjectName: 'SPT Feb 2020',
-	CaseReference: 'EN010009',
-	DataID: null,
-	UniqueReference: 'WS010006-34601',
-	WebReference: null,
-	PersonalName: 'Test (Test)',
-	Representative: null,
-	IndvdlOnBhalfName: null,
-	OrgOnBhalfName: null,
-	AgentOrgOnBhalfContactName: null,
-	RepFrom: 'Members of the Public/Businesses',
-	InterestInLand: null,
-	SpecifyOther: null,
-	CompulsoryAcquisitionHearing: null,
-	RepresentationOriginal: null,
-	RepresentationRedacted: 'Some comments',
-	RelevantOrNot: null,
-	SubmitFurtherWrittenReps: null,
-	PreliminaryMeeting: null,
-	OpenFloorHearings: null,
-	IssuesSpecificHearings: null,
-	DateRrepReceived: '2020-02-19T00:00:00.000Z',
-	DoNotPublish: null,
-	Attachments: 'WS010006-000002'
-};
-
-const REPRESENTATIONS_NI_DATA = [
+const REPRESENTATION_NI_DATA = [
 	{
-		...REPRESENTATION_NI_DATA,
-		hasPublishedAttachments: false
+		ID: 2,
+		ProjectName: 'SPT Feb 2020',
+		CaseReference: 'EN010009',
+		DataID: null,
+		UniqueReference: 'WS010006-34601',
+		WebReference: null,
+		PersonalName: 'Test (Test)',
+		Representative: null,
+		IndvdlOnBhalfName: null,
+		OrgOnBhalfName: null,
+		AgentOrgOnBhalfContactName: null,
+		RepFrom: 'Members of the Public/Businesses',
+		InterestInLand: null,
+		SpecifyOther: null,
+		CompulsoryAcquisitionHearing: null,
+		RepresentationOriginal: null,
+		RepresentationRedacted: 'Some comments',
+		RelevantOrNot: null,
+		SubmitFurtherWrittenReps: null,
+		PreliminaryMeeting: null,
+		OpenFloorHearings: null,
+		IssuesSpecificHearings: null,
+		DateRrepReceived: '2020-02-19T00:00:00.000Z',
+		DoNotPublish: null,
+		Attachments: 'WS010006-000002'
 	}
 ];
 
@@ -101,23 +96,15 @@ const REPRESENTATION_BACKOFFICE_RESPONSE = {
 };
 
 // eslint-disable-next-line no-unused-vars
-const { attachments, ...representationWithoutAttachments } = REPRESENTATION_BACKOFFICE_RESPONSE;
-
-const REPRESENTATIONS_BACKOFFICE_RESPONSE = Array(20).fill(representationWithoutAttachments);
-
-const REPRESENTATIONS_BACKOFFICE_RESPONSE_WITH_PUBLISHED_ATTACHMENTS = Array(20).fill({
-	...representationWithoutAttachments,
-	hasPublishedAttachments: false
-});
+let { attachments, ...REPRESENTATIONS_BACKOFFICE_RESPONSE } = REPRESENTATION_BACKOFFICE_RESPONSE;
+REPRESENTATIONS_BACKOFFICE_RESPONSE = Array(20).fill(REPRESENTATIONS_BACKOFFICE_RESPONSE);
 
 const FILTERS_NI_DB = [];
 module.exports = {
 	REPRESENTATION_NI_DATA,
-	REPRESENTATIONS_NI_DATA,
 	FILTERS_NI_DB,
 	REPRESENTATION_BACKOFFICE_DATA,
 	REPRESENTATION_BACKOFFICE_RESPONSE,
 	REPRESENTATIONS_BACKOFFICE_DATA,
-	REPRESENTATIONS_BACKOFFICE_RESPONSE,
-	REPRESENTATIONS_BACKOFFICE_RESPONSE_WITH_PUBLISHED_ATTACHMENTS
+	REPRESENTATIONS_BACKOFFICE_RESPONSE
 };

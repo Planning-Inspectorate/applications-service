@@ -121,27 +121,4 @@ describe('nsip-document-unpublish', () => {
 			`documents cache cleared for caseRef ${mockMessage.caseRef}`
 		);
 	});
-
-	it('clears the representations cache if the deleted document is a representation attachment', async () => {
-		await sendMessage(mockContext, {
-			...mockMessage,
-			filter1: 'Relevant representation attachment'
-		});
-
-		expect(mockContext.log).toHaveBeenCalledWith(
-			`representations cache cleared for caseRef ${mockMessage.caseRef}`
-		);
-	});
-
-	it('does NOT clear the representations cache if the case reference is missing', async () => {
-		await sendMessage(mockContext, {
-			...mockMessage,
-			caseRef: '',
-			filter1: 'Relevant representation attachment'
-		});
-
-		expect(mockContext.log).not.toHaveBeenCalledWith(
-			`representations cache cleared for caseRef ${mockMessage.caseRef}`
-		);
-	});
 });

@@ -1,8 +1,7 @@
 const {
 	fetchDocuments,
 	getAvailableFilters,
-	fetchDocumentsByDocumentType,
-	getPublishedDocumentIds
+	fetchDocumentsByDocumentType
 } = require('../../../src/repositories/document.ni.repository');
 const { DB_DOCUMENTS, DB_FILTERS } = require('../../__data__/documents');
 const { Op } = require('sequelize');
@@ -325,31 +324,6 @@ describe('documentV3 service', () => {
 			});
 
 			expect(result).toEqual(DB_FILTERS);
-		});
-	});
-
-	describe('getPublishedDocumentIds', () => {
-		it('returns an empty array if no document ids are passed in', async () => {
-			const result = await getPublishedDocumentIds([]);
-
-			expect(mockFindAll).not.toHaveBeenCalled();
-			expect(result).toEqual([]);
-		});
-
-		it('calls query api with correct params and returns an array of published document ids', async () => {
-			mockFindAll.mockResolvedValueOnce([{ dataID: 'mock-id-1' }, { dataID: 'mock-id-2' }]);
-
-			const result = await getPublishedDocumentIds(['mock-id-1', 'mock-id-2', 'mock-id-3']);
-
-			expect(mockFindAll).toHaveBeenCalledWith({
-				attributes: ['dataID'],
-				where: {
-					dataID: { [Op.in]: ['mock-id-1', 'mock-id-2', 'mock-id-3'] }
-				},
-				raw: true
-			});
-
-			expect(result).toEqual(['mock-id-1', 'mock-id-2']);
 		});
 	});
 
