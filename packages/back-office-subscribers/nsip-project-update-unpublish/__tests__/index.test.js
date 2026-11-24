@@ -24,7 +24,7 @@ const mockContext = {
 };
 
 const mockMessage = {
-	id: 1,
+	projectUpdateId: 1,
 	caseReference: 'BC010001',
 	correlationId: 'id-1'
 };
@@ -38,7 +38,7 @@ describe('nsip-project-update-unpublish', () => {
 	it('aborts unpublish if projectUpdateId is missing', async () => {
 		const messageWithoutUpdateId = {
 			...mockMessage,
-			id: undefined
+			projectUpdateId: undefined
 		};
 		await expect(sendMessage(mockContext, messageWithoutUpdateId)).rejects.toThrow(
 			'projectUpdateId or caseReference is missing'
@@ -70,11 +70,11 @@ describe('nsip-project-update-unpublish', () => {
 		await sendMessage(mockContext, mockMessage);
 		expect(mockDeleteMany).toHaveBeenCalledWith({
 			where: {
-				projectUpdateId: mockMessage.id
+				projectUpdateId: mockMessage.projectUpdateId
 			}
 		});
 		expect(mockContext.log).toHaveBeenCalledWith(
-			`unpublished project update with id: ${mockMessage.id}`
+			`unpublished project update with id: ${mockMessage.projectUpdateId}`
 		);
 		expect(mockContext.log).toHaveBeenCalledWith(
 			'clearing project updates cache for caseRef BC010001...'

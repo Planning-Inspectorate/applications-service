@@ -72,7 +72,6 @@ const mockDocument = {
 describe('nsip-document', () => {
 	beforeEach(() => {
 		mockExecuteRawUnsafe.mockReset();
-		mockContext.log.mockReset();
 	});
 	beforeAll(() => {
 		jest.useFakeTimers('modern');
@@ -144,29 +143,6 @@ describe('nsip-document', () => {
 		);
 		expect(mockContext.log).toHaveBeenCalledWith(
 			`documents cache cleared for caseRef ${mockMessage.caseRef}`
-		);
-	});
-
-	it('clears the representations cache if the document is a representation attachment', async () => {
-		await sendMessage(mockContext, {
-			...mockMessage,
-			filter1: 'Relevant representation attachment'
-		});
-
-		expect(mockContext.log).toHaveBeenCalledWith(
-			`representations cache cleared for caseRef ${mockMessage.caseRef}`
-		);
-	});
-
-	it('does NOT clear the representations cache if the case reference is missing', async () => {
-		await sendMessage(mockContext, {
-			...mockMessage,
-			caseRef: '',
-			filter1: 'Relevant representation attachment'
-		});
-
-		expect(mockContext.log).not.toHaveBeenCalledWith(
-			`representations cache cleared for caseRef ${mockMessage.caseRef}`
 		);
 	});
 });

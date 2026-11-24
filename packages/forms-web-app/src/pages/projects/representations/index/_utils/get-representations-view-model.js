@@ -15,8 +15,8 @@ const getFormattedComment = (comment) => {
 
 const getRepresentationViewModel = (
 	{
+		Attachments,
 		attachments,
-		hasPublishedAttachments,
 		DateRrepReceived,
 		ID,
 		PersonalName,
@@ -29,7 +29,7 @@ const getRepresentationViewModel = (
 	caseRef
 ) => ({
 	attachments,
-	hasAttachments: (attachments && attachments.length) || hasPublishedAttachments,
+	hasAttachments: (attachments && attachments.length) || !!Attachments,
 	dateSubmitted: formatDate(DateRrepReceived, language),
 	comment: RepresentationRedacted,
 	formattedComment: getFormattedComment(RepresentationRedacted),
